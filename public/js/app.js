@@ -2081,9 +2081,6 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     storeArticles: function storeArticles(shop) {
-      console.log(shop);
-      throw '';
-
       if (shop == 'maxi') {
         this.maxi.forEach(function (element) {
           var imageUrl;
@@ -45028,8 +45025,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\vue_articles\resources\assets\js\app.js */"./resources/assets/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\vue_articles\resources\assets\sass\app.scss */"./resources/assets/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\marketShop_Vue\resources\assets\js\app.js */"./resources/assets/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\marketShop_Vue\resources\assets\sass\app.scss */"./resources/assets/sass/app.scss");
 
 
 /***/ })

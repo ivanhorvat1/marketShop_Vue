@@ -309,7 +309,6 @@
                 }
             },
             storeArticles(shop){
-                console.log(shop); throw '';
                 if(shop == 'maxi') {
                     this.maxi.forEach(function (element) {
                         let imageUrl;
