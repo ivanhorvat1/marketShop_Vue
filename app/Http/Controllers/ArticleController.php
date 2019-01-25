@@ -32,21 +32,91 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        $article = $request->isMethod('put') ? Article::findOrFail($request->article_id) : new Article;
+        /*$collection->chunk(300, function ($subset) {
+            var_dump($subset->toArray());
+            $subset->each(function ($item) {
+                var_dump($item);
+            });
+        }); die;*/
 
-        $article->title = $request->input('title');
+        $storeRecords = [];
+
+        foreach ($request->products[0] as $product){
+            if ($product['images'][0]["image_n"]) {
+                $imageUrl = $product['images'][0]["image_n"];
+            } else {
+                $imageUrl = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
+            }
+            array_push($storeRecords,['title'=>$product['manufacturer'],'body'=>$product['name'],'imageUrl'=>$imageUrl,'barcodes'=>implode(',', $product['barcodes']),
+                'formattedPrice'=>$product['price']['formatted_price'],'supplementaryPriceLabel1'=>$product['statistical_price'],'supplementaryPriceLabel2'=>null,'shop'=>$request->shop]);
+        }
+
+        $collection = collect($storeRecords);
+        $chunks = $collection->chunk(300);
+        $chunks->toArray();
+//        var_dump($chunks->toArray()); die;
+
+        foreach($chunks as $chunk)
+        {
+            Article::insert($chunk->toArray());
+        }
+
+
+
+        /*foreach($chunks as $producti)
+        {
+            foreach ($producti as $product){
+                $article = $request->isMethod('put') ? Article::findOrFail($request->article_id) : new Article;
+                $article->title = $product['manufacturer'];
+                $article->body = $product['name'];
+                if ($product['images'][0]["image_n"]) {
+                    $article->imageUrl = $product['images'][0]["image_n"];
+                } else {
+                    $article->imageUrl = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
+                }
+                $article->barcodes = implode(',', $product['barcodes']);
+                $article->formattedPrice = $product['price']['formatted_price'];
+                $article->supplementaryPriceLabel1 = $product['statistical_price'];
+                $article->supplementaryPriceLabel2 = null;
+                $article->shop = $request->shop;
+
+                $article->save();
+            }
+        }*/
+
+       /*
+        if($request->shop == 'idea') {
+            foreach ($request->products[0] as $product) {
+                $article = $request->isMethod('put') ? Article::findOrFail($request->article_id) : new Article;
+                $article->title = $product['manufacturer'];
+                $article->body = $product['name'];
+                if ($product['images'][0]['image_n']) {
+                    $article->imageUrl = $product['images'][0]["image_n"];
+                } else {
+                    $article->imageUrl = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
+                }
+                $article->barcodes = implode(',', $product['barcodes']);
+                $article->formattedPrice = $product['price']['formatted_price'];
+                $article->supplementaryPriceLabel1 = $product['statistical_price'];
+                $article->supplementaryPriceLabel2 = null;
+                $article->shop = $request->shop;
+
+                $article->save();
+            }
+        }*/
+
+        /*$article->title = $request->input('title');
         $article->body = $request->input('body');
         $article->imageUrl = $request->input('imageUrl');
         $article->formattedPrice = $request->input('formattedPrice');
         $article->supplementaryPriceLabel1 = $request->input('supplementaryPriceLabel1');
         $article->supplementaryPriceLabel2 = $request->input('supplementaryPriceLabel2');
-        $article->barcodes = implode(',',$request->input('barcodes'));
+        $article->shop = $request->input('shop');
+        $article->barcodes = implode(',',$request->input('barcodes'));*/
 
-        //var_dump($article); die;
-
-        if($article->save()) {
+        /*if($article->save()) {
             return new ArticleResource($article);
-        }
+        }*/
         
     }
 

@@ -17,16 +17,16 @@
         <button @click="storeArticles('idea')" class="btn btn-primary">Ubaci Idea</button><br><br>
         <h6>Total products: {{pagination.totalArticles}}</h6><br>
         <div class="row">
-            <div class="col-sm-3" v-for="article in maxi.slice(startSlice,endSlice)" v-bind:key="article.code">
+            <div class="col-sm-3" v-for="article in idea.slice(startSlice,endSlice)" v-bind:key="article.code">
                 <div class="card">
                     <div v-if="!article.price.formattedValue" class="card-header">
                         <span style="text-decoration: line-through; background-color:red; color:white;">{{article.offer.original_price.formatted_price}}</span>
                     </div>
                     <!-- article.price.formattedValue -->
                     <div class="card-body">
-                        <img center v-if="article.images[2].url" class="center" :src="'https://d3el976p2k4mvu.cloudfront.net'+article.images[2].url" width="180px" height="180px">
-                        <img center v-else-if="article.images[0].image_n" class="center" :src="'https://www.idea.rs/online/'+article.images[0].image_n" width="180px" height="180px">
-                        <img center v-else :src="'https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694'">
+                        <!--<img center v-if="article.images[2].url" class="center" :src="'https://d3el976p2k4mvu.cloudfront.net'+article.images[2].url" width="180px" height="180px">
+                        <img center v-else-if="article.images[0].image_n" class="center" :src="'https://www.idea.rs/online/'+article.images[0].image_n" width="180px" height="180px">-->
+                        <img center  :src="'https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694'">
                         <p align="center"><b>{{ article.manufacturer }}:</b> {{ article.name }}</p>
                         <!--<<p align="center" style="background-color:red; color:white" >{{article.discountFlag}}</p>
                         <p>{{ article.price.supplementaryPriceLabel1 }}</p>-->
@@ -35,8 +35,8 @@
                         <p align="right" v-else><b>{{ article.price.formatted_price }}</b></p>
                         <!--<p align="right">{{ article.price.supplementaryPriceLabel2 }}: <b>{{ article.price.formattedValue }}</b></p>-->
                         <hr>
-                        <button @click="editArticle(article)" class="btn btn-primary">Store</button>
-                        <!--<button @click="deleteArticle(article.code)" class="btn btn-danger">Delete</button>-->
+                        <!--<button @click="editArticle(article)" class="btn btn-primary">Store</button>
+                        <button @click="deleteArticle(article.code)" class="btn btn-danger">Delete</button>-->
                     </div>
                 </div>
             </div>
@@ -128,7 +128,8 @@
                 article_id: '',
                 pagination: {},
                 edit: false,
-                category: ''
+                category: '',
+                products: []
             }
         },
         created() {
@@ -275,7 +276,7 @@
                         };
                     }
                     if(this.category === 'idea'){
-                        for(let i=1; i<=pagination.lastPage; i++){
+                        for(let i=2; i<=pagination.lastPage; i++){
                             this.fetchArticles(i,this.category);
                         }
                     }else{
@@ -309,6 +310,7 @@
                 }
             },
             storeArticles(shop){
+                let vm = this;
                 if(shop == 'maxi') {
                     this.maxi.forEach(function (element) {
                         let imageUrl;
@@ -325,14 +327,50 @@
                             imageUrl: imageUrl,
                             formattedPrice: element.price.formattedValue,
                             supplementaryPriceLabel1: element.price.supplementaryPriceLabel1,
-                            supplementaryPriceLabel2: element.price.supplementaryPriceLabel2
+                            supplementaryPriceLabel2: element.price.supplementaryPriceLabel2,
+                            shop: shop
                         };
 
                         vm.addArticle(articleAdd);
                     });
+                }else if(shop == 'idea'){
+                    /*this.idea.forEach(function (element) {
+                        let imageUrl;
+                        if (element.images[0].image_n) {
+                            imageUrl = element.images[0].image_n;
+                        } else {
+                            imageUrl = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
+                        }
+
+                        let articleAdd = {
+                            title: element.manufacturer,
+                            body: element.name,
+                            barcodes: element.barcodes,
+                            imageUrl: imageUrl,
+                            formattedPrice: element.price.formatted_price,
+                            supplementaryPriceLabel1: element.statistical_price,
+                            supplementaryPriceLabel2: null,
+                            shop: shop
+                        };
+                        vm.addArticle(articleAdd);
+                    });*/
+                    vm.storeVisit(this.idea,shop);
                 }
             },
+            storeVisit(article,shop)
+            {
+                this.products.push(article);
+                axios({
+                    method: 'post',
+                    url: '/api/article',
+                    data: {
+                        products: this.products,
+                        shop: shop
+                    }
+                });
+            },
             addArticle(article){
+                console.log(article);
                 if(this.edit === false){
                     //add
                     fetch('api/article',{

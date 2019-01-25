@@ -1890,7 +1890,8 @@ __webpack_require__.r(__webpack_exports__);
       article_id: '',
       pagination: {},
       edit: false,
-      category: ''
+      category: '',
+      products: []
     };
   },
   created: function created() {
@@ -2042,7 +2043,7 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         if (this.category === 'idea') {
-          for (var i = 1; i <= pagination.lastPage; i++) {
+          for (var i = 2; i <= pagination.lastPage; i++) {
             this.fetchArticles(i, this.category);
           }
         } else {
@@ -2081,6 +2082,8 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     storeArticles: function storeArticles(shop) {
+      var vm = this;
+
       if (shop == 'maxi') {
         this.maxi.forEach(function (element) {
           var imageUrl;
@@ -2098,14 +2101,49 @@ __webpack_require__.r(__webpack_exports__);
             imageUrl: imageUrl,
             formattedPrice: element.price.formattedValue,
             supplementaryPriceLabel1: element.price.supplementaryPriceLabel1,
-            supplementaryPriceLabel2: element.price.supplementaryPriceLabel2
+            supplementaryPriceLabel2: element.price.supplementaryPriceLabel2,
+            shop: shop
           };
           vm.addArticle(articleAdd);
         });
+      } else if (shop == 'idea') {
+        /*this.idea.forEach(function (element) {
+            let imageUrl;
+            if (element.images[0].image_n) {
+                imageUrl = element.images[0].image_n;
+            } else {
+                imageUrl = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
+            }
+             let articleAdd = {
+                title: element.manufacturer,
+                body: element.name,
+                barcodes: element.barcodes,
+                imageUrl: imageUrl,
+                formattedPrice: element.price.formatted_price,
+                supplementaryPriceLabel1: element.statistical_price,
+                supplementaryPriceLabel2: null,
+                shop: shop
+            };
+            vm.addArticle(articleAdd);
+        });*/
+        vm.storeVisit(this.idea, shop);
       }
+    },
+    storeVisit: function storeVisit(article, shop) {
+      this.products.push(article);
+      axios({
+        method: 'post',
+        url: '/api/article',
+        data: {
+          products: this.products,
+          shop: shop
+        }
+      });
     },
     addArticle: function addArticle(article) {
       var _this3 = this;
+
+      console.log(article);
 
       if (this.edit === false) {
         //add
@@ -33360,7 +33398,7 @@ var render = function() {
     _c(
       "div",
       { staticClass: "row" },
-      _vm._l(_vm.maxi.slice(_vm.startSlice, _vm.endSlice), function(article) {
+      _vm._l(_vm.idea.slice(_vm.startSlice, _vm.endSlice), function(article) {
         return _c("div", { key: article.code, staticClass: "col-sm-3" }, [
           _c("div", { staticClass: "card" }, [
             !article.price.formattedValue
@@ -33384,37 +33422,13 @@ var render = function() {
               : _vm._e(),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
-              article.images[2].url
-                ? _c("img", {
-                    staticClass: "center",
-                    attrs: {
-                      center: "",
-                      src:
-                        "https://d3el976p2k4mvu.cloudfront.net" +
-                        article.images[2].url,
-                      width: "180px",
-                      height: "180px"
-                    }
-                  })
-                : article.images[0].image_n
-                  ? _c("img", {
-                      staticClass: "center",
-                      attrs: {
-                        center: "",
-                        src:
-                          "https://www.idea.rs/online/" +
-                          article.images[0].image_n,
-                        width: "180px",
-                        height: "180px"
-                      }
-                    })
-                  : _c("img", {
-                      attrs: {
-                        center: "",
-                        src:
-                          "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694"
-                      }
-                    }),
+              _c("img", {
+                attrs: {
+                  center: "",
+                  src:
+                    "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694"
+                }
+              }),
               _vm._v(" "),
               _c("p", { attrs: { align: "center" } }, [
                 _c("b", [_vm._v(_vm._s(article.manufacturer) + ":")]),
@@ -33434,20 +33448,7 @@ var render = function() {
                     _c("b", [_vm._v(_vm._s(article.price.formatted_price))])
                   ]),
               _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary",
-                  on: {
-                    click: function($event) {
-                      _vm.editArticle(article)
-                    }
-                  }
-                },
-                [_vm._v("Store")]
-              )
+              _c("hr")
             ])
           ])
         ])

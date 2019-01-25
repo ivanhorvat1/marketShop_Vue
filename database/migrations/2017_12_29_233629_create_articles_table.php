@@ -15,13 +15,14 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
-            $table->text('body');
-            $table->text('barcodes');
-            $table->string('formattedPrice');
-            $table->string('supplementaryPriceLabel1');
-            $table->string('supplementaryPriceLabel2');
-            $table->string('imageUrl');
+            $table->string('title')->nullable();
+            $table->text('body')->nullable();
+            $table->text('barcodes')->nullable();
+            $table->string('formattedPrice')->nullable();
+            $table->string('supplementaryPriceLabel1')->nullable();
+            $table->string('supplementaryPriceLabel2')->nullable();
+            $table->string('shop')->nullable();
+            $table->string('imageUrl')->nullable();
             $table->timestamps();
         });
     }
