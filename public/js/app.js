@@ -1896,6 +1896,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.fetchArticles();
+    this.fetchProducts();
     window.addEventListener('scroll', this.handleScroll);
   },
   methods: {
@@ -1908,11 +1909,10 @@ __webpack_require__.r(__webpack_exports__);
       var windowHeight = Math.round($(document).height());
 
       if (scroll == windowHeight) {
-        if (this.pagination.nextPage <= this.pagination.lastPage) {
-          document.getElementById("loader").style.display = "block"; //setTimeout(this.fetchArticles(this.pagination.nextPage, this.category), 5000);
+        //if(this.pagination.nextPage <= this.pagination.lastPage) {
+        document.getElementById("loader").style.display = "block"; //setTimeout(this.fetchArticles(this.pagination.nextPage, this.category), 5000);
 
-          this.endSlice += 12;
-        }
+        this.endSlice += 12; //}
       } else {
         document.getElementById("loader").style.display = "none";
       }
@@ -1968,6 +1968,13 @@ __webpack_require__.r(__webpack_exports__);
         }
 
       return url;
+    },
+    fetchProducts: function fetchProducts() {
+      fetch('api/articles').then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        console.log(res.data);
+      });
     },
     fetchArticles: function fetchArticles(currentPage, category) {
       var _this = this;
@@ -2047,7 +2054,7 @@ __webpack_require__.r(__webpack_exports__);
             this.fetchArticles(i, this.category);
           }
         } else {
-          for (var _i = 1; _i <= 2; _i++) {
+          for (var _i = 1; _i <= 60; _i++) {
             this.fetchArticles(_i, this.category);
           }
         }
@@ -2085,47 +2092,8 @@ __webpack_require__.r(__webpack_exports__);
       var vm = this;
 
       if (shop == 'maxi') {
-        this.maxi.forEach(function (element) {
-          var imageUrl;
-
-          if (element.images[2]) {
-            imageUrl = element.images[2].url;
-          } else {
-            imageUrl = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
-          }
-
-          var articleAdd = {
-            title: element.manufacturerName,
-            body: element.name,
-            barcodes: element.eanCodes,
-            imageUrl: imageUrl,
-            formattedPrice: element.price.formattedValue,
-            supplementaryPriceLabel1: element.price.supplementaryPriceLabel1,
-            supplementaryPriceLabel2: element.price.supplementaryPriceLabel2,
-            shop: shop
-          };
-          vm.addArticle(articleAdd);
-        });
+        vm.storeVisit(this.maxi, shop);
       } else if (shop == 'idea') {
-        /*this.idea.forEach(function (element) {
-            let imageUrl;
-            if (element.images[0].image_n) {
-                imageUrl = element.images[0].image_n;
-            } else {
-                imageUrl = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
-            }
-             let articleAdd = {
-                title: element.manufacturer,
-                body: element.name,
-                barcodes: element.barcodes,
-                imageUrl: imageUrl,
-                formattedPrice: element.price.formatted_price,
-                supplementaryPriceLabel1: element.statistical_price,
-                supplementaryPriceLabel2: null,
-                shop: shop
-            };
-            vm.addArticle(articleAdd);
-        });*/
         vm.storeVisit(this.idea, shop);
       }
     },
@@ -33422,13 +33390,19 @@ var render = function() {
               : _vm._e(),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
-              _c("img", {
-                attrs: {
-                  center: "",
-                  src:
-                    "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694"
-                }
-              }),
+              article.images[0].image_n
+                ? _c("img", {
+                    staticClass: "center",
+                    attrs: {
+                      center: "",
+                      src:
+                        "https://www.idea.rs/online/" +
+                        article.images[0].image_n,
+                      width: "180px",
+                      height: "180px"
+                    }
+                  })
+                : _vm._e(),
               _vm._v(" "),
               _c("p", { attrs: { align: "center" } }, [
                 _c("b", [_vm._v(_vm._s(article.manufacturer) + ":")]),

@@ -16,11 +16,27 @@ class ArticleController extends Controller
      */
     public function index()
     {
+        $maxiBarcodes = [];
+        $ideaBarcodes = [];
+        $sameBarcode = [];
         // Get articles
-        $articles = Article::orderBy('created_at','desc')->paginate(5);
+        $maxi = Article::where('shop','maxi')->get();
+        $idea = Article::where('shop','idea')->get();
+
+        foreach ($maxi as $max){
+            foreach ($idea as $ide){
+                if(explode(',' ,$ide['barcodes']) == explode(',' ,$max['barcodes'])){
+                    array_push($sameBarcode, $max);
+                }
+            }
+        }
+
+        var_dump($sameBarcode);
+
+         die;
 
         // Return collection of articles as a resource
-        return ArticleResource::collection($articles);
+        return ArticleResource::collection($sameBarcode);
     }
 
 
@@ -32,92 +48,48 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        /*$collection->chunk(300, function ($subset) {
-            var_dump($subset->toArray());
-            $subset->each(function ($item) {
-                var_dump($item);
-            });
-        }); die;*/
-
+        $imageUrl = null;
+        $imageDefault = null;
         $storeRecords = [];
-
-        foreach ($request->products[0] as $product){
-            if ($product['images'][0]["image_n"]) {
-                $imageUrl = $product['images'][0]["image_n"];
-            } else {
-                $imageUrl = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
-            }
-            array_push($storeRecords,['title'=>$product['manufacturer'],'body'=>$product['name'],'imageUrl'=>$imageUrl,'barcodes'=>implode(',', $product['barcodes']),
-                'formattedPrice'=>$product['price']['formatted_price'],'supplementaryPriceLabel1'=>$product['statistical_price'],'supplementaryPriceLabel2'=>null,'shop'=>$request->shop]);
-        }
-
-        $collection = collect($storeRecords);
-        $chunks = $collection->chunk(300);
-        $chunks->toArray();
-//        var_dump($chunks->toArray()); die;
-
-        foreach($chunks as $chunk)
-        {
-            Article::insert($chunk->toArray());
-        }
-
-
-
-        /*foreach($chunks as $producti)
-        {
-            foreach ($producti as $product){
-                $article = $request->isMethod('put') ? Article::findOrFail($request->article_id) : new Article;
-                $article->title = $product['manufacturer'];
-                $article->body = $product['name'];
-                if ($product['images'][0]["image_n"]) {
-                    $article->imageUrl = $product['images'][0]["image_n"];
-                } else {
-                    $article->imageUrl = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
-                }
-                $article->barcodes = implode(',', $product['barcodes']);
-                $article->formattedPrice = $product['price']['formatted_price'];
-                $article->supplementaryPriceLabel1 = $product['statistical_price'];
-                $article->supplementaryPriceLabel2 = null;
-                $article->shop = $request->shop;
-
-                $article->save();
-            }
-        }*/
-
-       /*
+        $arrayLengt = sizeof($request->products[0]) - 1;
         if($request->shop == 'idea') {
-            foreach ($request->products[0] as $product) {
-                $article = $request->isMethod('put') ? Article::findOrFail($request->article_id) : new Article;
-                $article->title = $product['manufacturer'];
-                $article->body = $product['name'];
-                if ($product['images'][0]['image_n']) {
-                    $article->imageUrl = $product['images'][0]["image_n"];
+            for ($i = 0; $i <= $arrayLengt; $i++) {
+                if (array_key_exists('images', $request->products[0][$i]) && !empty($request->products[0][$i]['images'])) {
+                    $imageUrl = $request->products[0][$i]['images'][0]["image_n"];
                 } else {
-                    $article->imageUrl = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
+                    $imageDefault = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
                 }
-                $article->barcodes = implode(',', $product['barcodes']);
-                $article->formattedPrice = $product['price']['formatted_price'];
-                $article->supplementaryPriceLabel1 = $product['statistical_price'];
-                $article->supplementaryPriceLabel2 = null;
-                $article->shop = $request->shop;
 
-                $article->save();
+                array_push($storeRecords, ['title' => $request->products[0][$i]['manufacturer'], 'body' => $request->products[0][$i]['name'], 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => implode(',', $request->products[0][$i]['barcodes']),
+                    'formattedPrice' => $request->products[0][$i]['price']['formatted_price'], 'price' => $request->products[0][$i]['price']['amount'], 'supplementaryPriceLabel1' => $request->products[0][$i]['statistical_price'], 'supplementaryPriceLabel2' => null, 'shop' => $request->shop]);
             }
-        }*/
+        }else{
+            for ($i = 0; $i <= $arrayLengt; $i++) {
+                if (array_key_exists('images', $request->products[0][$i]) && !empty($request->products[0][$i]['images'])) {
+                    $imageUrl = $request->products[0][$i]['images'][2]['url'];
+                } else {
+                    $imageDefault = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
+                }
 
-        /*$article->title = $request->input('title');
-        $article->body = $request->input('body');
-        $article->imageUrl = $request->input('imageUrl');
-        $article->formattedPrice = $request->input('formattedPrice');
-        $article->supplementaryPriceLabel1 = $request->input('supplementaryPriceLabel1');
-        $article->supplementaryPriceLabel2 = $request->input('supplementaryPriceLabel2');
-        $article->shop = $request->input('shop');
-        $article->barcodes = implode(',',$request->input('barcodes'));*/
+                array_push($storeRecords, ['title' => $request->products[0][$i]['manufacturerName'], 'body' => $request->products[0][$i]['name'], 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => implode(',', $request->products[0][$i]['eanCodes']),
+                    'formattedPrice' => $request->products[0][$i]['price']['formattedValue'], 'price' => $request->products[0][$i]['price']['value'], 'supplementaryPriceLabel1' => $request->products[0][$i]['price']['supplementaryPriceLabel1'], 'supplementaryPriceLabel2' => $request->products[0][$i]['price']['supplementaryPriceLabel2'], 'shop' => $request->shop]);
+            }
+        }
 
-        /*if($article->save()) {
-            return new ArticleResource($article);
-        }*/
-        
+        foreach ($storeRecords as $record){
+            $article = $request->isMethod('put') ? Article::findOrFail($request->article_id) : new Article;
+            $article->title = $record['title'];
+            $article->body = $record['body'];
+            $article->imageUrl = $record['imageUrl'];
+            $article->imageDefault = $record['imageDefault'];
+            $article->barcodes = $record['barcodes'];
+            $article->formattedPrice = $record['formattedPrice'];
+            $article->price = $record['price'];
+            $article->supplementaryPriceLabel1 = $record['supplementaryPriceLabel1'];
+            $article->supplementaryPriceLabel2 = $record['supplementaryPriceLabel2'];
+            $article->shop = $record['shop'];
+            $article->save();
+        }
     }
 
     /**

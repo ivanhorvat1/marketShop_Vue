@@ -19,10 +19,12 @@ class CreateArticlesTable extends Migration
             $table->text('body')->nullable();
             $table->text('barcodes')->nullable();
             $table->string('formattedPrice')->nullable();
+            $table->string('price')->nullable();
             $table->string('supplementaryPriceLabel1')->nullable();
             $table->string('supplementaryPriceLabel2')->nullable();
             $table->string('shop')->nullable();
             $table->string('imageUrl')->nullable();
+            $table->string('imageDefault')->nullable();
             $table->timestamps();
         });
     }

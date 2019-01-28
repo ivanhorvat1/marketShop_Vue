@@ -24,9 +24,9 @@
                     </div>
                     <!-- article.price.formattedValue -->
                     <div class="card-body">
-                        <!--<img center v-if="article.images[2].url" class="center" :src="'https://d3el976p2k4mvu.cloudfront.net'+article.images[2].url" width="180px" height="180px">
-                        <img center v-else-if="article.images[0].image_n" class="center" :src="'https://www.idea.rs/online/'+article.images[0].image_n" width="180px" height="180px">-->
-                        <img center  :src="'https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694'">
+                        <!--<img center v-if="article.images[2].url" class="center" :src="'https://d3el976p2k4mvu.cloudfront.net'+article.images[2].url" width="180px" height="180px">-->
+                        <img center v-if="article.images[0].image_n" class="center" :src="'https://www.idea.rs/online/'+article.images[0].image_n" width="180px" height="180px">
+                        <!--<img center  :src="'https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694'">-->
                         <p align="center"><b>{{ article.manufacturer }}:</b> {{ article.name }}</p>
                         <!--<<p align="center" style="background-color:red; color:white" >{{article.discountFlag}}</p>
                         <p>{{ article.price.supplementaryPriceLabel1 }}</p>-->
@@ -134,6 +134,7 @@
         },
         created() {
             this.fetchArticles();
+            this.fetchProducts();
             window.addEventListener('scroll', this.handleScroll);
         },
         methods: {
@@ -146,11 +147,11 @@
                 let windowHeight = Math.round($(document).height());
 
                 if(scroll == windowHeight) {
-                    if(this.pagination.nextPage <= this.pagination.lastPage) {
+                    //if(this.pagination.nextPage <= this.pagination.lastPage) {
                         document.getElementById("loader").style.display = "block";
                         //setTimeout(this.fetchArticles(this.pagination.nextPage, this.category), 5000);
                         this.endSlice += 12;
-                    }
+                    //}
                 }else {
                     document.getElementById("loader").style.display = "none";
                 }
@@ -207,6 +208,13 @@
                 }
 
                 return url;
+            },
+            fetchProducts(){
+                fetch('api/articles')
+                    .then(res => res.json())
+                    .then(res => {
+                        console.log(res.data)
+                    })
             },
             fetchArticles(currentPage,category) {
                 let vm = this;
@@ -275,12 +283,13 @@
                             prevPage: paginate.currentPage - 1
                         };
                     }
+
                     if(this.category === 'idea'){
                         for(let i=2; i<=pagination.lastPage; i++){
                             this.fetchArticles(i,this.category);
                         }
                     }else{
-                        for(let i=1; i<=2; i++){
+                        for(let i=1; i<=60; i++){
                             this.fetchArticles(i,this.category);
                         }
                     }
@@ -312,48 +321,8 @@
             storeArticles(shop){
                 let vm = this;
                 if(shop == 'maxi') {
-                    this.maxi.forEach(function (element) {
-                        let imageUrl;
-                        if (element.images[2]) {
-                            imageUrl = element.images[2].url;
-                        } else {
-                            imageUrl = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
-                        }
-
-                        let articleAdd = {
-                            title: element.manufacturerName,
-                            body: element.name,
-                            barcodes: element.eanCodes,
-                            imageUrl: imageUrl,
-                            formattedPrice: element.price.formattedValue,
-                            supplementaryPriceLabel1: element.price.supplementaryPriceLabel1,
-                            supplementaryPriceLabel2: element.price.supplementaryPriceLabel2,
-                            shop: shop
-                        };
-
-                        vm.addArticle(articleAdd);
-                    });
+                    vm.storeVisit(this.maxi,shop);
                 }else if(shop == 'idea'){
-                    /*this.idea.forEach(function (element) {
-                        let imageUrl;
-                        if (element.images[0].image_n) {
-                            imageUrl = element.images[0].image_n;
-                        } else {
-                            imageUrl = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
-                        }
-
-                        let articleAdd = {
-                            title: element.manufacturer,
-                            body: element.name,
-                            barcodes: element.barcodes,
-                            imageUrl: imageUrl,
-                            formattedPrice: element.price.formatted_price,
-                            supplementaryPriceLabel1: element.statistical_price,
-                            supplementaryPriceLabel2: null,
-                            shop: shop
-                        };
-                        vm.addArticle(articleAdd);
-                    });*/
                     vm.storeVisit(this.idea,shop);
                 }
             },

@@ -14,13 +14,19 @@ class Article extends Resource
      */
     public function toArray($request)
     {
-        // return parent::toArray($request);
+         //return parent::toArray($request);
 
         return [
             'id' => $this->id,
             'title' => $this->title,
             'body' => $this->body,
-            'barcodes' => $this->barcodes
+            'barcodes' => $this->barcodes,
+            'formattedPrice' => $this->formattedPrice,
+            'supplementaryPriceLabel1' => $this->supplementaryPriceLabel1,
+            'supplementaryPriceLabel2' => $this->supplementaryPriceLabel2,
+            'shop' => $this->shop,
+            'imageUrl' => $this->imageUrl,
+            'imageDefault' => $this->imageDefault
         ];
     }
 
