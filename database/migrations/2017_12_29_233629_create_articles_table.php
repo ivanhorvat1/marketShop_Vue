@@ -15,11 +15,13 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('code');
             $table->string('title')->nullable();
             $table->text('body')->nullable();
             $table->text('barcodes')->nullable();
             $table->string('formattedPrice')->nullable();
             $table->string('price')->nullable();
+            $table->string('category')->nullable();
             $table->string('supplementaryPriceLabel1')->nullable();
             $table->string('supplementaryPriceLabel2')->nullable();
             $table->string('shop')->nullable();

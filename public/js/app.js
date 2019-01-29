@@ -1873,12 +1873,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       startSlice: 0,
       endSlice: 12,
       articles: [],
+      akcija: [],
       maxi: [],
       idea: [],
       maxi_idea: [],
@@ -1895,7 +1918,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.fetchArticles();
+    //this.fetchArticles();
     this.fetchProducts();
     window.addEventListener('scroll', this.handleScroll);
   },
@@ -1910,8 +1933,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (scroll == windowHeight) {
         //if(this.pagination.nextPage <= this.pagination.lastPage) {
-        document.getElementById("loader").style.display = "block"; //setTimeout(this.fetchArticles(this.pagination.nextPage, this.category), 5000);
-
+        document.getElementById("loader").style.display = "block";
         this.endSlice += 12; //}
       } else {
         document.getElementById("loader").style.display = "none";
@@ -1958,26 +1980,29 @@ __webpack_require__.r(__webpack_exports__);
           }else{
               url = 'https://www.maxi.rs/online/Pice,-kafa-i-caj/c/01/loadMore?pageSize=12&pageNumber=' + currentPage + '&sort=promotion';
           }
-      }*/
-      else {
-          if (currentPage == 0) {
-            url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
-          } else {
-            url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/view/QlProductListComponentController/loadMore?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
+      }
+      else{
+          if(currentPage == 0) {
+              url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
+          }else{
+              url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/view/QlProductListComponentController/loadMore?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
           }
-        }
+      }*/
+
 
       return url;
     },
     fetchProducts: function fetchProducts() {
+      var _this = this;
+
       fetch('api/articles').then(function (res) {
         return res.json();
       }).then(function (res) {
-        console.log(res.data);
+        _this.akcija = JSON.parse(res.data);
       });
     },
     fetchArticles: function fetchArticles(currentPage, category) {
-      var _this = this;
+      var _this2 = this;
 
       var vm = this;
       var url;
@@ -1993,39 +2018,29 @@ __webpack_require__.r(__webpack_exports__);
         return res.json();
       }).then(function (res) {
         if (currentPage == 0) {
-          if (_this.category === 'idea') {
+          if (_this2.category === 'idea') {
             //this.articles = res.products;
-            _this.idea = res.products;
+            _this2.idea = res.products;
             vm.makePagination(res._page, currentPage);
           } else {
             //this.articles = res.results;
-            _this.maxi = res.results;
+            _this2.maxi = res.results;
             vm.makePagination(res.pagination, currentPage);
           }
         } else {
-          if (_this.category === 'idea') {
+          if (_this2.category === 'idea') {
             //this.articles = this.articles.concat(res.products);
-            _this.idea = _this.idea.concat(res.products);
-            vm.makePagination(_this.pagination, currentPage);
+            _this2.idea = _this2.idea.concat(res.products);
+            vm.makePagination(_this2.pagination, currentPage);
           } else {
             //this.articles = this.articles.concat(res);
-            _this.maxi = _this.maxi.concat(res);
-            vm.makePagination(_this.pagination, currentPage);
+            _this2.maxi = _this2.maxi.concat(res);
+            vm.makePagination(_this2.pagination, currentPage);
           }
         }
-        /*if(this.maxi.length > 0 && this.idea.length > 0){
-            this.getMatch(this.maxi,this.idea);
-        }*/
-
       }).catch(function (err) {
         return console.log(err);
       });
-    },
-    getMatch: function getMatch(a, b) {
-      for (var i = 0; i < a.length; i++) {
-        for (var e = 0; e < b.length; e++) {//if ( a[i] === b[e] ) this.maxi_idea.push( a[i] );
-        }
-      }
     },
     makePagination: function makePagination(paginate, currentPage) {
       var pagination;
@@ -2071,23 +2086,6 @@ __webpack_require__.r(__webpack_exports__);
 
       this.pagination = pagination;
     },
-    deleteArticle: function deleteArticle(id) {
-      var _this2 = this;
-
-      if (confirm('Are you sure?')) {
-        fetch("api/article/".concat(id), {
-          method: 'delete'
-        }).then(function (res) {
-          return res.json();
-        }).then(function (data) {
-          alert('Article Removed');
-
-          _this2.fetchArticles();
-        }).catch(function (err) {
-          return console.log(err);
-        });
-      }
-    },
     storeArticles: function storeArticles(shop) {
       var vm = this;
 
@@ -2107,59 +2105,6 @@ __webpack_require__.r(__webpack_exports__);
           shop: shop
         }
       });
-    },
-    addArticle: function addArticle(article) {
-      var _this3 = this;
-
-      console.log(article);
-
-      if (this.edit === false) {
-        //add
-        fetch('api/article', {
-          method: 'post',
-          body: JSON.stringify(article),
-          headers: {
-            'content-type': 'application/json'
-          }
-        }).then(function (res) {
-          return res.json();
-        })
-        /*.then(data => {
-            this.article.name = '';
-            this.article.description = '';
-            alert('Article Added');
-            //this.fetchArticles();
-        })*/
-        .catch(function (err) {
-          return console.log(err);
-        });
-      } else {
-        //update
-        fetch('api/article', {
-          method: 'put',
-          body: JSON.stringify(this.article),
-          headers: {
-            'content-type': 'application/json'
-          }
-        }).then(function (res) {
-          return res.json();
-        }).then(function (data) {
-          _this3.article.name = '';
-          _this3.article.description = '';
-          alert('Article Updated');
-
-          _this3.fetchArticles();
-        }).catch(function (err) {
-          return console.log(err);
-        });
-      }
-    },
-    editArticle: function editArticle(article) {
-      //this.edit = true;
-      //this.article.article_id = article.code;
-      //this.article.code = article.code;
-      this.article.title = article.manufacturer;
-      this.article.body = article.name;
     }
   }
 });
@@ -33236,75 +33181,6 @@ var render = function() {
     _c("h2", [_vm._v("Products")]),
     _vm._v(" "),
     _c(
-      "form",
-      {
-        staticClass: "mb-3",
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.addArticle($event)
-          }
-        }
-      },
-      [
-        _c("div", { staticClass: "form-group" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.article.title,
-                expression: "article.title"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", placeholder: "Name" },
-            domProps: { value: _vm.article.title },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.article, "title", $event.target.value)
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("textarea", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.article.body,
-                expression: "article.body"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { placeholder: "Description" },
-            domProps: { value: _vm.article.body },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.article, "body", $event.target.value)
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-light btn-block",
-              attrs: { type: "submit" }
-            },
-            [_vm._v("Save")]
-          )
-        ])
-      ]
-    ),
-    _vm._v(" "),
-    _c(
       "button",
       {
         staticClass: "btn btn-primary",
@@ -33358,68 +33234,258 @@ var render = function() {
     _c("br"),
     _c("br"),
     _vm._v(" "),
-    _c("h6", [
-      _vm._v("Total products: " + _vm._s(_vm.pagination.totalArticles))
-    ]),
+    _c("h4", [_vm._v("Total products: " + _vm._s(_vm.akcija.length))]),
     _c("br"),
+    _vm._v(" "),
+    _c("div", { staticClass: "container", attrs: { align: "center" } }, [
+      _c(
+        "div",
+        {
+          staticClass: "carousel slide mb-5 ",
+          attrs: { id: "demo", "data-ride": "carousel" }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "carousel-inner" },
+            [
+              _vm._m(0),
+              _vm._v(" "),
+              _vm._l(_vm.akcija.slice(_vm.startSlice, _vm.endSlice), function(
+                article
+              ) {
+                return _c(
+                  "div",
+                  { key: article.code, staticClass: "carousel-item" },
+                  [
+                    article.imageUrl && article.shop == "maxi"
+                      ? _c("img", {
+                          staticClass: "center",
+                          attrs: {
+                            center: "",
+                            src:
+                              "https://d3el976p2k4mvu.cloudfront.net" +
+                              article.imageUrl,
+                            width: "180px",
+                            height: "180px"
+                          }
+                        })
+                      : article.imageUrl && article.shop == "idea"
+                        ? _c("img", {
+                            staticClass: "center",
+                            attrs: {
+                              center: "",
+                              src:
+                                "https://www.idea.rs/online/" +
+                                article.imageUrl,
+                              width: "180px",
+                              height: "180px"
+                            }
+                          })
+                        : _c("img", {
+                            attrs: { center: "", src: "article.imageDefault" }
+                          }),
+                    _vm._v(" "),
+                    _c("h6", { attrs: { align: "center" } }, [
+                      _c("b", [_vm._v(_vm._s(article.title) + ":")]),
+                      _vm._v(" " + _vm._s(article.body))
+                    ]),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("h5", { attrs: { align: "center" } }, [
+                      article.shop == "idea"
+                        ? _c("img", {
+                            staticStyle: { height: "18px", width: "75px" },
+                            attrs: {
+                              src:
+                                "https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"
+                            }
+                          })
+                        : _c("img", {
+                            staticStyle: { height: "50px", width: "80px" },
+                            attrs: {
+                              src:
+                                "https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"
+                            }
+                          }),
+                      _c("b", { staticStyle: { color: "goldenrod" } }, [
+                        _vm._v(
+                          " " +
+                            _vm._s(
+                              article.formattedPrice.substring(
+                                0,
+                                article.formattedPrice.length - 3
+                              )
+                            )
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    article.maxiCena
+                      ? _c("h5", { attrs: { align: "center" } }, [
+                          _c("img", {
+                            staticStyle: { height: "50px", width: "80px" },
+                            attrs: {
+                              src:
+                                "https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"
+                            }
+                          }),
+                          _c("b", [
+                            _vm._v(
+                              " " +
+                                _vm._s(
+                                  article.maxiCena.substring(
+                                    0,
+                                    article.maxiCena.length - 3
+                                  )
+                                )
+                            )
+                          ])
+                        ])
+                      : _c("h5", { attrs: { align: "center" } }, [
+                          _c("img", {
+                            staticStyle: { height: "18px", width: "75px" },
+                            attrs: {
+                              src:
+                                "https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"
+                            }
+                          }),
+                          _c("b", [
+                            _vm._v(
+                              " " +
+                                _vm._s(
+                                  article.ideaCena.substring(
+                                    0,
+                                    article.ideaCena.length - 3
+                                  )
+                                )
+                            )
+                          ])
+                        ])
+                  ]
+                )
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _vm._m(1),
+          _vm._v(" "),
+          _vm._m(2)
+        ]
+      )
+    ]),
     _vm._v(" "),
     _c(
       "div",
       { staticClass: "row" },
-      _vm._l(_vm.idea.slice(_vm.startSlice, _vm.endSlice), function(article) {
+      _vm._l(_vm.akcija.slice(_vm.startSlice, _vm.endSlice), function(article) {
         return _c("div", { key: article.code, staticClass: "col-sm-3" }, [
           _c("div", { staticClass: "card" }, [
-            !article.price.formattedValue
-              ? _c("div", { staticClass: "card-header" }, [
-                  _c(
-                    "span",
-                    {
-                      staticStyle: {
-                        "text-decoration": "line-through",
-                        "background-color": "red",
-                        color: "white"
-                      }
-                    },
-                    [
-                      _vm._v(
-                        _vm._s(article.offer.original_price.formatted_price)
-                      )
-                    ]
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
-              article.images[0].image_n
+              article.imageUrl && article.shop == "maxi"
                 ? _c("img", {
                     staticClass: "center",
                     attrs: {
                       center: "",
                       src:
-                        "https://www.idea.rs/online/" +
-                        article.images[0].image_n,
+                        "https://d3el976p2k4mvu.cloudfront.net" +
+                        article.imageUrl,
                       width: "180px",
                       height: "180px"
                     }
                   })
-                : _vm._e(),
+                : article.imageUrl && article.shop == "idea"
+                  ? _c("img", {
+                      staticClass: "center",
+                      attrs: {
+                        center: "",
+                        src: "https://www.idea.rs/online/" + article.imageUrl,
+                        width: "180px",
+                        height: "180px"
+                      }
+                    })
+                  : _c("img", {
+                      attrs: { center: "", src: "article.imageDefault" }
+                    }),
               _vm._v(" "),
               _c("p", { attrs: { align: "center" } }, [
-                _c("b", [_vm._v(_vm._s(article.manufacturer) + ":")]),
-                _vm._v(" " + _vm._s(article.name))
+                _c("b", [_vm._v(_vm._s(article.title) + ":")]),
+                _vm._v(" " + _vm._s(article.body))
               ]),
               _vm._v(" "),
               _c("hr"),
               _vm._v(" "),
-              article.price.formattedValue
+              _c("p", { attrs: { align: "right" } }, [
+                article.shop == "idea"
+                  ? _c("img", {
+                      staticStyle: { height: "18px", width: "75px" },
+                      attrs: {
+                        src:
+                          "https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"
+                      }
+                    })
+                  : _c("img", {
+                      staticStyle: { height: "50px", width: "80px" },
+                      attrs: {
+                        src:
+                          "https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"
+                      }
+                    }),
+                _c("b", [
+                  _vm._v(
+                    " " +
+                      _vm._s(
+                        article.formattedPrice.substring(
+                          0,
+                          article.formattedPrice.length - 3
+                        )
+                      )
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              article.maxiCena
                 ? _c("p", { attrs: { align: "right" } }, [
-                    _vm._v(
-                      _vm._s(article.price.supplementaryPriceLabel2) + ": "
-                    ),
-                    _c("b", [_vm._v(_vm._s(article.price.formattedValue))])
+                    _c("img", {
+                      staticStyle: { height: "50px", width: "80px" },
+                      attrs: {
+                        src:
+                          "https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"
+                      }
+                    }),
+                    _c("b", [
+                      _vm._v(
+                        " " +
+                          _vm._s(
+                            article.maxiCena.substring(
+                              0,
+                              article.maxiCena.length - 3
+                            )
+                          )
+                      )
+                    ])
                   ])
                 : _c("p", { attrs: { align: "right" } }, [
-                    _c("b", [_vm._v(_vm._s(article.price.formatted_price))])
+                    _c("img", {
+                      staticStyle: { height: "18px", width: "75px" },
+                      attrs: {
+                        src:
+                          "https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"
+                      }
+                    }),
+                    _c("b", [
+                      _vm._v(
+                        " " +
+                          _vm._s(
+                            article.ideaCena.substring(
+                              0,
+                              article.ideaCena.length - 3
+                            )
+                          )
+                      )
+                    ])
                   ]),
               _vm._v(" "),
               _c("hr")
@@ -33448,7 +33514,68 @@ var render = function() {
     _c("br")
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "carousel-item active", staticStyle: { height: "250px" } },
+      [
+        _c("h3", { staticStyle: { "padding-top": "100px" } }, [
+          _vm._v("Izdvajamo")
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "carousel-control-prev",
+        attrs: { href: "#demo", "data-slide": "prev" }
+      },
+      [
+        _c("span", {
+          staticClass: "carousel-control-prev-icon",
+          staticStyle: {
+            "background-color": "black",
+            "border-radius": "50%",
+            width: "30px",
+            height: "30px"
+          }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "carousel-control-next",
+        attrs: { href: "#demo", "data-slide": "next" }
+      },
+      [
+        _c("span", {
+          staticClass: "carousel-control-next-icon",
+          staticStyle: {
+            "background-color": "black",
+            "border-radius": "50%",
+            width: "30px",
+            height: "30px"
+          }
+        })
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 

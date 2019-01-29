@@ -16,27 +16,28 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $maxiBarcodes = [];
-        $ideaBarcodes = [];
         $sameBarcode = [];
         // Get articles
-        $maxi = Article::where('shop','maxi')->get();
-        $idea = Article::where('shop','idea')->get();
+        $maxi = Article::where('shop','maxi')->where('category','akcija')->get();
+        $idea = Article::where('shop','idea')->where('category','akcija')->get();
 
         foreach ($maxi as $max){
             foreach ($idea as $ide){
                 if(explode(',' ,$ide['barcodes']) == explode(',' ,$max['barcodes'])){
-                    array_push($sameBarcode, $max);
+                    if(str_replace('.','',$max['price']) >= $ide['price']){
+                        $ide['maxiCena'] = $max['formattedPrice'];
+                        array_push($sameBarcode, $ide);
+                    }else{
+                        $max['ideaCena'] = $ide['formattedPrice'];
+                        array_push($sameBarcode, $max);
+                    }
                 }
             }
         }
 
-        var_dump($sameBarcode);
-
-         die;
-
+        return ['data'=> json_encode($sameBarcode)];
         // Return collection of articles as a resource
-        return ArticleResource::collection($sameBarcode);
+        //return ArticleResource::collection($sameBarcode);
     }
 
 

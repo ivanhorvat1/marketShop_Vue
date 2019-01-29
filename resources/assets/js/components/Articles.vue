@@ -1,13 +1,13 @@
 <template>
     <div>
         <h2>Products</h2>
-        <form @submit.prevent="addArticle" class="mb-3">
+        <!--<form @submit.prevent="addArticle" class="mb-3">
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Name" v-model="article.title">
                 <textarea class="form-control" placeholder="Description" v-model="article.body"></textarea>
                 <button type="submit" class="btn btn-light btn-block">Save</button>
             </div>
-        </form>
+        </form>-->
         <button @click="fetchArticles(0,'maxi')" class="btn btn-primary">Maxi Akcija</button>
         <button @click="storeArticles('maxi')" class="btn btn-primary">Ubaci Maxi</button>
         <!--<button @click="fetchArticles(0,'pice')" class="btn btn-primary">Pice</button>
@@ -15,28 +15,50 @@
         <button @click="fetchArticles(0,'slatkisi')" class="btn btn-primary">Čokolade, keks, slane i slatke grickalice</button>-->
         <button @click="fetchArticles(0,'idea')" class="btn btn-primary">Idea Akcija</button>
         <button @click="storeArticles('idea')" class="btn btn-primary">Ubaci Idea</button><br><br>
-        <h6>Total products: {{pagination.totalArticles}}</h6><br>
-        <div class="row">
-            <div class="col-sm-3" v-for="article in idea.slice(startSlice,endSlice)" v-bind:key="article.code">
-                <div class="card">
-                    <div v-if="!article.price.formattedValue" class="card-header">
-                        <span style="text-decoration: line-through; background-color:red; color:white;">{{article.offer.original_price.formatted_price}}</span>
+        <h4>Total products: {{akcija.length}}</h4><br>
+        <div align="center" class="container">
+            <div id="demo" class="carousel slide mb-5 " data-ride="carousel">
+
+                <!-- The slideshow -->
+                <div class="carousel-inner">
+                    <div class="carousel-item active" style="height: 250px">
+                        <h3 style="padding-top: 100px">Izdvajamo</h3>
                     </div>
-                    <!-- article.price.formattedValue -->
+                    <div class="carousel-item" v-for="article in akcija.slice(startSlice,endSlice)" v-bind:key="article.code">
+                        <img center v-if="article.imageUrl && article.shop == 'maxi'" class="center" :src="'https://d3el976p2k4mvu.cloudfront.net'+article.imageUrl" width="180px" height="180px">
+                        <img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center" :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">
+                        <img center v-else :src="'article.imageDefault'">
+                        <h6 align="center"><b>{{ article.title }}:</b> {{ article.body }}</h6>
+                        <hr>
+                        <h5 align="center"><img v-if="article.shop == 'idea'" style="height: 18px; width: 75px" src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg" />
+                            <img v-else style="height: 50px; width: 80px" src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png" /><b style="color: goldenrod"> {{ article.formattedPrice.substring(0,article.formattedPrice.length - 3) }}</b></h5>
+                        <h5 v-if="article.maxiCena" align="center"><img style="height: 50px; width: 80px" src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png" /><b> {{ article.maxiCena.substring(0, article.maxiCena.length - 3) }}</b></h5>
+                        <h5 v-else align="center"><img style="height: 18px; width: 75px" src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg" /><b> {{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></h5>
+                    </div>
+                </div>
+
+                <!-- Left and right controls -->
+                <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                    <span class="carousel-control-prev-icon" style="background-color: black; border-radius: 50%; width: 30px; height: 30px;"></span>
+                </a>
+                <a class="carousel-control-next" href="#demo" data-slide="next">
+                    <span class="carousel-control-next-icon" style="background-color: black; border-radius: 50%; width: 30px; height: 30px;"></span>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3" v-for="article in akcija.slice(startSlice,endSlice)" v-bind:key="article.code">
+                <div class="card">
                     <div class="card-body">
-                        <!--<img center v-if="article.images[2].url" class="center" :src="'https://d3el976p2k4mvu.cloudfront.net'+article.images[2].url" width="180px" height="180px">-->
-                        <img center v-if="article.images[0].image_n" class="center" :src="'https://www.idea.rs/online/'+article.images[0].image_n" width="180px" height="180px">
-                        <!--<img center  :src="'https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694'">-->
-                        <p align="center"><b>{{ article.manufacturer }}:</b> {{ article.name }}</p>
-                        <!--<<p align="center" style="background-color:red; color:white" >{{article.discountFlag}}</p>
-                        <p>{{ article.price.supplementaryPriceLabel1 }}</p>-->
+                        <img center v-if="article.imageUrl && article.shop == 'maxi'" class="center" :src="'https://d3el976p2k4mvu.cloudfront.net'+article.imageUrl" width="180px" height="180px">
+                        <img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center" :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">
+                        <img center v-else :src="'article.imageDefault'">
+                        <p align="center"><b>{{ article.title }}:</b> {{ article.body }}</p>
                         <hr>
-                        <p align="right" v-if="article.price.formattedValue">{{ article.price.supplementaryPriceLabel2 }}: <b>{{ article.price.formattedValue }}</b></p>
-                        <p align="right" v-else><b>{{ article.price.formatted_price }}</b></p>
-                        <!--<p align="right">{{ article.price.supplementaryPriceLabel2 }}: <b>{{ article.price.formattedValue }}</b></p>-->
+                        <p align="right"><img v-if="article.shop == 'idea'" style="height: 18px; width: 75px" src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg" /><img v-else style="height: 50px; width: 80px" src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png" /><b> {{ article.formattedPrice.substring(0,article.formattedPrice.length - 3) }}</b></p>
+                        <p v-if="article.maxiCena" align="right"><img style="height: 50px; width: 80px" src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png" /><b> {{ article.maxiCena.substring(0, article.maxiCena.length - 3) }}</b></p>
+                        <p v-else align="right"><img style="height: 18px; width: 75px" src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg" /><b> {{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></p>
                         <hr>
-                        <!--<button @click="editArticle(article)" class="btn btn-primary">Store</button>
-                        <button @click="deleteArticle(article.code)" class="btn btn-danger">Delete</button>-->
                     </div>
                 </div>
             </div>
@@ -117,6 +139,7 @@
                 startSlice: 0,
                 endSlice: 12,
                 articles: [],
+                akcija: [],
                 maxi: [],
                 idea: [],
                 maxi_idea: [],
@@ -133,7 +156,7 @@
             }
         },
         created() {
-            this.fetchArticles();
+            //this.fetchArticles();
             this.fetchProducts();
             window.addEventListener('scroll', this.handleScroll);
         },
@@ -149,7 +172,6 @@
                 if(scroll == windowHeight) {
                     //if(this.pagination.nextPage <= this.pagination.lastPage) {
                         document.getElementById("loader").style.display = "block";
-                        //setTimeout(this.fetchArticles(this.pagination.nextPage, this.category), 5000);
                         this.endSlice += 12;
                     //}
                 }else {
@@ -198,14 +220,14 @@
                     }else{
                         url = 'https://www.maxi.rs/online/Pice,-kafa-i-caj/c/01/loadMore?pageSize=12&pageNumber=' + currentPage + '&sort=promotion';
                     }
-                }*/
+                }
                 else{
                     if(currentPage == 0) {
                         url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
                     }else{
                         url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/view/QlProductListComponentController/loadMore?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
                     }
-                }
+                }*/
 
                 return url;
             },
@@ -213,7 +235,7 @@
                 fetch('api/articles')
                     .then(res => res.json())
                     .then(res => {
-                        console.log(res.data)
+                        this.akcija = JSON.parse(res.data);
                     })
             },
             fetchArticles(currentPage,category) {
@@ -250,18 +272,8 @@
                                 vm.makePagination(this.pagination,currentPage);
                             }
                         }
-                        /*if(this.maxi.length > 0 && this.idea.length > 0){
-                            this.getMatch(this.maxi,this.idea);
-                        }*/
                     })
                     .catch(err => console.log(err));
-            },
-            getMatch(a, b){
-                for ( var i = 0; i < a.length; i++ ) {
-                    for ( var e = 0; e < b.length; e++ ) {
-                        //if ( a[i] === b[e] ) this.maxi_idea.push( a[i] );
-                    }
-                }
             },
             makePagination(paginate,currentPage) {
                 let pagination;
@@ -305,19 +317,6 @@
                 }
                 this.pagination = pagination;
             },
-            deleteArticle(id){
-                if(confirm('Are you sure?')){
-                    fetch(`api/article/${id}`,{
-                        method: 'delete',
-                    })
-                        .then(res => res.json())
-                        .then(data => {
-                            alert('Article Removed');
-                            this.fetchArticles();
-                        })
-                        .catch(err => console.log(err));
-                }
-            },
             storeArticles(shop){
                 let vm = this;
                 if(shop == 'maxi') {
@@ -337,51 +336,6 @@
                         shop: shop
                     }
                 });
-            },
-            addArticle(article){
-                console.log(article);
-                if(this.edit === false){
-                    //add
-                    fetch('api/article',{
-                        method: 'post',
-                        body: JSON.stringify(article),
-                        headers: {
-                            'content-type': 'application/json'
-                        }
-                    })
-                    .then(res => res.json())
-                    /*.then(data => {
-                        this.article.name = '';
-                        this.article.description = '';
-                        alert('Article Added');
-                        //this.fetchArticles();
-                    })*/
-                    .catch(err => console.log(err));
-                }else{
-                    //update
-                    fetch('api/article',{
-                        method: 'put',
-                        body: JSON.stringify(this.article),
-                        headers: {
-                            'content-type': 'application/json'
-                        }
-                    })
-                        .then(res => res.json())
-                        .then(data => {
-                            this.article.name = '';
-                            this.article.description = '';
-                            alert('Article Updated');
-                            this.fetchArticles();
-                        })
-                        .catch(err => console.log(err));
-                }
-            },
-            editArticle(article){
-                //this.edit = true;
-                //this.article.article_id = article.code;
-                //this.article.code = article.code;
-                this.article.title = article.manufacturer;
-                this.article.body = article.name;
             }
         }
     }
