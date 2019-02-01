@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Article;
 use App\Http\Resources\Article as ArticleResource;
+use Illuminate\Support\Facades\Cache;
 
 class ArticleController extends Controller
 {
@@ -20,6 +21,14 @@ class ArticleController extends Controller
         // Get articles
         $maxi = Article::where('shop','maxi')->where('category','akcija')->get();
         $idea = Article::where('shop','idea')->where('category','akcija')->get();
+
+//        $maxi = Cache::remember('articlesMaxi', 5, function(){
+//            return Article::where('shop','maxi')->where('category','akcija')->get();
+//        });
+//
+//        $idea = Cache::remember('articlesIdea', 5, function(){
+//            return Article::where('shop','idea')->where('category','akcija')->get();
+//        });
 
         foreach ($maxi as $max){
             foreach ($idea as $ide){
@@ -61,8 +70,10 @@ class ArticleController extends Controller
                     $imageDefault = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
                 }
 
-                array_push($storeRecords, ['title' => $request->products[0][$i]['manufacturer'], 'body' => $request->products[0][$i]['name'], 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => implode(',', $request->products[0][$i]['barcodes']),
-                    'formattedPrice' => $request->products[0][$i]['price']['formatted_price'], 'price' => $request->products[0][$i]['price']['amount'], 'supplementaryPriceLabel1' => $request->products[0][$i]['statistical_price'], 'supplementaryPriceLabel2' => null, 'shop' => $request->shop]);
+                array_push($storeRecords, ['code'=>$request->products[0][$i]['code'], 'title' => $request->products[0][$i]['manufacturer'],
+                    'body' => $request->products[0][$i]['name'], 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => implode(',', $request->products[0][$i]['barcodes']),
+                    'formattedPrice' => $request->products[0][$i]['price']['formatted_price'], 'price' => $request->products[0][$i]['price']['amount'],
+                    'supplementaryPriceLabel1' => $request->products[0][$i]['statistical_price'], 'supplementaryPriceLabel2' => null, 'shop' => $request->shop, 'category' => $request->category]);
             }
         }else{
             for ($i = 0; $i <= $arrayLengt; $i++) {
@@ -72,15 +83,22 @@ class ArticleController extends Controller
                     $imageDefault = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
                 }
 
-                array_push($storeRecords, ['title' => $request->products[0][$i]['manufacturerName'], 'body' => $request->products[0][$i]['name'], 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => implode(',', $request->products[0][$i]['eanCodes']),
-                    'formattedPrice' => $request->products[0][$i]['price']['formattedValue'], 'price' => $request->products[0][$i]['price']['value'], 'supplementaryPriceLabel1' => $request->products[0][$i]['price']['supplementaryPriceLabel1'], 'supplementaryPriceLabel2' => $request->products[0][$i]['price']['supplementaryPriceLabel2'], 'shop' => $request->shop]);
+                array_push($storeRecords, ['code'=>$request->products[0][$i]['code'], 'title' => $request->products[0][$i]['manufacturerName'],
+                    'body' => $request->products[0][$i]['name'], 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => implode(',', $request->products[0][$i]['eanCodes']),
+                    'formattedPrice' => $request->products[0][$i]['price']['formattedValue'], 'price' => $request->products[0][$i]['price']['value'],
+                    'supplementaryPriceLabel1' => $request->products[0][$i]['price']['supplementaryPriceLabel1'],
+                    'supplementaryPriceLabel2' => $request->products[0][$i]['price']['supplementaryPriceLabel2'], 'shop' => $request->shop, 'category' => $request->category]);
             }
+//            array_push($storeRecords, ['code'=>'7176748', 'title' => 'Schauma', 'body' => 'Sampon za decu Schauma Mermaid 250ml', 'imageUrl' => '/medias/sys_master/h83/h36/8829669539870.png', 'imageDefault' => null, 'barcodes' => '3838905551948,3838905551955,2401000202056',
+//                'formattedPrice' => '269,99 RSD', 'price' => '555.99', 'supplementaryPriceLabel1' => '1079.96 rsd/L', 'supplementaryPriceLabel2' => '250 ml', 'shop' => 'maxi']);
         }
 
         foreach ($storeRecords as $record){
-            $article = $request->isMethod('put') ? Article::findOrFail($request->article_id) : new Article;
+            $article = Article::firstOrNew(array('code'=>$record['code']));
+            $article->code = $record['code'];
             $article->title = $record['title'];
             $article->body = $record['body'];
+            $article->category = $record['category'];
             $article->imageUrl = $record['imageUrl'];
             $article->imageDefault = $record['imageDefault'];
             $article->barcodes = $record['barcodes'];

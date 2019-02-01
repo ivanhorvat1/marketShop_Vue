@@ -9,12 +9,12 @@
             </div>
         </form>-->
         <button @click="fetchArticles(0,'maxi')" class="btn btn-primary">Maxi Akcija</button>
-        <button @click="storeArticles('maxi')" class="btn btn-primary">Ubaci Maxi</button>
+        <button @click="storeArticles('maxi','akcija')" class="btn btn-primary">Ubaci Akcija Maxi</button>
         <!--<button @click="fetchArticles(0,'pice')" class="btn btn-primary">Pice</button>
         <button @click="fetchArticles(0,'meso')" class="btn btn-primary">Mesnati Proizvodi</button>
         <button @click="fetchArticles(0,'slatkisi')" class="btn btn-primary">Čokolade, keks, slane i slatke grickalice</button>-->
         <button @click="fetchArticles(0,'idea')" class="btn btn-primary">Idea Akcija</button>
-        <button @click="storeArticles('idea')" class="btn btn-primary">Ubaci Idea</button><br><br>
+        <button @click="storeArticles('idea','akcija')" class="btn btn-primary">Ubaci Akcija Idea</button><br><br>
         <h4>Total products: {{akcija.length}}</h4><br>
         <div align="center" class="container">
             <div id="demo" class="carousel slide mb-5 " data-ride="carousel">
@@ -317,23 +317,25 @@
                 }
                 this.pagination = pagination;
             },
-            storeArticles(shop){
+            storeArticles(shop,category){
                 let vm = this;
                 if(shop == 'maxi') {
-                    vm.storeVisit(this.maxi,shop);
+                    vm.storeVisit(this.maxi,shop,category);
                 }else if(shop == 'idea'){
-                    vm.storeVisit(this.idea,shop);
+                    vm.storeVisit(this.idea,shop,category);
                 }
             },
-            storeVisit(article,shop)
+            storeVisit(article,shop,category)
             {
+                this.products = [];
                 this.products.push(article);
                 axios({
                     method: 'post',
                     url: '/api/article',
                     data: {
                         products: this.products,
-                        shop: shop
+                        shop: shop,
+                        category: category
                     }
                 });
             }

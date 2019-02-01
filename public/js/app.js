@@ -2086,23 +2086,25 @@ __webpack_require__.r(__webpack_exports__);
 
       this.pagination = pagination;
     },
-    storeArticles: function storeArticles(shop) {
+    storeArticles: function storeArticles(shop, category) {
       var vm = this;
 
       if (shop == 'maxi') {
-        vm.storeVisit(this.maxi, shop);
+        vm.storeVisit(this.maxi, shop, category);
       } else if (shop == 'idea') {
-        vm.storeVisit(this.idea, shop);
+        vm.storeVisit(this.idea, shop, category);
       }
     },
-    storeVisit: function storeVisit(article, shop) {
+    storeVisit: function storeVisit(article, shop, category) {
+      this.products = [];
       this.products.push(article);
       axios({
         method: 'post',
         url: '/api/article',
         data: {
           products: this.products,
-          shop: shop
+          shop: shop,
+          category: category
         }
       });
     }
@@ -33199,11 +33201,11 @@ var render = function() {
         staticClass: "btn btn-primary",
         on: {
           click: function($event) {
-            _vm.storeArticles("maxi")
+            _vm.storeArticles("maxi", "akcija")
           }
         }
       },
-      [_vm._v("Ubaci Maxi")]
+      [_vm._v("Ubaci Akcija Maxi")]
     ),
     _vm._v(" "),
     _c(
@@ -33225,11 +33227,11 @@ var render = function() {
         staticClass: "btn btn-primary",
         on: {
           click: function($event) {
-            _vm.storeArticles("idea")
+            _vm.storeArticles("idea", "akcija")
           }
         }
       },
-      [_vm._v("Ubaci Idea")]
+      [_vm._v("Ubaci Akcija Idea")]
     ),
     _c("br"),
     _c("br"),
