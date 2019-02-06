@@ -19,12 +19,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 // List articles
 Route::get('articles', 'ArticleController@index');
+Route::get('action_sale_fetch', 'ActionSaleController@index');
+Route::get('action_drink_fetch', 'DrinkController@index');
 
 // List single article
 Route::get('article/{id}', 'ArticleController@show');
 
 // Create new article
 Route::post('article', 'ArticleController@store');
+Route::post('action_sale_store', 'ActionSaleController@store');
+Route::post('action_drink_store', 'ActionSaleController@store');
 
 // Update article
 Route::put('article', 'ArticleController@store');

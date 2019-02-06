@@ -8,63 +8,99 @@
                 <button type="submit" class="btn btn-light btn-block">Save</button>
             </div>
         </form>-->
-        <button @click="fetchArticles(0,'maxi')" class="btn btn-primary">Maxi Akcija</button>
+        <button @click="fetchArticles(0,'maxi','akcija')" class="btn btn-primary">Maxi Akcija</button>
         <button @click="storeArticles('maxi','akcija')" class="btn btn-primary">Ubaci Akcija Maxi</button>
-        <!--<button @click="fetchArticles(0,'pice')" class="btn btn-primary">Pice</button>
-        <button @click="fetchArticles(0,'meso')" class="btn btn-primary">Mesnati Proizvodi</button>
+        <button @click="fetchArticles(0, 'maxi', 'pice')" class="btn btn-primary">Maxi Pice</button>
+        <button @click="storeArticles('maxi','pice')" class="btn btn-primary">Ubaci Pice Maxi</button>
+        <!--<button @click="fetchArticles(0,'meso')" class="btn btn-primary">Mesnati Proizvodi</button>
         <button @click="fetchArticles(0,'slatkisi')" class="btn btn-primary">Čokolade, keks, slane i slatke grickalice</button>-->
-        <button @click="fetchArticles(0,'idea')" class="btn btn-primary">Idea Akcija</button>
-        <button @click="storeArticles('idea','akcija')" class="btn btn-primary">Ubaci Akcija Idea</button><br><br>
-        <h4>Total products: {{akcija.length}}</h4><br>
+        <button @click="fetchArticles(0,'idea','akcija')" class="btn btn-primary">Idea Akcija</button>
+        <button @click="storeArticles('idea','akcija')" class="btn btn-primary">Ubaci Akcija Idea</button>
+        <button @click="drinkIdea('60007883')" class="btn btn-primary">Pice Idea</button>
+        <button :disabled="this.categoryArray.length < 16" @click="checkChildren()" class="btn btn-primary">check children</button><br><br>
+        <button @click="storeArticles('idea','pice')" class="btn btn-primary">Ubaci Pice Idea</button>
+        <br><br>
+        <h4>Total products: {{drinks.length}}</h4><br>
+
+        <!-- The slideshow -->
+
         <div align="center" class="container">
             <div id="demo" class="carousel slide mb-5 " data-ride="carousel">
 
-                <!-- The slideshow -->
                 <div class="carousel-inner">
-                    <div class="carousel-item active" style="height: 250px">
+                    <div class="carousel-item active" style="height: 320px">
                         <h3 style="padding-top: 100px">Izdvajamo</h3>
                     </div>
-                    <div class="carousel-item" v-for="article in akcija.slice(startSlice,endSlice)" v-bind:key="article.code">
-                        <img center v-if="article.imageUrl && article.shop == 'maxi'" class="center" :src="'https://d3el976p2k4mvu.cloudfront.net'+article.imageUrl" width="180px" height="180px">
-                        <img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center" :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">
+                    <div class="carousel-item" v-for="article in akcija.slice(startSlice,endSlice)"
+                         v-bind:key="article.code">
+                        <img center v-if="article.imageUrl && article.shop == 'maxi'" class="center"
+                             :src="'https://d3el976p2k4mvu.cloudfront.net'+article.imageUrl" width="180px"
+                             height="180px">
+                        <img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center"
+                             :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">
                         <img center v-else :src="'article.imageDefault'">
                         <h6 align="center"><b>{{ article.title }}:</b> {{ article.body }}</h6>
                         <hr>
-                        <h5 align="center"><img v-if="article.shop == 'idea'" style="height: 18px; width: 75px" src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg" />
-                            <img v-else style="height: 50px; width: 80px" src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png" /><b style="color: goldenrod"> {{ article.formattedPrice.substring(0,article.formattedPrice.length - 3) }}</b></h5>
-                        <h5 v-if="article.maxiCena" align="center"><img style="height: 50px; width: 80px" src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png" /><b> {{ article.maxiCena.substring(0, article.maxiCena.length - 3) }}</b></h5>
-                        <h5 v-else align="center"><img style="height: 18px; width: 75px" src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg" /><b> {{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></h5>
+                        <h5 align="center"><img v-if="article.shop == 'idea'" style="height: 18px; width: 75px"
+                                                src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/>
+                            <img v-else style="height: 50px; width: 80px"
+                                 src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"/><b
+                                    style="color: goldenrod"> {{
+                                article.formattedPrice.substring(0,article.formattedPrice.length - 3) }}</b></h5>
+                        <h5 v-if="article.maxiCena" align="center"><img style="height: 50px; width: 80px"
+                                                                        src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"/><b>
+                            {{ article.maxiCena.substring(0, article.maxiCena.length - 3) }}</b></h5>
+                        <h5 v-else align="center"><img style="height: 18px; width: 75px"
+                                                       src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/><b>
+                            {{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></h5>
                     </div>
                 </div>
 
                 <!-- Left and right controls -->
                 <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                    <span class="carousel-control-prev-icon" style="background-color: black; border-radius: 50%; width: 30px; height: 30px;"></span>
+                    <span class="carousel-control-prev-icon"
+                          style="background-color: black; border-radius: 50%; width: 30px; height: 30px;"></span>
                 </a>
                 <a class="carousel-control-next" href="#demo" data-slide="next">
-                    <span class="carousel-control-next-icon" style="background-color: black; border-radius: 50%; width: 30px; height: 30px;"></span>
+                    <span class="carousel-control-next-icon"
+                          style="background-color: black; border-radius: 50%; width: 30px; height: 30px;"></span>
                 </a>
             </div>
         </div>
+
+        <!-- The end slideshow -->
+
         <div class="row">
-            <div class="col-sm-3" v-for="article in akcija.slice(startSlice,endSlice)" v-bind:key="article.code">
+            <div class="col-sm-3" v-for="article in drinks.slice(startSlice,endSlice)" v-bind:key="article.code">
                 <div class="card">
                     <div class="card-body">
-                        <img center v-if="article.imageUrl && article.shop == 'maxi'" class="center" :src="'https://d3el976p2k4mvu.cloudfront.net'+article.imageUrl" width="180px" height="180px">
-                        <img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center" :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">
+                        <img center v-if="article.imageUrl && article.shop == 'maxi'" class="center"
+                             :src="'https://d3el976p2k4mvu.cloudfront.net'+article.imageUrl" width="180px"
+                             height="180px">
+                        <img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center"
+                             :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">
                         <img center v-else :src="'article.imageDefault'">
                         <p align="center"><b>{{ article.title }}:</b> {{ article.body }}</p>
                         <hr>
-                        <p align="right"><img v-if="article.shop == 'idea'" style="height: 18px; width: 75px" src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg" /><img v-else style="height: 50px; width: 80px" src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png" /><b> {{ article.formattedPrice.substring(0,article.formattedPrice.length - 3) }}</b></p>
-                        <p v-if="article.maxiCena" align="right"><img style="height: 50px; width: 80px" src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png" /><b> {{ article.maxiCena.substring(0, article.maxiCena.length - 3) }}</b></p>
-                        <p v-else align="right"><img style="height: 18px; width: 75px" src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg" /><b> {{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></p>
+                        <p align="right"><img v-if="article.shop == 'idea'" style="height: 18px; width: 75px"
+                                              src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/><img
+                                v-else style="height: 50px; width: 80px"
+                                src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"/><b>
+                            {{ article.formattedPrice.substring(0,article.formattedPrice.length - 3) }}</b></p>
+                        <p v-if="article.maxiCena" align="right"><img style="height: 50px; width: 80px"
+                                                                      src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"/><b>
+                            {{ article.maxiCena.substring(0, article.maxiCena.length - 3) }}</b></p>
+                        <p v-else align="right"><img style="height: 18px; width: 75px"
+                                                     src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/><b>
+                            {{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></p>
                         <hr>
                     </div>
                 </div>
             </div>
         </div>
         <button @click="toTopFunction()" id="BtnToTop" title="Go to top">&uarr;</button>
-        <div id="loader"></div><br><br>
+        <div id="loader"></div>
+        <br><br>
         <!--<div class="col-md-12 text-center">
             <button :disabled="pagination.nextPage >= pagination.lastPage" @click="fetchArticles(pagination.nextPage,category)" class="btn btn-primary">Load More</button>
         </div>
@@ -106,7 +142,7 @@
     }
 
     #loader {
-        display:none;
+        display: none;
         position: fixed;
         left: 820px;
         bottom: 50px;
@@ -123,13 +159,21 @@
 
     /* Safari */
     @-webkit-keyframes spin {
-        0% { -webkit-transform: rotate(0deg); }
-        100% { -webkit-transform: rotate(360deg); }
+        0% {
+            -webkit-transform: rotate(0deg);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
     }
 
     @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
     }
 </style>
 <script>
@@ -151,13 +195,16 @@
                 article_id: '',
                 pagination: {},
                 edit: false,
-                category: '',
-                products: []
+                shop: '',
+                products: [],
+                categoryArray: [],
+                drinks: []
             }
         },
         created() {
             //this.fetchArticles();
-            this.fetchProducts();
+            this.fetchSaleProducts();
+            this.fetchDrinkProducts();
             window.addEventListener('scroll', this.handleScroll);
         },
         methods: {
@@ -165,16 +212,16 @@
                 document.body.scrollTop = 0;
                 document.documentElement.scrollTop = 0;
             },
-            handleScroll(){
+            handleScroll() {
                 let scroll = Math.ceil($(window).scrollTop() + $(window).height());
                 let windowHeight = Math.round($(document).height());
 
-                if(scroll == windowHeight) {
+                if (scroll == windowHeight) {
                     //if(this.pagination.nextPage <= this.pagination.lastPage) {
-                        document.getElementById("loader").style.display = "block";
-                        this.endSlice += 12;
+                    document.getElementById("loader").style.display = "block";
+                    this.endSlice += 12;
                     //}
-                }else {
+                } else {
                     document.getElementById("loader").style.display = "none";
                 }
 
@@ -184,41 +231,40 @@
                     document.getElementById("BtnToTop").style.display = "none";
                 }
             },
-            hideLoader(){
+            hideLoader() {
                 document.getElementById("loader").style.display = "none";
             },
-            dinamicUrl(currentPage){
+            dinamicUrl(currentPage, shop, category) {
                 let url;
 
-                if(this.category === 'maxi'){
-                    if(currentPage == 0) {
+                if (shop === 'maxi' && category === 'akcija') {
+                    if (currentPage == 0) {
                         url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
-                    }else{
+                    } else {
                         url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/view/QlProductListComponentController/loadMore?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
                     }
                 }
-                else if(this.category === 'idea'){
+                else if (shop === 'idea' && category === 'akcija') {
                     url = 'https://cors-anywhere.herokuapp.com/https://www.idea.rs/online/v2/offers?per_page=48&page=' + currentPage + '&filter%5Bsort%5D=offerSoldStatisticsDesc';
                 }
-                /*else if(this.category === 'meso'){
+                else if (shop === 'maxi' && category === 'pice') {
+                    url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/online/Pice%2C-kafa-i-caj/c/01/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion';
+                }
+                /*else if (shop === 'idea' && category === 'alkpica') {
+                    url = 'https://www.idea.rs/online/v2/categories/60007888/products?per_page=5000&page=1&filter%5Bsort%5D=offerSoldStatisticsDesc';
+                }
+                else if(this.shop === 'meso'){
                     if(currentPage == 0) {
-                         url = 'https://www.maxi.rs/online/Meso%2C-mesne-i-riblje-prera%C4%91evine/c/02/getSearchPageData?pageSize=12&pageNumber=' + currentPage + '&sort=promotion';
+                         url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/online/Meso%2C-mesne-i-riblje-prera%C4%91evine/c/02/getSearchPageData?pageSize=12&pageNumber=' + currentPage + '&sort=promotion';
                     }else{
-                         url = 'https://www.maxi.rs/online/Meso,-mesne-i-riblje-prera%C4%91evine/c/02/loadMore?pageSize=12&pageNumber=' + currentPage + '&sort=promotion';
+                         url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/online/Meso,-mesne-i-riblje-prera%C4%91evine/c/02/loadMore?pageSize=12&pageNumber=' + currentPage + '&sort=promotion';
                     }
                 }
-                else if(this.category === 'slatkisi') {
+                else if(this.shop === 'slatkisi') {
                     if (currentPage == 0) {
-                        url = 'https://www.maxi.rs/online/Cokolade%2C-keks%2C-slane-i-slatke-grickalice/c/09/getSearchPageData?pageSize=12';
+                        url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/online/Cokolade%2C-keks%2C-slane-i-slatke-grickalice/c/09/getSearchPageData?pageSize=12';
                     } else {
-                        url = 'https://www.maxi.rs/online/Cokolade%2C-keks%2C-slane-i-slatke-grickalice/c/09/loadMore?pageSize=12&pageNumber=' + currentPage + '&sort=popularity';
-                    }
-                }
-                else if(this.category === 'pice'){
-                    if(currentPage == 0) {
-                        url = 'https://www.maxi.rs/online/Pice%2C-kafa-i-caj/c/01/getSearchPageData?pageSize=12&pageNumber=' + currentPage + '&sort=promotion';
-                    }else{
-                        url = 'https://www.maxi.rs/online/Pice,-kafa-i-caj/c/01/loadMore?pageSize=12&pageNumber=' + currentPage + '&sort=promotion';
+                        url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/online/Cokolade%2C-keks%2C-slane-i-slatke-grickalice/c/09/loadMore?pageSize=12&pageNumber=' + currentPage + '&sort=popularity';
                     }
                 }
                 else{
@@ -231,54 +277,62 @@
 
                 return url;
             },
-            fetchProducts(){
-                fetch('api/articles')
+            fetchSaleProducts() {
+                fetch('api/action_sale_fetch')
                     .then(res => res.json())
                     .then(res => {
                         this.akcija = JSON.parse(res.data);
                     })
             },
-            fetchArticles(currentPage,category) {
+            fetchDrinkProducts() {
+                fetch('api/action_drink_fetch')
+                    .then(res => res.json())
+                    .then(res => {
+                        this.drinks = JSON.parse(res.data);
+                    })
+            },
+            fetchArticles(currentPage, shop, category) {
                 let vm = this;
                 let url;
 
-                this.category = category;
-                if(currentPage == 0){
+                this.shop = shop;
+                if (currentPage == 0) {
                     this.articles = [];
                 }
                 currentPage = currentPage || '0';
-                url = this.dinamicUrl(currentPage);
+                url = this.dinamicUrl(currentPage, shop, category);
                 fetch(url)
                     .then(res => res.json())
                     .then(res => {
-                        if(currentPage == 0) {
-                            if(this.category === 'idea'){
+                        if (currentPage == 0) {
+                            if (this.shop === 'idea') {
                                 //this.articles = res.products;
                                 this.idea = res.products;
-                                vm.makePagination(res._page, currentPage);
-                            }else {
+                                vm.makePagination(res._page, currentPage, category);
+                            } else {
                                 //this.articles = res.results;
                                 this.maxi = res.results;
-                                vm.makePagination(res.pagination, currentPage);
+                                vm.makePagination(res.pagination, currentPage, category);
                             }
-                        }else{
-                            if(this.category === 'idea'){
+                        } else {
+                            if (this.shop === 'idea') {
                                 //this.articles = this.articles.concat(res.products);
                                 this.idea = this.idea.concat(res.products);
-                                vm.makePagination(this.pagination,currentPage);
-                            }else{
+                                vm.makePagination(this.pagination, currentPage, category);
+                            } else {
                                 //this.articles = this.articles.concat(res);
                                 this.maxi = this.maxi.concat(res);
-                                vm.makePagination(this.pagination,currentPage);
+                                vm.makePagination(this.pagination, currentPage, category);
                             }
                         }
+                        console.log(this.maxi);
                     })
                     .catch(err => console.log(err));
             },
-            makePagination(paginate,currentPage) {
+            makePagination(paginate, currentPage, category) {
                 let pagination;
-                if(currentPage == 0) {
-                    if(this.category === 'idea'){
+                if (currentPage == 0) {
+                    if (this.shop === 'idea') {
                         pagination = {
                             totalArticles: paginate.item_count,
                             currentPage: paginate.current,
@@ -286,7 +340,7 @@
                             nextPage: paginate.current + 1,
                             prevPage: paginate.current - 1
                         };
-                    }else{
+                    } else {
                         pagination = {
                             totalArticles: paginate.totalNumberOfResults,
                             currentPage: paginate.currentPage,
@@ -296,16 +350,16 @@
                         };
                     }
 
-                    if(this.category === 'idea'){
-                        for(let i=2; i<=pagination.lastPage; i++){
-                            this.fetchArticles(i,this.category);
+                    if (this.shop === 'idea' && category == 'akcija') {
+                        for (let i = 2; i <= pagination.lastPage; i++) {
+                            this.fetchArticles(i, this.shop);
                         }
-                    }else{
-                        for(let i=1; i<=60; i++){
-                            this.fetchArticles(i,this.category);
+                    } else if (this.shop === 'maxi' && category == 'akcija') {
+                        for (let i = 1; i <= 60; i++) {
+                            this.fetchArticles(i, this.shop);
                         }
                     }
-                }else{
+                } else {
                     document.getElementById("loader").style.display = "none";
                     pagination = {
                         totalArticles: this.pagination.totalArticles,
@@ -317,27 +371,71 @@
                 }
                 this.pagination = pagination;
             },
-            storeArticles(shop,category){
+            storeArticles(shop, category) {
                 let vm = this;
-                if(shop == 'maxi') {
-                    vm.storeVisit(this.maxi,shop,category);
-                }else if(shop == 'idea'){
-                    vm.storeVisit(this.idea,shop,category);
+                let picaIdea = [];
+                if (shop == 'maxi') {
+                    vm.storeVisit(this.maxi, shop, category);
+                } else if (shop == 'idea' && category == 'pice') {
+                    this.idea.forEach(function (item) {
+                        item.forEach(function (data) {
+                            picaIdea.push(data);
+                        })
+                    })
+                    vm.storeVisit(picaIdea, shop, category);
+                } else if (shop == 'idea' && category == 'akcija') {
+                    vm.storeVisit(this.idea, shop, category);
                 }
             },
-            storeVisit(article,shop,category)
-            {
+            storeVisit(article, shop, category) {
                 this.products = [];
                 this.products.push(article);
                 axios({
                     method: 'post',
-                    url: '/api/article',
+                    url: '/api/action_sale_store',
                     data: {
                         products: this.products,
                         shop: shop,
                         category: category
                     }
                 });
+            },
+            drinkIdea(categoryNumber, data) {
+                let vm = this;
+                let url = 'https://cors-anywhere.herokuapp.com/https://www.idea.rs/online/v2/categories/' + categoryNumber;
+
+                this.categoryArray.push(data);
+                //console.log(this.categoryArray);
+                fetch(url)
+                    .then(res => res.json())
+                    .then(res => {
+                        if (res.has_children) {
+                            res.children.forEach(function (item) {
+                                vm.drinkIdea(item.id, item);
+                            })
+                        }
+                    })
+            },
+            checkChildren() {
+                let noChildren = [];
+                let ideapice = [];
+                this.categoryArray.splice(0, 1);
+                this.categoryArray.forEach(function (item) {
+                    if (!item.has_children) {
+                        noChildren.push(item.id)
+                    }
+                });
+
+                noChildren.forEach(function (items) {
+                    let url = 'https://cors-anywhere.herokuapp.com/https://www.idea.rs/online/v2/categories/' + items + '/products?per_page=5000&page=1&filter%5Bsort%5D=offerSoldStatisticsDesc';
+                    fetch(url)
+                        .then(res => res.json())
+                        .then(res => {
+                            ideapice.push(res.products);
+                        })
+                });
+
+                this.idea = ideapice;
             }
         }
     }
