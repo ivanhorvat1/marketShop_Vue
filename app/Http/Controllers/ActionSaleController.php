@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\action_sale;
 use App\drink;
+use App\Meat;
 
 class ActionSaleController extends Controller
 {
@@ -105,6 +106,23 @@ class ActionSaleController extends Controller
         }elseif ($request->category == 'pice'){
             foreach ($storeRecords as $record){
                 $article = drink::firstOrNew(array('code'=>$record['code']));
+                $article->code = $record['code'];
+                $article->title = $record['title'];
+                $article->body = $record['body'];
+                $article->category = $record['category'];
+                $article->imageUrl = $record['imageUrl'];
+                $article->imageDefault = $record['imageDefault'];
+                $article->barcodes = $record['barcodes'];
+                $article->formattedPrice = $record['formattedPrice'];
+                $article->price = $record['price'];
+                $article->supplementaryPriceLabel1 = $record['supplementaryPriceLabel1'];
+                $article->supplementaryPriceLabel2 = $record['supplementaryPriceLabel2'];
+                $article->shop = $record['shop'];
+                $article->save();
+            }
+        }elseif ($request->category == 'meso'){
+            foreach ($storeRecords as $record){
+                $article = Meat::firstOrNew(array('code'=>$record['code']));
                 $article->code = $record['code'];
                 $article->title = $record['title'];
                 $article->body = $record['body'];

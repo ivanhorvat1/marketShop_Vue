@@ -1939,6 +1939,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1965,8 +1970,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     //this.fetchArticles();
-    this.fetchSaleProducts();
-    this.fetchDrinkProducts();
+    //this.fetchSaleProducts();
+    //this.fetchDrinkProducts();
     window.addEventListener('scroll', this.handleScroll);
   },
   methods: {
@@ -2008,6 +2013,8 @@ __webpack_require__.r(__webpack_exports__);
         url = 'https://cors-anywhere.herokuapp.com/https://www.idea.rs/online/v2/offers?per_page=48&page=' + currentPage + '&filter%5Bsort%5D=offerSoldStatisticsDesc';
       } else if (shop === 'maxi' && category === 'pice') {
         url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/online/Pice%2C-kafa-i-caj/c/01/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion';
+      } else if (shop === 'maxi' && category === 'meso') {
+        url = 'https://www.maxi.rs/online/Meso%2C-mesne-i-riblje-prera%C4%91evine/c/02/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion';
       }
       /*else if (shop === 'idea' && category === 'alkpica') {
           url = 'https://www.idea.rs/online/v2/categories/60007888/products?per_page=5000&page=1&filter%5Bsort%5D=offerSoldStatisticsDesc';
@@ -2122,11 +2129,11 @@ __webpack_require__.r(__webpack_exports__);
 
         if (this.shop === 'idea' && category == 'akcija') {
           for (var i = 2; i <= pagination.lastPage; i++) {
-            this.fetchArticles(i, this.shop);
+            this.fetchArticles(i, this.shop, category);
           }
         } else if (this.shop === 'maxi' && category == 'akcija') {
           for (var _i = 1; _i <= 60; _i++) {
-            this.fetchArticles(_i, this.shop);
+            this.fetchArticles(_i, this.shop, category);
           }
         }
       } else {
@@ -33338,6 +33345,32 @@ var render = function() {
         staticClass: "btn btn-primary",
         on: {
           click: function($event) {
+            _vm.fetchArticles(0, "maxi", "meso")
+          }
+        }
+      },
+      [_vm._v("Maxi Meso")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            _vm.storeArticles("maxi", "meso")
+          }
+        }
+      },
+      [_vm._v("Ubaci Meso Maxi")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
             _vm.fetchArticles(0, "idea", "akcija")
           }
         }
@@ -33382,8 +33415,9 @@ var render = function() {
           }
         }
       },
-      [_vm._v("check children")]
+      [_vm._v("check\n        children\n    ")]
     ),
+    _vm._v(" "),
     _c("br"),
     _c("br"),
     _vm._v(" "),

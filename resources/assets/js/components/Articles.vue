@@ -12,12 +12,17 @@
         <button @click="storeArticles('maxi','akcija')" class="btn btn-primary">Ubaci Akcija Maxi</button>
         <button @click="fetchArticles(0, 'maxi', 'pice')" class="btn btn-primary">Maxi Pice</button>
         <button @click="storeArticles('maxi','pice')" class="btn btn-primary">Ubaci Pice Maxi</button>
+        <button @click="fetchArticles(0, 'maxi', 'meso')" class="btn btn-primary">Maxi Meso</button>
+        <button @click="storeArticles('maxi','meso')" class="btn btn-primary">Ubaci Meso Maxi</button>
         <!--<button @click="fetchArticles(0,'meso')" class="btn btn-primary">Mesnati Proizvodi</button>
         <button @click="fetchArticles(0,'slatkisi')" class="btn btn-primary">Čokolade, keks, slane i slatke grickalice</button>-->
         <button @click="fetchArticles(0,'idea','akcija')" class="btn btn-primary">Idea Akcija</button>
         <button @click="storeArticles('idea','akcija')" class="btn btn-primary">Ubaci Akcija Idea</button>
         <button @click="drinkIdea('60007883')" class="btn btn-primary">Pice Idea</button>
-        <button :disabled="this.categoryArray.length < 16" @click="checkChildren()" class="btn btn-primary">check children</button><br><br>
+        <button :disabled="this.categoryArray.length < 16" @click="checkChildren()" class="btn btn-primary">check
+            children
+        </button>
+        <br><br>
         <button @click="storeArticles('idea','pice')" class="btn btn-primary">Ubaci Pice Idea</button>
         <br><br>
         <h4>Total products: {{drinks.length}}</h4><br>
@@ -203,8 +208,8 @@
         },
         created() {
             //this.fetchArticles();
-            this.fetchSaleProducts();
-            this.fetchDrinkProducts();
+            //this.fetchSaleProducts();
+            //this.fetchDrinkProducts();
             window.addEventListener('scroll', this.handleScroll);
         },
         methods: {
@@ -236,7 +241,6 @@
             },
             dinamicUrl(currentPage, shop, category) {
                 let url;
-
                 if (shop === 'maxi' && category === 'akcija') {
                     if (currentPage == 0) {
                         url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
@@ -249,6 +253,9 @@
                 }
                 else if (shop === 'maxi' && category === 'pice') {
                     url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/online/Pice%2C-kafa-i-caj/c/01/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion';
+                }
+                else if (shop === 'maxi' && category === 'meso') {
+                    url = 'https://www.maxi.rs/online/Meso%2C-mesne-i-riblje-prera%C4%91evine/c/02/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion';
                 }
                 /*else if (shop === 'idea' && category === 'alkpica') {
                     url = 'https://www.idea.rs/online/v2/categories/60007888/products?per_page=5000&page=1&filter%5Bsort%5D=offerSoldStatisticsDesc';
@@ -352,11 +359,11 @@
 
                     if (this.shop === 'idea' && category == 'akcija') {
                         for (let i = 2; i <= pagination.lastPage; i++) {
-                            this.fetchArticles(i, this.shop);
+                            this.fetchArticles(i, this.shop, category);
                         }
                     } else if (this.shop === 'maxi' && category == 'akcija') {
                         for (let i = 1; i <= 60; i++) {
-                            this.fetchArticles(i, this.shop);
+                            this.fetchArticles(i, this.shop, category);
                         }
                     }
                 } else {
