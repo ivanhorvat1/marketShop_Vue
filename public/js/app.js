@@ -1944,6 +1944,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1965,13 +1968,17 @@ __webpack_require__.r(__webpack_exports__);
       shop: '',
       products: [],
       categoryArray: [],
-      drinks: []
+      drinks: [],
+      meat: [],
+      sweet: []
     };
   },
   created: function created() {
     //this.fetchArticles();
     //this.fetchSaleProducts();
     //this.fetchDrinkProducts();
+    //this.fetchSweetProducts();
+    //this.fetchMeatProducts();
     window.addEventListener('scroll', this.handleScroll);
   },
   methods: {
@@ -2001,20 +2008,21 @@ __webpack_require__.r(__webpack_exports__);
       document.getElementById("loader").style.display = "none";
     },
     dinamicUrl: function dinamicUrl(currentPage, shop, category) {
-      var url;
+      var url; //https://cors-anywhere.herokuapp.com/
+      //https://crossorigin.me/
 
       if (shop === 'maxi' && category === 'akcija') {
         if (currentPage == 0) {
-          url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
+          url = 'https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
         } else {
-          url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/view/QlProductListComponentController/loadMore?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
+          url = 'https://www.maxi.rs/view/QlProductListComponentController/loadMore?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
         }
       } else if (shop === 'idea' && category === 'akcija') {
         url = 'https://cors-anywhere.herokuapp.com/https://www.idea.rs/online/v2/offers?per_page=48&page=' + currentPage + '&filter%5Bsort%5D=offerSoldStatisticsDesc';
       } else if (shop === 'maxi' && category === 'pice') {
-        url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/online/Pice%2C-kafa-i-caj/c/01/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion';
+        url = 'https://www.maxi.rs/online/Pice%2C-kafa-i-caj/c/01/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion';
       } else if (shop === 'maxi' && category === 'meso') {
-        url = 'https://www.maxi.rs/online/Meso%2C-mesne-i-riblje-prera%C4%91evine/c/02/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion';
+        url = 'https://www.maxi.rs/online/Meso%2C-mesne-i-riblje-prera%C4%91evine/c/02/getSearchPageData?pageSize=50&pageNumber=0&sort=promotion';
       }
       /*else if (shop === 'idea' && category === 'alkpica') {
           url = 'https://www.idea.rs/online/v2/categories/60007888/products?per_page=5000&page=1&filter%5Bsort%5D=offerSoldStatisticsDesc';
@@ -2062,8 +2070,26 @@ __webpack_require__.r(__webpack_exports__);
         _this2.drinks = JSON.parse(res.data);
       });
     },
-    fetchArticles: function fetchArticles(currentPage, shop, category) {
+    fetchMeatProducts: function fetchMeatProducts() {
       var _this3 = this;
+
+      fetch('api/action_meat_fetch').then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this3.meat = JSON.parse(res.data);
+      });
+    },
+    fetchSweetProducts: function fetchSweetProducts() {
+      var _this4 = this;
+
+      fetch('api/action_sweet_fetch').then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this4.sweet = JSON.parse(res.data);
+      });
+    },
+    fetchArticles: function fetchArticles(currentPage, shop, category) {
+      var _this5 = this;
 
       var vm = this;
       var url;
@@ -2075,35 +2101,45 @@ __webpack_require__.r(__webpack_exports__);
 
       currentPage = currentPage || '0';
       url = this.dinamicUrl(currentPage, shop, category);
-      fetch(url).then(function (res) {
-        return res.json();
-      }).then(function (res) {
-        if (currentPage == 0) {
-          if (_this3.shop === 'idea') {
-            //this.articles = res.products;
-            _this3.idea = res.products;
-            vm.makePagination(res._page, currentPage, category);
-          } else {
-            //this.articles = res.results;
-            _this3.maxi = res.results;
-            vm.makePagination(res.pagination, currentPage, category);
-          }
-        } else {
-          if (_this3.shop === 'idea') {
-            //this.articles = this.articles.concat(res.products);
-            _this3.idea = _this3.idea.concat(res.products);
-            vm.makePagination(_this3.pagination, currentPage, category);
-          } else {
-            //this.articles = this.articles.concat(res);
-            _this3.maxi = _this3.maxi.concat(res);
-            vm.makePagination(_this3.pagination, currentPage, category);
-          }
-        }
 
-        console.log(_this3.maxi);
-      }).catch(function (err) {
-        return console.log(err);
-      });
+      if (shop == 'idea') {
+        fetch(url).then(function (res) {
+          return res.json();
+        }).then(function (res) {
+          if (currentPage == 0) {
+            if (_this5.shop === 'idea') {
+              //this.articles = res.products;
+              _this5.idea = res.products;
+              vm.makePagination(res._page, currentPage, category);
+            } else {
+              //this.articles = res.results;
+              _this5.maxi = res.results;
+              vm.makePagination(res.pagination, currentPage, category);
+            }
+          } else {
+            if (_this5.shop === 'idea') {
+              //this.articles = this.articles.concat(res.products);
+              _this5.idea = _this5.idea.concat(res.products);
+              vm.makePagination(_this5.pagination, currentPage, category);
+            } else {
+              //this.articles = this.articles.concat(res);
+              _this5.maxi = _this5.maxi.concat(res);
+              vm.makePagination(_this5.pagination, currentPage, category);
+            }
+          }
+        }).catch(function (err) {
+          return console.log(err);
+        });
+      } else {
+        $.getJSON('http://api.allorigins.ml/get?url=' + encodeURIComponent(url) + '&callback=?', function (data) {
+          var res = JSON.parse(data.contents);
+          vm.storeMaxi(res);
+          alert('done');
+        });
+      }
+    },
+    storeMaxi: function storeMaxi(res) {
+      this.maxi = res.results;
     },
     makePagination: function makePagination(paginate, currentPage, category) {
       var pagination;
@@ -2155,7 +2191,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (shop == 'maxi') {
         vm.storeVisit(this.maxi, shop, category);
-      } else if (shop == 'idea' && category == 'pice') {
+      } else if (shop == 'idea' && category == 'pice' || category == 'meso' || category == 'slatkisi') {
         this.idea.forEach(function (item) {
           item.forEach(function (data) {
             picaIdea.push(data);
@@ -2179,7 +2215,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    drinkIdea: function drinkIdea(categoryNumber, data) {
+    getCategoriesIdea: function getCategoriesIdea(categoryNumber, data) {
       var vm = this;
       var url = 'https://cors-anywhere.herokuapp.com/https://www.idea.rs/online/v2/categories/' + categoryNumber;
       this.categoryArray.push(data); //console.log(this.categoryArray);
@@ -2189,7 +2225,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         if (res.has_children) {
           res.children.forEach(function (item) {
-            vm.drinkIdea(item.id, item);
+            vm.getCategoriesIdea(item.id, item);
           });
         }
       });
@@ -33397,7 +33433,7 @@ var render = function() {
         staticClass: "btn btn-primary",
         on: {
           click: function($event) {
-            _vm.drinkIdea("60007883")
+            _vm.getCategoriesIdea("60007883")
           }
         }
       },
@@ -33408,18 +33444,53 @@ var render = function() {
       "button",
       {
         staticClass: "btn btn-primary",
-        attrs: { disabled: this.categoryArray.length < 16 },
+        on: {
+          click: function($event) {
+            _vm.getCategoriesIdea("60007823")
+          }
+        }
+      },
+      [_vm._v("Meso Idea")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            _vm.getCategoriesIdea("60007780")
+          }
+        }
+      },
+      [_vm._v("Meso2 Idea")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            _vm.getCategoriesIdea("60007896")
+          }
+        }
+      },
+      [_vm._v("Slatkisi Idea")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
         on: {
           click: function($event) {
             _vm.checkChildren()
           }
         }
       },
-      [_vm._v("check\n        children\n    ")]
+      [_vm._v("check idea children")]
     ),
-    _vm._v(" "),
-    _c("br"),
-    _c("br"),
     _vm._v(" "),
     _c(
       "button",
@@ -33434,10 +33505,36 @@ var render = function() {
       [_vm._v("Ubaci Pice Idea")]
     ),
     _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            _vm.storeArticles("idea", "meso")
+          }
+        }
+      },
+      [_vm._v("Ubaci Meso Idea")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            _vm.storeArticles("idea", "slatkisi")
+          }
+        }
+      },
+      [_vm._v("Ubaci Slatkisi Idea")]
+    ),
+    _vm._v(" "),
     _c("br"),
     _c("br"),
     _vm._v(" "),
-    _c("h4", [_vm._v("Total products: " + _vm._s(_vm.drinks.length))]),
+    _c("h4", [_vm._v("Total products: " + _vm._s(_vm.meat.length))]),
     _c("br"),
     _vm._v(" "),
     _c("div", { staticClass: "container", attrs: { align: "center" } }, [
@@ -33583,7 +33680,7 @@ var render = function() {
     _c(
       "div",
       { staticClass: "row" },
-      _vm._l(_vm.drinks.slice(_vm.startSlice, _vm.endSlice), function(article) {
+      _vm._l(_vm.meat.slice(_vm.startSlice, _vm.endSlice), function(article) {
         return _c("div", { key: article.code, staticClass: "col-sm-3" }, [
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-body" }, [

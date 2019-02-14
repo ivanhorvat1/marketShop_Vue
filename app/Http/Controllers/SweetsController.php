@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Meat;
+use App\Sweets;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class MeatController extends Controller
+class SweetsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +17,8 @@ class MeatController extends Controller
     {
         $sameBarcode = [];
         // Get articles
-        $maxi = Meat::where('shop', 'maxi')->where('category', 'meso')->whereNotNull('barcodes')->get();
-        $idea = Meat::where('shop', 'idea')->where('category', 'meso')->whereNotNull('barcodes')->get();
+        $maxi = Sweets::where('shop', 'maxi')->where('category', 'slatkisi')->whereNotNull('barcodes')->get();
+        $idea = Sweets::where('shop', 'idea')->where('category', 'slatkisi')->whereNotNull('barcodes')->get();
 
 //        $maxi = Cache::remember('articlesMaxi', 5, function(){
 //            return Article::where('shop','maxi')->where('category','akcija')->get();
@@ -69,10 +69,10 @@ class MeatController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Meat  $meat
+     * @param  \App\Sweets  $sweets
      * @return \Illuminate\Http\Response
      */
-    public function show(Meat $meat)
+    public function show(Sweets $sweets)
     {
         //
     }
@@ -80,10 +80,10 @@ class MeatController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Meat  $meat
+     * @param  \App\Sweets  $sweets
      * @return \Illuminate\Http\Response
      */
-    public function edit(Meat $meat)
+    public function edit(Sweets $sweets)
     {
         //
     }
@@ -92,10 +92,10 @@ class MeatController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Meat  $meat
+     * @param  \App\Sweets  $sweets
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Meat $meat)
+    public function update(Request $request, Sweets $sweets)
     {
         //
     }
@@ -103,10 +103,10 @@ class MeatController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Meat  $meat
+     * @param  \App\Sweets  $sweets
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Meat $meat)
+    public function destroy(Sweets $sweets)
     {
         //
     }

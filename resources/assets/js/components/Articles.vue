@@ -18,16 +18,19 @@
         <button @click="fetchArticles(0,'slatkisi')" class="btn btn-primary">Čokolade, keks, slane i slatke grickalice</button>-->
         <button @click="fetchArticles(0,'idea','akcija')" class="btn btn-primary">Idea Akcija</button>
         <button @click="storeArticles('idea','akcija')" class="btn btn-primary">Ubaci Akcija Idea</button>
-        <button @click="drinkIdea('60007883')" class="btn btn-primary">Pice Idea</button>
-        <button :disabled="this.categoryArray.length < 16" @click="checkChildren()" class="btn btn-primary">check
-            children
-        </button>
-        <br><br>
+        <button @click="getCategoriesIdea('60007883')" class="btn btn-primary">Pice Idea</button>
+        <button @click="getCategoriesIdea('60007823')" class="btn btn-primary">Meso Idea</button>
+        <button @click="getCategoriesIdea('60007780')" class="btn btn-primary">Meso2 Idea</button>
+        <button @click="getCategoriesIdea('60007896')" class="btn btn-primary">Slatkisi Idea</button>
+        <button @click="checkChildren()" class="btn btn-primary">check idea children</button>
+        <!--:disabled="this.categoryArray.length < 16"-->
         <button @click="storeArticles('idea','pice')" class="btn btn-primary">Ubaci Pice Idea</button>
+        <button @click="storeArticles('idea','meso')" class="btn btn-primary">Ubaci Meso Idea</button>
+        <button @click="storeArticles('idea','slatkisi')" class="btn btn-primary">Ubaci Slatkisi Idea</button>
         <br><br>
-        <h4>Total products: {{drinks.length}}</h4><br>
+        <h4>Total products: {{meat.length}}</h4><br>
 
-        <!-- The slideshow -->
+        <!-- slideshow -->
 
         <div align="center" class="container">
             <div id="demo" class="carousel slide mb-5 " data-ride="carousel">
@@ -73,10 +76,10 @@
             </div>
         </div>
 
-        <!-- The end slideshow -->
+        <!-- end slideshow -->
 
         <div class="row">
-            <div class="col-sm-3" v-for="article in drinks.slice(startSlice,endSlice)" v-bind:key="article.code">
+            <div class="col-sm-3" v-for="article in meat.slice(startSlice,endSlice)" v-bind:key="article.code">
                 <div class="card">
                     <div class="card-body">
                         <img center v-if="article.imageUrl && article.shop == 'maxi'" class="center"
@@ -203,13 +206,17 @@
                 shop: '',
                 products: [],
                 categoryArray: [],
-                drinks: []
+                drinks: [],
+                meat: [],
+                sweet: []
             }
         },
         created() {
             //this.fetchArticles();
             //this.fetchSaleProducts();
             //this.fetchDrinkProducts();
+            //this.fetchSweetProducts();
+            //this.fetchMeatProducts();
             window.addEventListener('scroll', this.handleScroll);
         },
         methods: {
@@ -241,21 +248,23 @@
             },
             dinamicUrl(currentPage, shop, category) {
                 let url;
+                //https://cors-anywhere.herokuapp.com/
+                //https://crossorigin.me/
                 if (shop === 'maxi' && category === 'akcija') {
                     if (currentPage == 0) {
-                        url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
+                        url = 'https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
                     } else {
-                        url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/view/QlProductListComponentController/loadMore?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
+                        url = 'https://www.maxi.rs/view/QlProductListComponentController/loadMore?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
                     }
                 }
                 else if (shop === 'idea' && category === 'akcija') {
                     url = 'https://cors-anywhere.herokuapp.com/https://www.idea.rs/online/v2/offers?per_page=48&page=' + currentPage + '&filter%5Bsort%5D=offerSoldStatisticsDesc';
                 }
                 else if (shop === 'maxi' && category === 'pice') {
-                    url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/online/Pice%2C-kafa-i-caj/c/01/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion';
+                    url = 'https://www.maxi.rs/online/Pice%2C-kafa-i-caj/c/01/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion';
                 }
                 else if (shop === 'maxi' && category === 'meso') {
-                    url = 'https://www.maxi.rs/online/Meso%2C-mesne-i-riblje-prera%C4%91evine/c/02/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion';
+                    url = 'https://www.maxi.rs/online/Meso%2C-mesne-i-riblje-prera%C4%91evine/c/02/getSearchPageData?pageSize=50&pageNumber=0&sort=promotion';
                 }
                 /*else if (shop === 'idea' && category === 'alkpica') {
                     url = 'https://www.idea.rs/online/v2/categories/60007888/products?per_page=5000&page=1&filter%5Bsort%5D=offerSoldStatisticsDesc';
@@ -298,6 +307,20 @@
                         this.drinks = JSON.parse(res.data);
                     })
             },
+            fetchMeatProducts() {
+                fetch('api/action_meat_fetch')
+                    .then(res => res.json())
+                    .then(res => {
+                        this.meat = JSON.parse(res.data);
+                    })
+            },
+            fetchSweetProducts() {
+                fetch('api/action_sweet_fetch')
+                    .then(res => res.json())
+                    .then(res => {
+                        this.sweet = JSON.parse(res.data);
+                    })
+            },
             fetchArticles(currentPage, shop, category) {
                 let vm = this;
                 let url;
@@ -308,33 +331,45 @@
                 }
                 currentPage = currentPage || '0';
                 url = this.dinamicUrl(currentPage, shop, category);
-                fetch(url)
-                    .then(res => res.json())
-                    .then(res => {
-                        if (currentPage == 0) {
-                            if (this.shop === 'idea') {
-                                //this.articles = res.products;
-                                this.idea = res.products;
-                                vm.makePagination(res._page, currentPage, category);
+
+                if(shop == 'idea') {
+                    fetch(url)
+                        .then(res => res.json())
+                        .then(res => {
+                            if (currentPage == 0) {
+                                if (this.shop === 'idea') {
+                                    //this.articles = res.products;
+                                    this.idea = res.products;
+                                    vm.makePagination(res._page, currentPage, category);
+                                } else {
+                                    //this.articles = res.results;
+                                    this.maxi = res.results;
+                                    vm.makePagination(res.pagination, currentPage, category);
+                                }
                             } else {
-                                //this.articles = res.results;
-                                this.maxi = res.results;
-                                vm.makePagination(res.pagination, currentPage, category);
+                                if (this.shop === 'idea') {
+                                    //this.articles = this.articles.concat(res.products);
+                                    this.idea = this.idea.concat(res.products);
+                                    vm.makePagination(this.pagination, currentPage, category);
+                                } else {
+                                    //this.articles = this.articles.concat(res);
+                                    this.maxi = this.maxi.concat(res);
+                                    vm.makePagination(this.pagination, currentPage, category);
+                                }
                             }
-                        } else {
-                            if (this.shop === 'idea') {
-                                //this.articles = this.articles.concat(res.products);
-                                this.idea = this.idea.concat(res.products);
-                                vm.makePagination(this.pagination, currentPage, category);
-                            } else {
-                                //this.articles = this.articles.concat(res);
-                                this.maxi = this.maxi.concat(res);
-                                vm.makePagination(this.pagination, currentPage, category);
-                            }
-                        }
-                        console.log(this.maxi);
-                    })
-                    .catch(err => console.log(err));
+                        })
+                        .catch(err => console.log(err));
+                }else{
+                    $.getJSON('http://api.allorigins.ml/get?url=' + encodeURIComponent(url) + '&callback=?', function(data){
+                        let res = JSON.parse(data.contents);
+                        vm.storeMaxi(res);
+                        alert('done');
+                    });
+
+                }
+            },
+            storeMaxi(res){
+                this.maxi = res.results;
             },
             makePagination(paginate, currentPage, category) {
                 let pagination;
@@ -383,7 +418,7 @@
                 let picaIdea = [];
                 if (shop == 'maxi') {
                     vm.storeVisit(this.maxi, shop, category);
-                } else if (shop == 'idea' && category == 'pice') {
+                } else if (shop == 'idea' && category == 'pice' || category == 'meso' || category == 'slatkisi') {
                     this.idea.forEach(function (item) {
                         item.forEach(function (data) {
                             picaIdea.push(data);
@@ -407,7 +442,7 @@
                     }
                 });
             },
-            drinkIdea(categoryNumber, data) {
+            getCategoriesIdea(categoryNumber, data) {
                 let vm = this;
                 let url = 'https://cors-anywhere.herokuapp.com/https://www.idea.rs/online/v2/categories/' + categoryNumber;
 
@@ -418,7 +453,7 @@
                     .then(res => {
                         if (res.has_children) {
                             res.children.forEach(function (item) {
-                                vm.drinkIdea(item.id, item);
+                                vm.getCategoriesIdea(item.id, item);
                             })
                         }
                     })

@@ -28,6 +28,8 @@ class CreateDrinksTable extends Migration
             $table->string('imageUrl')->nullable();
             $table->string('imageDefault')->nullable();
             $table->timestamps();
+            $table->charset = 'utf8mb4';
+            $table->collate = 'utf8mb4_swedish_ci';
         });
     }
 

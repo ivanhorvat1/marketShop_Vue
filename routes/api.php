@@ -21,6 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('articles', 'ArticleController@index');
 Route::get('action_sale_fetch', 'ActionSaleController@index');
 Route::get('action_drink_fetch', 'DrinkController@index');
+Route::get('action_meat_fetch', 'MeatController@index');
+Route::get('action_sweet_fetch', 'SweetsController@index');
 
 // List single article
 Route::get('article/{id}', 'ArticleController@show');
