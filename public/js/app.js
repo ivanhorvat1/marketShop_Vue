@@ -1953,6 +1953,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1982,9 +1984,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     //this.fetchArticles();
-    this.fetchSaleProducts();
-    this.fetchDrinkProducts(); //this.fetchSweetProducts();
-    //this.fetchMeatProducts();
+    this.fetchSaleProducts(); //this.fetchDrinkProducts();
+
+    this.fetchSweetProducts(); //this.fetchMeatProducts();
 
     window.addEventListener('scroll', this.handleScroll);
   },
@@ -1994,21 +1996,28 @@ __webpack_require__.r(__webpack_exports__);
       document.documentElement.scrollTop = 0;
     },
     handleScroll: function handleScroll() {
-      var scroll = Math.ceil($(window).scrollTop() + $(window).height());
-      var windowHeight = Math.round($(document).height());
+      if (this.articles.length > 0) {
+        var scroll = Math.ceil($(window).scrollTop() + $(window).height());
+        var windowHeight = Math.round($(document).height());
 
-      if (scroll == windowHeight) {
-        //if(this.pagination.nextPage <= this.pagination.lastPage) {
-        document.getElementById("loader").style.display = "block";
-        this.endSlice += 12; //}
-      } else {
-        document.getElementById("loader").style.display = "none";
-      }
+        if (scroll == windowHeight) {
+          //if(this.pagination.nextPage <= this.pagination.lastPage) {
+          document.getElementById("loader").style.display = "block";
+          this.endSlice += 12; //}
+        } else {
+          document.getElementById("loader").style.display = "none";
+        }
 
-      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        document.getElementById("BtnToTop").style.display = "block";
-      } else {
-        document.getElementById("BtnToTop").style.display = "none";
+        if (this.articles.length < this.endSlice) {
+          document.getElementById("loader").style.display = "none";
+          return;
+        }
+
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+          document.getElementById("BtnToTop").style.display = "block";
+        } else {
+          document.getElementById("BtnToTop").style.display = "none";
+        }
       }
     },
     hideLoader: function hideLoader() {
@@ -2024,7 +2033,7 @@ __webpack_require__.r(__webpack_exports__);
         } else {
             url = 'https://www.maxi.rs/view/QlProductListComponentController/loadMore?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
         }*/
-        url = 'https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=0&sort=promotion';
+        url = 'https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=40&sort=promotion';
       } else if (shop === 'idea' && category === 'akcija') {
         url = 'https://cors-anywhere.herokuapp.com/https://www.idea.rs/online/v2/offers?per_page=48&page=' + currentPage + '&filter%5Bsort%5D=offerSoldStatisticsDesc';
       } else if (shop === 'maxi' && category === 'pice') {
@@ -2079,7 +2088,7 @@ __webpack_require__.r(__webpack_exports__);
       fetch('api/action_drink_fetch').then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this2.drinks = JSON.parse(res.data);
+        _this2.articles = JSON.parse(res.data);
       });
     },
     fetchMeatProducts: function fetchMeatProducts() {
@@ -2088,7 +2097,7 @@ __webpack_require__.r(__webpack_exports__);
       fetch('api/action_meat_fetch').then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this3.meat = JSON.parse(res.data);
+        _this3.articles = JSON.parse(res.data);
       });
     },
     fetchSweetProducts: function fetchSweetProducts() {
@@ -2097,7 +2106,7 @@ __webpack_require__.r(__webpack_exports__);
       fetch('api/action_sweet_fetch').then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this4.sweet = JSON.parse(res.data);
+        _this4.articles = JSON.parse(res.data);
       });
     },
     fetchArticles: function fetchArticles(currentPage, shop, category) {
@@ -2118,6 +2127,14 @@ __webpack_require__.r(__webpack_exports__);
         fetch(url).then(function (res) {
           return res.json();
         }).then(function (res) {
+          /*if (this.shop === 'idea') {
+              //this.articles = res.products;
+              this.idea = res.products;
+              vm.makePagination(res._page, currentPage, category);
+          }else {
+              this.maxi = res.results;
+              vm.makePagination(res.pagination, currentPage, category);
+          }*/
           if (currentPage == 0) {
             if (_this5.shop === 'idea') {
               //this.articles = res.products;
@@ -2369,6 +2386,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2387,21 +2405,28 @@ __webpack_require__.r(__webpack_exports__);
       document.documentElement.scrollTop = 0;
     },
     handleScroll: function handleScroll() {
-      var scroll = Math.ceil($(window).scrollTop() + $(window).height());
-      var windowHeight = Math.round($(document).height());
+      if (this.freeze.length > 0) {
+        var scroll = Math.ceil($(window).scrollTop() + $(window).height());
+        var windowHeight = Math.round($(document).height());
 
-      if (scroll == windowHeight) {
-        //if(this.pagination.nextPage <= this.pagination.lastPage) {
-        document.getElementById("loader").style.display = "block";
-        this.endSlice += 12; //}
-      } else {
-        document.getElementById("loader").style.display = "none";
-      }
+        if (scroll == windowHeight) {
+          //if(this.pagination.nextPage <= this.pagination.lastPage) {
+          document.getElementById("loader").style.display = "block";
+          this.endSlice += 12; //}
+        } else {
+          document.getElementById("loader").style.display = "none";
+        }
 
-      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        document.getElementById("BtnToTop").style.display = "block";
-      } else {
-        document.getElementById("BtnToTop").style.display = "none";
+        if (this.freeze.length < this.endSlice) {
+          document.getElementById("loader").style.display = "none";
+          return;
+        }
+
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+          document.getElementById("BtnToTop").style.display = "block";
+        } else {
+          document.getElementById("BtnToTop").style.display = "none";
+        }
       }
     },
     fetchFreezeProducts: function fetchFreezeProducts() {
@@ -33825,171 +33850,160 @@ var render = function() {
     _c("br"),
     _c("br"),
     _vm._v(" "),
-    _c("h4", [_vm._v("Total products: " + _vm._s(_vm.akcija.length))]),
+    _c("h4", [
+      _vm._v("Total on Action products: " + _vm._s(_vm.akcija.length))
+    ]),
     _c("br"),
     _vm._v(" "),
-    _vm.akcija.length > 0
-      ? _c("div", { staticClass: "container", attrs: { align: "center" } }, [
+    _c("div", { staticClass: "container", attrs: { align: "center" } }, [
+      _c(
+        "div",
+        {
+          staticClass: "carousel slide mb-5 ",
+          attrs: { id: "demo", "data-ride": "carousel" }
+        },
+        [
           _c(
             "div",
-            {
-              staticClass: "carousel slide mb-5 ",
-              attrs: { id: "demo", "data-ride": "carousel" }
-            },
+            { staticClass: "carousel-inner" },
             [
-              _c(
-                "div",
-                { staticClass: "carousel-inner" },
-                [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _vm._l(
-                    _vm.akcija.slice(_vm.startSlice, _vm.endSlice),
-                    function(article) {
-                      return _c(
-                        "div",
-                        { key: article.code, staticClass: "carousel-item" },
-                        [
-                          article.imageUrl && article.shop == "maxi"
-                            ? _c("img", {
-                                staticClass: "center",
-                                attrs: {
-                                  center: "",
-                                  src:
-                                    "https://d3el976p2k4mvu.cloudfront.net" +
-                                    article.imageUrl,
-                                  width: "180px",
-                                  height: "180px"
-                                }
-                              })
-                            : article.imageUrl && article.shop == "idea"
-                              ? _c("img", {
-                                  staticClass: "center",
-                                  attrs: {
-                                    center: "",
-                                    src:
-                                      "https://www.idea.rs/online/" +
-                                      article.imageUrl,
-                                    width: "180px",
-                                    height: "180px"
-                                  }
-                                })
-                              : _c("img", {
-                                  attrs: {
-                                    center: "",
-                                    src: "article.imageDefault"
-                                  }
-                                }),
-                          _vm._v(" "),
-                          _c("h6", { attrs: { align: "center" } }, [
-                            _c("b", [_vm._v(_vm._s(article.title) + ":")]),
-                            _vm._v(" " + _vm._s(article.body))
-                          ]),
-                          _vm._v(" "),
-                          _c("hr"),
-                          _vm._v(" "),
-                          _c("h5", { attrs: { align: "center" } }, [
-                            article.shop == "idea"
-                              ? _c("img", {
-                                  staticStyle: {
-                                    height: "18px",
-                                    width: "75px"
-                                  },
-                                  attrs: {
-                                    src:
-                                      "https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"
-                                  }
-                                })
-                              : _c("img", {
-                                  staticStyle: {
-                                    height: "50px",
-                                    width: "80px"
-                                  },
-                                  attrs: {
-                                    src:
-                                      "https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"
-                                  }
-                                }),
-                            _c("b", { staticStyle: { color: "goldenrod" } }, [
-                              _vm._v(
-                                " " +
-                                  _vm._s(
-                                    article.formattedPrice.substring(
-                                      0,
-                                      article.formattedPrice.length - 3
-                                    )
-                                  )
+              _vm._m(0),
+              _vm._v(" "),
+              _vm._l(_vm.akcija.slice(_vm.startSlice, _vm.endSlice), function(
+                article
+              ) {
+                return _c(
+                  "div",
+                  { key: article.code, staticClass: "carousel-item" },
+                  [
+                    article.imageUrl && article.shop == "maxi"
+                      ? _c("img", {
+                          staticClass: "center",
+                          attrs: {
+                            center: "",
+                            src:
+                              "https://d3el976p2k4mvu.cloudfront.net" +
+                              article.imageUrl,
+                            width: "180px",
+                            height: "180px"
+                          }
+                        })
+                      : article.imageUrl && article.shop == "idea"
+                        ? _c("img", {
+                            staticClass: "center",
+                            attrs: {
+                              center: "",
+                              src:
+                                "https://www.idea.rs/online/" +
+                                article.imageUrl,
+                              width: "180px",
+                              height: "180px"
+                            }
+                          })
+                        : _c("img", {
+                            attrs: { center: "", src: "article.imageDefault" }
+                          }),
+                    _vm._v(" "),
+                    _c("h6", { attrs: { align: "center" } }, [
+                      _c("b", [_vm._v(_vm._s(article.title) + ":")]),
+                      _vm._v(" " + _vm._s(article.body))
+                    ]),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("h5", { attrs: { align: "center" } }, [
+                      article.shop == "idea"
+                        ? _c("img", {
+                            staticStyle: { height: "18px", width: "75px" },
+                            attrs: {
+                              src:
+                                "https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"
+                            }
+                          })
+                        : _c("img", {
+                            staticStyle: { height: "50px", width: "80px" },
+                            attrs: {
+                              src:
+                                "https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"
+                            }
+                          }),
+                      _c("b", { staticStyle: { color: "goldenrod" } }, [
+                        _vm._v(
+                          " " +
+                            _vm._s(
+                              article.formattedPrice.substring(
+                                0,
+                                article.formattedPrice.length - 3
                               )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          article.maxiCena
-                            ? _c("h5", { attrs: { align: "center" } }, [
-                                _c("img", {
-                                  staticStyle: {
-                                    height: "50px",
-                                    width: "80px"
-                                  },
-                                  attrs: {
-                                    src:
-                                      "https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"
-                                  }
-                                }),
-                                _c("b", [
-                                  _vm._v(
-                                    "\n                        " +
-                                      _vm._s(
-                                        article.maxiCena.substring(
-                                          0,
-                                          article.maxiCena.length - 3
-                                        )
-                                      )
+                            )
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    article.maxiCena
+                      ? _c("h5", { attrs: { align: "center" } }, [
+                          _c("img", {
+                            staticStyle: { height: "50px", width: "80px" },
+                            attrs: {
+                              src:
+                                "https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"
+                            }
+                          }),
+                          _c("b", [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(
+                                  article.maxiCena.substring(
+                                    0,
+                                    article.maxiCena.length - 3
                                   )
-                                ])
-                              ])
-                            : _c("h5", { attrs: { align: "center" } }, [
-                                _c("img", {
-                                  staticStyle: {
-                                    height: "18px",
-                                    width: "75px"
-                                  },
-                                  attrs: {
-                                    src:
-                                      "https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"
-                                  }
-                                }),
-                                _c("b", [
-                                  _vm._v(
-                                    "\n                        " +
-                                      _vm._s(
-                                        article.ideaCena.substring(
-                                          0,
-                                          article.ideaCena.length - 3
-                                        )
-                                      )
+                                )
+                            )
+                          ])
+                        ])
+                      : _c("h5", { attrs: { align: "center" } }, [
+                          _c("img", {
+                            staticStyle: { height: "18px", width: "75px" },
+                            attrs: {
+                              src:
+                                "https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"
+                            }
+                          }),
+                          _c("b", [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(
+                                  article.ideaCena.substring(
+                                    0,
+                                    article.ideaCena.length - 3
                                   )
-                                ])
-                              ])
-                        ]
-                      )
-                    }
-                  )
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _vm._m(1),
-              _vm._v(" "),
-              _vm._m(2)
-            ]
-          )
-        ])
-      : _vm._e(),
+                                )
+                            )
+                          ])
+                        ])
+                  ]
+                )
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _vm._m(1),
+          _vm._v(" "),
+          _vm._m(2)
+        ]
+      )
+    ]),
+    _vm._v(" "),
+    _c("h4", [_vm._v("Total products: " + _vm._s(_vm.articles.length))]),
+    _c("br"),
     _vm._v(" "),
     _c(
       "div",
       { staticClass: "row" },
-      _vm._l(_vm.drinks.slice(_vm.startSlice, _vm.endSlice), function(article) {
+      _vm._l(_vm.articles.slice(_vm.startSlice, _vm.endSlice), function(
+        article
+      ) {
         return _c("div", { key: article.code, staticClass: "col-sm-3" }, [
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-body" }, [
@@ -34208,6 +34222,9 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container", attrs: { align: "center" } }, [
+    _c("h4", [_vm._v("Total products: " + _vm._s(_vm.freeze.length))]),
+    _c("br"),
+    _vm._v(" "),
     _c(
       "div",
       { staticClass: "row" },

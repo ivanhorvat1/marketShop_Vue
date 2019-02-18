@@ -34,11 +34,11 @@
         <button @click="storeArticles('idea','slatkisi')" class="btn btn-primary">Ubaci Slatkisi Idea</button>
         <button @click="storeArticles('idea','smrznuti')" class="btn btn-primary">Ubaci smrznuti Idea</button>
         <br><br>
-        <h4>Total products: {{akcija.length}}</h4><br>
+        <h4>Total on Action products: {{akcija.length}}</h4><br>
 
         <!-- slideshow -->
 
-        <div align="center" class="container" v-if="akcija.length > 0">
+        <div align="center" class="container">
             <div id="demo" class="carousel slide mb-5 " data-ride="carousel">
 
                 <div class="carousel-inner">
@@ -84,8 +84,10 @@
 
         <!-- end slideshow -->
 
+        <h4>Total products: {{articles.length}}</h4><br>
+
         <div class="row">
-            <div class="col-sm-3" v-for="article in drinks.slice(startSlice,endSlice)" v-bind:key="article.code">
+            <div class="col-sm-3" v-for="article in articles.slice(startSlice,endSlice)" v-bind:key="article.code">
                 <div class="card">
                     <div class="card-body">
                         <img center v-if="article.imageUrl && article.shop == 'maxi'" class="center"
@@ -221,8 +223,8 @@
         created() {
             //this.fetchArticles();
             this.fetchSaleProducts();
-            this.fetchDrinkProducts();
-            //this.fetchSweetProducts();
+            //this.fetchDrinkProducts();
+            this.fetchSweetProducts();
             //this.fetchMeatProducts();
             window.addEventListener('scroll', this.handleScroll);
         },
@@ -232,22 +234,29 @@
                 document.documentElement.scrollTop = 0;
             },
             handleScroll() {
-                let scroll = Math.ceil($(window).scrollTop() + $(window).height());
-                let windowHeight = Math.round($(document).height());
+                if(this.articles.length > 0) {
+                    let scroll = Math.ceil($(window).scrollTop() + $(window).height());
+                    let windowHeight = Math.round($(document).height());
 
-                if (scroll == windowHeight) {
-                    //if(this.pagination.nextPage <= this.pagination.lastPage) {
-                    document.getElementById("loader").style.display = "block";
-                    this.endSlice += 12;
-                    //}
-                } else {
-                    document.getElementById("loader").style.display = "none";
-                }
+                    if (scroll == windowHeight) {
+                        //if(this.pagination.nextPage <= this.pagination.lastPage) {
+                        document.getElementById("loader").style.display = "block";
+                        this.endSlice += 12;
+                        //}
+                    } else {
+                        document.getElementById("loader").style.display = "none";
+                    }
 
-                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                    document.getElementById("BtnToTop").style.display = "block";
-                } else {
-                    document.getElementById("BtnToTop").style.display = "none";
+                    if (this.articles.length < this.endSlice) {
+                        document.getElementById("loader").style.display = "none";
+                        return;
+                    }
+
+                    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                        document.getElementById("BtnToTop").style.display = "block";
+                    } else {
+                        document.getElementById("BtnToTop").style.display = "none";
+                    }
                 }
             },
             hideLoader() {
@@ -263,7 +272,7 @@
                     } else {
                         url = 'https://www.maxi.rs/view/QlProductListComponentController/loadMore?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
                     }*/
-                   url = 'https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=0&sort=promotion'
+                   url = 'https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=40&sort=promotion'
                 }
                 else if (shop === 'idea' && category === 'akcija') {
                     url = 'https://cors-anywhere.herokuapp.com/https://www.idea.rs/online/v2/offers?per_page=48&page=' + currentPage + '&filter%5Bsort%5D=offerSoldStatisticsDesc';
@@ -318,21 +327,21 @@
                 fetch('api/action_drink_fetch')
                     .then(res => res.json())
                     .then(res => {
-                        this.drinks = JSON.parse(res.data);
+                        this.articles = JSON.parse(res.data);
                     })
             },
             fetchMeatProducts() {
                 fetch('api/action_meat_fetch')
                     .then(res => res.json())
                     .then(res => {
-                        this.meat = JSON.parse(res.data);
+                        this.articles = JSON.parse(res.data);
                     })
             },
             fetchSweetProducts() {
                 fetch('api/action_sweet_fetch')
                     .then(res => res.json())
                     .then(res => {
-                        this.sweet = JSON.parse(res.data);
+                        this.articles = JSON.parse(res.data);
                     })
             },
             fetchArticles(currentPage, shop, category) {
@@ -350,6 +359,14 @@
                     fetch(url)
                         .then(res => res.json())
                         .then(res => {
+                            /*if (this.shop === 'idea') {
+                                //this.articles = res.products;
+                                this.idea = res.products;
+                                vm.makePagination(res._page, currentPage, category);
+                            }else {
+                                this.maxi = res.results;
+                                vm.makePagination(res.pagination, currentPage, category);
+                            }*/
                             if (currentPage == 0) {
                                 if (this.shop === 'idea') {
                                     //this.articles = res.products;

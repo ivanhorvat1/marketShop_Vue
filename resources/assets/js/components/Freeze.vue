@@ -1,5 +1,6 @@
 <template>
     <div align="center" class="container">
+        <h4>Total products: {{freeze.length}}</h4><br>
         <div class="row">
             <div class="col-sm-3" v-for="article in freeze.slice(startSlice,endSlice)" v-bind:key="article.code">
                 <div class="card">
@@ -111,22 +112,29 @@
                 document.documentElement.scrollTop = 0;
             },
             handleScroll() {
-                let scroll = Math.ceil($(window).scrollTop() + $(window).height());
-                let windowHeight = Math.round($(document).height());
+                if(this.freeze.length > 0) {
+                    let scroll = Math.ceil($(window).scrollTop() + $(window).height());
+                    let windowHeight = Math.round($(document).height());
 
-                if (scroll == windowHeight) {
-                    //if(this.pagination.nextPage <= this.pagination.lastPage) {
-                    document.getElementById("loader").style.display = "block";
-                    this.endSlice += 12;
-                    //}
-                } else {
-                    document.getElementById("loader").style.display = "none";
-                }
+                    if (scroll == windowHeight) {
+                        //if(this.pagination.nextPage <= this.pagination.lastPage) {
+                        document.getElementById("loader").style.display = "block";
+                        this.endSlice += 12;
+                        //}
+                    } else {
+                        document.getElementById("loader").style.display = "none";
+                    }
 
-                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                    document.getElementById("BtnToTop").style.display = "block";
-                } else {
-                    document.getElementById("BtnToTop").style.display = "none";
+                    if (this.freeze.length < this.endSlice) {
+                        document.getElementById("loader").style.display = "none";
+                        return;
+                    }
+
+                    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                        document.getElementById("BtnToTop").style.display = "block";
+                    } else {
+                        document.getElementById("BtnToTop").style.display = "none";
+                    }
                 }
             },
             fetchFreezeProducts() {
