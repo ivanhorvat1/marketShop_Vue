@@ -1947,6 +1947,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1970,15 +1976,16 @@ __webpack_require__.r(__webpack_exports__);
       categoryArray: [],
       drinks: [],
       meat: [],
-      sweet: []
+      sweet: [],
+      freeze: []
     };
   },
   created: function created() {
     //this.fetchArticles();
-    //this.fetchSaleProducts();
-    //this.fetchDrinkProducts();
-    //this.fetchSweetProducts();
+    this.fetchSaleProducts();
+    this.fetchDrinkProducts(); //this.fetchSweetProducts();
     //this.fetchMeatProducts();
+
     window.addEventListener('scroll', this.handleScroll);
   },
   methods: {
@@ -2012,17 +2019,22 @@ __webpack_require__.r(__webpack_exports__);
       //https://crossorigin.me/
 
       if (shop === 'maxi' && category === 'akcija') {
-        if (currentPage == 0) {
-          url = 'https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
+        /*if (currentPage == 0) {
+            url = 'https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
         } else {
-          url = 'https://www.maxi.rs/view/QlProductListComponentController/loadMore?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
-        }
+            url = 'https://www.maxi.rs/view/QlProductListComponentController/loadMore?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
+        }*/
+        url = 'https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=0&sort=promotion';
       } else if (shop === 'idea' && category === 'akcija') {
         url = 'https://cors-anywhere.herokuapp.com/https://www.idea.rs/online/v2/offers?per_page=48&page=' + currentPage + '&filter%5Bsort%5D=offerSoldStatisticsDesc';
       } else if (shop === 'maxi' && category === 'pice') {
         url = 'https://www.maxi.rs/online/Pice%2C-kafa-i-caj/c/01/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion';
       } else if (shop === 'maxi' && category === 'meso') {
-        url = 'https://www.maxi.rs/online/Meso%2C-mesne-i-riblje-prera%C4%91evine/c/02/getSearchPageData?pageSize=50&pageNumber=0&sort=promotion';
+        url = 'https://www.maxi.rs/online/Meso%2C-mesne-i-riblje-prera%C4%91evine/c/02/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion';
+      } else if (shop === 'maxi' && category === 'slatkisi') {
+        url = 'https://www.maxi.rs/online/Cokolade%2C-keks%2C-slane-i-slatke-grickalice/c/09/getSearchPageData?q=%3Apopularity&sort=promotion&pageSize=5000&pageNumber=0';
+      } else if (shop === 'maxi' && category === 'smrznuti') {
+        url = 'https://www.maxi.rs/online/Smrznuti-proizvodi/c/10/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion';
       }
       /*else if (shop === 'idea' && category === 'alkpica') {
           url = 'https://www.idea.rs/online/v2/categories/60007888/products?per_page=5000&page=1&filter%5Bsort%5D=offerSoldStatisticsDesc';
@@ -2191,7 +2203,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (shop == 'maxi') {
         vm.storeVisit(this.maxi, shop, category);
-      } else if (shop == 'idea' && category == 'pice' || category == 'meso' || category == 'slatkisi') {
+      } else if (shop == 'idea' && category == 'pice' || category == 'meso' || category == 'slatkisi' || category == 'smrznuti') {
         this.idea.forEach(function (item) {
           item.forEach(function (data) {
             picaIdea.push(data);
@@ -2248,6 +2260,158 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
       this.idea = ideapice;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/Freeze.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/Freeze.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      startSlice: 0,
+      endSlice: 12,
+      freeze: []
+    };
+  },
+  created: function created() {
+    this.fetchFreezeProducts();
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  methods: {
+    toTopFunction: function toTopFunction() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    },
+    handleScroll: function handleScroll() {
+      var scroll = Math.ceil($(window).scrollTop() + $(window).height());
+      var windowHeight = Math.round($(document).height());
+
+      if (scroll == windowHeight) {
+        //if(this.pagination.nextPage <= this.pagination.lastPage) {
+        document.getElementById("loader").style.display = "block";
+        this.endSlice += 12; //}
+      } else {
+        document.getElementById("loader").style.display = "none";
+      }
+
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("BtnToTop").style.display = "block";
+      } else {
+        document.getElementById("BtnToTop").style.display = "none";
+      }
+    },
+    fetchFreezeProducts: function fetchFreezeProducts() {
+      var _this = this;
+
+      fetch('api/action_freeze_fetch').then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this.freeze = JSON.parse(res.data);
+      });
     }
   }
 });
@@ -4677,6 +4841,25 @@ if (typeof jQuery === 'undefined') {
 /*!*********************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/Articles.vue?vue&type=style&index=0&lang=css& ***!
   \*********************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n#BtnToTop {\n    display: none;\n    position: fixed;\n    bottom: 40px;\n    right: 30px;\n    z-index: 99;\n    font-size: 25px;\n    border: none;\n    outline: none;\n    background-color: red;\n    color: white;\n    cursor: pointer;\n    padding-left: 15px;\n    padding-right: 15px;\n    padding-top: 5px;\n    padding-bottom: 5px;\n    border-radius: 4px;\n}\n#BtnToTop:hover {\n    background-color: #555;\n}\n#loader {\n    display: none;\n    position: fixed;\n    left: 820px;\n    bottom: 50px;\n    z-index: 1;\n    width: 50px;\n    height: 50px;\n    margin: -75px 0 0 -75px;\n    border: 8px solid #f3f3f3;\n    border-radius: 50%;\n    border-top: 8px solid #3498db;\n    -webkit-animation: spin 2s linear infinite;\n    animation: spin 2s linear infinite;\n}\n\n/* Safari */\n@-webkit-keyframes spin {\n0% {\n        -webkit-transform: rotate(0deg);\n}\n100% {\n        -webkit-transform: rotate(360deg);\n}\n}\n@keyframes spin {\n0% {\n        -webkit-transform: rotate(0deg);\n                transform: rotate(0deg);\n}\n100% {\n        -webkit-transform: rotate(360deg);\n                transform: rotate(360deg);\n}\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/Freeze.vue?vue&type=style&index=0&lang=css&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/Freeze.vue?vue&type=style&index=0&lang=css& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -32721,6 +32904,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/Freeze.vue?vue&type=style&index=0&lang=css&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/Freeze.vue?vue&type=style&index=0&lang=css& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Freeze.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/Freeze.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/lib/addStyles.js":
 /*!****************************************************!*\
   !*** ./node_modules/style-loader/lib/addStyles.js ***!
@@ -33407,6 +33620,58 @@ var render = function() {
         staticClass: "btn btn-primary",
         on: {
           click: function($event) {
+            _vm.fetchArticles(0, "maxi", "slatkisi")
+          }
+        }
+      },
+      [_vm._v("Maxi Slatkisi")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            _vm.storeArticles("maxi", "slatkisi")
+          }
+        }
+      },
+      [_vm._v("Ubaci Slatkise Maxi")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            _vm.fetchArticles(0, "maxi", "smrznuti")
+          }
+        }
+      },
+      [_vm._v("Maxi Smrznuto")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            _vm.storeArticles("maxi", "smrznuti")
+          }
+        }
+      },
+      [_vm._v("Ubaci Smrznuto Maxi")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
             _vm.fetchArticles(0, "idea", "akcija")
           }
         }
@@ -33485,6 +33750,19 @@ var render = function() {
         staticClass: "btn btn-primary",
         on: {
           click: function($event) {
+            _vm.getCategoriesIdea("60007907")
+          }
+        }
+      },
+      [_vm._v("Smrznuti Proiz Idea")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
             _vm.checkChildren()
           }
         }
@@ -33531,156 +33809,187 @@ var render = function() {
       [_vm._v("Ubaci Slatkisi Idea")]
     ),
     _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            _vm.storeArticles("idea", "smrznuti")
+          }
+        }
+      },
+      [_vm._v("Ubaci smrznuti Idea")]
+    ),
+    _vm._v(" "),
     _c("br"),
     _c("br"),
     _vm._v(" "),
-    _c("h4", [_vm._v("Total products: " + _vm._s(_vm.meat.length))]),
+    _c("h4", [_vm._v("Total products: " + _vm._s(_vm.akcija.length))]),
     _c("br"),
     _vm._v(" "),
-    _c("div", { staticClass: "container", attrs: { align: "center" } }, [
-      _c(
-        "div",
-        {
-          staticClass: "carousel slide mb-5 ",
-          attrs: { id: "demo", "data-ride": "carousel" }
-        },
-        [
+    _vm.akcija.length > 0
+      ? _c("div", { staticClass: "container", attrs: { align: "center" } }, [
           _c(
             "div",
-            { staticClass: "carousel-inner" },
+            {
+              staticClass: "carousel slide mb-5 ",
+              attrs: { id: "demo", "data-ride": "carousel" }
+            },
             [
-              _vm._m(0),
-              _vm._v(" "),
-              _vm._l(_vm.akcija.slice(_vm.startSlice, _vm.endSlice), function(
-                article
-              ) {
-                return _c(
-                  "div",
-                  { key: article.code, staticClass: "carousel-item" },
-                  [
-                    article.imageUrl && article.shop == "maxi"
-                      ? _c("img", {
-                          staticClass: "center",
-                          attrs: {
-                            center: "",
-                            src:
-                              "https://d3el976p2k4mvu.cloudfront.net" +
-                              article.imageUrl,
-                            width: "180px",
-                            height: "180px"
-                          }
-                        })
-                      : article.imageUrl && article.shop == "idea"
-                        ? _c("img", {
-                            staticClass: "center",
-                            attrs: {
-                              center: "",
-                              src:
-                                "https://www.idea.rs/online/" +
-                                article.imageUrl,
-                              width: "180px",
-                              height: "180px"
-                            }
-                          })
-                        : _c("img", {
-                            attrs: { center: "", src: "article.imageDefault" }
-                          }),
-                    _vm._v(" "),
-                    _c("h6", { attrs: { align: "center" } }, [
-                      _c("b", [_vm._v(_vm._s(article.title) + ":")]),
-                      _vm._v(" " + _vm._s(article.body))
-                    ]),
-                    _vm._v(" "),
-                    _c("hr"),
-                    _vm._v(" "),
-                    _c("h5", { attrs: { align: "center" } }, [
-                      article.shop == "idea"
-                        ? _c("img", {
-                            staticStyle: { height: "18px", width: "75px" },
-                            attrs: {
-                              src:
-                                "https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"
-                            }
-                          })
-                        : _c("img", {
-                            staticStyle: { height: "50px", width: "80px" },
-                            attrs: {
-                              src:
-                                "https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"
-                            }
-                          }),
-                      _c("b", { staticStyle: { color: "goldenrod" } }, [
-                        _vm._v(
-                          " " +
-                            _vm._s(
-                              article.formattedPrice.substring(
-                                0,
-                                article.formattedPrice.length - 3
+              _c(
+                "div",
+                { staticClass: "carousel-inner" },
+                [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _vm._l(
+                    _vm.akcija.slice(_vm.startSlice, _vm.endSlice),
+                    function(article) {
+                      return _c(
+                        "div",
+                        { key: article.code, staticClass: "carousel-item" },
+                        [
+                          article.imageUrl && article.shop == "maxi"
+                            ? _c("img", {
+                                staticClass: "center",
+                                attrs: {
+                                  center: "",
+                                  src:
+                                    "https://d3el976p2k4mvu.cloudfront.net" +
+                                    article.imageUrl,
+                                  width: "180px",
+                                  height: "180px"
+                                }
+                              })
+                            : article.imageUrl && article.shop == "idea"
+                              ? _c("img", {
+                                  staticClass: "center",
+                                  attrs: {
+                                    center: "",
+                                    src:
+                                      "https://www.idea.rs/online/" +
+                                      article.imageUrl,
+                                    width: "180px",
+                                    height: "180px"
+                                  }
+                                })
+                              : _c("img", {
+                                  attrs: {
+                                    center: "",
+                                    src: "article.imageDefault"
+                                  }
+                                }),
+                          _vm._v(" "),
+                          _c("h6", { attrs: { align: "center" } }, [
+                            _c("b", [_vm._v(_vm._s(article.title) + ":")]),
+                            _vm._v(" " + _vm._s(article.body))
+                          ]),
+                          _vm._v(" "),
+                          _c("hr"),
+                          _vm._v(" "),
+                          _c("h5", { attrs: { align: "center" } }, [
+                            article.shop == "idea"
+                              ? _c("img", {
+                                  staticStyle: {
+                                    height: "18px",
+                                    width: "75px"
+                                  },
+                                  attrs: {
+                                    src:
+                                      "https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"
+                                  }
+                                })
+                              : _c("img", {
+                                  staticStyle: {
+                                    height: "50px",
+                                    width: "80px"
+                                  },
+                                  attrs: {
+                                    src:
+                                      "https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"
+                                  }
+                                }),
+                            _c("b", { staticStyle: { color: "goldenrod" } }, [
+                              _vm._v(
+                                " " +
+                                  _vm._s(
+                                    article.formattedPrice.substring(
+                                      0,
+                                      article.formattedPrice.length - 3
+                                    )
+                                  )
                               )
-                            )
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    article.maxiCena
-                      ? _c("h5", { attrs: { align: "center" } }, [
-                          _c("img", {
-                            staticStyle: { height: "50px", width: "80px" },
-                            attrs: {
-                              src:
-                                "https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"
-                            }
-                          }),
-                          _c("b", [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(
-                                  article.maxiCena.substring(
-                                    0,
-                                    article.maxiCena.length - 3
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          article.maxiCena
+                            ? _c("h5", { attrs: { align: "center" } }, [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "50px",
+                                    width: "80px"
+                                  },
+                                  attrs: {
+                                    src:
+                                      "https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"
+                                  }
+                                }),
+                                _c("b", [
+                                  _vm._v(
+                                    "\n                        " +
+                                      _vm._s(
+                                        article.maxiCena.substring(
+                                          0,
+                                          article.maxiCena.length - 3
+                                        )
+                                      )
                                   )
-                                )
-                            )
-                          ])
-                        ])
-                      : _c("h5", { attrs: { align: "center" } }, [
-                          _c("img", {
-                            staticStyle: { height: "18px", width: "75px" },
-                            attrs: {
-                              src:
-                                "https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"
-                            }
-                          }),
-                          _c("b", [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(
-                                  article.ideaCena.substring(
-                                    0,
-                                    article.ideaCena.length - 3
+                                ])
+                              ])
+                            : _c("h5", { attrs: { align: "center" } }, [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "18px",
+                                    width: "75px"
+                                  },
+                                  attrs: {
+                                    src:
+                                      "https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"
+                                  }
+                                }),
+                                _c("b", [
+                                  _vm._v(
+                                    "\n                        " +
+                                      _vm._s(
+                                        article.ideaCena.substring(
+                                          0,
+                                          article.ideaCena.length - 3
+                                        )
+                                      )
                                   )
-                                )
-                            )
-                          ])
-                        ])
-                  ]
-                )
-              })
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _vm._m(1),
-          _vm._v(" "),
-          _vm._m(2)
-        ]
-      )
-    ]),
+                                ])
+                              ])
+                        ]
+                      )
+                    }
+                  )
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
+              _vm._m(2)
+            ]
+          )
+        ])
+      : _vm._e(),
     _vm._v(" "),
     _c(
       "div",
       { staticClass: "row" },
-      _vm._l(_vm.meat.slice(_vm.startSlice, _vm.endSlice), function(article) {
+      _vm._l(_vm.drinks.slice(_vm.startSlice, _vm.endSlice), function(article) {
         return _c("div", { key: article.code, staticClass: "col-sm-3" }, [
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-body" }, [
@@ -33883,6 +34192,167 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/Freeze.vue?vue&type=template&id=98faa7e4&":
+/*!****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/Freeze.vue?vue&type=template&id=98faa7e4& ***!
+  \****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container", attrs: { align: "center" } }, [
+    _c(
+      "div",
+      { staticClass: "row" },
+      _vm._l(_vm.freeze.slice(_vm.startSlice, _vm.endSlice), function(article) {
+        return _c("div", { key: article.code, staticClass: "col-sm-3" }, [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-body" }, [
+              article.imageUrl && article.shop == "maxi"
+                ? _c("img", {
+                    staticClass: "center",
+                    attrs: {
+                      center: "",
+                      src:
+                        "https://d3el976p2k4mvu.cloudfront.net" +
+                        article.imageUrl,
+                      width: "180px",
+                      height: "180px"
+                    }
+                  })
+                : article.imageUrl && article.shop == "idea"
+                  ? _c("img", {
+                      staticClass: "center",
+                      attrs: {
+                        center: "",
+                        src: "https://www.idea.rs/online/" + article.imageUrl,
+                        width: "180px",
+                        height: "180px"
+                      }
+                    })
+                  : _c("img", {
+                      attrs: { center: "", src: "article.imageDefault" }
+                    }),
+              _vm._v(" "),
+              _c("p", { attrs: { align: "center" } }, [
+                _c("b", [_vm._v(_vm._s(article.title) + ":")]),
+                _vm._v(" " + _vm._s(article.body))
+              ]),
+              _vm._v(" "),
+              _c("hr"),
+              _vm._v(" "),
+              _c("p", { attrs: { align: "right" } }, [
+                article.shop == "idea"
+                  ? _c("img", {
+                      staticStyle: { height: "18px", width: "75px" },
+                      attrs: {
+                        src:
+                          "https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"
+                      }
+                    })
+                  : _c("img", {
+                      staticStyle: { height: "50px", width: "80px" },
+                      attrs: {
+                        src:
+                          "https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"
+                      }
+                    }),
+                _c("b", [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(
+                        article.formattedPrice.substring(
+                          0,
+                          article.formattedPrice.length - 3
+                        )
+                      )
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              article.maxiCena
+                ? _c("p", { attrs: { align: "right" } }, [
+                    _c("img", {
+                      staticStyle: { height: "50px", width: "80px" },
+                      attrs: {
+                        src:
+                          "https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"
+                      }
+                    }),
+                    _c("b", [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(
+                            article.maxiCena.substring(
+                              0,
+                              article.maxiCena.length - 3
+                            )
+                          )
+                      )
+                    ])
+                  ])
+                : _c("p", { attrs: { align: "right" } }, [
+                    _c("img", {
+                      staticStyle: { height: "18px", width: "75px" },
+                      attrs: {
+                        src:
+                          "https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"
+                      }
+                    }),
+                    _c("b", [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(
+                            article.ideaCena.substring(
+                              0,
+                              article.ideaCena.length - 3
+                            )
+                          )
+                      )
+                    ])
+                  ]),
+              _vm._v(" "),
+              _c("hr")
+            ])
+          ])
+        ])
+      }),
+      0
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        attrs: { id: "BtnToTop", title: "Go to top" },
+        on: {
+          click: function($event) {
+            _vm.toTopFunction()
+          }
+        }
+      },
+      [_vm._v("↑")]
+    ),
+    _vm._v(" "),
+    _c("div", { attrs: { id: "loader" } }),
+    _vm._v(" "),
+    _c("br"),
+    _c("br")
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/Navbar.vue?vue&type=template&id=cadbadf2&":
 /*!****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/Navbar.vue?vue&type=template&id=cadbadf2& ***!
@@ -33913,7 +34383,81 @@ var staticRenderFns = [
           _c("a", { staticClass: "navbar-brand", attrs: { href: "#" } }, [
             _vm._v("Maxi Gotcha")
           ])
-        ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "collapse navbar-collapse",
+            attrs: { id: "navbarNavAltMarkup" }
+          },
+          [
+            _c("ul", { staticClass: "navbar-nav" }, [
+              _c("li", { staticClass: "nav-item active" }, [
+                _c("a", { staticClass: "nav-link", attrs: { href: "/" } }, [
+                  _vm._v("Home "),
+                  _c("span", { staticClass: "sr-only" }, [_vm._v("(current)")])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "nav-item" }, [
+                _c(
+                  "a",
+                  { staticClass: "nav-link", attrs: { href: "/freeze" } },
+                  [_vm._v("Freeze")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "nav-item dropdown" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "nav-link dropdown-toggle",
+                    attrs: {
+                      href: "#",
+                      id: "navbarDropdownMenuLink",
+                      "data-toggle": "dropdown",
+                      "aria-haspopup": "true",
+                      "aria-expanded": "false"
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    Dropdown link\n                "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "dropdown-menu",
+                    attrs: { "aria-labelledby": "navbarDropdownMenuLink" }
+                  },
+                  [
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "#" } },
+                      [_vm._v("Action")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "#" } },
+                      [_vm._v("Another action")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      { staticClass: "dropdown-item", attrs: { href: "#" } },
+                      [_vm._v("Something else here")]
+                    )
+                  ]
+                )
+              ])
+            ])
+          ]
+        )
       ]
     )
   }
@@ -45209,6 +45753,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 Vue.component('articles', __webpack_require__(/*! ./components/Articles.vue */ "./resources/assets/js/components/Articles.vue").default);
 Vue.component('navbar', __webpack_require__(/*! ./components/Navbar.vue */ "./resources/assets/js/components/Navbar.vue").default);
+Vue.component('freeze', __webpack_require__(/*! ./components/Freeze.vue */ "./resources/assets/js/components/Freeze.vue").default);
 var app = new Vue({
   el: '#app'
 });
@@ -45352,6 +45897,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Articles_vue_vue_type_template_id_59e03618___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Articles_vue_vue_type_template_id_59e03618___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/Freeze.vue":
+/*!***************************************************!*\
+  !*** ./resources/assets/js/components/Freeze.vue ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Freeze_vue_vue_type_template_id_98faa7e4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Freeze.vue?vue&type=template&id=98faa7e4& */ "./resources/assets/js/components/Freeze.vue?vue&type=template&id=98faa7e4&");
+/* harmony import */ var _Freeze_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Freeze.vue?vue&type=script&lang=js& */ "./resources/assets/js/components/Freeze.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Freeze_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Freeze.vue?vue&type=style&index=0&lang=css& */ "./resources/assets/js/components/Freeze.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _Freeze_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Freeze_vue_vue_type_template_id_98faa7e4___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Freeze_vue_vue_type_template_id_98faa7e4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/assets/js/components/Freeze.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/Freeze.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/assets/js/components/Freeze.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Freeze_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Freeze.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/Freeze.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Freeze_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/Freeze.vue?vue&type=style&index=0&lang=css&":
+/*!************************************************************************************!*\
+  !*** ./resources/assets/js/components/Freeze.vue?vue&type=style&index=0&lang=css& ***!
+  \************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Freeze_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Freeze.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/Freeze.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Freeze_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Freeze_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Freeze_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Freeze_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Freeze_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/Freeze.vue?vue&type=template&id=98faa7e4&":
+/*!**********************************************************************************!*\
+  !*** ./resources/assets/js/components/Freeze.vue?vue&type=template&id=98faa7e4& ***!
+  \**********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Freeze_vue_vue_type_template_id_98faa7e4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Freeze.vue?vue&type=template&id=98faa7e4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/Freeze.vue?vue&type=template&id=98faa7e4&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Freeze_vue_vue_type_template_id_98faa7e4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Freeze_vue_vue_type_template_id_98faa7e4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

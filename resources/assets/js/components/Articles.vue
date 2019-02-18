@@ -14,6 +14,10 @@
         <button @click="storeArticles('maxi','pice')" class="btn btn-primary">Ubaci Pice Maxi</button>
         <button @click="fetchArticles(0, 'maxi', 'meso')" class="btn btn-primary">Maxi Meso</button>
         <button @click="storeArticles('maxi','meso')" class="btn btn-primary">Ubaci Meso Maxi</button>
+        <button @click="fetchArticles(0, 'maxi', 'slatkisi')" class="btn btn-primary">Maxi Slatkisi</button>
+        <button @click="storeArticles('maxi','slatkisi')" class="btn btn-primary">Ubaci Slatkise Maxi</button>
+        <button @click="fetchArticles(0, 'maxi', 'smrznuti')" class="btn btn-primary">Maxi Smrznuto</button>
+        <button @click="storeArticles('maxi','smrznuti')" class="btn btn-primary">Ubaci Smrznuto Maxi</button>
         <!--<button @click="fetchArticles(0,'meso')" class="btn btn-primary">Mesnati Proizvodi</button>
         <button @click="fetchArticles(0,'slatkisi')" class="btn btn-primary">Čokolade, keks, slane i slatke grickalice</button>-->
         <button @click="fetchArticles(0,'idea','akcija')" class="btn btn-primary">Idea Akcija</button>
@@ -22,17 +26,19 @@
         <button @click="getCategoriesIdea('60007823')" class="btn btn-primary">Meso Idea</button>
         <button @click="getCategoriesIdea('60007780')" class="btn btn-primary">Meso2 Idea</button>
         <button @click="getCategoriesIdea('60007896')" class="btn btn-primary">Slatkisi Idea</button>
+        <button @click="getCategoriesIdea('60007907')" class="btn btn-primary">Smrznuti Proiz Idea</button>
         <button @click="checkChildren()" class="btn btn-primary">check idea children</button>
         <!--:disabled="this.categoryArray.length < 16"-->
         <button @click="storeArticles('idea','pice')" class="btn btn-primary">Ubaci Pice Idea</button>
         <button @click="storeArticles('idea','meso')" class="btn btn-primary">Ubaci Meso Idea</button>
         <button @click="storeArticles('idea','slatkisi')" class="btn btn-primary">Ubaci Slatkisi Idea</button>
+        <button @click="storeArticles('idea','smrznuti')" class="btn btn-primary">Ubaci smrznuti Idea</button>
         <br><br>
-        <h4>Total products: {{meat.length}}</h4><br>
+        <h4>Total products: {{akcija.length}}</h4><br>
 
         <!-- slideshow -->
 
-        <div align="center" class="container">
+        <div align="center" class="container" v-if="akcija.length > 0">
             <div id="demo" class="carousel slide mb-5 " data-ride="carousel">
 
                 <div class="carousel-inner">
@@ -79,7 +85,7 @@
         <!-- end slideshow -->
 
         <div class="row">
-            <div class="col-sm-3" v-for="article in meat.slice(startSlice,endSlice)" v-bind:key="article.code">
+            <div class="col-sm-3" v-for="article in drinks.slice(startSlice,endSlice)" v-bind:key="article.code">
                 <div class="card">
                     <div class="card-body">
                         <img center v-if="article.imageUrl && article.shop == 'maxi'" class="center"
@@ -208,13 +214,14 @@
                 categoryArray: [],
                 drinks: [],
                 meat: [],
-                sweet: []
+                sweet: [],
+                freeze: []
             }
         },
         created() {
             //this.fetchArticles();
-            //this.fetchSaleProducts();
-            //this.fetchDrinkProducts();
+            this.fetchSaleProducts();
+            this.fetchDrinkProducts();
             //this.fetchSweetProducts();
             //this.fetchMeatProducts();
             window.addEventListener('scroll', this.handleScroll);
@@ -251,11 +258,12 @@
                 //https://cors-anywhere.herokuapp.com/
                 //https://crossorigin.me/
                 if (shop === 'maxi' && category === 'akcija') {
-                    if (currentPage == 0) {
+                    /*if (currentPage == 0) {
                         url = 'https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
                     } else {
                         url = 'https://www.maxi.rs/view/QlProductListComponentController/loadMore?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
-                    }
+                    }*/
+                   url = 'https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=0&sort=promotion'
                 }
                 else if (shop === 'idea' && category === 'akcija') {
                     url = 'https://cors-anywhere.herokuapp.com/https://www.idea.rs/online/v2/offers?per_page=48&page=' + currentPage + '&filter%5Bsort%5D=offerSoldStatisticsDesc';
@@ -264,7 +272,13 @@
                     url = 'https://www.maxi.rs/online/Pice%2C-kafa-i-caj/c/01/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion';
                 }
                 else if (shop === 'maxi' && category === 'meso') {
-                    url = 'https://www.maxi.rs/online/Meso%2C-mesne-i-riblje-prera%C4%91evine/c/02/getSearchPageData?pageSize=50&pageNumber=0&sort=promotion';
+                    url = 'https://www.maxi.rs/online/Meso%2C-mesne-i-riblje-prera%C4%91evine/c/02/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion';
+                }
+                else if (shop === 'maxi' && category === 'slatkisi') {
+                    url = 'https://www.maxi.rs/online/Cokolade%2C-keks%2C-slane-i-slatke-grickalice/c/09/getSearchPageData?q=%3Apopularity&sort=promotion&pageSize=5000&pageNumber=0';
+                }
+                else if (shop === 'maxi' && category === 'smrznuti') {
+                    url = 'https://www.maxi.rs/online/Smrznuti-proizvodi/c/10/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion';
                 }
                 /*else if (shop === 'idea' && category === 'alkpica') {
                     url = 'https://www.idea.rs/online/v2/categories/60007888/products?per_page=5000&page=1&filter%5Bsort%5D=offerSoldStatisticsDesc';
@@ -418,7 +432,7 @@
                 let picaIdea = [];
                 if (shop == 'maxi') {
                     vm.storeVisit(this.maxi, shop, category);
-                } else if (shop == 'idea' && category == 'pice' || category == 'meso' || category == 'slatkisi') {
+                } else if (shop == 'idea' && category == 'pice' || category == 'meso' || category == 'slatkisi' || category == 'smrznuti') {
                     this.idea.forEach(function (item) {
                         item.forEach(function (data) {
                             picaIdea.push(data);

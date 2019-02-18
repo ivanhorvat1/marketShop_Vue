@@ -11,6 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome')->with('showStore',true);
+//});
+
+Route::get('/', [
+    'uses' => 'FrontEndController@index',
+    'as' => 'index'
+]);
+
+Route::get('/freeze',[
+    'uses' => 'FreezeController@getView',
+    'as' => 'freeze'
+]);
