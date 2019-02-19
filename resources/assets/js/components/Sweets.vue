@@ -79,7 +79,7 @@
                 }
             },
             fetchProducts() {
-                fetch('api/action_freeze_fetch')
+                fetch('api/action_sweet_fetch')
                     .then(res => res.json())
                     .then(res => {
                         this.products = JSON.parse(res.data);

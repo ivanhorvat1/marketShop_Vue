@@ -7,6 +7,8 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <script>window.Laravel = { csrfToken: '{{ csrf_token() }}'}</script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
@@ -17,6 +19,13 @@
     <body>
     <div id="app">
         @include('includes.navbar')
+
+        <div id="preloader-wrapper">
+            <div id="preloader"></div>
+            <div class="preloader-section section-left"></div>
+            <div class="preloader-section section-right"></div>
+        </div>
+
         <div class="container">
             @if($showStore)
                 @include('frontend.articlesHomePage')

@@ -19,8 +19,19 @@ Route::get('/', [
     'uses' => 'FrontEndController@index',
     'as' => 'index'
 ]);
-
 Route::get('/freeze',[
     'uses' => 'FreezeController@getView',
     'as' => 'freeze'
+]);
+Route::get('/drinks',[
+    'uses' => 'DrinkController@getView',
+    'as' => 'drinks'
+]);
+Route::get('/sweets',[
+    'uses' => 'SweetsController@getView',
+    'as' => 'sweets'
+]);
+Route::get('/meats',[
+    'uses' => 'MeatController@getView',
+    'as' => 'meats'
 ]);

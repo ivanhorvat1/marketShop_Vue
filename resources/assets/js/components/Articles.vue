@@ -40,7 +40,6 @@
 
         <div align="center" class="container">
             <div id="demo" class="carousel slide mb-5 " data-ride="carousel">
-
                 <div class="carousel-inner">
                     <div class="carousel-item active" style="height: 320px">
                         <h3 style="padding-top: 100px">Izdvajamo</h3>
@@ -72,19 +71,19 @@
 
                 <!-- Left and right controls -->
                 <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                    <span class="carousel-control-prev-icon"
-                          style="background-color: black; border-radius: 50%; width: 30px; height: 30px;"></span>
+                    <span class="carousel-control-prev-icon" style="background-color: black; border-radius: 50%; width: 30px; height: 30px;"></span>
+                    <span class="sr-only">Previous</span>
                 </a>
                 <a class="carousel-control-next" href="#demo" data-slide="next">
-                    <span class="carousel-control-next-icon"
-                          style="background-color: black; border-radius: 50%; width: 30px; height: 30px;"></span>
+                    <span class="carousel-control-next-icon" style="background-color: black; border-radius: 50%; width: 30px; height: 30px;"></span>
+                    <span class="sr-only">Next</span>
                 </a>
             </div>
         </div>
 
         <!-- end slideshow -->
 
-        <h4>Total products: {{articles.length}}</h4><br>
+        <h4 v-if="articles.length > 0">Total products: {{articles.length}}</h4><br>
 
         <div class="row">
             <div class="col-sm-3" v-for="article in articles.slice(startSlice,endSlice)" v-bind:key="article.code">
@@ -133,65 +132,6 @@
     </nav>-->
     </div>
 </template>
-<style>
-    #BtnToTop {
-        display: none;
-        position: fixed;
-        bottom: 40px;
-        right: 30px;
-        z-index: 99;
-        font-size: 25px;
-        border: none;
-        outline: none;
-        background-color: red;
-        color: white;
-        cursor: pointer;
-        padding-left: 15px;
-        padding-right: 15px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        border-radius: 4px;
-    }
-
-    #BtnToTop:hover {
-        background-color: #555;
-    }
-
-    #loader {
-        display: none;
-        position: fixed;
-        left: 820px;
-        bottom: 50px;
-        z-index: 1;
-        width: 50px;
-        height: 50px;
-        margin: -75px 0 0 -75px;
-        border: 8px solid #f3f3f3;
-        border-radius: 50%;
-        border-top: 8px solid #3498db;
-        -webkit-animation: spin 2s linear infinite;
-        animation: spin 2s linear infinite;
-    }
-
-    /* Safari */
-    @-webkit-keyframes spin {
-        0% {
-            -webkit-transform: rotate(0deg);
-        }
-        100% {
-            -webkit-transform: rotate(360deg);
-        }
-    }
-
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
-        }
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-</style>
 <script>
     export default {
         data() {
@@ -221,10 +161,9 @@
             }
         },
         created() {
-            //this.fetchArticles();
             this.fetchSaleProducts();
             //this.fetchDrinkProducts();
-            this.fetchSweetProducts();
+            //this.fetchSweetProducts();
             //this.fetchMeatProducts();
             window.addEventListener('scroll', this.handleScroll);
         },
@@ -321,6 +260,7 @@
                     .then(res => res.json())
                     .then(res => {
                         this.akcija = JSON.parse(res.data);
+                        $('body').addClass('loaded');
                     })
             },
             fetchDrinkProducts() {
@@ -353,20 +293,12 @@
                     this.articles = [];
                 }
                 currentPage = currentPage || '0';
-                url = this.dinamicUrl(currentPage, shop, category);
+                url = vm.dinamicUrl(currentPage, shop, category);
 
                 if(shop == 'idea') {
                     fetch(url)
                         .then(res => res.json())
                         .then(res => {
-                            /*if (this.shop === 'idea') {
-                                //this.articles = res.products;
-                                this.idea = res.products;
-                                vm.makePagination(res._page, currentPage, category);
-                            }else {
-                                this.maxi = res.results;
-                                vm.makePagination(res.pagination, currentPage, category);
-                            }*/
                             if (currentPage == 0) {
                                 if (this.shop === 'idea') {
                                     //this.articles = res.products;
@@ -391,16 +323,31 @@
                         })
                         .catch(err => console.log(err));
                 }else{
-                    $.getJSON('http://api.allorigins.ml/get?url=' + encodeURIComponent(url) + '&callback=?', function(data){
-                        let res = JSON.parse(data.contents);
-                        vm.storeMaxi(res);
-                        alert('done');
-                    });
-
+                    if(category == 'akcija'){
+                        for (let i = 0; i <= 60; i++) {
+                                $.getJSON('http://api.allorigins.ml/get?url=' + encodeURIComponent("https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber="+i+"&sort=promotion") + '&callback=?', function(data){
+                                    let res = JSON.parse(data.contents);
+                                    vm.storeMaxi(res,i);
+                                });
+                        }
+                    }else{
+                        $.getJSON('http://api.allorigins.ml/get?url=' + encodeURIComponent(url) + '&callback=?', function(data){
+                            let res = JSON.parse(data.contents);
+                            vm.storeMaxi(res);
+                            alert('done');
+                        });
+                    }
                 }
             },
-            storeMaxi(res){
-                this.maxi = res.results;
+            storeMaxi(res,i){
+                if(i == 0){
+                    this.maxi = res.results;
+                }else if(i > 0){
+                    this.maxi = this.maxi.concat(res.results);
+                }else{
+                    this.maxi = res.results;
+                }
+                console.log(this.maxi);
             },
             makePagination(paginate, currentPage, category) {
                 let pagination;
@@ -427,11 +374,11 @@
                         for (let i = 2; i <= pagination.lastPage; i++) {
                             this.fetchArticles(i, this.shop, category);
                         }
-                    } else if (this.shop === 'maxi' && category == 'akcija') {
+                    }/* else if (this.shop === 'maxi' && category == 'akcija') {
                         for (let i = 1; i <= 60; i++) {
                             this.fetchArticles(i, this.shop, category);
                         }
-                    }
+                    }*/
                 } else {
                     document.getElementById("loader").style.display = "none";
                     pagination = {

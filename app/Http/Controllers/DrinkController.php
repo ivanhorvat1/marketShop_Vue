@@ -39,4 +39,8 @@ class DrinkController extends Controller
 
         return ['data' => json_encode($sameBarcode)];
     }
+
+    public function getView(){
+        return view('frontend.drinksArticles')->with('showStore',false);
+    }
 }

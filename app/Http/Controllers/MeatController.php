@@ -45,6 +45,10 @@ class MeatController extends Controller
         return ['data' => json_encode($sameBarcode)];
     }
 
+    public function getView(){
+        return view('frontend.meatsArticles')->with('showStore',false);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
