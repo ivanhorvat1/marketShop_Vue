@@ -1895,6 +1895,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1915,11 +1916,7 @@ __webpack_require__.r(__webpack_exports__);
       edit: false,
       shop: '',
       products: [],
-      categoryArray: [],
-      drinks: [],
-      meat: [],
-      sweet: [],
-      freeze: []
+      categoryArray: []
     };
   },
   created: function created() {
@@ -2232,6 +2229,50 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
       this.idea = ideapice;
+    },
+    getDis: function getDis() {
+      //let url = 'http://online.dis.rs/proizvodi.php?brArtPoStr=96';
+      var url = 'http://online.dis.rs/inc/inc.nalog.prijava.php?email=kja89560%40zwoho.com&lozinka=123456&radi=da'; //var_dump($section);
+
+      /*axios.get("http://online.dis.rs/proizvodi.php?brArtPoStr=96").then(response => {
+          console.log(response.data);
+          //resolve({template: response.data})
+      })*/
+
+      $.getJSON('http://api.allorigins.ml/get?url=' + encodeURIComponent(url) + '&callback=?', function (data) {
+        //let res = JSON.parse(data.contents);
+        console.log(data.contents);
+        alert('done');
+      });
+
+      var getJSON = function getJSON(url) {
+        return new Promise(function (resolve, reject) {
+          var xhr = new XMLHttpRequest();
+          xhr.open('get', url, true);
+          xhr.responseType = 'json';
+
+          xhr.onload = function () {
+            var status = xhr.status;
+
+            if (status == 200) {
+              resolve(xhr.response);
+            } else {
+              reject(status);
+            }
+          };
+
+          xhr.send();
+        });
+      };
+
+      getJSON('https://www.googleapis.com/freebase/v1/text/en/bob_dylan').then(function (data) {
+        alert('Your Json result is:  ' + data.result); //you can comment this, i used it to debug
+
+        result.innerText = data.result; //display the result in an HTML element
+      }, function (status) {
+        //error detection....
+        alert('Something went wrong.');
+      });
     }
   }
 });
@@ -33405,6 +33446,19 @@ var render = function() {
         }
       },
       [_vm._v("Ubaci smrznuti Idea")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            _vm.getDis()
+          }
+        }
+      },
+      [_vm._v("Dis proizvodi")]
     ),
     _vm._v(" "),
     _c("br"),

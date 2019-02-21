@@ -19,6 +19,12 @@ Route::get('/', [
     'uses' => 'FrontEndController@index',
     'as' => 'index'
 ]);
+
+Route::get('/loginDis', [
+    'uses' => 'FrontEndController@login',
+    'as' => 'login'
+]);
+
 Route::get('/freeze',[
     'uses' => 'FreezeController@getView',
     'as' => 'freeze'
