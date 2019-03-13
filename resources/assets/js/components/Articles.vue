@@ -34,6 +34,7 @@
         <button @click="storeArticles('idea','slatkisi')" class="btn btn-primary">Ubaci Slatkisi Idea</button>
         <button @click="storeArticles('idea','smrznuti')" class="btn btn-primary">Ubaci smrznuti Idea</button>
         <button @click="getDis()" class="btn btn-primary">Dis proizvodi</button>
+        <a href="/loginDis">My button</a>
         <br><br>
         <h4>Total on Action products: {{akcija.length}}</h4><br>
 
@@ -158,7 +159,8 @@
             }
         },
         created() {
-            this.fetchSaleProducts();
+            $('body').addClass('loaded');
+            //this.fetchSaleProducts();
             //this.fetchDrinkProducts();
             //this.fetchSweetProducts();
             //this.fetchMeatProducts();
@@ -321,14 +323,17 @@
                         .catch(err => console.log(err));
                 }else{
                     if(category == 'akcija'){
+                        //https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber="+i+"&sort=promotion
+                        //http://api.allorigins.ml
                         for (let i = 0; i <= 60; i++) {
-                                $.getJSON('http://api.allorigins.ml/get?url=' + encodeURIComponent("https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber="+i+"&sort=promotion") + '&callback=?', function(data){
+                                $.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent("https://www.maxi.rs/search/promotions/getSearchPageData?pageSize=20&pageNumber="+i+"&sort=promotion") + '&callback=?', function(data){
                                     let res = JSON.parse(data.contents);
                                     vm.storeMaxi(res,i);
                                 });
                         }
+                        alert('done');
                     }else{
-                        $.getJSON('http://api.allorigins.ml/get?url=' + encodeURIComponent(url) + '&callback=?', function(data){
+                        $.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent(url) + '&callback=?', function(data){
                             let res = JSON.parse(data.contents);
                             vm.storeMaxi(res);
                             alert('done');
@@ -344,7 +349,7 @@
                 }else{
                     this.maxi = res.results;
                 }
-                console.log(this.maxi);
+                //console.log(this.maxi);
             },
             makePagination(paginate, currentPage, category) {
                 let pagination;

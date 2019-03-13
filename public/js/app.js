@@ -1896,6 +1896,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1920,7 +1921,8 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.fetchSaleProducts(); //this.fetchDrinkProducts();
+    $('body').addClass('loaded'); //this.fetchSaleProducts();
+    //this.fetchDrinkProducts();
     //this.fetchSweetProducts();
     //this.fetchMeatProducts();
 
@@ -2091,17 +2093,21 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         if (category == 'akcija') {
           var _loop = function _loop(i) {
-            $.getJSON('http://api.allorigins.ml/get?url=' + encodeURIComponent("https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=" + i + "&sort=promotion") + '&callback=?', function (data) {
+            $.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent("https://www.maxi.rs/search/promotions/getSearchPageData?pageSize=20&pageNumber=" + i + "&sort=promotion") + '&callback=?', function (data) {
               var res = JSON.parse(data.contents);
               vm.storeMaxi(res, i);
             });
           };
 
+          //https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber="+i+"&sort=promotion
+          //http://api.allorigins.ml
           for (var i = 0; i <= 60; i++) {
             _loop(i);
           }
+
+          alert('done');
         } else {
-          $.getJSON('http://api.allorigins.ml/get?url=' + encodeURIComponent(url) + '&callback=?', function (data) {
+          $.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent(url) + '&callback=?', function (data) {
             var res = JSON.parse(data.contents);
             vm.storeMaxi(res);
             alert('done');
@@ -2116,9 +2122,8 @@ __webpack_require__.r(__webpack_exports__);
         this.maxi = this.maxi.concat(res.results);
       } else {
         this.maxi = res.results;
-      }
+      } //console.log(this.maxi);
 
-      console.log(this.maxi);
     },
     makePagination: function makePagination(paginate, currentPage, category) {
       var pagination;
@@ -33460,6 +33465,8 @@ var render = function() {
       },
       [_vm._v("Dis proizvodi")]
     ),
+    _vm._v(" "),
+    _c("a", { attrs: { href: "/loginDis" } }, [_vm._v("My button")]),
     _vm._v(" "),
     _c("br"),
     _c("br"),

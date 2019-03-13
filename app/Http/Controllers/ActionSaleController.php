@@ -50,6 +50,9 @@ class ActionSaleController extends Controller
         $imageDefault = null;
         $storeRecords = [];
         $arrayLengt = sizeof($request->products[0]) - 1;
+
+
+
         if($request->shop == 'idea') {
             for ($i = 0; $i <= $arrayLengt; $i++) {
                 if (array_key_exists('images', $request->products[0][$i]) && !empty($request->products[0][$i]['images'])) {
@@ -89,6 +92,13 @@ class ActionSaleController extends Controller
         }
 
         if($request->category == 'akcija'){
+
+            if($request->shop == 'idea') {
+                action_sale::where('shop', 'idea')->delete();
+            }else{
+                action_sale::where('shop', 'maxi')->delete();
+            }
+
             foreach ($storeRecords as $record){
                 $article = action_sale::firstOrNew(array('code'=>$record['code']));
                 $article->code = $record['code'];

@@ -21,8 +21,8 @@ Route::get('/', [
 ]);
 
 Route::get('/loginDis', [
-    'uses' => 'FrontEndController@login',
-    'as' => 'login'
+    'uses' => 'FrontEndController@dis',
+    'as' => 'loginDis'
 ]);
 
 Route::get('/freeze',[
