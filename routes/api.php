@@ -24,6 +24,7 @@ Route::get('action_drink_fetch', 'DrinkController@index');
 Route::get('action_meat_fetch', 'MeatController@index');
 Route::get('action_sweet_fetch', 'SweetsController@index');
 Route::get('action_freeze_fetch', 'FreezeController@index');
+Route::get('compare_dis_market', 'DisMarketController@getDisArticles');
 
 // List single article
 Route::get('article/{id}', 'ArticleController@show');

@@ -21,6 +21,7 @@ Vue.component('freeze', require('./components/Freeze.vue').default);
 Vue.component('drinks', require('./components/Drinks.vue').default);
 Vue.component('sweets', require('./components/Sweets.vue').default);
 Vue.component('meats', require('./components/Meats.vue').default);
+Vue.component('comparedismarket', require('./components/CompareDisMarket.vue').default);
 
 const app = new Vue({
     el: '#app'

@@ -21,8 +21,13 @@ Route::get('/', [
 ]);
 
 Route::get('/loginDis', [
-    'uses' => 'FrontEndController@dis',
+    'uses' => 'DisMarketController@disMarket',
     'as' => 'loginDis'
+]);
+
+Route::get('/getDisArticles', [
+    'uses' => 'DisMarketController@getDisArticles',
+    'as' => 'getDisArticles'
 ]);
 
 Route::get('/freeze',[
@@ -40,4 +45,8 @@ Route::get('/sweets',[
 Route::get('/meats',[
     'uses' => 'MeatController@getView',
     'as' => 'meats'
+]);
+Route::get('/dis',[
+    'uses' => 'DisMarketController@getView',
+    'as' => 'dis'
 ]);
