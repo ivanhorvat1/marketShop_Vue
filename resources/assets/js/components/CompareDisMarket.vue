@@ -2,39 +2,24 @@
     <div align="center" class="container">
         <h4 align="left">Total products: {{products.length}}</h4><br>
         <div class="row">
-            <div class="col-sm-6" v-for="article in products.slice(startSlice,endSlice)" v-bind:key="article.code">
+            <div class="col-sm-6" v-for="(article, index) in products" v-bind:key="article.dis.code">
                 <div class="card">
                     <div class="card-body">
-                        <!--<img center v-if="article.imageUrl && article.shop == 'maxi'" class="center"
-                             :src="'https://d3el976p2k4mvu.cloudfront.net'+article.imageUrl" width="180px"
-                             height="180px">
-                        <img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center"
-                             :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">
-                        <img center v-else :src="'article.imageDefault'">
-                        <p align="center"><b>{{ article.title }}:</b> {{ article.body }}</p>
-                        <hr>
-                        <p align="right"><img v-if="article.shop == 'idea'" style="height: 18px; width: 75px"
-                                              src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/><img
-                                v-else style="height: 50px; width: 80px"
-                                src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"/><b>
-                            {{ article.formattedPrice.substring(0,article.formattedPrice.length - 3) }}</b></p>
-                        <p v-if="article.maxiCena" align="right"><img style="height: 50px; width: 80px"
-                                                                      src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"/><b>
-                            {{ article.maxiCena.substring(0, article.maxiCena.length - 3) }}</b></p>
-                        <p v-else align="right"><img style="height: 18px; width: 75px"
-                                                     src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/><b>
-                            {{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></p>-->
                         <p>{{ article.dis.name}}</p>
+                        <p>{{ article.dis.code}}</p>
                         <hr>
-                        <form action="/action_page.php">
-                        <div v-for="baza in article.drink" v-bind:key="article.code">
-                                <input type="radio" name="gender" value="male"> {{baza.body}}<br>
-                        </div>
-                            <input type="submit" value="Submit">
+                        <form @submit.prevent="addDisArticle(index,article.dis.code,article.dis.name,article.dis.newPrice,article.dis.oldPrice,article.dis.salePrice)"
+                              method="post">
+                            <div v-for="baza in article.drink">
+                                <input type="radio" v-model="articles.barcodes" :value="baza.barcodes"> {{baza.body}}
+                                <!--<input type="text" v-model="articles.supplementary"/>-->
+                                <br>
+                            </div>
+                            <hr>
+                            <button type="submit" class="btn btn-info btn-block">Submit</button>
                         </form>
                     </div>
                 </div>
-                <hr>
             </div>
         </div>
         <button @click="toTopFunction()" id="BtnToTop" title="Go to top">&uarr;</button>
@@ -46,9 +31,12 @@
     export default {
         data() {
             return {
-                startSlice: 0,
-                endSlice: 12,
-                products: []
+                products: [],
+                // hidden: '',
+                articles: {
+                    barcodes: '',
+                    // supplementary: ''
+                }
             }
         },
         created() {
@@ -61,14 +49,13 @@
                 document.documentElement.scrollTop = 0;
             },
             handleScroll() {
-                if(this.products.length > 0) {
+                if (this.products.length > 0) {
                     let scroll = Math.ceil($(window).scrollTop() + $(window).height());
                     let windowHeight = Math.round($(document).height());
 
                     if (scroll == windowHeight) {
                         //if(this.pagination.nextPage <= this.pagination.lastPage) {
                         document.getElementById("loader").style.display = "block";
-                        this.endSlice += 12;
                         //}
                     } else {
                         document.getElementById("loader").style.display = "none";
@@ -90,11 +77,38 @@
                 fetch('api/compare_dis_market')
                     .then(res => res.json())
                     .then(res => {
-                        //console.log(res);
+                        console.log(res);
                         this.products = res;
                         $('body').addClass('loaded');
                     })
             },
+            addDisArticle(index, code, name, newPrice, oldPrice, salePrice) {
+                this.articles.code = code;
+                this.articles.name = name;
+                this.articles.newPrice = newPrice;
+                this.articles.oldPrice = oldPrice;
+                this.articles.salePrice = salePrice;
+                this.articles.category = 'pice';
+                this.articles.shop = 'dis';
+
+                if (this.articles.barcodes == '') {
+                    return alert('Please select one of radio buttons');
+                }
+
+                fetch('api/storeDisArticles', {
+                    method: 'post',
+                    body: JSON.stringify(this.articles),
+                    headers: {
+                        'content-type': 'application/json'
+                    }
+                })
+                    .then(data => {
+                        this.articles.barcodes = '';
+                        // this.hidden = 'display: none;';
+                        this.products.splice(index,1);
+                        //alert('Article Added');
+                    });
+            }
         }
     }
 </script>

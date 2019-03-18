@@ -33,6 +33,7 @@ Route::get('article/{id}', 'ArticleController@show');
 Route::post('article', 'ArticleController@store');
 Route::post('action_sale_store', 'ActionSaleController@store');
 Route::post('action_drink_store', 'ActionSaleController@store');
+Route::post('storeDisArticles', 'DisMarketController@store');
 
 // Update article
 Route::put('article', 'ArticleController@store');

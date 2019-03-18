@@ -2322,27 +2322,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      startSlice: 0,
-      endSlice: 12,
-      products: []
+      products: [],
+      // hidden: '',
+      articles: {
+        barcodes: '' // supplementary: ''
+
+      }
     };
   },
   created: function created() {
@@ -2361,8 +2349,7 @@ __webpack_require__.r(__webpack_exports__);
 
         if (scroll == windowHeight) {
           //if(this.pagination.nextPage <= this.pagination.lastPage) {
-          document.getElementById("loader").style.display = "block";
-          this.endSlice += 12; //}
+          document.getElementById("loader").style.display = "block"; //}
         } else {
           document.getElementById("loader").style.display = "none";
         }
@@ -2385,9 +2372,37 @@ __webpack_require__.r(__webpack_exports__);
       fetch('api/compare_dis_market').then(function (res) {
         return res.json();
       }).then(function (res) {
-        //console.log(res);
+        console.log(res);
         _this.products = res;
         $('body').addClass('loaded');
+      });
+    },
+    addDisArticle: function addDisArticle(index, code, name, newPrice, oldPrice, salePrice) {
+      var _this2 = this;
+
+      this.articles.code = code;
+      this.articles.name = name;
+      this.articles.newPrice = newPrice;
+      this.articles.oldPrice = oldPrice;
+      this.articles.salePrice = salePrice;
+      this.articles.category = 'pice';
+      this.articles.shop = 'dis';
+
+      if (this.articles.barcodes == '') {
+        return alert('Please select one of radio buttons');
+      }
+
+      fetch('api/storeDisArticles', {
+        method: 'post',
+        body: JSON.stringify(this.articles),
+        headers: {
+          'content-type': 'application/json'
+        }
+      }).then(function (data) {
+        _this2.articles.barcodes = ''; // this.hidden = 'display: none;';
+
+        _this2.products.splice(index, 1); //alert('Article Added');
+
       });
     }
   }
@@ -33972,38 +33987,82 @@ var render = function() {
     _c(
       "div",
       { staticClass: "row" },
-      _vm._l(_vm.products.slice(_vm.startSlice, _vm.endSlice), function(
-        article
-      ) {
-        return _c("div", { key: article.code, staticClass: "col-sm-6" }, [
+      _vm._l(_vm.products, function(article, index) {
+        return _c("div", { key: article.dis.code, staticClass: "col-sm-6" }, [
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-body" }, [
               _c("p", [_vm._v(_vm._s(article.dis.name))]),
+              _vm._v(" "),
+              _c("p", [_vm._v(_vm._s(article.dis.code))]),
               _vm._v(" "),
               _c("hr"),
               _vm._v(" "),
               _c(
                 "form",
-                { attrs: { action: "/action_page.php" } },
+                {
+                  attrs: { method: "post" },
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      _vm.addDisArticle(
+                        index,
+                        article.dis.code,
+                        article.dis.name,
+                        article.dis.newPrice,
+                        article.dis.oldPrice,
+                        article.dis.salePrice
+                      )
+                    }
+                  }
+                },
                 [
                   _vm._l(article.drink, function(baza) {
-                    return _c("div", { key: article.code }, [
+                    return _c("div", [
                       _c("input", {
-                        attrs: { type: "radio", name: "gender", value: "male" }
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.articles.barcodes,
+                            expression: "articles.barcodes"
+                          }
+                        ],
+                        attrs: { type: "radio" },
+                        domProps: {
+                          value: baza.barcodes,
+                          checked: _vm._q(_vm.articles.barcodes, baza.barcodes)
+                        },
+                        on: {
+                          change: function($event) {
+                            _vm.$set(_vm.articles, "barcodes", baza.barcodes)
+                          }
+                        }
                       }),
-                      _vm._v(" " + _vm._s(baza.body)),
+                      _vm._v(
+                        " " +
+                          _vm._s(baza.body) +
+                          "\n                            "
+                      ),
+                      _vm._v(" "),
                       _c("br")
                     ])
                   }),
                   _vm._v(" "),
-                  _c("input", { attrs: { type: "submit", value: "Submit" } })
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-info btn-block",
+                      attrs: { type: "submit" }
+                    },
+                    [_vm._v("Submit")]
+                  )
                 ],
                 2
               )
             ])
-          ]),
-          _vm._v(" "),
-          _c("hr")
+          ])
         ])
       }),
       0
