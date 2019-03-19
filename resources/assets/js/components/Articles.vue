@@ -33,10 +33,10 @@
         <button @click="storeArticles('idea','meso')" class="btn btn-primary">Ubaci Meso Idea</button>
         <button @click="storeArticles('idea','slatkisi')" class="btn btn-primary">Ubaci Slatkisi Idea</button>
         <button @click="storeArticles('idea','smrznuti')" class="btn btn-primary">Ubaci smrznuti Idea</button>
-        <button @click="getDis()" class="btn btn-primary">Dis proizvodi</button>
-        <a href="/loginDis">My button</a>
+        <!--<button @click="getDis()" class="btn btn-primary">Dis proizvodi</button>-->
+        <button class="btn btn-primary"><a href="/dis" style="color: white">Dis Market</a></button>
         <br><br>
-        <h4>Total on Action products: {{akcija.length}}</h4><br>
+        <h4>Total products on Action: {{akcija.length}}</h4><br>
 
         <!-- slideshow -->
 
@@ -48,11 +48,11 @@
                     </div>
                     <div class="carousel-item" v-for="article in akcija.slice(startSlice,endSlice)"
                          v-bind:key="article.code">
-                        <img center v-if="article.imageUrl && article.shop == 'maxi'" class="center"
+                        <img center v-if="article.imageUrl /*&& article.shop == 'maxi'*/" class="center"
                              :src="'https://d3el976p2k4mvu.cloudfront.net'+article.imageUrl" width="180px"
                              height="180px">
-                        <img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center"
-                             :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">
+                        <!--<img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center"
+                             :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">-->
                         <img center v-else :src="'article.imageDefault'">
                         <h6 align="center"><b>{{ article.title }}:</b> {{ article.body }}</h6>
                         <hr>
@@ -159,11 +159,12 @@
             }
         },
         created() {
-            $('body').addClass('loaded');
-            //this.fetchSaleProducts();
-            //this.fetchDrinkProducts();
-            //this.fetchSweetProducts();
-            //this.fetchMeatProducts();
+            //$('body').addClass('loaded');
+            this.fetchSaleProducts();
+            this.fetchDrinkProducts();
+            this.fetchFreezeProducts();
+            this.fetchSweetProducts();
+            this.fetchMeatProducts();
             window.addEventListener('scroll', this.handleScroll);
         },
         methods: {
@@ -258,30 +259,21 @@
                 fetch('api/action_sale_fetch')
                     .then(res => res.json())
                     .then(res => {
-                        this.akcija = JSON.parse(res.data);
+                        this.akcija = res;
                         $('body').addClass('loaded');
                     })
             },
             fetchDrinkProducts() {
                 fetch('api/action_drink_fetch')
-                    .then(res => res.json())
-                    .then(res => {
-                        this.articles = JSON.parse(res.data);
-                    })
             },
             fetchMeatProducts() {
                 fetch('api/action_meat_fetch')
-                    .then(res => res.json())
-                    .then(res => {
-                        this.articles = JSON.parse(res.data);
-                    })
             },
             fetchSweetProducts() {
                 fetch('api/action_sweet_fetch')
-                    .then(res => res.json())
-                    .then(res => {
-                        this.articles = JSON.parse(res.data);
-                    })
+            },
+            fetchFreezeProducts() {
+                fetch('api/action_freeze_fetch')
             },
             fetchArticles(currentPage, shop, category) {
                 let vm = this;
@@ -459,15 +451,15 @@
 
                 this.idea = ideapice;
             },
-            getDis(){
+            /*getDis(){
                //let url = 'http://online.dis.rs/proizvodi.php?brArtPoStr=96';
                let url = 'http://online.dis.rs/inc/inc.nalog.prijava.php?email=kja89560%40zwoho.com&lozinka=123456&radi=da';
                 //var_dump($section);
 
-                /*axios.get("http://online.dis.rs/proizvodi.php?brArtPoStr=96").then(response => {
+                /!*axios.get("http://online.dis.rs/proizvodi.php?brArtPoStr=96").then(response => {
                     console.log(response.data);
                     //resolve({template: response.data})
-                })*/
+                })*!/
 
                 $.getJSON('http://api.allorigins.ml/get?url=' + encodeURIComponent(url) + '&callback=?', function(data){
                     //let res = JSON.parse(data.contents);
@@ -499,7 +491,7 @@
                 }, function(status) { //error detection....
                     alert('Something went wrong.');
                 });
-            }
+            }*/
         }
     }
 </script>

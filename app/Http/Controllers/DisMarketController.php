@@ -55,6 +55,8 @@ class DisMarketController extends Controller
         //$html = $this->grab_page("http://online.dis.rs/proizvodi.php?");
         //$html = iconv("Windows-1250", "UTF-8", $html);
 
+        $drinkUrl = ['P1','O1'];
+
         /*preg_match_all("!<a href=\'#\' onclick=\"proslediNaStranicu\('(.*?)'\);return .*?;\s*\"\s*>(.*?)<\/a>!",
             $html,
             $match);*/
@@ -72,91 +74,94 @@ class DisMarketController extends Controller
         //echo $match[2][$i] . '<br>';
         //$url = 'http://online.dis.rs/' . $url;
         //http://online.dis.rs/proizvodi.php?brArtPoStr=350&kat=P1
-        $url = 'http://online.dis.rs/proizvodi.php?&kat=P1';
-        $htmlKAT = $this->grab_page($url . '&brArtPoStr=96');
+        foreach ($drinkUrl as $driUrl) {
+//        $url = 'http://online.dis.rs/proizvodi.php?&kat=P1';
+            $url = 'http://online.dis.rs/proizvodi.php?&kat=' . $driUrl;
+            $htmlKAT = $this->grab_page($url . '&brArtPoStr=96');
 
-        $htmlKAT = iconv("Windows-1250", "UTF-8", $htmlKAT);
-        //<a href=\'#\' onclick="proslediNaStranicu\('.*?limit=(\d*)&.*?'\);return .*?;\s*"\s*>››<\/a>
-        preg_match_all("!<a href=\'#\' onclick=\"proslediNaStranicu\('.*?limit=(\d*)&.*?'\);return .*?;\s*\"\s*>(.*?)<\/a>!",
-            $htmlKAT,
-            $limit);
+            $htmlKAT = iconv("Windows-1250", "UTF-8", $htmlKAT);
+            //<a href=\'#\' onclick="proslediNaStranicu\('.*?limit=(\d*)&.*?'\);return .*?;\s*"\s*>››<\/a>
+            preg_match_all("!<a href=\'#\' onclick=\"proslediNaStranicu\('.*?limit=(\d*)&.*?'\);return .*?;\s*\"\s*>(.*?)<\/a>!",
+                $htmlKAT,
+                $limit);
 
-        if (array_filter($limit)) {
-            $limit = max($limit[1]) + 96;
-        } else {
-            $limit = 0;
+            if (array_filter($limit)) {
+                $limit = max($limit[1]) + 96;
+            } else {
+                $limit = 0;
+            }
+
+            $urlFinal = $url . '&sortArt=sortNazart&brArtPoStr=' . $limit;
+
+            $htmlContent = $this->grab_page($urlFinal);
+
+            $htmlContent = iconv("Windows-1250", "UTF-8", $htmlContent);
+
+            $artikal_start = '<div id="artikal">';
+            $artikliHTML = array_slice(explode($artikal_start, $htmlContent), 1);
+
+            foreach ($artikliHTML as &$artikal) {
+                // Matching artical name
+                preg_match_all('!<div id="artikal-naziv">\s*(.*?)\s*<\/div>\s*!',
+                    $artikal,
+                    $artikal_nazivi);
+                // Matching artical cod
+                preg_match_all('!<div id="artikal-slika-okvir">\s*.*?data-target="#slikaModal(.*?)".*?\s*<\/div>\s*!',
+                    $artikal,
+                    $artikal_kodovi);
+
+                // Matching artical newPrice
+                preg_match_all("!<span class='tekst-artikal-cena'>(\d*,\d{2}).*?<!",
+                    $artikal,
+                    $artikal_cena_nova);
+
+                if (!empty($artikal_cena_nova[1])) {
+                    $artikal_cena_nova = $artikal_cena_nova[1][0];
+                } else {
+                    $artikal_cena_nova = null;
+                }
+
+                // Matching artical oldPrice
+                preg_match_all("!<span class='tekst-artikal-cena-stara'>(\d*,\d{2}).*?<!",
+                    $artikal,
+                    $artikal_cena_stara);
+
+                if (!empty($artikal_cena_stara[1])) {
+                    $artikal_cena_stara = $artikal_cena_stara[1][0];
+                } else {
+                    $artikal_cena_stara = null;
+                }
+
+                // Matching artical salePrice
+                preg_match_all("!<span class='tekst-artikal-cena-akcija'>(\d*,\d{2}).*?<!",
+                    $artikal,
+                    $artikal_cena_akcija);
+
+                if (!empty($artikal_cena_akcija[1])) {
+                    $artikal_cena_akcija = $artikal_cena_akcija[1][0];
+                } else {
+                    $artikal_cena_akcija = null;
+                }
+
+                $this->artikli[] = [
+                    'name' => $artikal_nazivi[1][0],
+                    'code' => $artikal_kodovi[1][0],
+                    'newPrice' => $artikal_cena_nova,
+                    'oldPrice' => $artikal_cena_stara,
+                    'salePrice' => $artikal_cena_akcija,
+                    'category' => 'pice'
+                    //'category' => $match[2][$i]
+                ];
+            }
+
+            // echo $i . '<br>';
+
+            //}
+
+            //$i++;
+
+            //}
         }
-
-        $urlFinal = $url . '&sortArt=sortNazart&brArtPoStr=' . $limit;
-
-        $htmlContent = $this->grab_page($urlFinal);
-
-        $htmlContent = iconv("Windows-1250", "UTF-8", $htmlContent);
-
-        $artikal_start = '<div id="artikal">';
-        $artikliHTML = array_slice(explode($artikal_start, $htmlContent), 1);
-
-        foreach ($artikliHTML as &$artikal) {
-            // Matching artical name
-            preg_match_all('!<div id="artikal-naziv">\s*(.*?)\s*<\/div>\s*!',
-                $artikal,
-                $artikal_nazivi);
-            // Matching artical cod
-            preg_match_all('!<div id="artikal-slika-okvir">\s*.*?data-target="#slikaModal(.*?)".*?\s*<\/div>\s*!',
-                $artikal,
-                $artikal_kodovi);
-
-            // Matching artical newPrice
-            preg_match_all("!<span class='tekst-artikal-cena'>(\d*,\d{2}).*?<!",
-                $artikal,
-                $artikal_cena_nova);
-
-            if (!empty($artikal_cena_nova[1])) {
-                $artikal_cena_nova = $artikal_cena_nova[1][0];
-            } else {
-                $artikal_cena_nova = null;
-            }
-
-            // Matching artical oldPrice
-            preg_match_all("!<span class='tekst-artikal-cena-stara'>(\d*,\d{2}).*?<!",
-                $artikal,
-                $artikal_cena_stara);
-
-            if (!empty($artikal_cena_stara[1])) {
-                $artikal_cena_stara = $artikal_cena_stara[1][0];
-            } else {
-                $artikal_cena_stara = null;
-            }
-
-            // Matching artical salePrice
-            preg_match_all("!<span class='tekst-artikal-cena-akcija'>(\d*,\d{2}).*?<!",
-                $artikal,
-                $artikal_cena_akcija);
-
-            if (!empty($artikal_cena_akcija[1])) {
-                $artikal_cena_akcija = $artikal_cena_akcija[1][0];
-            } else {
-                $artikal_cena_akcija = null;
-            }
-
-            $this->artikli[] = [
-                'name' => $artikal_nazivi[1][0],
-                'code' => $artikal_kodovi[1][0],
-                'newPrice' => $artikal_cena_nova,
-                'oldPrice' => $artikal_cena_stara,
-                'salePrice' => $artikal_cena_akcija,
-                'category' => 'pice'
-                //'category' => $match[2][$i]
-            ];
-        }
-
-        // echo $i . '<br>';
-
-        //}
-
-        //$i++;
-
-        //}
 
         return $this->artikli;
         // echo "Ima ukupno : " . count($this->artikli) . " artikala u DIS marketu!";

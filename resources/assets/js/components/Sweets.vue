@@ -5,11 +5,11 @@
             <div class="col-sm-3" v-for="article in products.slice(startSlice,endSlice)" v-bind:key="article.code">
                 <div class="card">
                     <div class="card-body">
-                        <img center v-if="article.imageUrl && article.shop == 'maxi'" class="center"
+                        <img center v-if="article.imageUrl /*&& article.shop == 'maxi'*/" class="center"
                              :src="'https://d3el976p2k4mvu.cloudfront.net'+article.imageUrl" width="180px"
                              height="180px">
-                        <img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center"
-                             :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">
+                        <!--<img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center"
+                             :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">-->
                         <img center v-else :src="'article.imageDefault'">
                         <p align="center"><b>{{ article.title }}:</b> {{ article.body }}</p>
                         <hr>
@@ -82,7 +82,7 @@
                 fetch('api/action_sweet_fetch')
                     .then(res => res.json())
                     .then(res => {
-                        this.products = JSON.parse(res.data);
+                        this.products = res;
                         $('body').addClass('loaded');
                     })
             },

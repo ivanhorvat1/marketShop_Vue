@@ -1921,11 +1921,12 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    $('body').addClass('loaded'); //this.fetchSaleProducts();
-    //this.fetchDrinkProducts();
-    //this.fetchSweetProducts();
-    //this.fetchMeatProducts();
-
+    //$('body').addClass('loaded');
+    this.fetchSaleProducts();
+    this.fetchDrinkProducts();
+    this.fetchFreezeProducts();
+    this.fetchSweetProducts();
+    this.fetchMeatProducts();
     window.addEventListener('scroll', this.handleScroll);
   },
   methods: {
@@ -2017,39 +2018,24 @@ __webpack_require__.r(__webpack_exports__);
       fetch('api/action_sale_fetch').then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this.akcija = JSON.parse(res.data);
+        _this.akcija = res;
         $('body').addClass('loaded');
       });
     },
     fetchDrinkProducts: function fetchDrinkProducts() {
-      var _this2 = this;
-
-      fetch('api/action_drink_fetch').then(function (res) {
-        return res.json();
-      }).then(function (res) {
-        _this2.articles = JSON.parse(res.data);
-      });
+      fetch('api/action_drink_fetch');
     },
     fetchMeatProducts: function fetchMeatProducts() {
-      var _this3 = this;
-
-      fetch('api/action_meat_fetch').then(function (res) {
-        return res.json();
-      }).then(function (res) {
-        _this3.articles = JSON.parse(res.data);
-      });
+      fetch('api/action_meat_fetch');
     },
     fetchSweetProducts: function fetchSweetProducts() {
-      var _this4 = this;
-
-      fetch('api/action_sweet_fetch').then(function (res) {
-        return res.json();
-      }).then(function (res) {
-        _this4.articles = JSON.parse(res.data);
-      });
+      fetch('api/action_sweet_fetch');
+    },
+    fetchFreezeProducts: function fetchFreezeProducts() {
+      fetch('api/action_freeze_fetch');
     },
     fetchArticles: function fetchArticles(currentPage, shop, category) {
-      var _this5 = this;
+      var _this2 = this;
 
       var vm = this;
       var url;
@@ -2067,24 +2053,24 @@ __webpack_require__.r(__webpack_exports__);
           return res.json();
         }).then(function (res) {
           if (currentPage == 0) {
-            if (_this5.shop === 'idea') {
+            if (_this2.shop === 'idea') {
               //this.articles = res.products;
-              _this5.idea = res.products;
+              _this2.idea = res.products;
               vm.makePagination(res._page, currentPage, category);
             } else {
               //this.articles = res.results;
-              _this5.maxi = res.results;
+              _this2.maxi = res.results;
               vm.makePagination(res.pagination, currentPage, category);
             }
           } else {
-            if (_this5.shop === 'idea') {
+            if (_this2.shop === 'idea') {
               //this.articles = this.articles.concat(res.products);
-              _this5.idea = _this5.idea.concat(res.products);
-              vm.makePagination(_this5.pagination, currentPage, category);
+              _this2.idea = _this2.idea.concat(res.products);
+              vm.makePagination(_this2.pagination, currentPage, category);
             } else {
               //this.articles = this.articles.concat(res);
-              _this5.maxi = _this5.maxi.concat(res);
-              vm.makePagination(_this5.pagination, currentPage, category);
+              _this2.maxi = _this2.maxi.concat(res);
+              vm.makePagination(_this2.pagination, currentPage, category);
             }
           }
         }).catch(function (err) {
@@ -2234,50 +2220,6 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
       this.idea = ideapice;
-    },
-    getDis: function getDis() {
-      //let url = 'http://online.dis.rs/proizvodi.php?brArtPoStr=96';
-      var url = 'http://online.dis.rs/inc/inc.nalog.prijava.php?email=kja89560%40zwoho.com&lozinka=123456&radi=da'; //var_dump($section);
-
-      /*axios.get("http://online.dis.rs/proizvodi.php?brArtPoStr=96").then(response => {
-          console.log(response.data);
-          //resolve({template: response.data})
-      })*/
-
-      $.getJSON('http://api.allorigins.ml/get?url=' + encodeURIComponent(url) + '&callback=?', function (data) {
-        //let res = JSON.parse(data.contents);
-        console.log(data.contents);
-        alert('done');
-      });
-
-      var getJSON = function getJSON(url) {
-        return new Promise(function (resolve, reject) {
-          var xhr = new XMLHttpRequest();
-          xhr.open('get', url, true);
-          xhr.responseType = 'json';
-
-          xhr.onload = function () {
-            var status = xhr.status;
-
-            if (status == 200) {
-              resolve(xhr.response);
-            } else {
-              reject(status);
-            }
-          };
-
-          xhr.send();
-        });
-      };
-
-      getJSON('https://www.googleapis.com/freebase/v1/text/en/bob_dylan').then(function (data) {
-        alert('Your Json result is:  ' + data.result); //you can comment this, i used it to debug
-
-        result.innerText = data.result; //display the result in an HTML element
-      }, function (status) {
-        //error detection....
-        alert('Something went wrong.');
-      });
     }
   }
 });
@@ -2455,6 +2397,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2503,7 +2451,7 @@ __webpack_require__.r(__webpack_exports__);
       fetch('api/action_drink_fetch').then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this.products = JSON.parse(res.data);
+        _this.products = res;
         $('body').addClass('loaded');
       });
     }
@@ -2605,7 +2553,7 @@ __webpack_require__.r(__webpack_exports__);
       fetch('api/action_freeze_fetch').then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this.products = JSON.parse(res.data);
+        _this.products = res;
         $('body').addClass('loaded');
       });
     }
@@ -2707,7 +2655,7 @@ __webpack_require__.r(__webpack_exports__);
       fetch('api/action_meat_fetch').then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this.products = JSON.parse(res.data);
+        _this.products = res;
         $('body').addClass('loaded');
       });
     }
@@ -2723,10 +2671,6 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-//
-//
-//
-//
 //
 //
 //
@@ -2864,7 +2808,7 @@ __webpack_require__.r(__webpack_exports__);
       fetch('api/action_sweet_fetch').then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this.products = JSON.parse(res.data);
+        _this.products = res;
         $('body').addClass('loaded');
       });
     }
@@ -33583,26 +33527,13 @@ var render = function() {
       [_vm._v("Ubaci smrznuti Idea")]
     ),
     _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-primary",
-        on: {
-          click: function($event) {
-            _vm.getDis()
-          }
-        }
-      },
-      [_vm._v("Dis proizvodi")]
-    ),
-    _vm._v(" "),
-    _c("a", { attrs: { href: "/loginDis" } }, [_vm._v("My button")]),
+    _vm._m(0),
     _vm._v(" "),
     _c("br"),
     _c("br"),
     _vm._v(" "),
     _c("h4", [
-      _vm._v("Total on Action products: " + _vm._s(_vm.akcija.length))
+      _vm._v("Total products on Action: " + _vm._s(_vm.akcija.length))
     ]),
     _c("br"),
     _vm._v(" "),
@@ -33618,7 +33549,7 @@ var render = function() {
             "div",
             { staticClass: "carousel-inner" },
             [
-              _vm._m(0),
+              _vm._m(1),
               _vm._v(" "),
               _vm._l(_vm.akcija.slice(_vm.startSlice, _vm.endSlice), function(
                 article
@@ -33627,7 +33558,7 @@ var render = function() {
                   "div",
                   { key: article.code, staticClass: "carousel-item" },
                   [
-                    article.imageUrl && article.shop == "maxi"
+                    article.imageUrl /*&& article.shop == 'maxi'*/
                       ? _c("img", {
                           staticClass: "center",
                           attrs: {
@@ -33639,21 +33570,9 @@ var render = function() {
                             height: "180px"
                           }
                         })
-                      : article.imageUrl && article.shop == "idea"
-                        ? _c("img", {
-                            staticClass: "center",
-                            attrs: {
-                              center: "",
-                              src:
-                                "https://www.idea.rs/online/" +
-                                article.imageUrl,
-                              width: "180px",
-                              height: "180px"
-                            }
-                          })
-                        : _c("img", {
-                            attrs: { center: "", src: "article.imageDefault" }
-                          }),
+                      : _c("img", {
+                          attrs: { center: "", src: "article.imageDefault" }
+                        }),
                     _vm._v(" "),
                     _c("h6", { attrs: { align: "center" } }, [
                       _c("b", [_vm._v(_vm._s(article.title) + ":")]),
@@ -33739,9 +33658,9 @@ var render = function() {
             2
           ),
           _vm._v(" "),
-          _vm._m(1),
+          _vm._m(2),
           _vm._v(" "),
-          _vm._m(2)
+          _vm._m(3)
         ]
       )
     ]),
@@ -33892,6 +33811,16 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn btn-primary" }, [
+      _c("a", { staticStyle: { color: "white" }, attrs: { href: "/dis" } }, [
+        _vm._v("Dis Market")
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -34124,7 +34053,7 @@ var render = function() {
         return _c("div", { key: article.code, staticClass: "col-sm-3" }, [
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-body" }, [
-              article.imageUrl && article.shop == "maxi"
+              article.imageUrl /*&& article.shop == 'maxi'*/
                 ? _c("img", {
                     staticClass: "center",
                     attrs: {
@@ -34136,19 +34065,7 @@ var render = function() {
                       height: "180px"
                     }
                   })
-                : article.imageUrl && article.shop == "idea"
-                  ? _c("img", {
-                      staticClass: "center",
-                      attrs: {
-                        center: "",
-                        src: "https://www.idea.rs/online/" + article.imageUrl,
-                        width: "180px",
-                        height: "180px"
-                      }
-                    })
-                  : _c("img", {
-                      attrs: { center: "", src: "article.imageDefault" }
-                    }),
+                : _vm._e(),
               _vm._v(" "),
               _c("p", { attrs: { align: "center" } }, [
                 _c("b", [_vm._v(_vm._s(article.title) + ":")]),
@@ -34156,35 +34073,6 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("hr"),
-              _vm._v(" "),
-              _c("p", { attrs: { align: "right" } }, [
-                article.shop == "idea"
-                  ? _c("img", {
-                      staticStyle: { height: "18px", width: "75px" },
-                      attrs: {
-                        src:
-                          "https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"
-                      }
-                    })
-                  : _c("img", {
-                      staticStyle: { height: "50px", width: "80px" },
-                      attrs: {
-                        src:
-                          "https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"
-                      }
-                    }),
-                _c("b", [
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(
-                        article.formattedPrice.substring(
-                          0,
-                          article.formattedPrice.length - 3
-                        )
-                      )
-                  )
-                ])
-              ]),
               _vm._v(" "),
               article.maxiCena
                 ? _c("p", { attrs: { align: "right" } }, [
@@ -34207,7 +34095,10 @@ var render = function() {
                       )
                     ])
                   ])
-                : _c("p", { attrs: { align: "right" } }, [
+                : _vm._e(),
+              _vm._v(" "),
+              article.ideaCena
+                ? _c("p", { attrs: { align: "right" } }, [
                     _c("img", {
                       staticStyle: { height: "18px", width: "75px" },
                       attrs: {
@@ -34226,7 +34117,31 @@ var render = function() {
                           )
                       )
                     ])
-                  ]),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              article.disCena
+                ? _c("p", { attrs: { align: "right" } }, [
+                    _c("img", {
+                      staticStyle: { height: "70px", width: "100px" },
+                      attrs: {
+                        src:
+                          "https://liftoglasi.rs/wp-content/uploads/2015/02/dis-logo1.jpg"
+                      }
+                    }),
+                    _c("b", [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(
+                            article.disCena.substring(
+                              0,
+                              article.disCena.length - 3
+                            )
+                          )
+                      )
+                    ])
+                  ])
+                : _vm._e(),
               _vm._v(" "),
               _c("hr")
             ])
@@ -34292,7 +34207,7 @@ var render = function() {
         return _c("div", { key: article.code, staticClass: "col-sm-3" }, [
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-body" }, [
-              article.imageUrl && article.shop == "maxi"
+              article.imageUrl /*&& article.shop == 'maxi'*/
                 ? _c("img", {
                     staticClass: "center",
                     attrs: {
@@ -34304,19 +34219,9 @@ var render = function() {
                       height: "180px"
                     }
                   })
-                : article.imageUrl && article.shop == "idea"
-                  ? _c("img", {
-                      staticClass: "center",
-                      attrs: {
-                        center: "",
-                        src: "https://www.idea.rs/online/" + article.imageUrl,
-                        width: "180px",
-                        height: "180px"
-                      }
-                    })
-                  : _c("img", {
-                      attrs: { center: "", src: "article.imageDefault" }
-                    }),
+                : _c("img", {
+                    attrs: { center: "", src: "article.imageDefault" }
+                  }),
               _vm._v(" "),
               _c("p", { attrs: { align: "center" } }, [
                 _c("b", [_vm._v(_vm._s(article.title) + ":")]),
@@ -34460,7 +34365,7 @@ var render = function() {
         return _c("div", { key: article.code, staticClass: "col-sm-3" }, [
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-body" }, [
-              article.imageUrl && article.shop == "maxi"
+              article.imageUrl /*&& article.shop == 'maxi'*/
                 ? _c("img", {
                     staticClass: "center",
                     attrs: {
@@ -34472,19 +34377,9 @@ var render = function() {
                       height: "180px"
                     }
                   })
-                : article.imageUrl && article.shop == "idea"
-                  ? _c("img", {
-                      staticClass: "center",
-                      attrs: {
-                        center: "",
-                        src: "https://www.idea.rs/online/" + article.imageUrl,
-                        width: "180px",
-                        height: "180px"
-                      }
-                    })
-                  : _c("img", {
-                      attrs: { center: "", src: "article.imageDefault" }
-                    }),
+                : _c("img", {
+                    attrs: { center: "", src: "article.imageDefault" }
+                  }),
               _vm._v(" "),
               _c("p", { attrs: { align: "center" } }, [
                 _c("b", [_vm._v(_vm._s(article.title) + ":")]),
@@ -34668,12 +34563,6 @@ var staticRenderFns = [
                   { staticClass: "nav-link", attrs: { href: "/meats" } },
                   [_c("i", { staticClass: "fas fa-drumstick-bite fa-3x" })]
                 )
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "nav-item" }, [
-                _c("a", { staticClass: "nav-link", attrs: { href: "/dis" } }, [
-                  _vm._v("DIS")
-                ])
               ])
             ])
           ]
@@ -34718,7 +34607,7 @@ var render = function() {
         return _c("div", { key: article.code, staticClass: "col-sm-3" }, [
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-body" }, [
-              article.imageUrl && article.shop == "maxi"
+              article.imageUrl /*&& article.shop == 'maxi'*/
                 ? _c("img", {
                     staticClass: "center",
                     attrs: {
@@ -34730,19 +34619,9 @@ var render = function() {
                       height: "180px"
                     }
                   })
-                : article.imageUrl && article.shop == "idea"
-                  ? _c("img", {
-                      staticClass: "center",
-                      attrs: {
-                        center: "",
-                        src: "https://www.idea.rs/online/" + article.imageUrl,
-                        width: "180px",
-                        height: "180px"
-                      }
-                    })
-                  : _c("img", {
-                      attrs: { center: "", src: "article.imageDefault" }
-                    }),
+                : _c("img", {
+                    attrs: { center: "", src: "article.imageDefault" }
+                  }),
               _vm._v(" "),
               _c("p", { attrs: { align: "center" } }, [
                 _c("b", [_vm._v(_vm._s(article.title) + ":")]),

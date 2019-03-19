@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Sweets;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 class SweetsController extends Controller
 {
@@ -15,34 +17,34 @@ class SweetsController extends Controller
      */
     public function index()
     {
-        $sameBarcode = [];
-        // Get articles
-        $maxi = Sweets::where('shop', 'maxi')->where('category', 'slatkisi')->whereNotNull('barcodes')->get();
-        $idea = Sweets::where('shop', 'idea')->where('category', 'slatkisi')->whereNotNull('barcodes')->get();
+        $expiresAt = Carbon::now()->endOfDay()->subHour()->addMinutes(30);
 
-//        $maxi = Cache::remember('articlesMaxi', 5, function(){
-//            return Article::where('shop','maxi')->where('category','akcija')->get();
-//        });
-//
-//        $idea = Cache::remember('articlesIdea', 5, function(){
-//            return Article::where('shop','idea')->where('category','akcija')->get();
-//        });
+        $maxiIdea = Cache::remember('maxiIdeaDisSweets', 10, function () {
+            $maxiIdea = [];
+            // Get articles
+            $maxi = Sweets::where('shop', 'maxi')->where('category', 'slatkisi')->whereNotNull('barcodes')->get();
+            $idea = Sweets::where('shop', 'idea')->where('category', 'slatkisi')->whereNotNull('barcodes')->get();
 
-        foreach ($maxi as $max) {
-            foreach ($idea as $ide) {
-                if (explode(',', $ide['barcodes']) == explode(',', $max['barcodes'])) {
-                    if (str_replace('.', '', $max['price']) >= $ide['price']) {
-                        $ide['maxiCena'] = $max['formattedPrice'];
-                        array_push($sameBarcode, $ide);
-                    } else {
-                        $max['ideaCena'] = $ide['formattedPrice'];
-                        array_push($sameBarcode, $max);
+            foreach ($maxi as $max) {
+                foreach ($idea as $ide) {
+                    if (explode(',', $ide['barcodes']) == explode(',', $max['barcodes'])) {
+                        $max['price'] = str_replace('.', '', $max['price']);
+                        if ($max['price'] >= $ide['price']) {
+                            $ide['maxiCena'] = $max['formattedPrice'];
+                            $ide['imageUrl'] = $max['imageUrl'];
+                            array_push($maxiIdea, $ide);
+                        } else {
+                            $max['ideaCena'] = $ide['formattedPrice'];
+                            array_push($maxiIdea, $max);
+                        }
                     }
                 }
             }
-        }
 
-        return ['data' => json_encode($sameBarcode)];
+            return $maxiIdea;
+        });
+
+        return $maxiIdea;
     }
 
     public function getView(){

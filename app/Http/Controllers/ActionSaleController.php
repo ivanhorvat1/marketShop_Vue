@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\action_sale;
@@ -9,39 +10,110 @@ use App\drink;
 use App\Meat;
 use App\Sweets;
 use App\Freeze;
+use App\dis_action_sale;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class ActionSaleController extends Controller
 {
     public function index()
     {
-        $sameBarcode = [];
         // Get articles
-        $maxi = action_sale::where('shop','maxi')->where('category','akcija')->get();
+        /*$maxi = action_sale::where('shop','maxi')->where('category','akcija')->get();
         $idea = action_sale::where('shop','idea')->where('category','akcija')->get();
+        $dis = dis_action_sale::all();*/
 
-//        $maxi = Cache::remember('articlesMaxi', 5, function(){
-//            return Article::where('shop','maxi')->where('category','akcija')->get();
-//        });
-//
-//        $idea = Cache::remember('articlesIdea', 5, function(){
-//            return Article::where('shop','idea')->where('category','akcija')->get();
-//        });
+        /*DB::connection()->enableQueryLog();
 
-        foreach ($maxi as $max){
-            foreach ($idea as $ide){
-                if(explode(',' ,$ide['barcodes']) == explode(',' ,$max['barcodes'])){
-                    if(str_replace('.','',$max['price']) >= $ide['price']){
-                        $ide['maxiCena'] = $max['formattedPrice'];
-                        array_push($sameBarcode, $ide);
-                    }else{
-                        $max['ideaCena'] = $ide['formattedPrice'];
-                        array_push($sameBarcode, $max);
+        $maxi = Cache::remember('articlesMaxi', 1, function(){
+            return action_sale::where('shop','maxi')->where('category','akcija')->get();
+        });
+
+        $idea = Cache::remember('articlesIdea', 1, function(){
+            return action_sale::where('shop','idea')->where('category','akcija')->get();
+        });
+
+        $dis = Cache::remember('articlesDis', 1, function(){
+            return dis_action_sale::all();
+        });
+
+        $log = DB::getQueryLog();
+
+        print_r($log);*/
+
+        $expiresAt = Carbon::now()->endOfDay()->subHour()->addMinutes(30);
+
+        $maxiIdea = Cache::remember('maxiIdeaDisSale', 10, function() {
+
+            $maxi = action_sale::where('shop','maxi')->where('category','akcija')->get();
+            $idea = action_sale::where('shop','idea')->where('category','akcija')->get();
+            $dis = dis_action_sale::all();
+
+            $maxiIdea = [];
+            foreach ($maxi as $max) {
+                foreach ($idea as $ide) {
+                    $max['price'] = str_replace('.', '', $max['price']);
+                    if (explode(',', $ide['barcodes']) == explode(',', $max['barcodes'])) {
+                        if ($max['price'] >= $ide['price']) {
+                            $ide['maxiCena'] = $max['formattedPrice'];
+                            $ide['imageUrl'] = $max['imageUrl'];
+                            array_push($maxiIdea, $ide);
+                        } else {
+                            $max['ideaCena'] = $ide['formattedPrice'];
+                            array_push($maxiIdea, $max);
+                        }
                     }
                 }
             }
-        }
 
-        return ['data'=> json_encode($sameBarcode)];
+            $maxiIdeaDis = [];
+
+            foreach ($dis as $di){
+                foreach ($maxiIdea as $maxide){
+                    if (explode(',', $di['barcodes']) == explode(',', $maxide['barcodes'])) {
+                        if($di['price'] >= $maxide['price']){
+
+                            if(!$maxide['ideaCena']){
+                                $maxide['ideaCena'] = $maxide['formattedPrice'];
+                            }
+
+                            if(!$maxide['maxiCena']){
+                                $maxide['maxiCena'] = $maxide['formattedPrice'];
+                            }
+
+                            $maxide[$di['shop'].'Cena'] = $di['formattedPrice'];
+                            if(!in_array($maxide['barcodes'],array_column($maxiIdeaDis, 'barcodes'))){
+                                array_push($maxiIdeaDis, $maxide);
+                            }
+                        }else{
+                            if($maxide['ideaCena']){
+                                $ideaCena = $maxide['ideaCena'];
+                            }else{
+                                $ideaCena = $maxide['formattedPrice'];
+                            }
+                            if($maxide['maxiCena']){
+                                $maxiCena = $maxide['maxiCena'];
+                            }else{
+                                $maxiCena = $maxide['formattedPrice'];
+                            }
+                            $di['ideaCena'] = $ideaCena;
+                            $di['disCena'] = $di['formattedPrice'];
+                            $di['imageUrl'] = $maxide['imageUrl'];
+                            $di['maxiCena'] = $maxiCena;
+                            if(!in_array($di['barcodes'],array_column($maxiIdeaDis, 'barcodes'))) {
+                                array_push($maxiIdeaDis, $di);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(empty($maxiIdeaDis)) return $maxiIdea;
+
+            return $maxiIdeaDis;
+        });
+
+        return $maxiIdea;
     }
 
     public function store(Request $request)
@@ -82,7 +154,7 @@ class ActionSaleController extends Controller
 
                 array_push($storeRecords, ['code'=>$request->products[0][$i]['code'], 'title' => $request->products[0][$i]['manufacturerName'],
                     'body' => $request->products[0][$i]['name'], 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => $barcode,
-                    'formattedPrice' => $request->products[0][$i]['price']['formattedValue'], 'price' => $request->products[0][$i]['price']['value'],
+                    'formattedPrice' => $request->products[0][$i]['price']['formattedValue'], 'price' => str_replace('.','',$request->products[0][$i]['price']['value']),
                     'supplementaryPriceLabel1' => $request->products[0][$i]['price']['supplementaryPriceLabel1'],
                     'supplementaryPriceLabel2' => $request->products[0][$i]['price']['supplementaryPriceLabel2'], 'shop' => $request->shop, 'category' => $request->category]);
             }

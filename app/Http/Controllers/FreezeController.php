@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Freeze;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 class FreezeController extends Controller
 {
@@ -15,38 +17,40 @@ class FreezeController extends Controller
      */
     public function index()
     {
-        $sameBarcode = [];
-        // Get articles
-        $maxi = Freeze::where('shop', 'maxi')->where('category', 'smrznuti')->whereNotNull('barcodes')->get();
-        $idea = Freeze::where('shop', 'idea')->where('category', 'smrznuti')->whereNotNull('barcodes')->get();
 
-//        $maxi = Cache::remember('articlesMaxi', 5, function(){
-//            return Article::where('shop','maxi')->where('category','akcija')->get();
-//        });
-//
-//        $idea = Cache::remember('articlesIdea', 5, function(){
-//            return Article::where('shop','idea')->where('category','akcija')->get();
-//        });
+        $expiresAt = Carbon::now()->endOfDay()->subHour()->addMinutes(30);
 
-        foreach ($maxi as $max) {
-            foreach ($idea as $ide) {
-                if (explode(',', $ide['barcodes']) == explode(',', $max['barcodes'])) {
-                    if (str_replace('.', '', $max['price']) >= $ide['price']) {
-                        $ide['maxiCena'] = $max['formattedPrice'];
-                        array_push($sameBarcode, $ide);
-                    } else {
-                        $max['ideaCena'] = $ide['formattedPrice'];
-                        array_push($sameBarcode, $max);
+        $maxiIdea = Cache::remember('maxiIdeaDisFreeze', 10, function () {
+            $maxiIdea = [];
+
+            $maxi = Freeze::where('shop', 'maxi')->where('category', 'smrznuti')->whereNotNull('barcodes')->get();
+            $idea = Freeze::where('shop', 'idea')->where('category', 'smrznuti')->whereNotNull('barcodes')->get();
+
+            foreach ($maxi as $max) {
+                foreach ($idea as $ide) {
+                    if (explode(',', $ide['barcodes']) == explode(',', $max['barcodes'])) {
+                        $max['price'] = str_replace('.', '', $max['price']);
+                        if ($max['price'] >= $ide['price']) {
+                            $ide['maxiCena'] = $max['formattedPrice'];
+                            $ide['imageUrl'] = $max['imageUrl'];
+                            array_push($maxiIdea, $ide);
+                        } else {
+                            $max['ideaCena'] = $ide['formattedPrice'];
+                            array_push($maxiIdea, $max);
+                        }
                     }
                 }
             }
-        }
 
-        return ['data' => json_encode($sameBarcode)];
+            return $maxiIdea;
+        });
+
+        return $maxiIdea;
     }
 
-    public function getView(){
-        return view('frontend.freezeArticles')->with('showStore',false);
+    public function getView()
+    {
+        return view('frontend.freezeArticles')->with('showStore', false);
     }
 
     /**
@@ -62,7 +66,7 @@ class FreezeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -73,7 +77,7 @@ class FreezeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Freeze  $freeze
+     * @param  \App\Freeze $freeze
      * @return \Illuminate\Http\Response
      */
     public function show(Freeze $freeze)
@@ -84,7 +88,7 @@ class FreezeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Freeze  $freeze
+     * @param  \App\Freeze $freeze
      * @return \Illuminate\Http\Response
      */
     public function edit(Freeze $freeze)
@@ -95,8 +99,8 @@ class FreezeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Freeze  $freeze
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Freeze $freeze
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Freeze $freeze)
@@ -107,7 +111,7 @@ class FreezeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Freeze  $freeze
+     * @param  \App\Freeze $freeze
      * @return \Illuminate\Http\Response
      */
     public function destroy(Freeze $freeze)
