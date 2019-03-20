@@ -10,31 +10,31 @@
         </form>-->
         <button @click="fetchArticles(0,'maxi','akcija')" class="btn btn-primary">Maxi Akcija</button>
         <button @click="storeArticles('maxi','akcija')" class="btn btn-primary">Ubaci Akcija Maxi</button>
-        <button @click="fetchArticles(0, 'maxi', 'pice')" class="btn btn-primary">Maxi Pice</button>
-        <button @click="storeArticles('maxi','pice')" class="btn btn-primary">Ubaci Pice Maxi</button>
-        <button @click="fetchArticles(0, 'maxi', 'meso')" class="btn btn-primary">Maxi Meso</button>
-        <button @click="storeArticles('maxi','meso')" class="btn btn-primary">Ubaci Meso Maxi</button>
-        <button @click="fetchArticles(0, 'maxi', 'slatkisi')" class="btn btn-primary">Maxi Slatkisi</button>
-        <button @click="storeArticles('maxi','slatkisi')" class="btn btn-primary">Ubaci Slatkise Maxi</button>
-        <button @click="fetchArticles(0, 'maxi', 'smrznuti')" class="btn btn-primary">Maxi Smrznuto</button>
-        <button @click="storeArticles('maxi','smrznuti')" class="btn btn-primary">Ubaci Smrznuto Maxi</button>
-        <!--<button @click="fetchArticles(0,'meso')" class="btn btn-primary">Mesnati Proizvodi</button>
-        <button @click="fetchArticles(0,'slatkisi')" class="btn btn-primary">Čokolade, keks, slane i slatke grickalice</button>-->
+        <button @click="fetchArticles(0, 'maxi', 'pice')" class="btn btn-primary">Ubaci Maxi Pice</button>
+        <!--<button @click="storeArticles('maxi','pice')" class="btn btn-primary">Ubaci Pice Maxi</button>-->
+        <button @click="fetchArticles(0, 'maxi', 'meso')" class="btn btn-primary">Ubaci Maxi Meso</button>
+        <!--<button @click="storeArticles('maxi','meso')" class="btn btn-primary">Ubaci Meso Maxi</button>-->
+        <button @click="fetchArticles(0, 'maxi', 'slatkisi')" class="btn btn-primary">Ubaci Maxi Slatkisi</button>
+        <!--<button @click="storeArticles('maxi','slatkisi')" class="btn btn-primary">Ubaci Slatkise Maxi</button>-->
+        <button @click="fetchArticles(0, 'maxi', 'smrznuti')" class="btn btn-primary">Ubaci Maxi Smrznuto</button>
+        <!--<button @click="storeArticles('maxi','smrznuti')" class="btn btn-primary">Ubaci Smrznuto Maxi</button>-->
+        <br>
+        <br>
         <button @click="fetchArticles(0,'idea','akcija')" class="btn btn-primary">Idea Akcija</button>
-        <button @click="storeArticles('idea','akcija')" class="btn btn-primary">Ubaci Akcija Idea</button>
+        <button @click="storeArticles('idea','akcija')" class="btn btn-info">Ubaci Akcija Idea</button>
         <button @click="getCategoriesIdea('60007883')" class="btn btn-primary">Pice Idea</button>
         <button @click="getCategoriesIdea('60007823')" class="btn btn-primary">Meso Idea</button>
         <button @click="getCategoriesIdea('60007780')" class="btn btn-primary">Meso2 Idea</button>
         <button @click="getCategoriesIdea('60007896')" class="btn btn-primary">Slatkisi Idea</button>
         <button @click="getCategoriesIdea('60007907')" class="btn btn-primary">Smrznuti Proiz Idea</button>
-        <button @click="checkChildren()" class="btn btn-primary">check idea children</button>
+        <button @click="checkChildren()" class="btn btn-danger">check idea children</button>
         <!--:disabled="this.categoryArray.length < 16"-->
-        <button @click="storeArticles('idea','pice')" class="btn btn-primary">Ubaci Pice Idea</button>
-        <button @click="storeArticles('idea','meso')" class="btn btn-primary">Ubaci Meso Idea</button>
-        <button @click="storeArticles('idea','slatkisi')" class="btn btn-primary">Ubaci Slatkisi Idea</button>
-        <button @click="storeArticles('idea','smrznuti')" class="btn btn-primary">Ubaci smrznuti Idea</button>
-        <!--<button @click="getDis()" class="btn btn-primary">Dis proizvodi</button>-->
-        <button class="btn btn-primary"><a href="/dis" style="color: white">Dis Market</a></button>
+        <button @click="storeArticles('idea','pice')" class="btn btn-info">Ubaci Pice Idea</button>
+        <button @click="storeArticles('idea','meso')" class="btn btn-info">Ubaci Meso Idea</button>
+        <button @click="storeArticles('idea','slatkisi')" class="btn btn-info">Ubaci Slatkisi Idea</button>
+        <button @click="storeArticles('idea','smrznuti')" class="btn btn-info">Ubaci smrznuti Idea</button>
+        <br><br>
+        <button class="btn btn-primary"><a href="/dis" style="color: white">Dis Market Pice</a></button>
         <br><br>
         <h4>Total products on Action: {{akcija.length}}</h4><br>
 
@@ -85,7 +85,7 @@
 
         <!-- end slideshow -->
 
-        <h4 v-if="articles.length > 0">Total products: {{articles.length}}</h4><br>
+        <!--<h4 v-if="articles.length > 0">Total products: {{articles.length}}</h4><br>
 
         <div class="row">
             <div class="col-sm-3" v-for="article in articles.slice(startSlice,endSlice)" v-bind:key="article.code">
@@ -114,7 +114,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
         <button @click="toTopFunction()" id="BtnToTop" title="Go to top">&uarr;</button>
         <div id="loader"></div>
         <br><br>
@@ -159,12 +159,12 @@
             }
         },
         created() {
-            //$('body').addClass('loaded');
+            // $('body').addClass('loaded');
             this.fetchSaleProducts();
-            this.fetchDrinkProducts();
+            /*this.fetchDrinkProducts();
             this.fetchFreezeProducts();
             this.fetchSweetProducts();
-            this.fetchMeatProducts();
+            this.fetchMeatProducts();*/
             window.addEventListener('scroll', this.handleScroll);
         },
         methods: {
@@ -322,12 +322,16 @@
                                     let res = JSON.parse(data.contents);
                                     vm.storeMaxi(res,i);
                                 });
+
+                                /*if(i > 59){
+                                    alert('done');
+                                }*/
                         }
-                        alert('done');
                     }else{
                         $.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent(url) + '&callback=?', function(data){
                             let res = JSON.parse(data.contents);
                             vm.storeMaxi(res);
+                            vm.storeArticles(shop, category);
                             alert('done');
                         });
                     }
@@ -335,6 +339,7 @@
             },
             storeMaxi(res,i){
                 if(i == 0){
+                    this.maxi = [];
                     this.maxi = res.results;
                 }else if(i > 0){
                     this.maxi = this.maxi.concat(res.results);
@@ -342,6 +347,35 @@
                     this.maxi = res.results;
                 }
                 //console.log(this.maxi);
+            },
+            storeArticles(shop, category) {
+                let vm = this;
+                let picaIdea = [];
+                if (shop == 'maxi') {
+                    vm.storeVisit(this.maxi, shop, category);
+                } else if (shop == 'idea' && category == 'pice' || category == 'meso' || category == 'slatkisi' || category == 'smrznuti') {
+                    this.idea.forEach(function (item) {
+                        item.forEach(function (data) {
+                            picaIdea.push(data);
+                        })
+                    })
+                    vm.storeVisit(picaIdea, shop, category);
+                } else if (shop == 'idea' && category == 'akcija') {
+                    vm.storeVisit(this.idea, shop, category);
+                }
+            },
+            storeVisit(article, shop, category) {
+                this.products = [];
+                this.products.push(article);
+                axios({
+                    method: 'post',
+                    url: '/api/action_sale_store',
+                    data: {
+                        products: this.products,
+                        shop: shop,
+                        category: category
+                    }
+                });
             },
             makePagination(paginate, currentPage, category) {
                 let pagination;
@@ -385,40 +419,15 @@
                 }
                 this.pagination = pagination;
             },
-            storeArticles(shop, category) {
-                let vm = this;
-                let picaIdea = [];
-                if (shop == 'maxi') {
-                    vm.storeVisit(this.maxi, shop, category);
-                } else if (shop == 'idea' && category == 'pice' || category == 'meso' || category == 'slatkisi' || category == 'smrznuti') {
-                    this.idea.forEach(function (item) {
-                        item.forEach(function (data) {
-                            picaIdea.push(data);
-                        })
-                    })
-                    vm.storeVisit(picaIdea, shop, category);
-                } else if (shop == 'idea' && category == 'akcija') {
-                    vm.storeVisit(this.idea, shop, category);
-                }
-            },
-            storeVisit(article, shop, category) {
-                this.products = [];
-                this.products.push(article);
-                axios({
-                    method: 'post',
-                    url: '/api/action_sale_store',
-                    data: {
-                        products: this.products,
-                        shop: shop,
-                        category: category
-                    }
-                });
-            },
             getCategoriesIdea(categoryNumber, data) {
                 let vm = this;
                 let url = 'https://cors-anywhere.herokuapp.com/https://www.idea.rs/online/v2/categories/' + categoryNumber;
 
-                this.categoryArray.push(data);
+                if(data != undefined){
+                    this.categoryArray.push(data);
+                }else{
+                    this.categoryArray = [];
+                }
                 //console.log(this.categoryArray);
                 fetch(url)
                     .then(res => res.json())
@@ -433,7 +442,7 @@
             checkChildren() {
                 let noChildren = [];
                 let ideapice = [];
-                this.categoryArray.splice(0, 1);
+                //this.categoryArray.splice(0, 1);
                 this.categoryArray.forEach(function (item) {
                     if (!item.has_children) {
                         noChildren.push(item.id)
@@ -449,49 +458,10 @@
                         })
                 });
 
+                //console.log(ideapice);
+
                 this.idea = ideapice;
-            },
-            /*getDis(){
-               //let url = 'http://online.dis.rs/proizvodi.php?brArtPoStr=96';
-               let url = 'http://online.dis.rs/inc/inc.nalog.prijava.php?email=kja89560%40zwoho.com&lozinka=123456&radi=da';
-                //var_dump($section);
-
-                /!*axios.get("http://online.dis.rs/proizvodi.php?brArtPoStr=96").then(response => {
-                    console.log(response.data);
-                    //resolve({template: response.data})
-                })*!/
-
-                $.getJSON('http://api.allorigins.ml/get?url=' + encodeURIComponent(url) + '&callback=?', function(data){
-                    //let res = JSON.parse(data.contents);
-                    console.log(data.contents);
-                    alert('done');
-                });
-
-                var getJSON = function(url) {
-                    return new Promise(function(resolve, reject) {
-                        var xhr = new XMLHttpRequest();
-                        xhr.open('get', url, true);
-                        xhr.responseType = 'json';
-                        xhr.onload = function() {
-                            var status = xhr.status;
-                            if (status == 200) {
-                                resolve(xhr.response);
-                            } else {
-                                reject(status);
-                            }
-                        };
-                        xhr.send();
-                    });
-                };
-
-                getJSON('https://www.googleapis.com/freebase/v1/text/en/bob_dylan').then(function(data) {
-                    alert('Your Json result is:  ' + data.result); //you can comment this, i used it to debug
-
-                    result.innerText = data.result; //display the result in an HTML element
-                }, function(status) { //error detection....
-                    alert('Something went wrong.');
-                });
-            }*/
+            }
         }
     }
 </script>
