@@ -31,10 +31,12 @@ class SweetsController extends Controller
                         $max['price'] = str_replace('.', '', $max['price']);
                         if ($max['price'] >= $ide['price']) {
                             $ide['maxiCena'] = $max['formattedPrice'];
+                            $ide['ideaCena'] = $ide['formattedPrice'];
                             $ide['imageUrl'] = $max['imageUrl'];
                             array_push($maxiIdea, $ide);
                         } else {
                             $max['ideaCena'] = $ide['formattedPrice'];
+                            $max['maxiCena'] = $max['formattedPrice'];
                             array_push($maxiIdea, $max);
                         }
                     }

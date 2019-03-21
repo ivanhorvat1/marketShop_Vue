@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\dis_meat;
+use App\Meat;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\dis_drink;
@@ -48,7 +50,7 @@ class DisMarketController extends Controller
         unset($ch);
     }
 
-    public function disMarket()
+    public function disMarketDrink()
     {
         ini_set('max_execution_time', 30000); //300 seconds = 5 minutes
         $this->login("http://online.dis.rs/inc/inc.nalog.prijava.php", "email=nemixbg%40gmail.com&lozinka=n3m4nj41982&radi=da");
@@ -168,10 +170,10 @@ class DisMarketController extends Controller
         //var_dump($this->artikli);
     }
 
-    public function getDisArticles()
+    public function getDisDrinks()
     {
 
-        $disArtikli = $this->disMarket();
+        $disArtikli = $this->disMarketDrink();
 
         $database = [];
         foreach ($disArtikli as $dis) {
@@ -195,9 +197,161 @@ class DisMarketController extends Controller
         return $database;
     }
 
+    public function disMarketMeat()
+    {
+        ini_set('max_execution_time', 30000); //300 seconds = 5 minutes
+        $this->login("http://online.dis.rs/inc/inc.nalog.prijava.php", "email=nemixbg%40gmail.com&lozinka=n3m4nj41982&radi=da");
+        //$html = $this->grab_page("http://online.dis.rs/proizvodi.php?");
+        //$html = iconv("Windows-1250", "UTF-8", $html);
+
+        $drinkUrl = ['D1','B1'];
+
+        /*preg_match_all("!<a href=\'#\' onclick=\"proslediNaStranicu\('(.*?)'\);return .*?;\s*\"\s*>(.*?)<\/a>!",
+            $html,
+            $match);*/
+
+        /*$match[1] = array_slice($match[1], 8, -12);
+        $match[2] = array_slice($match[2], 8, -12);
+
+        $duzinaKategorije = strlen($match[1][0]);
+
+        //$artikli = [];
+        $i = 0;
+        foreach ($match[1] as $url) {
+            if (strlen($url) == $duzinaKategorije) {*/
+
+        //echo $match[2][$i] . '<br>';
+        //$url = 'http://online.dis.rs/' . $url;
+        //http://online.dis.rs/proizvodi.php?brArtPoStr=350&kat=P1
+        foreach ($drinkUrl as $driUrl) {
+//        $url = 'http://online.dis.rs/proizvodi.php?&kat=P1';
+            $url = 'http://online.dis.rs/proizvodi.php?&kat=' . $driUrl;
+            $htmlKAT = $this->grab_page($url . '&brArtPoStr=96');
+
+            $htmlKAT = iconv("Windows-1250", "UTF-8", $htmlKAT);
+            //<a href=\'#\' onclick="proslediNaStranicu\('.*?limit=(\d*)&.*?'\);return .*?;\s*"\s*>››<\/a>
+            preg_match_all("!<a href=\'#\' onclick=\"proslediNaStranicu\('.*?limit=(\d*)&.*?'\);return .*?;\s*\"\s*>(.*?)<\/a>!",
+                $htmlKAT,
+                $limit);
+
+            if (array_filter($limit)) {
+                $limit = max($limit[1]) + 96;
+            } else {
+                $limit = 0;
+            }
+
+            $urlFinal = $url . '&sortArt=sortNazart&brArtPoStr=' . $limit;
+
+            $htmlContent = $this->grab_page($urlFinal);
+
+            $htmlContent = iconv("Windows-1250", "UTF-8", $htmlContent);
+
+            $artikal_start = '<div id="artikal">';
+            $artikliHTML = array_slice(explode($artikal_start, $htmlContent), 1);
+
+            foreach ($artikliHTML as &$artikal) {
+                // Matching artical name
+                preg_match_all('!<div id="artikal-naziv">\s*(.*?)\s*<\/div>\s*!',
+                    $artikal,
+                    $artikal_nazivi);
+                // Matching artical cod
+                preg_match_all('!<div id="artikal-slika-okvir">\s*.*?data-target="#slikaModal(.*?)".*?\s*<\/div>\s*!',
+                    $artikal,
+                    $artikal_kodovi);
+
+                // Matching artical newPrice
+                preg_match_all("!<span class='tekst-artikal-cena'>(\d*,\d{2}).*?<!",
+                    $artikal,
+                    $artikal_cena_nova);
+
+                if (!empty($artikal_cena_nova[1])) {
+                    $artikal_cena_nova = $artikal_cena_nova[1][0];
+                } else {
+                    $artikal_cena_nova = null;
+                }
+
+                // Matching artical oldPrice
+                preg_match_all("!<span class='tekst-artikal-cena-stara'>(\d*,\d{2}).*?<!",
+                    $artikal,
+                    $artikal_cena_stara);
+
+                if (!empty($artikal_cena_stara[1])) {
+                    $artikal_cena_stara = $artikal_cena_stara[1][0];
+                } else {
+                    $artikal_cena_stara = null;
+                }
+
+                // Matching artical salePrice
+                preg_match_all("!<span class='tekst-artikal-cena-akcija'>(\d*,\d{2}).*?<!",
+                    $artikal,
+                    $artikal_cena_akcija);
+
+                if (!empty($artikal_cena_akcija[1])) {
+                    $artikal_cena_akcija = $artikal_cena_akcija[1][0];
+                } else {
+                    $artikal_cena_akcija = null;
+                }
+
+                $this->artikli[] = [
+                    'name' => $artikal_nazivi[1][0],
+                    'code' => $artikal_kodovi[1][0],
+                    'newPrice' => $artikal_cena_nova,
+                    'oldPrice' => $artikal_cena_stara,
+                    'salePrice' => $artikal_cena_akcija,
+                    'category' => 'pice'
+                    //'category' => $match[2][$i]
+                ];
+            }
+
+            // echo $i . '<br>';
+
+            //}
+
+            //$i++;
+
+            //}
+        }
+
+        return $this->artikli;
+        // echo "Ima ukupno : " . count($this->artikli) . " artikala u DIS marketu!";
+        //var_dump($this->artikli);
+    }
+
+    public function getDisMeat()
+    {
+
+        $disArtikli = $this->disMarketMeat();
+
+        $database = [];
+        foreach ($disArtikli as $dis) {
+            $explo = explode(' ', $dis['name']);
+
+            $duzina = count($explo);
+
+            //foreach ($explo as $ex){
+            // if($duzina > 3){
+            //->where('body', 'like', '%'.$explo[3].'%')
+            $databasee = ['dis' => $dis, 'drink' => Meat::select('body', 'barcodes', 'supplementaryPriceLabel2')->whereNotNull('barcodes')->where('body', 'like', '%' . $explo[0] . '%')->where('body', 'like', '%' . $explo[1] . '%')->get()];
+            // }
+            //}
+            //var_dump($databasee['drink']->isEmpty()); continue;
+            if ($databasee['drink']->isNotEmpty()) {
+                $database[] = $databasee;
+            }
+
+        }
+
+        return $database;
+    }
+
     public function getView()
     {
         return view('frontend.compareDisMarket')->with('showStore', false);
+    }
+
+    public function getViewMeat()
+    {
+        return view('frontend.compareDisMarketMeat')->with('showStore', false);
     }
 
     public function store(Request $request)
@@ -215,7 +369,12 @@ class DisMarketController extends Controller
             $price = str_replace(',','',$request->newPrice);
         }
 
-        $article = dis_drink::firstOrNew(array('code' => $request->code));
+        if($request->category == 'pice'){
+            $article = dis_drink::firstOrNew(array('code' => $request->code));
+        }elseif ($request->category == 'meso'){
+            $article = dis_meat::firstOrNew(array('code' => $request->code));
+        }
+
         $article->code = $request->code;
         $article->title = $request->name;
         $article->body = $request->name;
@@ -250,6 +409,66 @@ class DisMarketController extends Controller
             $article->save();
 
         }
+    }
+
+    public function updateExistingDrinks()
+    {
+        $dis = $this->disMarketDrink();
+
+        /*var_dump($dis);
+        die;*/
+
+        $success = false;
+
+        foreach ($dis as $disArtikli) {
+
+            if ($disArtikli['salePrice'] != null) {
+                $formattedPrice = $disArtikli['oldPrice'] . " RSD";
+                $price = str_replace(',', '', $disArtikli['oldPrice']);
+            } else {
+                $formattedPrice = $disArtikli['newPrice'] . " RSD";
+                $price = str_replace(',', '', $disArtikli['newPrice']);
+            }
+
+            if(!$price){
+                $price = null;
+            }
+
+            //var_dump($price); continue;
+            $article = dis_drink::where('code',  $disArtikli['code'])->first();
+            if($article) {
+                $article->formattedPrice = $formattedPrice;
+                $article->price = $price;
+                $saved = $article->save();
+            }
+
+            if ($disArtikli['salePrice'] != null) {
+
+                $formattedPrice = $disArtikli['salePrice'] . " RSD";
+
+                $article = dis_action_sale::where('code',  $disArtikli['code'])->first();
+                if($article) {
+                    $article->formattedPrice = $formattedPrice;
+                    $article->price = str_replace(',', '', $disArtikli['salePrice']);
+                    $saved = $article->save();
+                }
+
+            }
+
+            if($saved){
+                $success = true;
+            }else{
+                return response()->json([
+                    "success"=>false
+                ]);
+            }
+        }
+
+        $data = [
+            "success"=>$success
+        ];
+
+        return response()->json($data);
     }
 
 }

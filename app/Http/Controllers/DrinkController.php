@@ -16,24 +16,26 @@ class DrinkController extends Controller
 
         $expiresAt = Carbon::now()->endOfDay()->subHour()->addMinutes(30);
 
-        $maxiIdea = Cache::remember('maxiIdeaDisDrink', 10, function () {
+        $cache = Cache::remember('maxiIdeaDisDrinks', 10, function () {
             $maxiIdea = [];
             // Get articles
             $maxi = drink::where('shop', 'maxi')->where('category', 'pice')->whereNotNull('barcodes')->get();
             $idea = drink::where('shop', 'idea')->where('category', 'pice')->whereNotNull('barcodes')->get();
-            $dis = dis_drink::where('category', 'pice')->get();
+            $dis = dis_drink::all();
 
 
             foreach ($maxi as $max) {
                 foreach ($idea as $ide) {
-                    $max['price'] = str_replace('.', '', $max['price']);
                     if (explode(',', $ide['barcodes']) == explode(',', $max['barcodes'])) {
+                        $max['price'] = str_replace('.', '', $max['price']);
                         if ($max['price'] >= $ide['price']) {
                             $ide['maxiCena'] = $max['formattedPrice'];
+                            $ide['ideaCena'] = $ide['formattedPrice'];
                             $ide['imageUrl'] = $max['imageUrl'];
                             array_push($maxiIdea, $ide);
                         } else {
                             $max['ideaCena'] = $ide['formattedPrice'];
+                            $max['maxiCena'] = $max['formattedPrice'];
                             array_push($maxiIdea, $max);
                         }
                     }
@@ -88,7 +90,7 @@ class DrinkController extends Controller
 
         });
 
-        return $maxiIdea;
+        return $cache;
     }
 
     public function getView()

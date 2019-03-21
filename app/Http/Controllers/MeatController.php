@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\dis_meat;
 use App\Meat;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,11 +20,12 @@ class MeatController extends Controller
     {
         $expiresAt = Carbon::now()->endOfDay()->subHour()->addMinutes(30);
 
-        $maxiIdea = Cache::remember('maxiIdeaDisMeat', 10, function () {
+        $cache = Cache::remember('maxiIdeaDisMeats', 10, function () {
             $maxiIdea = [];
             // Get articles
             $maxi = Meat::where('shop', 'maxi')->where('category', 'meso')->whereNotNull('barcodes')->get();
             $idea = Meat::where('shop', 'idea')->where('category', 'meso')->whereNotNull('barcodes')->get();
+            $dis = dis_meat::all();
 
             foreach ($maxi as $max) {
                 foreach ($idea as $ide) {
@@ -31,20 +33,66 @@ class MeatController extends Controller
                         $max['price'] = str_replace('.', '', $max['price']);
                         if ($max['price'] >= $ide['price']) {
                             $ide['maxiCena'] = $max['formattedPrice'];
+                            $ide['ideaCena'] = $ide['formattedPrice'];
                             $ide['imageUrl'] = $max['imageUrl'];
                             array_push($maxiIdea, $ide);
                         } else {
                             $max['ideaCena'] = $ide['formattedPrice'];
+                            $max['maxiCena'] = $max['formattedPrice'];
                             array_push($maxiIdea, $max);
                         }
                     }
                 }
             }
 
-            return $maxiIdea;
+            $maxiIdeaDis = [];
+
+            foreach ($dis as $di) {
+                foreach ($maxiIdea as $maxide) {
+                    if (explode(',', $di['barcodes']) == explode(',', $maxide['barcodes'])) {
+                        if ($di['price'] >= $maxide['price']) {
+
+                            if (!$maxide['ideaCena']) {
+                                $maxide['ideaCena'] = $maxide['formattedPrice'];
+                            }
+
+                            if (!$maxide['maxiCena']) {
+                                $maxide['maxiCena'] = $maxide['formattedPrice'];
+                            }
+
+                            $maxide[$di['shop'] . 'Cena'] = $di['formattedPrice'];
+                            if (!in_array($maxide['barcodes'], array_column($maxiIdeaDis, 'barcodes'))) {
+                                array_push($maxiIdeaDis, $maxide);
+                            }
+                        } else {
+                            if ($maxide['ideaCena']) {
+                                $ideaCena = $maxide['ideaCena'];
+                            } else {
+                                $ideaCena = $maxide['formattedPrice'];
+                            }
+                            if ($maxide['maxiCena']) {
+                                $maxiCena = $maxide['maxiCena'];
+                            } else {
+                                $maxiCena = $maxide['formattedPrice'];
+                            }
+                            $di['ideaCena'] = $ideaCena;
+                            $di['disCena'] = $di['formattedPrice'];
+                            $di['imageUrl'] = $maxide['imageUrl'];
+                            $di['maxiCena'] = $maxiCena;
+                            if (!in_array($di['barcodes'], array_column($maxiIdeaDis, 'barcodes'))) {
+                                array_push($maxiIdeaDis, $di);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (empty($maxiIdeaDis)) return $maxiIdea;
+
+            return $maxiIdeaDis;
         });
 
-        return $maxiIdea;
+        return $cache;
     }
 
     public function getView(){

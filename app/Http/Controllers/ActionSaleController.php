@@ -43,7 +43,7 @@ class ActionSaleController extends Controller
 
         $expiresAt = Carbon::now()->endOfDay()->subHour()->addMinutes(30);
 
-        $maxiIdea = Cache::remember('maxiIdeaDisSale', 10, function() {
+        $cache = Cache::remember('maxiIdeaDisSale', 10, function() {
 
             $maxi = action_sale::where('shop','maxi')->where('category','akcija')->get();
             $idea = action_sale::where('shop','idea')->where('category','akcija')->get();
@@ -52,14 +52,16 @@ class ActionSaleController extends Controller
             $maxiIdea = [];
             foreach ($maxi as $max) {
                 foreach ($idea as $ide) {
-                    $max['price'] = str_replace('.', '', $max['price']);
                     if (explode(',', $ide['barcodes']) == explode(',', $max['barcodes'])) {
+                        $max['price'] = str_replace('.', '', $max['price']);
                         if ($max['price'] >= $ide['price']) {
                             $ide['maxiCena'] = $max['formattedPrice'];
+                            $ide['ideaCena'] = $ide['formattedPrice'];
                             $ide['imageUrl'] = $max['imageUrl'];
                             array_push($maxiIdea, $ide);
                         } else {
                             $max['ideaCena'] = $ide['formattedPrice'];
+                            $max['maxiCena'] = $max['formattedPrice'];
                             array_push($maxiIdea, $max);
                         }
                     }
@@ -113,7 +115,7 @@ class ActionSaleController extends Controller
             return $maxiIdeaDis;
         });
 
-        return $maxiIdea;
+        return $cache;
     }
 
     public function store(Request $request)

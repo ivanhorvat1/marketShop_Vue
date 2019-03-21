@@ -21,14 +21,14 @@
                         <p v-if="article.maxiCena" align="right"><img style="height: 50px; width: 80px"
                                                                       src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"/><b>
                             {{ article.maxiCena.substring(0, article.maxiCena.length - 3) }}</b></p>
-                        <p v-if="article.ideaCena" align="right"><img style="height: 18px; width: 75px"
+                        <p v-if="article.ideaCena" align="right"><img style="height: 25px; width: 75px"
                                                                       src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/><b>
                             {{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></p>
                         <!--<p v-else align="right"><img style="height: 18px; width: 75px"
                                                      src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/><b>
                             {{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></p>-->
-                        <p v-if="article.disCena" align="right"><img style="height: 70px; width: 100px"
-                                                                      src="https://liftoglasi.rs/wp-content/uploads/2015/02/dis-logo1.jpg"/><b>
+                        <p v-if="article.disCena" align="right"><img style="height: 50px; width: 80px"
+                                                                      src="http://www.serbianlogo.com/thumbnails/dis_krnjevo.gif"/><b>
                             {{ article.disCena.substring(0, article.disCena.length - 3) }}</b></p>
                         <hr>
                     </div>

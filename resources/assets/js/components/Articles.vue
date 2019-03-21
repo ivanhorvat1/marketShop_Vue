@@ -35,6 +35,8 @@
         <button @click="storeArticles('idea','smrznuti')" class="btn btn-info">Ubaci smrznuti Idea</button>
         <br><br>
         <button class="btn btn-primary"><a href="/dis" style="color: white">Dis Market Pice</a></button>
+        <button class="btn btn-primary"><a href="/disMeat" style="color: white">Dis Market Meso</a></button>
+        <button @click="updateDisDrinks()" class="btn btn-info">Dis update Drinks</button>
         <br><br>
         <h4>Total products on Action: {{akcija.length}}</h4><br>
 
@@ -461,6 +463,13 @@
                 //console.log(ideapice);
 
                 this.idea = ideapice;
+            },
+            updateDisDrinks(){
+                fetch('api/dis_update_drinks')
+                    .then(res => res.json())
+                    .then(res => {
+                        alert(res.success);
+                    })
             }
         }
     }
