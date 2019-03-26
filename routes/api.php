@@ -21,7 +21,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('articles', 'ArticleController@index');
 Route::get('action_sale_fetch', 'ActionSaleController@index');
 Route::get('action_drink_fetch', 'DrinkController@index');
+Route::get('action_drink_fetch_separate', 'DrinkController@getSeparatedMarket');
 Route::get('action_meat_fetch', 'MeatController@index');
+Route::get('action_meat_fetch_separate', 'MeatController@getSeparatedMarket');
 Route::get('action_sweet_fetch', 'SweetsController@index');
 Route::get('action_freeze_fetch', 'FreezeController@index');
 Route::get('compare_dis_market_drink', 'DisMarketController@getDisDrinks');

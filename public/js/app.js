@@ -1950,7 +1950,7 @@ __webpack_require__.r(__webpack_exports__);
           document.getElementById("loader").style.display = "none";
         }
 
-        if (this.articles.length < this.endSlice) {
+        if (this.articles.length < this.endSlice && this.articles.length < this.endSlice) {
           document.getElementById("loader").style.display = "none";
           return;
         }
@@ -2549,12 +2549,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       startSlice: 0,
       endSlice: 12,
-      products: []
+      products: [],
+      articles: []
     };
   },
   created: function created() {
@@ -2567,7 +2596,7 @@ __webpack_require__.r(__webpack_exports__);
       document.documentElement.scrollTop = 0;
     },
     handleScroll: function handleScroll() {
-      if (this.products.length > 0) {
+      if (this.products.length > 0 || this.articles.length > 0) {
         var scroll = Math.ceil($(window).scrollTop() + $(window).height());
         var windowHeight = Math.round($(document).height());
 
@@ -2579,7 +2608,7 @@ __webpack_require__.r(__webpack_exports__);
           document.getElementById("loader").style.display = "none";
         }
 
-        if (this.products.length < this.endSlice) {
+        if (this.products.length < this.endSlice && this.articles.length < this.endSlice) {
           document.getElementById("loader").style.display = "none";
           return;
         }
@@ -2597,8 +2626,23 @@ __webpack_require__.r(__webpack_exports__);
       fetch('api/action_drink_fetch').then(function (res) {
         return res.json();
       }).then(function (res) {
+        _this.endSlice = 12;
+        _this.articles = '';
         _this.products = res;
         $('body').addClass('loaded');
+      });
+    },
+    fetchArticles: function fetchArticles(shop) {
+      var _this2 = this;
+
+      axios.get('api/action_drink_fetch_separate', {
+        params: {
+          shop: shop
+        }
+      }).then(function (res) {
+        _this2.endSlice = 12;
+        _this2.products = '';
+        _this2.articles = res.data;
       });
     }
   }
@@ -2682,7 +2726,7 @@ __webpack_require__.r(__webpack_exports__);
           document.getElementById("loader").style.display = "none";
         }
 
-        if (this.products.length < this.endSlice) {
+        if (this.products.length < this.endSlice && this.articles.length < this.endSlice) {
           document.getElementById("loader").style.display = "none";
           return;
         }
@@ -2755,12 +2799,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       startSlice: 0,
       endSlice: 12,
-      products: []
+      products: [],
+      articles: []
     };
   },
   created: function created() {
@@ -2773,7 +2848,7 @@ __webpack_require__.r(__webpack_exports__);
       document.documentElement.scrollTop = 0;
     },
     handleScroll: function handleScroll() {
-      if (this.products.length > 0) {
+      if (this.products.length > 0 || this.articles.length > 0) {
         var scroll = Math.ceil($(window).scrollTop() + $(window).height());
         var windowHeight = Math.round($(document).height());
 
@@ -2785,7 +2860,7 @@ __webpack_require__.r(__webpack_exports__);
           document.getElementById("loader").style.display = "none";
         }
 
-        if (this.products.length < this.endSlice) {
+        if (this.products.length < this.endSlice && this.articles.length < this.endSlice) {
           document.getElementById("loader").style.display = "none";
           return;
         }
@@ -2803,8 +2878,24 @@ __webpack_require__.r(__webpack_exports__);
       fetch('api/action_meat_fetch').then(function (res) {
         return res.json();
       }).then(function (res) {
+        _this.endSlice = 12;
+        _this.articles = '';
         _this.products = res;
         $('body').addClass('loaded');
+      });
+    },
+    fetchArticles: function fetchArticles(shop) {
+      var _this2 = this;
+
+      axios.get('api/action_meat_fetch_separate', {
+        params: {
+          shop: shop
+        }
+      }) //.then(res => res.json())
+      .then(function (res) {
+        _this2.endSlice = 12;
+        _this2.products = '';
+        _this2.articles = res.data;
       });
     }
   }
@@ -2939,7 +3030,7 @@ __webpack_require__.r(__webpack_exports__);
           document.getElementById("loader").style.display = "none";
         }
 
-        if (this.products.length < this.endSlice) {
+        if (this.products.length < this.endSlice && this.articles.length < this.endSlice) {
           document.getElementById("loader").style.display = "none";
           return;
         }
@@ -34175,116 +34266,277 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container", attrs: { align: "center" } }, [
-    _c("h4", { attrs: { align: "left" } }, [
-      _vm._v("Total products: " + _vm._s(_vm.products.length))
-    ]),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            _vm.fetchArticles("maxi")
+          }
+        }
+      },
+      [_vm._v("Maxi Pice")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            _vm.fetchArticles("idea")
+          }
+        }
+      },
+      [_vm._v("Idea Pice")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            _vm.fetchArticles("dis")
+          }
+        }
+      },
+      [_vm._v("Dis Pice")]
+    ),
+    _vm._v(" "),
+    _c("br"),
+    _c("br"),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            _vm.fetchProducts()
+          }
+        }
+      },
+      [_vm._v("Compare All Products")]
+    ),
+    _vm._v(" "),
+    _vm.products.length > 0
+      ? _c("h4", { attrs: { align: "left" } }, [
+          _vm._v("Total products: " + _vm._s(_vm.products.length))
+        ])
+      : _c("h4", { attrs: { align: "left" } }, [
+          _vm._v("Total products: " + _vm._s(_vm.articles.length))
+        ]),
     _c("br"),
     _vm._v(" "),
     _c(
       "div",
       { staticClass: "row" },
-      _vm._l(_vm.products.slice(_vm.startSlice, _vm.endSlice), function(
-        article
-      ) {
-        return _c("div", { key: article.code, staticClass: "col-sm-3" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-body" }, [
-              article.imageUrl /*&& article.shop == 'maxi'*/
-                ? _c("img", {
-                    staticClass: "center",
-                    attrs: {
-                      center: "",
-                      src:
-                        "https://d3el976p2k4mvu.cloudfront.net" +
-                        article.imageUrl,
-                      width: "180px",
-                      height: "180px"
-                    }
-                  })
-                : _vm._e(),
-              _vm._v(" "),
-              _c("p", { attrs: { align: "center" } }, [
-                _c("b", [_vm._v(_vm._s(article.title) + ":")]),
-                _vm._v(" " + _vm._s(article.body))
-              ]),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
-              article.maxiCena
-                ? _c("p", { attrs: { align: "right" } }, [
-                    _c("img", {
-                      staticStyle: { height: "50px", width: "80px" },
-                      attrs: {
-                        src:
-                          "https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"
-                      }
-                    }),
-                    _c("b", [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(
-                            article.maxiCena.substring(
-                              0,
-                              article.maxiCena.length - 3
+      [
+        _vm._l(_vm.products.slice(_vm.startSlice, _vm.endSlice), function(
+          article
+        ) {
+          return _vm.products.length > 0
+            ? _c("div", { key: article.code, staticClass: "col-sm-3" }, [
+                _c("div", { staticClass: "card" }, [
+                  _c("div", { staticClass: "card-body" }, [
+                    article.imageUrl !== null /*&& article.shop == 'maxi'*/
+                      ? _c("img", {
+                          staticClass: "center",
+                          attrs: {
+                            center: "",
+                            src:
+                              "https://d3el976p2k4mvu.cloudfront.net" +
+                              article.imageUrl,
+                            width: "180px",
+                            height: "180px"
+                          }
+                        })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    article.imageUrl == null
+                      ? _c("img", {
+                          attrs: { center: "", src: article.imageDefault }
+                        })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("p", { attrs: { align: "center" } }, [
+                      _c("b", [_vm._v(_vm._s(article.title) + ":")]),
+                      _vm._v(" " + _vm._s(article.body))
+                    ]),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    article.maxiCena
+                      ? _c("p", { attrs: { align: "right" } }, [
+                          _c("img", {
+                            staticStyle: { height: "50px", width: "80px" },
+                            attrs: {
+                              src:
+                                "https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"
+                            }
+                          }),
+                          _c("b", [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(
+                                  article.maxiCena.substring(
+                                    0,
+                                    article.maxiCena.length - 3
+                                  )
+                                )
                             )
-                          )
-                      )
-                    ])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              article.ideaCena
-                ? _c("p", { attrs: { align: "right" } }, [
-                    _c("img", {
-                      staticStyle: { height: "25px", width: "75px" },
-                      attrs: {
-                        src:
-                          "https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"
-                      }
-                    }),
-                    _c("b", [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(
-                            article.ideaCena.substring(
-                              0,
-                              article.ideaCena.length - 3
+                          ])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    article.ideaCena
+                      ? _c("p", { attrs: { align: "right" } }, [
+                          _c("img", {
+                            staticStyle: { height: "25px", width: "75px" },
+                            attrs: {
+                              src:
+                                "https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"
+                            }
+                          }),
+                          _c("b", [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(
+                                  article.ideaCena.substring(
+                                    0,
+                                    article.ideaCena.length - 3
+                                  )
+                                )
                             )
-                          )
-                      )
-                    ])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              article.disCena
-                ? _c("p", { attrs: { align: "right" } }, [
-                    _c("img", {
-                      staticStyle: { height: "50px", width: "80px" },
-                      attrs: {
-                        src:
-                          "http://www.serbianlogo.com/thumbnails/dis_krnjevo.gif"
-                      }
-                    }),
-                    _c("b", [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(
-                            article.disCena.substring(
-                              0,
-                              article.disCena.length - 3
+                          ])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    article.disCena
+                      ? _c("p", { attrs: { align: "right" } }, [
+                          _c("img", {
+                            staticStyle: { height: "50px", width: "80px" },
+                            attrs: {
+                              src:
+                                "http://www.serbianlogo.com/thumbnails/dis_krnjevo.gif"
+                            }
+                          }),
+                          _c("b", [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(
+                                  article.disCena.substring(
+                                    0,
+                                    article.disCena.length - 3
+                                  )
+                                )
                             )
-                          )
-                      )
-                    ])
+                          ])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("hr")
                   ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("hr")
-            ])
-          ])
-        ])
-      }),
-      0
+                ])
+              ])
+            : _vm._e()
+        }),
+        _vm._v(" "),
+        _vm._l(_vm.articles.slice(_vm.startSlice, _vm.endSlice), function(
+          articlea
+        ) {
+          return _vm.articles.length > 0
+            ? _c("div", { key: articlea.code, staticClass: "col-sm-3" }, [
+                _c("div", { staticClass: "card" }, [
+                  _c("div", { staticClass: "card-body" }, [
+                    articlea.imageUrl !== null && articlea.shop == "maxi"
+                      ? _c("img", {
+                          staticClass: "center",
+                          attrs: {
+                            center: "",
+                            src:
+                              "https://d3el976p2k4mvu.cloudfront.net" +
+                              articlea.imageUrl,
+                            width: "180px",
+                            height: "180px"
+                          }
+                        })
+                      : articlea.imageUrl !== null && articlea.shop == "idea"
+                        ? _c("img", {
+                            staticClass: "center",
+                            attrs: {
+                              center: "",
+                              src:
+                                "https://www.idea.rs/online/" +
+                                articlea.imageUrl,
+                              width: "180px",
+                              height: "180px"
+                            }
+                          })
+                        : articlea.imageUrl !== null && articlea.shop == "dis"
+                          ? _c("img", {
+                              staticClass: "center",
+                              attrs: {
+                                center: "",
+                                src:
+                                  "https://www.idea.rs/online/" +
+                                  articlea.imageUrl,
+                                width: "180px",
+                                height: "180px"
+                              }
+                            })
+                          : _c("img", {
+                              staticStyle: { height: "200px", width: "180px" },
+                              attrs: { center: "", src: articlea.imageDefault }
+                            }),
+                    _vm._v(" "),
+                    _c("p", { attrs: { align: "center" } }, [
+                      _c("b", [_vm._v(_vm._s(articlea.title) + ":")]),
+                      _vm._v(" " + _vm._s(articlea.body))
+                    ]),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("p", { attrs: { align: "right" } }, [
+                      articlea.shop == "maxi"
+                        ? _c("img", {
+                            staticStyle: { height: "50px", width: "80px" },
+                            attrs: {
+                              src:
+                                "https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"
+                            }
+                          })
+                        : articlea.shop == "idea"
+                          ? _c("img", {
+                              staticStyle: { height: "25px", width: "75px" },
+                              attrs: {
+                                src:
+                                  "https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"
+                              }
+                            })
+                          : articlea.shop == "dis"
+                            ? _c("img", {
+                                staticStyle: { height: "50px", width: "80px" },
+                                attrs: {
+                                  src:
+                                    "http://www.serbianlogo.com/thumbnails/dis_krnjevo.gif"
+                                }
+                              })
+                            : _vm._e(),
+                      _vm._v(" "),
+                      _c("b", [_vm._v(_vm._s(articlea.formattedPrice))])
+                    ]),
+                    _vm._v(" "),
+                    _c("hr")
+                  ])
+                ])
+              ])
+            : _vm._e()
+        })
+      ],
+      2
     ),
     _vm._v(" "),
     _c(
@@ -34483,116 +34735,276 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container", attrs: { align: "center" } }, [
-    _c("h4", { attrs: { align: "left" } }, [
-      _vm._v("Total products: " + _vm._s(_vm.products.length))
-    ]),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            _vm.fetchArticles("maxi")
+          }
+        }
+      },
+      [_vm._v("Maxi Meso")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            _vm.fetchArticles("idea")
+          }
+        }
+      },
+      [_vm._v("Idea Meso")]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            _vm.fetchArticles("dis")
+          }
+        }
+      },
+      [_vm._v("Dis Meso")]
+    ),
+    _c("br"),
+    _c("br"),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            _vm.fetchProducts()
+          }
+        }
+      },
+      [_vm._v("Compare All Products")]
+    ),
+    _vm._v(" "),
+    _vm.products.length > 0
+      ? _c("h4", { attrs: { align: "left" } }, [
+          _vm._v("Total products: " + _vm._s(_vm.products.length))
+        ])
+      : _c("h4", { attrs: { align: "left" } }, [
+          _vm._v("Total products: " + _vm._s(_vm.articles.length))
+        ]),
     _c("br"),
     _vm._v(" "),
     _c(
       "div",
       { staticClass: "row" },
-      _vm._l(_vm.products.slice(_vm.startSlice, _vm.endSlice), function(
-        article
-      ) {
-        return _c("div", { key: article.code, staticClass: "col-sm-3" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-body" }, [
-              article.imageUrl /*&& article.shop == 'maxi'*/
-                ? _c("img", {
-                    staticClass: "center",
-                    attrs: {
-                      center: "",
-                      src:
-                        "https://d3el976p2k4mvu.cloudfront.net" +
-                        article.imageUrl,
-                      width: "180px",
-                      height: "180px"
-                    }
-                  })
-                : _vm._e(),
-              _vm._v(" "),
-              _c("p", { attrs: { align: "center" } }, [
-                _c("b", [_vm._v(_vm._s(article.title) + ":")]),
-                _vm._v(" " + _vm._s(article.body))
-              ]),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
-              article.maxiCena
-                ? _c("p", { attrs: { align: "right" } }, [
-                    _c("img", {
-                      staticStyle: { height: "50px", width: "80px" },
-                      attrs: {
-                        src:
-                          "https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"
-                      }
-                    }),
-                    _c("b", [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(
-                            article.maxiCena.substring(
-                              0,
-                              article.maxiCena.length - 3
+      [
+        _vm._l(_vm.products.slice(_vm.startSlice, _vm.endSlice), function(
+          article
+        ) {
+          return _vm.products.length > 0
+            ? _c("div", { key: article.code, staticClass: "col-sm-3" }, [
+                _c("div", { staticClass: "card" }, [
+                  _c("div", { staticClass: "card-body" }, [
+                    article.imageUrl !== null /*&& article.shop == 'maxi'*/
+                      ? _c("img", {
+                          staticClass: "center",
+                          attrs: {
+                            center: "",
+                            src:
+                              "https://d3el976p2k4mvu.cloudfront.net" +
+                              article.imageUrl,
+                            width: "180px",
+                            height: "180px"
+                          }
+                        })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    article.imageUrl == null
+                      ? _c("img", {
+                          attrs: { center: "", src: article.imageDefault }
+                        })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("p", { attrs: { align: "center" } }, [
+                      _c("b", [_vm._v(_vm._s(article.title) + ":")]),
+                      _vm._v(" " + _vm._s(article.body))
+                    ]),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    article.maxiCena
+                      ? _c("p", { attrs: { align: "right" } }, [
+                          _c("img", {
+                            staticStyle: { height: "50px", width: "80px" },
+                            attrs: {
+                              src:
+                                "https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"
+                            }
+                          }),
+                          _c("b", [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(
+                                  article.maxiCena.substring(
+                                    0,
+                                    article.maxiCena.length - 3
+                                  )
+                                )
                             )
-                          )
-                      )
-                    ])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              article.ideaCena
-                ? _c("p", { attrs: { align: "right" } }, [
-                    _c("img", {
-                      staticStyle: { height: "25px", width: "75px" },
-                      attrs: {
-                        src:
-                          "https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"
-                      }
-                    }),
-                    _c("b", [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(
-                            article.ideaCena.substring(
-                              0,
-                              article.ideaCena.length - 3
+                          ])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    article.ideaCena
+                      ? _c("p", { attrs: { align: "right" } }, [
+                          _c("img", {
+                            staticStyle: { height: "25px", width: "75px" },
+                            attrs: {
+                              src:
+                                "https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"
+                            }
+                          }),
+                          _c("b", [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(
+                                  article.ideaCena.substring(
+                                    0,
+                                    article.ideaCena.length - 3
+                                  )
+                                )
                             )
-                          )
-                      )
-                    ])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              article.disCena
-                ? _c("p", { attrs: { align: "right" } }, [
-                    _c("img", {
-                      staticStyle: { height: "50px", width: "80px" },
-                      attrs: {
-                        src:
-                          "http://www.serbianlogo.com/thumbnails/dis_krnjevo.gif"
-                      }
-                    }),
-                    _c("b", [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(
-                            article.disCena.substring(
-                              0,
-                              article.disCena.length - 3
+                          ])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    article.disCena
+                      ? _c("p", { attrs: { align: "right" } }, [
+                          _c("img", {
+                            staticStyle: { height: "50px", width: "80px" },
+                            attrs: {
+                              src:
+                                "http://www.serbianlogo.com/thumbnails/dis_krnjevo.gif"
+                            }
+                          }),
+                          _c("b", [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(
+                                  article.disCena.substring(
+                                    0,
+                                    article.disCena.length - 3
+                                  )
+                                )
                             )
-                          )
-                      )
-                    ])
+                          ])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("hr")
                   ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("hr")
-            ])
-          ])
-        ])
-      }),
-      0
+                ])
+              ])
+            : _vm._e()
+        }),
+        _vm._v(" "),
+        _vm._l(_vm.articles.slice(_vm.startSlice, _vm.endSlice), function(
+          articlea
+        ) {
+          return _vm.articles.length > 0
+            ? _c("div", { key: articlea.code, staticClass: "col-sm-3" }, [
+                _c("div", { staticClass: "card" }, [
+                  _c("div", { staticClass: "card-body" }, [
+                    articlea.imageUrl !== null && articlea.shop == "maxi"
+                      ? _c("img", {
+                          staticClass: "center",
+                          attrs: {
+                            center: "",
+                            src:
+                              "https://d3el976p2k4mvu.cloudfront.net" +
+                              articlea.imageUrl,
+                            width: "180px",
+                            height: "180px"
+                          }
+                        })
+                      : articlea.imageUrl !== null && articlea.shop == "idea"
+                        ? _c("img", {
+                            staticClass: "center",
+                            attrs: {
+                              center: "",
+                              src:
+                                "https://www.idea.rs/online/" +
+                                articlea.imageUrl,
+                              width: "180px",
+                              height: "180px"
+                            }
+                          })
+                        : articlea.imageUrl !== null && articlea.shop == "dis"
+                          ? _c("img", {
+                              staticClass: "center",
+                              attrs: {
+                                center: "",
+                                src:
+                                  "https://www.idea.rs/online/" +
+                                  articlea.imageUrl,
+                                width: "180px",
+                                height: "180px"
+                              }
+                            })
+                          : _c("img", {
+                              staticStyle: { height: "200px", width: "180px" },
+                              attrs: { center: "", src: articlea.imageDefault }
+                            }),
+                    _vm._v(" "),
+                    _c("p", { attrs: { align: "center" } }, [
+                      _c("b", [_vm._v(_vm._s(articlea.title) + ":")]),
+                      _vm._v(" " + _vm._s(articlea.body))
+                    ]),
+                    _vm._v(" "),
+                    _c("hr"),
+                    _vm._v(" "),
+                    _c("p", { attrs: { align: "right" } }, [
+                      articlea.shop == "maxi"
+                        ? _c("img", {
+                            staticStyle: { height: "50px", width: "80px" },
+                            attrs: {
+                              src:
+                                "https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"
+                            }
+                          })
+                        : articlea.shop == "idea"
+                          ? _c("img", {
+                              staticStyle: { height: "25px", width: "75px" },
+                              attrs: {
+                                src:
+                                  "https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"
+                              }
+                            })
+                          : articlea.shop == "dis"
+                            ? _c("img", {
+                                staticStyle: { height: "50px", width: "80px" },
+                                attrs: {
+                                  src:
+                                    "http://www.serbianlogo.com/thumbnails/dis_krnjevo.gif"
+                                }
+                              })
+                            : _vm._e(),
+                      _vm._v(" "),
+                      _c("b", [_vm._v(_vm._s(articlea.formattedPrice))])
+                    ]),
+                    _vm._v(" "),
+                    _c("hr")
+                  ])
+                ])
+              ])
+            : _vm._e()
+        })
+      ],
+      2
     ),
     _vm._v(" "),
     _c(

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Cache;
 
 class MeatController extends Controller
 {
+    public $shop;
     /**
      * Display a listing of the resource.
      *
@@ -97,6 +98,23 @@ class MeatController extends Controller
 
     public function getView(){
         return view('frontend.meatsArticles')->with('showStore',false);
+    }
+
+    public function getSeparatedMarket(Request $request){
+
+        $this->shop = $request->shop;
+        $cache = Cache::remember($this->shop.'Meats', 10, function () {
+
+            if($this->shop == 'maxi'){
+                return Meat::where('shop', 'maxi')->where('category', 'meso')->whereNotNull('barcodes')->get();
+            }elseif ($this->shop == 'idea'){
+                return Meat::where('shop', 'idea')->where('category', 'meso')->whereNotNull('barcodes')->get();
+            }elseif ($this->shop == 'dis'){
+                return dis_meat::all();
+            }
+        });
+
+        return $cache;
     }
 
     /**

@@ -1,13 +1,19 @@
 <template>
     <div align="center" class="container">
-        <h4 align="left">Total products: {{products.length}}</h4><br>
+        <button @click="fetchArticles('maxi')" class="btn btn-primary">Maxi Meso</button>
+        <button @click="fetchArticles('idea')" class="btn btn-primary">Idea Meso</button>
+        <button @click="fetchArticles('dis')" class="btn btn-primary">Dis Meso</button><br><br>
+        <button @click="fetchProducts()" class="btn btn-primary">Compare All Products</button>
+        <h4 v-if="products.length > 0" align="left">Total products: {{products.length}}</h4>
+        <h4 v-else align="left">Total products: {{articles.length}}</h4><br>
         <div class="row">
-            <div class="col-sm-3" v-for="article in products.slice(startSlice,endSlice)" v-bind:key="article.code">
+            <div v-if="products.length > 0" class="col-sm-3" v-for="article in products.slice(startSlice,endSlice)" v-bind:key="article.code">
                 <div class="card">
                     <div class="card-body">
-                        <img center v-if="article.imageUrl /*&& article.shop == 'maxi'*/" class="center"
+                        <img center v-if="article.imageUrl !== null /*&& article.shop == 'maxi'*/" class="center"
                              :src="'https://d3el976p2k4mvu.cloudfront.net'+article.imageUrl" width="180px"
                              height="180px">
+                        <img center v-if="article.imageUrl == null" :src=article.imageDefault>
                         <!--<img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center"
                              :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">-->
                         <p align="center"><b>{{ article.title }}:</b> {{ article.body }}</p>
@@ -29,6 +35,30 @@
                     </div>
                 </div>
             </div>
+            <div v-if="articles.length > 0" class="col-sm-3" v-for="articlea in articles.slice(startSlice,endSlice)" v-bind:key="articlea.code">
+                <div class="card">
+                    <div class="card-body">
+                        <img center v-if="articlea.imageUrl !== null && articlea.shop == 'maxi'" class="center"
+                             :src="'https://d3el976p2k4mvu.cloudfront.net'+articlea.imageUrl" width="180px"
+                             height="180px">
+                        <img center v-else-if="articlea.imageUrl !== null && articlea.shop == 'idea'" class="center"
+                             :src="'https://www.idea.rs/online/'+articlea.imageUrl" width="180px" height="180px">
+                        <img center v-else-if="articlea.imageUrl !== null && articlea.shop == 'dis'" class="center"
+                             :src="'https://www.idea.rs/online/'+articlea.imageUrl" width="180px" height="180px">
+                        <img v-else center style="height: 200px; width: 180px" :src=articlea.imageDefault>
+                        <p align="center"><b>{{ articlea.title }}:</b> {{ articlea.body }}</p>
+                        <hr>
+                        <p align="right"><img v-if="articlea.shop == 'maxi'" style="height: 50px; width: 80px"
+                                              src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"/>
+                            <img v-else-if="articlea.shop == 'idea'" style="height: 25px; width: 75px"
+                                 src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/>
+                            <img v-else-if="articlea.shop == 'dis'" style="height: 50px; width: 80px"
+                                 src="http://www.serbianlogo.com/thumbnails/dis_krnjevo.gif"/>
+                            <b>{{articlea.formattedPrice }}</b></p>
+                        <hr>
+                    </div>
+                </div>
+            </div>
         </div>
         <button @click="toTopFunction()" id="BtnToTop" title="Go to top">&uarr;</button>
         <div id="loader"></div>
@@ -41,7 +71,8 @@
             return {
                 startSlice: 0,
                 endSlice: 12,
-                products: []
+                products: [],
+                articles: []
             }
         },
         created() {
@@ -54,7 +85,7 @@
                 document.documentElement.scrollTop = 0;
             },
             handleScroll() {
-                if(this.products.length > 0) {
+                if(this.products.length > 0 || this.articles.length > 0) {
                     let scroll = Math.ceil($(window).scrollTop() + $(window).height());
                     let windowHeight = Math.round($(document).height());
 
@@ -67,7 +98,7 @@
                         document.getElementById("loader").style.display = "none";
                     }
 
-                    if (this.products.length < this.endSlice) {
+                    if (this.products.length < this.endSlice && this.articles.length < this.endSlice) {
                         document.getElementById("loader").style.display = "none";
                         return;
                     }
@@ -83,8 +114,22 @@
                 fetch('api/action_meat_fetch')
                     .then(res => res.json())
                     .then(res => {
+                        this.endSlice = 12;
+                        this.articles = '';
                         this.products = res;
                         $('body').addClass('loaded');
+                    })
+            },fetchArticles(shop) {
+                axios.get('api/action_meat_fetch_separate', {
+                    params: {
+                        shop: shop
+                    }
+                })
+                    //.then(res => res.json())
+                    .then(res => {
+                        this.endSlice = 12;
+                        this.products = '';
+                        this.articles = res.data;
                     })
             },
         }

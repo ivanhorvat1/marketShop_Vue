@@ -97,4 +97,21 @@ class DrinkController extends Controller
     {
         return view('frontend.drinksArticles')->with('showStore', false);
     }
+
+    public function getSeparatedMarket(Request $request){
+
+        $this->shop = $request->shop;
+        $cache = Cache::remember($this->shop.'Drinks', 10, function () {
+
+            if($this->shop == 'maxi'){
+                return drink::where('shop', 'maxi')->orderBy('price', 'DESC')->get();
+            }elseif ($this->shop == 'idea'){
+                return drink::where('shop', 'idea')->orderBy('price', 'DESC')->get();
+            }elseif ($this->shop == 'dis'){
+                return dis_drink::orderBy('price', 'DESC')->all();
+            }
+        });
+
+        return $cache;
+    }
 }

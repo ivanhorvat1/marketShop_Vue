@@ -188,7 +188,7 @@
                         document.getElementById("loader").style.display = "none";
                     }
 
-                    if (this.articles.length < this.endSlice) {
+                    if (this.articles.length < this.endSlice && this.articles.length < this.endSlice) {
                         document.getElementById("loader").style.display = "none";
                         return;
                     }

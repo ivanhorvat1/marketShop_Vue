@@ -67,7 +67,7 @@
                         document.getElementById("loader").style.display = "none";
                     }
 
-                    if (this.products.length < this.endSlice) {
+                    if (this.products.length < this.endSlice && this.articles.length < this.endSlice) {
                         document.getElementById("loader").style.display = "none";
                         return;
                     }
