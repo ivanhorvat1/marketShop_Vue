@@ -1,43 +1,47 @@
 <template>
     <div>
-        <h2>Products</h2>
-        <!--<form @submit.prevent="addArticle" class="mb-3">
-            <div class="form-group">
-                <input type="text" class="form-control" placeholder="Name" v-model="article.title">
-                <textarea class="form-control" placeholder="Description" v-model="article.body"></textarea>
-                <button type="submit" class="btn btn-light btn-block">Save</button>
-            </div>
-        </form>-->
-        <button @click="fetchArticles(0,'maxi','akcija')" class="btn btn-primary">Maxi Akcija</button>
-        <button @click="storeArticles('maxi','akcija')" class="btn btn-primary">Ubaci Akcija Maxi</button>
-        <button @click="fetchArticles(0, 'maxi', 'pice')" class="btn btn-primary">Ubaci Maxi Pice</button>
-        <!--<button @click="storeArticles('maxi','pice')" class="btn btn-primary">Ubaci Pice Maxi</button>-->
-        <button @click="fetchArticles(0, 'maxi', 'meso')" class="btn btn-primary">Ubaci Maxi Meso</button>
-        <!--<button @click="storeArticles('maxi','meso')" class="btn btn-primary">Ubaci Meso Maxi</button>-->
-        <button @click="fetchArticles(0, 'maxi', 'slatkisi')" class="btn btn-primary">Ubaci Maxi Slatkisi</button>
-        <!--<button @click="storeArticles('maxi','slatkisi')" class="btn btn-primary">Ubaci Slatkise Maxi</button>-->
-        <button @click="fetchArticles(0, 'maxi', 'smrznuti')" class="btn btn-primary">Ubaci Maxi Smrznuto</button>
-        <!--<button @click="storeArticles('maxi','smrznuti')" class="btn btn-primary">Ubaci Smrznuto Maxi</button>-->
-        <br>
-        <br>
-        <button @click="fetchArticles(0,'idea','akcija')" class="btn btn-primary">Idea Akcija</button>
-        <button @click="storeArticles('idea','akcija')" class="btn btn-info">Ubaci Akcija Idea</button>
-        <button @click="getCategoriesIdea('60007883')" class="btn btn-primary">Pice Idea</button>
-        <button @click="getCategoriesIdea('60007823')" class="btn btn-primary">Meso Idea</button>
-        <button @click="getCategoriesIdea('60007780')" class="btn btn-primary">Meso2 Idea</button>
-        <button @click="getCategoriesIdea('60007896')" class="btn btn-primary">Slatkisi Idea</button>
-        <button @click="getCategoriesIdea('60007907')" class="btn btn-primary">Smrznuti Proiz Idea</button>
-        <button @click="checkChildren()" class="btn btn-danger">check idea children</button>
-        <!--:disabled="this.categoryArray.length < 16"-->
-        <button @click="storeArticles('idea','pice')" class="btn btn-info">Ubaci Pice Idea</button>
-        <button @click="storeArticles('idea','meso')" class="btn btn-info">Ubaci Meso Idea</button>
-        <button @click="storeArticles('idea','slatkisi')" class="btn btn-info">Ubaci Slatkisi Idea</button>
-        <button @click="storeArticles('idea','smrznuti')" class="btn btn-info">Ubaci smrznuti Idea</button>
-        <br><br>
-        <button class="btn btn-primary"><a href="/dis" style="color: white">Dis Market Pice</a></button>
-        <button class="btn btn-primary"><a href="/disMeat" style="color: white">Dis Market Meso</a></button>
-        <button @click="updateDisDrinks()" class="btn btn-info">Dis update Drinks</button>
-        <br><br>
+        <div hidden>
+            <h2>Products</h2>
+            <!--<form @submit.prevent="addArticle" class="mb-3">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Name" v-model="article.title">
+                    <textarea class="form-control" placeholder="Description" v-model="article.body"></textarea>
+                    <button type="submit" class="btn btn-light btn-block">Save</button>
+                </div>
+            </form>-->
+
+            <button @click="fetchArticles(0,'maxi','akcija')" class="btn btn-primary">Maxi Akcija</button>
+            <button @click="storeArticles('maxi','akcija')" class="btn btn-primary">Ubaci Akcija Maxi</button>
+            <button @click="fetchArticles(0, 'maxi', 'pice')" class="btn btn-primary">Ubaci Maxi Pice</button>
+            <!--<button @click="storeArticles('maxi','pice')" class="btn btn-primary">Ubaci Pice Maxi</button>-->
+            <button @click="fetchArticles(0, 'maxi', 'meso')" class="btn btn-primary">Ubaci Maxi Meso</button>
+            <!--<button @click="storeArticles('maxi','meso')" class="btn btn-primary">Ubaci Meso Maxi</button>-->
+            <button @click="fetchArticles(0, 'maxi', 'slatkisi')" class="btn btn-primary">Ubaci Maxi Slatkisi</button>
+            <!--<button @click="storeArticles('maxi','slatkisi')" class="btn btn-primary">Ubaci Slatkise Maxi</button>-->
+            <button @click="fetchArticles(0, 'maxi', 'smrznuti')" class="btn btn-primary">Ubaci Maxi Smrznuto</button>
+            <!--<button @click="storeArticles('maxi','smrznuti')" class="btn btn-primary">Ubaci Smrznuto Maxi</button>-->
+            <br>
+            <br>
+            <button @click="fetchArticles(0,'idea','akcija')" class="btn btn-primary">Idea Akcija</button>
+            <button @click="storeArticles('idea','akcija')" class="btn btn-info">Ubaci Akcija Idea</button>
+            <button @click="getCategoriesIdea('60007883')" class="btn btn-primary">Pice Idea</button>
+            <button @click="getCategoriesIdea('60007823')" class="btn btn-primary">Meso Idea</button>
+            <button @click="getCategoriesIdea('60007780')" class="btn btn-primary">Meso2 Idea</button>
+            <button @click="getCategoriesIdea('60007896')" class="btn btn-primary">Slatkisi Idea</button>
+            <button @click="getCategoriesIdea('60007907')" class="btn btn-primary">Smrznuti Proiz Idea</button>
+            <button @click="checkChildren()" class="btn btn-danger">check idea children</button>
+            <!--:disabled="this.categoryArray.length < 16"-->
+            <button @click="storeArticles('idea','pice')" class="btn btn-info">Ubaci Pice Idea</button>
+            <button @click="storeArticles('idea','meso')" class="btn btn-info">Ubaci Meso Idea</button>
+            <button @click="storeArticles('idea','slatkisi')" class="btn btn-info">Ubaci Slatkisi Idea</button>
+            <button @click="storeArticles('idea','smrznuti')" class="btn btn-info">Ubaci smrznuti Idea</button>
+            <br><br>
+            <button class="btn btn-primary"><a href="/dis" style="color: white">Dis Market Pice</a></button>
+            <button class="btn btn-primary"><a href="/disMeat" style="color: white">Dis Market Meso</a></button>
+            <button @click="updateDisDrinks()" class="btn btn-info">Dis update Drinks</button>
+            <button @click="updateDisMeat()" class="btn btn-info">Dis update Meat</button>
+            <br><br>
+        </div>
         <h4>Total products on Action: {{akcija.length}}</h4><br>
 
         <!-- slideshow -->
@@ -45,11 +49,11 @@
         <div align="center" class="container">
             <div id="demo" class="carousel slide mb-5 " data-ride="carousel">
                 <div class="carousel-inner">
-                    <div class="carousel-item active" style="height: 320px">
-                        <h3 style="padding-top: 100px">Izdvajamo</h3>
+                    <div class="carousel-item active" style="height: 400px">
+                        <h3 style="padding-top: 200px">Izdvajamo</h3>
                     </div>
                     <div class="carousel-item" v-for="article in akcija.slice(startSlice,endSlice)"
-                         v-bind:key="article.code">
+                         v-bind:key="article.code" style="height: 400px">
                         <img center v-if="article.imageUrl /*&& article.shop == 'maxi'*/" class="center"
                              :src="'https://d3el976p2k4mvu.cloudfront.net'+article.imageUrl" width="180px"
                              height="180px">
@@ -58,28 +62,27 @@
                         <img center v-else :src="'article.imageDefault'">
                         <h6 align="center"><b>{{ article.title }}:</b> {{ article.body }}</h6>
                         <hr>
-                        <h5 align="center"><img v-if="article.shop == 'idea'" style="height: 18px; width: 75px"
-                                                src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/>
-                            <img v-else style="height: 50px; width: 80px"
-                                 src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"/><b
-                                    style="color: goldenrod"> {{
-                                article.formattedPrice.substring(0,article.formattedPrice.length - 3) }}</b></h5>
                         <h5 v-if="article.maxiCena" align="center"><img style="height: 50px; width: 80px"
                                                                         src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"/><b>
                             {{ article.maxiCena.substring(0, article.maxiCena.length - 3) }}</b></h5>
-                        <h5 v-else align="center"><img style="height: 18px; width: 75px"
-                                                       src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/><b>
+                        <h5 v-if="article.ideaCena" align="center"><img style="height: 20px; width: 75px"
+                                                                        src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/><b>
                             {{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></h5>
+                        <h5 v-if="article.disCena" align="center"><img style="height: 50px; width: 80px"
+                                                                       src="http://www.serbianlogo.com/thumbnails/dis_krnjevo.gif"/><b>
+                            {{ article.disCena.substring(0, article.disCena.length - 3) }}</b></h5>
                     </div>
                 </div>
 
                 <!-- Left and right controls -->
                 <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                    <span class="carousel-control-prev-icon" style="background-color: black; border-radius: 50%; width: 30px; height: 30px;"></span>
+                    <span class="carousel-control-prev-icon"
+                          style="background-color: black; border-radius: 50%; width: 30px; height: 30px;"></span>
                     <span class="sr-only">Previous</span>
                 </a>
                 <a class="carousel-control-next" href="#demo" data-slide="next">
-                    <span class="carousel-control-next-icon" style="background-color: black; border-radius: 50%; width: 30px; height: 30px;"></span>
+                    <span class="carousel-control-next-icon"
+                          style="background-color: black; border-radius: 50%; width: 30px; height: 30px;"></span>
                     <span class="sr-only">Next</span>
                 </a>
             </div>
@@ -175,7 +178,7 @@
                 document.documentElement.scrollTop = 0;
             },
             handleScroll() {
-                if(this.articles.length > 0) {
+                if (this.articles.length > 0) {
                     let scroll = Math.ceil($(window).scrollTop() + $(window).height());
                     let windowHeight = Math.round($(document).height());
 
@@ -213,7 +216,7 @@
                     } else {
                         url = 'https://www.maxi.rs/view/QlProductListComponentController/loadMore?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
                     }*/
-                   url = 'https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=40&sort=promotion'
+                    url = 'https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=40&sort=promotion'
                 }
                 else if (shop === 'idea' && category === 'akcija') {
                     url = 'https://cors-anywhere.herokuapp.com/https://www.idea.rs/online/v2/offers?per_page=48&page=' + currentPage + '&filter%5Bsort%5D=offerSoldStatisticsDesc';
@@ -261,7 +264,7 @@
                 fetch('api/action_sale_fetch')
                     .then(res => res.json())
                     .then(res => {
-                        this.akcija = res;
+                        this.akcija = _.orderBy(res, 'price', 'desc');
                         $('body').addClass('loaded');
                     })
             },
@@ -288,7 +291,7 @@
                 currentPage = currentPage || '0';
                 url = vm.dinamicUrl(currentPage, shop, category);
 
-                if(shop == 'idea') {
+                if (shop == 'idea') {
                     fetch(url)
                         .then(res => res.json())
                         .then(res => {
@@ -315,22 +318,22 @@
                             }
                         })
                         .catch(err => console.log(err));
-                }else{
-                    if(category == 'akcija'){
+                } else {
+                    if (category == 'akcija') {
                         //https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber="+i+"&sort=promotion
                         //http://api.allorigins.ml
                         for (let i = 0; i <= 60; i++) {
-                                $.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent("https://www.maxi.rs/search/promotions/getSearchPageData?pageSize=20&pageNumber="+i+"&sort=promotion") + '&callback=?', function(data){
-                                    let res = JSON.parse(data.contents);
-                                    vm.storeMaxi(res,i);
-                                });
+                            $.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent("https://www.maxi.rs/search/promotions/getSearchPageData?pageSize=20&pageNumber=" + i + "&sort=promotion") + '&callback=?', function (data) {
+                                let res = JSON.parse(data.contents);
+                                vm.storeMaxi(res, i);
+                            });
 
-                                /*if(i > 59){
-                                    alert('done');
-                                }*/
+                            /*if(i > 59){
+                                alert('done');
+                            }*/
                         }
-                    }else{
-                        $.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent(url) + '&callback=?', function(data){
+                    } else {
+                        $.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent(url) + '&callback=?', function (data) {
                             let res = JSON.parse(data.contents);
                             vm.storeMaxi(res);
                             vm.storeArticles(shop, category);
@@ -339,16 +342,15 @@
                     }
                 }
             },
-            storeMaxi(res,i){
-                if(i == 0){
+            storeMaxi(res, i) {
+                if (i == 0) {
                     this.maxi = [];
                     this.maxi = res.results;
-                }else if(i > 0){
+                } else if (i > 0) {
                     this.maxi = this.maxi.concat(res.results);
-                }else{
+                } else {
                     this.maxi = res.results;
                 }
-                //console.log(this.maxi);
             },
             storeArticles(shop, category) {
                 let vm = this;
@@ -404,11 +406,12 @@
                         for (let i = 2; i <= pagination.lastPage; i++) {
                             this.fetchArticles(i, this.shop, category);
                         }
-                    }/* else if (this.shop === 'maxi' && category == 'akcija') {
-                        for (let i = 1; i <= 60; i++) {
-                            this.fetchArticles(i, this.shop, category);
-                        }
-                    }*/
+                    }
+                    /* else if (this.shop === 'maxi' && category == 'akcija') {
+                                            for (let i = 1; i <= 60; i++) {
+                                                this.fetchArticles(i, this.shop, category);
+                                            }
+                                        }*/
                 } else {
                     document.getElementById("loader").style.display = "none";
                     pagination = {
@@ -425,12 +428,11 @@
                 let vm = this;
                 let url = 'https://cors-anywhere.herokuapp.com/https://www.idea.rs/online/v2/categories/' + categoryNumber;
 
-                if(data != undefined){
+                if (data != undefined) {
                     this.categoryArray.push(data);
-                }else{
+                } else {
                     this.categoryArray = [];
                 }
-                //console.log(this.categoryArray);
                 fetch(url)
                     .then(res => res.json())
                     .then(res => {
@@ -444,7 +446,6 @@
             checkChildren() {
                 let noChildren = [];
                 let ideapice = [];
-                //this.categoryArray.splice(0, 1);
                 this.categoryArray.forEach(function (item) {
                     if (!item.has_children) {
                         noChildren.push(item.id)
@@ -460,12 +461,17 @@
                         })
                 });
 
-                //console.log(ideapice);
-
                 this.idea = ideapice;
             },
-            updateDisDrinks(){
+            updateDisDrinks() {
                 fetch('api/dis_update_drinks')
+                    .then(res => res.json())
+                    .then(res => {
+                        alert(res.success);
+                    })
+            },
+            updateDisMeat() {
+                fetch('api/dis_update_meat')
                     .then(res => res.json())
                     .then(res => {
                         alert(res.success);

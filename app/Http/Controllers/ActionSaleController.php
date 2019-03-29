@@ -18,29 +18,6 @@ class ActionSaleController extends Controller
 {
     public function index()
     {
-        // Get articles
-        /*$maxi = action_sale::where('shop','maxi')->where('category','akcija')->get();
-        $idea = action_sale::where('shop','idea')->where('category','akcija')->get();
-        $dis = dis_action_sale::all();*/
-
-        /*DB::connection()->enableQueryLog();
-
-        $maxi = Cache::remember('articlesMaxi', 1, function(){
-            return action_sale::where('shop','maxi')->where('category','akcija')->get();
-        });
-
-        $idea = Cache::remember('articlesIdea', 1, function(){
-            return action_sale::where('shop','idea')->where('category','akcija')->get();
-        });
-
-        $dis = Cache::remember('articlesDis', 1, function(){
-            return dis_action_sale::all();
-        });
-
-        $log = DB::getQueryLog();
-
-        print_r($log);*/
-
         $expiresAt = Carbon::now()->endOfDay()->subHour()->addMinutes(30);
 
         $cache = Cache::remember('maxiIdeaDisSale', 10, function() {
@@ -258,5 +235,34 @@ class ActionSaleController extends Controller
                 $article->save();
             }
         }
+    }
+
+    public function getView()
+    {
+        return view('frontend.actionSaleArticles')->with('showStore', false);
+    }
+
+    public function getSeparatedMarket(Request $request){
+
+        $this->shop = $request->shop;
+
+        if($request->sort == 'rastuce'){
+            $this->sort = 'ASC';
+        }else{
+            $this->sort = 'DESC';
+        }
+
+        $cache = Cache::remember($this->shop.'Drinks'.$this->sort, 10, function () {
+
+            if($this->shop == 'maxi'){
+                return action_sale::where('shop', 'maxi')->orderBy('price', $this->sort)->get();
+            }elseif ($this->shop == 'idea'){
+                return action_sale::where('shop', 'idea')->orderBy('price', $this->sort)->get();
+            }elseif ($this->shop == 'dis'){
+                return dis_action_sale::orderBy('price', $this->sort)->get();
+            }
+        });
+
+        return $cache;
     }
 }

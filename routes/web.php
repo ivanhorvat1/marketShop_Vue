@@ -30,6 +30,11 @@ Route::get('/getDisArticles', [
     'as' => 'getDisArticles'
 ]);
 
+Route::get('/action',[
+    'uses' => 'ActionSaleController@getView',
+    'as' => 'freeze'
+]);
+
 Route::get('/freeze',[
     'uses' => 'FreezeController@getView',
     'as' => 'freeze'

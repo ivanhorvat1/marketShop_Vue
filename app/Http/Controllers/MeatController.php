@@ -103,14 +103,21 @@ class MeatController extends Controller
     public function getSeparatedMarket(Request $request){
 
         $this->shop = $request->shop;
-        $cache = Cache::remember($this->shop.'Meats', 10, function () {
+
+        if($request->sort == 'rastuce'){
+            $this->sort = 'ASC';
+        }else{
+            $this->sort = 'DESC';
+        }
+
+        $cache = Cache::remember($this->shop.'Meats'.$this->sort, 10, function () {
 
             if($this->shop == 'maxi'){
-                return Meat::where('shop', 'maxi')->where('category', 'meso')->whereNotNull('barcodes')->get();
+                return Meat::where('shop', 'maxi')->orderBy('price', $this->sort)->get();
             }elseif ($this->shop == 'idea'){
-                return Meat::where('shop', 'idea')->where('category', 'meso')->whereNotNull('barcodes')->get();
+                return Meat::where('shop', 'idea')->orderBy('price', $this->sort)->get();
             }elseif ($this->shop == 'dis'){
-                return dis_meat::all();
+                return dis_meat::orderBy('price', $this->sort)->get();
             }
         });
 

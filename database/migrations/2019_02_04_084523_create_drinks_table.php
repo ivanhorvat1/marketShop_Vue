@@ -20,7 +20,7 @@ class CreateDrinksTable extends Migration
             $table->text('body')->nullable();
             $table->text('barcodes')->nullable();
             $table->string('formattedPrice')->nullable();
-            $table->string('price')->nullable();
+            $table->integer('price')->nullable();
             $table->string('category')->nullable();
             $table->string('supplementaryPriceLabel1')->nullable();
             $table->string('supplementaryPriceLabel2')->nullable();

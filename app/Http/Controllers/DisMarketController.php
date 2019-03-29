@@ -471,4 +471,60 @@ class DisMarketController extends Controller
         return response()->json($data);
     }
 
+    public function updateExistingMeat()
+    {
+        $dis = $this->disMarketMeat();
+
+        $success = false;
+
+        foreach ($dis as $disArtikli) {
+
+            if ($disArtikli['salePrice'] != null) {
+                $formattedPrice = $disArtikli['oldPrice'] . " RSD";
+                $price = str_replace(',', '', $disArtikli['oldPrice']);
+            } else {
+                $formattedPrice = $disArtikli['newPrice'] . " RSD";
+                $price = str_replace(',', '', $disArtikli['newPrice']);
+            }
+
+            if(!$price){
+                $price = null;
+            }
+
+            $article = dis_meat::where('code',  $disArtikli['code'])->first();
+            if($article) {
+                $article->formattedPrice = $formattedPrice;
+                $article->price = $price;
+                $saved = $article->save();
+            }
+
+            if ($disArtikli['salePrice'] != null) {
+
+                $formattedPrice = $disArtikli['salePrice'] . " RSD";
+
+                $article = dis_action_sale::where('code',  $disArtikli['code'])->first();
+                if($article) {
+                    $article->formattedPrice = $formattedPrice;
+                    $article->price = str_replace(',', '', $disArtikli['salePrice']);
+                    $saved = $article->save();
+                }
+
+            }
+
+            if($saved){
+                $success = true;
+            }else{
+                return response()->json([
+                    "success"=>false
+                ]);
+            }
+        }
+
+        $data = [
+            "success"=>$success
+        ];
+
+        return response()->json($data);
+    }
+
 }

@@ -7,8 +7,11 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
+import Vue from 'vue';
+import VTooltip from 'v-tooltip';
 
+//window.Vue = require('vue');
+Vue.use(VTooltip);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -17,6 +20,7 @@ window.Vue = require('vue');
 
 Vue.component('articles', require('./components/Articles.vue').default);
 Vue.component('navbar', require('./components/Navbar.vue').default);
+Vue.component('action', require('./components/Action.vue').default);
 Vue.component('freeze', require('./components/Freeze.vue').default);
 Vue.component('drinks', require('./components/Drinks.vue').default);
 Vue.component('sweets', require('./components/Sweets.vue').default);

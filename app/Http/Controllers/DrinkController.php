@@ -16,12 +16,12 @@ class DrinkController extends Controller
 
         $expiresAt = Carbon::now()->endOfDay()->subHour()->addMinutes(30);
 
-        $cache = Cache::remember('maxiIdeaDisDrinks', 10, function () {
+        $cache = Cache::remember('maxiIdeaDisDrinksD', 10, function () {
             $maxiIdea = [];
             // Get articles
-            $maxi = drink::where('shop', 'maxi')->where('category', 'pice')->whereNotNull('barcodes')->get();
-            $idea = drink::where('shop', 'idea')->where('category', 'pice')->whereNotNull('barcodes')->get();
-            $dis = dis_drink::all();
+            $maxi = drink::where('shop', 'maxi')->where('category', 'pice')->whereNotNull('barcodes')->orderBy('price', 'DESC')->get();
+            $idea = drink::where('shop', 'idea')->where('category', 'pice')->whereNotNull('barcodes')->orderBy('price', 'DESC')->get();
+            $dis = dis_drink::orderBy('price', 'DESC')->get();
 
 
             foreach ($maxi as $max) {
@@ -101,14 +101,21 @@ class DrinkController extends Controller
     public function getSeparatedMarket(Request $request){
 
         $this->shop = $request->shop;
-        $cache = Cache::remember($this->shop.'Drinks', 10, function () {
+
+        if($request->sort == 'rastuce'){
+            $this->sort = 'ASC';
+        }else{
+            $this->sort = 'DESC';
+        }
+
+        $cache = Cache::remember($this->shop.'Drinks'.$this->sort, 10, function () {
 
             if($this->shop == 'maxi'){
-                return drink::where('shop', 'maxi')->orderBy('price', 'DESC')->get();
+                return drink::where('shop', 'maxi')->orderBy('price', $this->sort)->get();
             }elseif ($this->shop == 'idea'){
-                return drink::where('shop', 'idea')->orderBy('price', 'DESC')->get();
+                return drink::where('shop', 'idea')->orderBy('price', $this->sort)->get();
             }elseif ($this->shop == 'dis'){
-                return dis_drink::orderBy('price', 'DESC')->all();
+                return dis_drink::orderBy('price', $this->sort)->get();
             }
         });
 

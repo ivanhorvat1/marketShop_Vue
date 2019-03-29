@@ -5,8 +5,16 @@
         <button @click="fetchArticles('dis')" class="btn btn-primary">Dis Pice</button>
         <br><br>
         <button @click="fetchProducts()" class="btn btn-primary">Compare All Products</button>
-        <h4 v-if="products.length > 0" align="left">Total products: {{products.length}}</h4>
-        <h4 v-else align="left">Total products: {{articles.length}}</h4><br>
+        <h4 v-if="products.length > 0" align="left">Total compared products: {{products.length}}</h4>
+        <h4 v-else align="left">Total products {{shop}}: {{articles.length}}</h4><br>
+        <div class="col-sm-8"></div>
+        <div v-if="articles.length > 0" class="form-group col-sm-4">
+            <label for="sel1">Sortiranje</label>
+            <select class="form-control" id="sel1" @change="fetchArticles(shop)" v-model="key">
+                <option :selected="key == 'opadajuce'" value="opadajuce">Sortiranje po opadajucim cenama</option>
+                <option value="rastuce">Sortiranje po rastucim Cenama</option>
+            </select>
+        </div>
         <div class="row">
             <div v-if="products.length > 0" class="col-sm-3" v-for="article in products.slice(startSlice,endSlice)"
                  v-bind:key="article.code">
@@ -75,7 +83,9 @@
                 startSlice: 0,
                 endSlice: 12,
                 products: [],
-                articles: []
+                articles: [],
+                key: 'opadajuce',
+                shop: ''
             }
         },
         created() {
@@ -123,9 +133,11 @@
                         $('body').addClass('loaded');
                     })
             }, fetchArticles(shop) {
+                this.shop = shop;
                 axios.get('api/action_drink_fetch_separate', {
                     params: {
-                        shop: shop
+                        shop: shop,
+                        sort: this.key
                     }
                 })
                     .then(res => {

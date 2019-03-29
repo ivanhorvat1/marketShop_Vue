@@ -4,8 +4,16 @@
         <button @click="fetchArticles('idea')" class="btn btn-primary">Idea Meso</button>
         <button @click="fetchArticles('dis')" class="btn btn-primary">Dis Meso</button><br><br>
         <button @click="fetchProducts()" class="btn btn-primary">Compare All Products</button>
-        <h4 v-if="products.length > 0" align="left">Total products: {{products.length}}</h4>
-        <h4 v-else align="left">Total products: {{articles.length}}</h4><br>
+        <h4 v-if="products.length > 0" align="left">Total compared products: {{products.length}}</h4>
+        <h4 v-else align="left">Total products {{shop}}: {{articles.length}}</h4><br>
+        <div class="col-sm-8"></div>
+        <div v-if="articles.length > 0" class="form-group col-sm-4">
+            <label for="sel1">Sortiranje</label>
+            <select class="form-control" id="sel1" @change="fetchArticles(shop)" v-model="key">
+                <option :selected="key == 'opadajuce'" value="opadajuce">Sortiranje po opadajucim cenama</option>
+                <option value="rastuce">Sortiranje po rastucim Cenama</option>
+            </select>
+        </div>
         <div class="row">
             <div v-if="products.length > 0" class="col-sm-3" v-for="article in products.slice(startSlice,endSlice)" v-bind:key="article.code">
                 <div class="card">
@@ -21,7 +29,7 @@
                         <p v-if="article.maxiCena" align="right"><img style="height: 50px; width: 80px"
                                                                       src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"/><b>
                             {{ article.maxiCena.substring(0, article.maxiCena.length - 3) }}</b></p>
-                        <p v-if="article.ideaCena" align="right"><img style="height: 25px; width: 75px"
+                        <p v-if="article.ideaCena" align="right"><img style="height: 20px; width: 75px"
                                                                       src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/><b>
                             {{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></p>
                         <!--<p v-else align="right"><img style="height: 18px; width: 75px"
@@ -50,7 +58,7 @@
                         <hr>
                         <p align="right"><img v-if="articlea.shop == 'maxi'" style="height: 50px; width: 80px"
                                               src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"/>
-                            <img v-else-if="articlea.shop == 'idea'" style="height: 25px; width: 75px"
+                            <img v-else-if="articlea.shop == 'idea'" style="height: 20px; width: 75px"
                                  src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/>
                             <img v-else-if="articlea.shop == 'dis'" style="height: 50px; width: 80px"
                                  src="http://www.serbianlogo.com/thumbnails/dis_krnjevo.gif"/>
@@ -72,7 +80,9 @@
                 startSlice: 0,
                 endSlice: 12,
                 products: [],
-                articles: []
+                articles: [],
+                key: 'opadajuce',
+                shop: ''
             }
         },
         created() {
@@ -111,18 +121,21 @@
                 }
             },
             fetchProducts() {
+                let vm = this;
                 fetch('api/action_meat_fetch')
                     .then(res => res.json())
                     .then(res => {
                         this.endSlice = 12;
                         this.articles = '';
-                        this.products = res;
+                        this.products = _.orderBy(res, 'price','desc');
                         $('body').addClass('loaded');
                     })
             },fetchArticles(shop) {
+                this.shop = shop;
                 axios.get('api/action_meat_fetch_separate', {
                     params: {
-                        shop: shop
+                        shop: shop,
+                        sort: this.key
                     }
                 })
                     //.then(res => res.json())
@@ -131,7 +144,7 @@
                         this.products = '';
                         this.articles = res.data;
                     })
-            },
+            }
         }
     }
 </script>
