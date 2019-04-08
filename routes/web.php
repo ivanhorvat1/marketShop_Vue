@@ -51,14 +51,19 @@ Route::get('/meats',[
     'uses' => 'MeatController@getView',
     'as' => 'meats'
 ]);
-Route::get('/dis',[
+Route::get('/disDrink',[
     'uses' => 'DisMarketController@getView',
-    'as' => 'dis'
+    'as' => 'disDrink'
 ]);
 
 Route::get('/disMeat',[
     'uses' => 'DisMarketController@getViewMeat',
     'as' => 'disMeat'
+]);
+
+Route::get('/disFreeze',[
+    'uses' => 'DisMarketController@getViewFreeze',
+    'as' => 'disFreeze'
 ]);
 
 Route::get('/disUpdateDrinks',[

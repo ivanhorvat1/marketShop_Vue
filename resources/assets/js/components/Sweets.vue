@@ -1,5 +1,5 @@
 <template>
-    <div align="center" class="container">
+    <div align="center">
         <h4 align="left">Total products: {{products.length}}</h4><br>
         <div class="row">
             <div class="col-sm-3" v-for="article in products.slice(startSlice,endSlice)" v-bind:key="article.code">
@@ -11,7 +11,7 @@
                         <!--<img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center"
                              :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">-->
                         <!--<img center v-else :src="'article.imageDefault'">-->
-                        <p align="center"><b>{{ article.title }}:</b> {{ article.body }}</p>
+                        <p class="textOverflow" align="center"><!--<b>{{ article.title }}:</b>--> {{ article.body }}</p>
                         <hr>
                         <p v-if="article.maxiCena" align="right"><img style="height: 50px; width: 80px"
                                                                       src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"/><b>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div hidden>
+        <div>
             <h2>Products</h2>
             <!--<form @submit.prevent="addArticle" class="mb-3">
                 <div class="form-group">
@@ -10,15 +10,15 @@
                 </div>
             </form>-->
 
-            <button @click="fetchArticles(0,'maxi','akcija')" class="btn btn-primary">Maxi Akcija</button>
-            <button @click="storeArticles('maxi','akcija')" class="btn btn-primary">Ubaci Akcija Maxi</button>
-            <button @click="fetchArticles(0, 'maxi', 'pice')" class="btn btn-primary">Ubaci Maxi Pice</button>
+            <button @click="fetchArticles(0,'maxi','akcija')" class="btn btn-primary waves-effect waves-light">Maxi Akcija</button>
+            <button @click="storeArticles('maxi','akcija')" class="btn blue">Ubaci Akcija Maxi</button>
+            <button @click="fetchArticles(0, 'maxi', 'pice')" class="btn blue">Ubaci Maxi Pice</button>
             <!--<button @click="storeArticles('maxi','pice')" class="btn btn-primary">Ubaci Pice Maxi</button>-->
-            <button @click="fetchArticles(0, 'maxi', 'meso')" class="btn btn-primary">Ubaci Maxi Meso</button>
+            <button @click="fetchArticles(0, 'maxi', 'meso')" class="btn blue">Ubaci Maxi Meso</button>
             <!--<button @click="storeArticles('maxi','meso')" class="btn btn-primary">Ubaci Meso Maxi</button>-->
-            <button @click="fetchArticles(0, 'maxi', 'slatkisi')" class="btn btn-primary">Ubaci Maxi Slatkisi</button>
+            <button @click="fetchArticles(0, 'maxi', 'slatkisi')" class="btn blue">Ubaci Maxi Slatkisi</button>
             <!--<button @click="storeArticles('maxi','slatkisi')" class="btn btn-primary">Ubaci Slatkise Maxi</button>-->
-            <button @click="fetchArticles(0, 'maxi', 'smrznuti')" class="btn btn-primary">Ubaci Maxi Smrznuto</button>
+            <button @click="fetchArticles(0, 'maxi', 'smrznuti')" class="btn blue">Ubaci Maxi Smrznuto</button>
             <!--<button @click="storeArticles('maxi','smrznuti')" class="btn btn-primary">Ubaci Smrznuto Maxi</button>-->
             <br>
             <br>
@@ -29,24 +29,47 @@
             <button @click="getCategoriesIdea('60007780')" class="btn btn-primary">Meso2 Idea</button>
             <button @click="getCategoriesIdea('60007896')" class="btn btn-primary">Slatkisi Idea</button>
             <button @click="getCategoriesIdea('60007907')" class="btn btn-primary">Smrznuti Proiz Idea</button>
-            <button @click="checkChildren()" class="btn btn-danger">check idea children</button>
+            <button @click="checkChildren()" class="btn red">check idea children</button>
             <!--:disabled="this.categoryArray.length < 16"-->
-            <button @click="storeArticles('idea','pice')" class="btn btn-info">Ubaci Pice Idea</button>
-            <button @click="storeArticles('idea','meso')" class="btn btn-info">Ubaci Meso Idea</button>
-            <button @click="storeArticles('idea','slatkisi')" class="btn btn-info">Ubaci Slatkisi Idea</button>
-            <button @click="storeArticles('idea','smrznuti')" class="btn btn-info">Ubaci smrznuti Idea</button>
+            <button @click="storeArticles('idea','pice')" class="btn blue">Ubaci Pice Idea</button>
+            <button @click="storeArticles('idea','meso')" class="btn blue">Ubaci Meso Idea</button>
+            <button @click="storeArticles('idea','slatkisi')" class="btn blue">Ubaci Slatkisi Idea</button>
+            <button @click="storeArticles('idea','smrznuti')" class="btn blue">Ubaci smrznuti Idea</button>
             <br><br>
-            <button class="btn btn-primary"><a href="/dis" style="color: white">Dis Market Pice</a></button>
+            <button class="btn btn-primary"><a href="/disDrink" style="color: white">Dis Market Pice</a></button>
             <button class="btn btn-primary"><a href="/disMeat" style="color: white">Dis Market Meso</a></button>
-            <button @click="updateDisDrinks()" class="btn btn-info">Dis update Drinks</button>
-            <button @click="updateDisMeat()" class="btn btn-info">Dis update Meat</button>
+            <button class="btn btn-primary"><a href="/disFreeze" style="color: white">Dis Market Smrznuto</a></button>
+            <button @click="updateDisDrinks()" class="btn blue">Dis update Drinks</button>
+            <button @click="updateDisMeat()" class="btn blue">Dis update Meat</button>
             <br><br>
         </div>
         <h4>Total products on Action: {{akcija.length}}</h4><br>
-
         <!-- slideshow -->
 
-        <div align="center" class="container">
+        <div class="carousel carousel-slider">
+            <!--<div class="carousel-item" v-for="article in akcija.slice(startSlice,endSlice)"
+                 v-bind:key="article.code" style="height: 400px">
+                <img center v-if="article.imageUrl /*&& article.shop == 'maxi'*/" class="center"
+                     :src="'https://d3el976p2k4mvu.cloudfront.net'+article.imageUrl" width="180px"
+                     height="180px">
+                &lt;!&ndash;<img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center"
+                                 :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">&ndash;&gt;
+                <img center v-else :src="'article.imageDefault'">
+                <h6 align="center"><b>{{ article.title }}:</b> {{ article.body }}</h6>
+                <hr>
+                <h5 v-if="article.maxiCena" align="center"><img style="height: 50px; width: 80px"
+                                                                src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"/><b>
+                    {{ article.maxiCena.substring(0, article.maxiCena.length - 3) }}</b></h5>
+                <h5 v-if="article.ideaCena" align="center"><img style="height: 20px; width: 75px"
+                                                                src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/><b>
+                    {{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></h5>
+                <h5 v-if="article.disCena" align="center"><img style="height: 50px; width: 80px"
+                                                               src="http://www.serbianlogo.com/thumbnails/dis_krnjevo.gif"/><b>
+                    {{ article.disCena.substring(0, article.disCena.length - 3) }}</b></h5>
+            </div>-->
+        </div>
+
+        <!--<div align="center" class="container">
             <div id="demo" class="carousel slide mb-5 " data-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active" style="height: 400px">
@@ -57,8 +80,8 @@
                         <img center v-if="article.imageUrl /*&& article.shop == 'maxi'*/" class="center"
                              :src="'https://d3el976p2k4mvu.cloudfront.net'+article.imageUrl" width="180px"
                              height="180px">
-                        <!--<img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center"
-                             :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">-->
+                        &lt;!&ndash;<img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center"
+                             :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">&ndash;&gt;
                         <img center v-else :src="'article.imageDefault'">
                         <h6 align="center"><b>{{ article.title }}:</b> {{ article.body }}</h6>
                         <hr>
@@ -74,7 +97,7 @@
                     </div>
                 </div>
 
-                <!-- Left and right controls -->
+                &lt;!&ndash; Left and right controls &ndash;&gt;
                 <a class="carousel-control-prev" href="#demo" data-slide="prev">
                     <span class="carousel-control-prev-icon"
                           style="background-color: black; border-radius: 50%; width: 30px; height: 30px;"></span>
@@ -86,7 +109,7 @@
                     <span class="sr-only">Next</span>
                 </a>
             </div>
-        </div>
+        </div>-->
 
         <!-- end slideshow -->
 
@@ -337,7 +360,7 @@
                             let res = JSON.parse(data.contents);
                             vm.storeMaxi(res);
                             vm.storeArticles(shop, category);
-                            alert('done');
+                            M.toast({html: 'Succesfully added', classes: 'rounded'});
                         });
                     }
                 }

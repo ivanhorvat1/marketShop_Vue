@@ -16,7 +16,7 @@ class DrinkController extends Controller
 
         $expiresAt = Carbon::now()->endOfDay()->subHour()->addMinutes(30);
 
-        $cache = Cache::remember('maxiIdeaDisDrinksD', 10, function () {
+        $cache = Cache::remember('maxiIdeaDisDrinks', 10, function () {
             $maxiIdea = [];
             // Get articles
             $maxi = drink::where('shop', 'maxi')->where('category', 'pice')->whereNotNull('barcodes')->orderBy('price', 'DESC')->get();
@@ -32,10 +32,14 @@ class DrinkController extends Controller
                             $ide['maxiCena'] = $max['formattedPrice'];
                             $ide['ideaCena'] = $ide['formattedPrice'];
                             $ide['imageUrl'] = $max['imageUrl'];
+                            $ide['supplementaryPriceMaxi'] = $max['supplementaryPriceLabel1'];
+                            $ide['supplementaryPriceIdea'] = $ide['supplementaryPriceLabel1'];
                             array_push($maxiIdea, $ide);
                         } else {
                             $max['ideaCena'] = $ide['formattedPrice'];
                             $max['maxiCena'] = $max['formattedPrice'];
+                            $max['supplementaryPriceIdea'] = $ide['supplementaryPriceLabel1'];
+                            $max['supplementaryPriceMaxi'] = $max['supplementaryPriceLabel1'];
                             array_push($maxiIdea, $max);
                         }
                     }

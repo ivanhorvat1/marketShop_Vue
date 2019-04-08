@@ -74,7 +74,7 @@
                 }
             },
             fetchProducts() {
-                fetch('api/compare_dis_market_meat')
+                fetch('api/compare_dis_market_drink')
                     .then(res => res.json())
                     .then(res => {
                         console.log(res);
@@ -88,7 +88,7 @@
                 this.articles.newPrice = newPrice;
                 this.articles.oldPrice = oldPrice;
                 this.articles.salePrice = salePrice;
-                this.articles.category = 'meso';
+                this.articles.category = 'pice';
                 this.articles.shop = 'dis';
 
                 /*Separating barcodes and imageUrl*/

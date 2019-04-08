@@ -1,8 +1,8 @@
 <template>
-    <div align="center" class="container">
+    <div align="center">
         <h4 align="left">Total products: {{products.length}}</h4><br>
         <div class="row">
-            <div class="col-sm-6" v-for="(article, index) in products" v-bind:key="article.dis.code">
+            <div class="col-sm-4" v-for="(article, index) in products" v-bind:key="article.dis.code">
                 <div class="card">
                     <div class="card-body">
                         <p>{{ article.dis.name}}</p>
@@ -10,9 +10,9 @@
                         <hr>
                         <form @submit.prevent="addDisArticle(index,article.dis.code,article.dis.name,article.dis.newPrice,article.dis.oldPrice,article.dis.salePrice)"
                               method="post">
-                            <div v-for="baza in article.drink">
-                                <input type="radio" v-model="articles.barcodes" :value="baza.barcodes"> {{baza.body}}
-                                <!--<input type="text" v-model="articles.supplementary"/>-->
+                            <div v-for="baza in article.freeze">
+                                <input type="radio" v-model="articles.barcodes" :value="baza.barcodes+'-'+baza.imageUrl"> {{baza.body}}
+                                <!--<input type="hidden" :ref="'imageUrl'+index" :value="baza.imageUrl"/>-->
                                 <br>
                             </div>
                             <hr>
@@ -34,7 +34,7 @@
                 products: [],
                 // hidden: '',
                 articles: {
-                    barcodes: '',
+                    barcodes: ''
                     // supplementary: ''
                 }
             }
@@ -74,10 +74,9 @@
                 }
             },
             fetchProducts() {
-                fetch('api/compare_dis_market_drink')
+                fetch('api/compare_dis_market_freeze')
                     .then(res => res.json())
                     .then(res => {
-                        console.log(res);
                         this.products = res;
                         $('body').addClass('loaded');
                     })
@@ -88,8 +87,15 @@
                 this.articles.newPrice = newPrice;
                 this.articles.oldPrice = oldPrice;
                 this.articles.salePrice = salePrice;
-                this.articles.category = 'pice';
+                this.articles.category = 'smrznuti';
                 this.articles.shop = 'dis';
+
+                /*Separating barcodes and imageUrl*/
+                var regex = /[^-]+/g;
+                var found = this.articles.barcodes.match(regex);
+
+                this.articles.barcodes = found[0];
+                this.articles.imageUrl = found[1];
 
                 if (this.articles.barcodes == '') {
                     return alert('Please select one of radio buttons');

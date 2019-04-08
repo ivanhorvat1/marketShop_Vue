@@ -1,5 +1,5 @@
 <template>
-    <div align="center" class="container">
+    <div align="center">
         <button @click="fetchArticles('maxi')" class="btn btn-primary">Maxi Meso</button>
         <button @click="fetchArticles('idea')" class="btn btn-primary">Idea Meso</button>
         <button @click="fetchArticles('dis')" class="btn btn-primary">Dis Meso</button><br><br>
@@ -24,7 +24,7 @@
                         <img center v-if="article.imageUrl == null" :src=article.imageDefault>
                         <!--<img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center"
                              :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">-->
-                        <p align="center"><b>{{ article.title }}:</b> {{ article.body }}</p>
+                        <p class="textOverflow" align="center"><!--<b>{{ article.title }}:</b>--> {{ article.body }}</p>
                         <hr>
                         <p v-if="article.maxiCena" align="right"><img style="height: 50px; width: 80px"
                                                                       src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"/><b>

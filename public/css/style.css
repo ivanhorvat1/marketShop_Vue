@@ -203,14 +203,33 @@
     background: powderblue;
 }*/
 
-.fas, .menu{
+.fas, .menu, .menuspan{
     color: #591259;
+}
+
+.sidenav-trigger{
+    color: #591259;
+}
+
+.menuspan{
+    padding-left: 5px;
 }
 
 .fas:hover, .activeMenu{
     color: mediumpurple;
 }
 
+nav {
+    background-color: #ffffff !important;
+}
+
+.textOverflow {
+    display: block;
+    width: 180px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 /*.container .navbar-container{
     background-image: url("/public/images/navbar.jpg");
 }
