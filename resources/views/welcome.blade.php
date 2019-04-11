@@ -41,6 +41,7 @@
     </div>
 </div>
 <script src="{{ asset('js/app.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script>
     $(document).ready(function(){
         $('.collapsible').collapsible();
@@ -60,8 +61,8 @@
     window.onbeforeunload = function () {
         window.scrollTo(0, 0);
     }
+
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 </html>

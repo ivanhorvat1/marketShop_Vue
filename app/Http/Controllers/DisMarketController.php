@@ -59,7 +59,7 @@ class DisMarketController extends Controller
         //$html = $this->grab_page("http://online.dis.rs/proizvodi.php?");
         //$html = iconv("Windows-1250", "UTF-8", $html);
 
-        $drinkUrl = ['P1','O1'];
+        $drinkUrl = ['P1', 'O1'];
 
         /*preg_match_all("!<a href=\'#\' onclick=\"proslediNaStranicu\('(.*?)'\);return .*?;\s*\"\s*>(.*?)<\/a>!",
             $html,
@@ -186,7 +186,7 @@ class DisMarketController extends Controller
             //foreach ($explo as $ex){
             // if($duzina > 3){
             //->where('body', 'like', '%'.$explo[3].'%')
-            $databasee = ['dis' => $dis, 'drink' => drink::select('body', 'barcodes', 'supplementaryPriceLabel2','imageUrl')->where('category', 'pice')->whereNotNull('barcodes')->where('body', 'like', '%' . $explo[0] . '%')->where('body', 'like', '%' . $explo[1] . '%')->get()];
+            $databasee = ['dis' => $dis, 'drink' => drink::select('body', 'barcodes', 'supplementaryPriceLabel2', 'imageUrl')->where('category', 'pice')->whereNotNull('barcodes')->where('body', 'like', '%' . $explo[0] . '%')->where('body', 'like', '%' . $explo[1] . '%')->get()];
             // }
             //}
             //var_dump($databasee['drink']->isEmpty()); continue;
@@ -204,7 +204,7 @@ class DisMarketController extends Controller
         ini_set('max_execution_time', 30000); //300 seconds = 5 minutes
         $this->login("http://online.dis.rs/inc/inc.nalog.prijava.php", "email=nemixbg%40gmail.com&lozinka=n3m4nj41982&radi=da");
 
-        $drinkUrl = ['D1','B1'];
+        $drinkUrl = ['D1', 'B1'];
         foreach ($drinkUrl as $driUrl) {
             $url = 'http://online.dis.rs/proizvodi.php?&kat=' . $driUrl;
             $htmlKAT = $this->grab_page($url . '&brArtPoStr=96');
@@ -311,7 +311,7 @@ class DisMarketController extends Controller
             //foreach ($explo as $ex){
             // if($duzina > 3){
             //->where('body', 'like', '%'.$explo[3].'%')
-            $databasee = ['dis' => $dis, 'drink' => Meat::select('body', 'barcodes', 'supplementaryPriceLabel2','imageUrl')->whereNotNull('barcodes')->where('body', 'like', '%' . $explo[0] . '%')->where('body', 'like', '%' . $explo[1] . '%')->get()];
+            $databasee = ['dis' => $dis, 'drink' => Meat::select('body', 'barcodes', 'supplementaryPriceLabel2', 'imageUrl')->whereNotNull('barcodes')->where('body', 'like', '%' . $explo[0] . '%')->where('body', 'like', '%' . $explo[1] . '%')->get()];
             // }
             //}
             //var_dump($databasee['drink']->isEmpty()); continue;
@@ -436,7 +436,7 @@ class DisMarketController extends Controller
             //foreach ($explo as $ex){
             // if($duzina > 3){
             //->where('body', 'like', '%'.$explo[3].'%')
-            $databasee = ['dis' => $dis, 'freeze' => Freeze::select('body', 'barcodes', 'supplementaryPriceLabel2','imageUrl')->whereNotNull('barcodes')->where('body', 'like', '%' . $explo[0] . '%')->where('body', 'like', '%' . $explo[1] . '%')->get()];
+            $databasee = ['dis' => $dis, 'freeze' => Freeze::select('body', 'barcodes', 'supplementaryPriceLabel2', 'imageUrl')->whereNotNull('barcodes')->where('body', 'like', '%' . $explo[0] . '%')->where('body', 'like', '%' . $explo[1] . '%')->get()];
             // }
             //}
             //var_dump($databasee['drink']->isEmpty()); continue;
@@ -473,17 +473,17 @@ class DisMarketController extends Controller
 
         if ($request->salePrice != null) {
             $formattedPrice = $request->oldPrice . " RSD";
-            $price = str_replace(',','',$request->oldPrice);
+            $price = str_replace(',', '', $request->oldPrice);
         } else {
             $formattedPrice = $request->newPrice . " RSD";
-            $price = str_replace(',','',$request->newPrice);
+            $price = str_replace(',', '', $request->newPrice);
         }
 
-        if($request->category == 'pice'){
+        if ($request->category == 'pice') {
             $article = dis_drink::firstOrNew(array('code' => $request->code));
-        }elseif ($request->category == 'meso'){
+        } elseif ($request->category == 'meso') {
             $article = dis_meat::firstOrNew(array('code' => $request->code));
-        }elseif ($request->category == 'smrznuti'){
+        } elseif ($request->category == 'smrznuti') {
             $article = dis_freeze::firstOrNew(array('code' => $request->code));
         }
 
@@ -514,7 +514,7 @@ class DisMarketController extends Controller
             $article->imageDefault = $imageDefault;
             $article->barcodes = $request->barcodes;
             $article->formattedPrice = $formattedPrice;
-            $article->price = str_replace(',','',$request->salePrice);
+            $article->price = str_replace(',', '', $request->salePrice);
             $article->supplementaryPriceLabel1 = null;
             $article->supplementaryPriceLabel2 = null;
             $article->shop = $request->shop;
@@ -526,10 +526,8 @@ class DisMarketController extends Controller
     public function updateExistingDrinks()
     {
         $dis = $this->disMarketDrink();
-
-        /*var_dump($dis);
-        die;*/
-
+        dis_action_sale::where('category', 'pice')->delete();
+        $saved = true;
         $success = false;
 
         foreach ($dis as $disArtikli) {
@@ -542,42 +540,53 @@ class DisMarketController extends Controller
                 $price = str_replace(',', '', $disArtikli['newPrice']);
             }
 
-            if(!$price){
+            if (!$price) {
                 $price = null;
             }
 
-            //var_dump($price); continue;
-            $article = dis_drink::where('code',  $disArtikli['code'])->first();
-            if($article) {
+            $article = dis_drink::where('code', $disArtikli['code'])->first();
+            if ($article) {
+                $code = $article->code;
+                $barcodes = $article->barcodes;
+                $title = $article->title;
+                $body = $article->body;
+                $category = $article->category;
+                $shop = $article->shop;
+                $imageDefault = $article->imageDefault;
                 $article->formattedPrice = $formattedPrice;
                 $article->price = $price;
                 $saved = $article->save();
-            }
 
-            if ($disArtikli['salePrice'] != null) {
+                if ($disArtikli['salePrice'] != null) {
+                    $formattedPrice = $disArtikli['salePrice'] . " RSD";
 
-                $formattedPrice = $disArtikli['salePrice'] . " RSD";
+                    $data = [
+                        'code' => $code,
+                        'title' => $title,
+                        'body' => $body,
+                        'barcodes' => $barcodes,
+                        'category' => $category,
+                        'shop' => $shop,
+                        'imageDefault' => $imageDefault,
+                        'formattedPrice' => $formattedPrice,
+                        'price' => str_replace(',', '', $disArtikli['salePrice'])
+                    ];
 
-                $article = dis_action_sale::where('code',  $disArtikli['code'])->first();
-                if($article) {
-                    $article->formattedPrice = $formattedPrice;
-                    $article->price = str_replace(',', '', $disArtikli['salePrice']);
-                    $saved = $article->save();
+                    $saved = dis_action_sale::create($data);
                 }
-
             }
 
-            if($saved){
+            if ($saved) {
                 $success = true;
-            }else{
+            } else {
                 return response()->json([
-                    "success"=>false
+                    "success" => false
                 ]);
             }
         }
 
         $data = [
-            "success"=>$success
+            "success" => $success
         ];
 
         return response()->json($data);
@@ -586,8 +595,9 @@ class DisMarketController extends Controller
     public function updateExistingMeat()
     {
         $dis = $this->disMarketMeat();
-
+        dis_action_sale::where('category', 'meso')->delete();
         $success = false;
+        $saved = true;
 
         foreach ($dis as $disArtikli) {
 
@@ -599,41 +609,128 @@ class DisMarketController extends Controller
                 $price = str_replace(',', '', $disArtikli['newPrice']);
             }
 
-            if(!$price){
+            if (!$price) {
                 $price = null;
             }
 
-            $article = dis_meat::where('code',  $disArtikli['code'])->first();
-            if($article) {
+            $article = dis_meat::where('code', $disArtikli['code'])->first();
+
+            if ($article) {
+                $code = $article->code;
+                $barcodes = $article->barcodes;
+                $title = $article->title;
+                $body = $article->body;
+                $category = $article->category;
+                $shop = $article->shop;
+                $imageDefault = $article->imageDefault;
                 $article->formattedPrice = $formattedPrice;
                 $article->price = $price;
                 $saved = $article->save();
-            }
 
-            if ($disArtikli['salePrice'] != null) {
+                if ($disArtikli['salePrice'] != null) {
+                    $formattedPrice = $disArtikli['salePrice'] . " RSD";
 
-                $formattedPrice = $disArtikli['salePrice'] . " RSD";
+                    $data = [
+                        'code' => $code,
+                        'title' => $title,
+                        'body' => $body,
+                        'barcodes' => $barcodes,
+                        'category' => $category,
+                        'shop' => $shop,
+                        'imageDefault' => $imageDefault,
+                        'formattedPrice' => $formattedPrice,
+                        'price' => str_replace(',', '', $disArtikli['salePrice'])
+                    ];
 
-                $article = dis_action_sale::where('code',  $disArtikli['code'])->first();
-                if($article) {
-                    $article->formattedPrice = $formattedPrice;
-                    $article->price = str_replace(',', '', $disArtikli['salePrice']);
-                    $saved = $article->save();
+                    $saved = dis_action_sale::create($data);
                 }
 
+
             }
 
-            if($saved){
+            if ($saved) {
                 $success = true;
-            }else{
+            } else {
                 return response()->json([
-                    "success"=>false
+                    "success" => false
                 ]);
             }
         }
 
         $data = [
-            "success"=>$success
+            "success" => $success
+        ];
+
+        return response()->json($data);
+    }
+
+    public function updateExistingFreeze()
+    {
+        $dis = $this->disMarketFreeze();
+
+        $success = false;
+        $saved = true;
+
+        dis_action_sale::where('category', 'smrznuti')->delete();
+
+        foreach ($dis as $disArtikli) {
+
+            if ($disArtikli['salePrice'] != null) {
+                $formattedPrice = $disArtikli['oldPrice'] . " RSD";
+                $price = str_replace(',', '', $disArtikli['oldPrice']);
+            } else {
+                $formattedPrice = $disArtikli['newPrice'] . " RSD";
+                $price = str_replace(',', '', $disArtikli['newPrice']);
+            }
+
+            if (!$price) {
+                $price = null;
+            }
+
+            $article = dis_freeze::where('code', $disArtikli['code'])->first();
+
+            if ($article) {
+                $code = $article->code;
+                $barcodes = $article->barcodes;
+                $title = $article->title;
+                $body = $article->body;
+                $category = $article->category;
+                $shop = $article->shop;
+                $imageDefault = $article->imageDefault;
+                $article->formattedPrice = $formattedPrice;
+                $article->price = $price;
+
+                $saved = $article->save();
+                if ($disArtikli['salePrice'] != null) {
+                    $formattedPrice = $disArtikli['salePrice'] . " RSD";
+
+                    $data = [
+                        'code' => $code,
+                        'title' => $title,
+                        'body' => $body,
+                        'barcodes' => $barcodes,
+                        'category' => $category,
+                        'shop' => $shop,
+                        'imageDefault' => $imageDefault,
+                        'formattedPrice' => $formattedPrice,
+                        'price' => str_replace(',', '', $disArtikli['salePrice'])
+                    ];
+
+                    $saved = dis_action_sale::create($data);
+                }
+            }
+
+            if ($saved) {
+                $success = true;
+            } else {
+                return response()->json([
+                    "success" => false
+                ]);
+            }
+        }
+
+        $data = [
+            "success" => $success
         ];
 
         return response()->json($data);

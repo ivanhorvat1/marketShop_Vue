@@ -2093,6 +2093,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2431,14 +2432,30 @@ __webpack_require__.r(__webpack_exports__);
       fetch('api/dis_update_drinks').then(function (res) {
         return res.json();
       }).then(function (res) {
-        alert(res.success);
+        M.toast({
+          html: res.success,
+          classes: 'rounded'
+        }, 3000);
       });
     },
     updateDisMeat: function updateDisMeat() {
       fetch('api/dis_update_meat').then(function (res) {
         return res.json();
       }).then(function (res) {
-        alert(res.success);
+        M.toast({
+          html: res.success,
+          classes: 'rounded'
+        }, 3000);
+      });
+    },
+    updateDisFreeze: function updateDisFreeze() {
+      fetch('api/dis_update_freeze').then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        M.toast({
+          html: res.success,
+          classes: 'rounded'
+        }, 3000);
       });
     }
   }
@@ -2992,7 +3009,7 @@ __webpack_require__.r(__webpack_exports__);
       document.documentElement.scrollTop = 0;
     },
     handleScroll: function handleScroll() {
-      if (this.products.length > 0) {
+      if (this.products.length > 0 || this.articles.length > 0) {
         var scroll = Math.ceil($(window).scrollTop() + $(window).height());
         var windowHeight = Math.round($(document).height());
 
@@ -3022,7 +3039,9 @@ __webpack_require__.r(__webpack_exports__);
       fetch('api/action_drink_fetch').then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this.products = res;
+        _this.endSlice = 12;
+        _this.articles = '';
+        _this.products = _.orderBy(res, 'price', 'desc');
         $('body').addClass('loaded');
       });
     },
@@ -3214,7 +3233,7 @@ __webpack_require__.r(__webpack_exports__);
       document.documentElement.scrollTop = 0;
     },
     handleScroll: function handleScroll() {
-      if (this.products.length > 0) {
+      if (this.products.length > 0 || this.articles.length > 0) {
         var scroll = Math.ceil($(window).scrollTop() + $(window).height());
         var windowHeight = Math.round($(document).height());
 
@@ -3244,7 +3263,9 @@ __webpack_require__.r(__webpack_exports__);
       fetch('api/action_freeze_fetch').then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this.products = res;
+        _this.endSlice = 12;
+        _this.articles = '';
+        _this.products = _.orderBy(res, 'price', 'desc');
         $('body').addClass('loaded');
       });
     },
@@ -41130,6 +41151,19 @@ var render = function() {
         [_vm._v("Dis update Meat")]
       ),
       _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn blue",
+          on: {
+            click: function($event) {
+              _vm.updateDisFreeze()
+            }
+          }
+        },
+        [_vm._v("Dis update Freeze")]
+      ),
+      _vm._v(" "),
       _c("br"),
       _c("br")
     ]),
@@ -41138,8 +41172,6 @@ var render = function() {
       _vm._v("Total products on Action: " + _vm._s(_vm.akcija.length))
     ]),
     _c("br"),
-    _vm._v(" "),
-    _c("div", { staticClass: "carousel carousel-slider" }),
     _vm._v(" "),
     _c(
       "button",
@@ -41939,10 +41971,14 @@ var render = function() {
                               attrs: { center: "", src: articlea.imageDefault }
                             }),
                     _vm._v(" "),
-                    _c("p", { attrs: { align: "center" } }, [
-                      _c("b", [_vm._v(_vm._s(articlea.title) + ":")]),
-                      _vm._v(" " + _vm._s(articlea.body))
-                    ]),
+                    _c(
+                      "p",
+                      {
+                        staticClass: "textOverflow",
+                        attrs: { align: "center" }
+                      },
+                      [_vm._v(" " + _vm._s(articlea.body))]
+                    ),
                     _vm._v(" "),
                     _c("hr"),
                     _vm._v(" "),
@@ -42397,13 +42433,21 @@ var render = function() {
                             })
                           : _c("img", {
                               staticStyle: { height: "200px", width: "180px" },
-                              attrs: { center: "", src: articlea.imageDefault }
+                              attrs: {
+                                center: "",
+                                src:
+                                  "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694"
+                              }
                             }),
                     _vm._v(" "),
-                    _c("p", { attrs: { align: "center" } }, [
-                      _c("b", [_vm._v(_vm._s(articlea.title) + ":")]),
-                      _vm._v(" " + _vm._s(articlea.body))
-                    ]),
+                    _c(
+                      "p",
+                      {
+                        staticClass: "textOverflow",
+                        attrs: { align: "center" }
+                      },
+                      [_vm._v(_vm._s(articlea.body))]
+                    ),
                     _vm._v(" "),
                     _c("hr"),
                     _vm._v(" "),

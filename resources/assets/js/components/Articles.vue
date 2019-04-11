@@ -41,13 +41,14 @@
             <button class="btn btn-primary"><a href="/disFreeze" style="color: white">Dis Market Smrznuto</a></button>
             <button @click="updateDisDrinks()" class="btn blue">Dis update Drinks</button>
             <button @click="updateDisMeat()" class="btn blue">Dis update Meat</button>
+            <button @click="updateDisFreeze()" class="btn blue">Dis update Freeze</button>
             <br><br>
         </div>
         <h4>Total products on Action: {{akcija.length}}</h4><br>
         <!-- slideshow -->
 
-        <div class="carousel carousel-slider">
-            <!--<div class="carousel-item" v-for="article in akcija.slice(startSlice,endSlice)"
+        <!--<div class="carousel carousel-slider">
+            <div class="carousel-item" v-for="article in akcija.slice(startSlice,endSlice)"
                  v-bind:key="article.code" style="height: 400px">
                 <img center v-if="article.imageUrl /*&& article.shop == 'maxi'*/" class="center"
                      :src="'https://d3el976p2k4mvu.cloudfront.net'+article.imageUrl" width="180px"
@@ -66,8 +67,8 @@
                 <h5 v-if="article.disCena" align="center"><img style="height: 50px; width: 80px"
                                                                src="http://www.serbianlogo.com/thumbnails/dis_krnjevo.gif"/><b>
                     {{ article.disCena.substring(0, article.disCena.length - 3) }}</b></h5>
-            </div>-->
-        </div>
+            </div>
+        </div>-->
 
         <!--<div align="center" class="container">
             <div id="demo" class="carousel slide mb-5 " data-ride="carousel">
@@ -490,14 +491,21 @@
                 fetch('api/dis_update_drinks')
                     .then(res => res.json())
                     .then(res => {
-                        alert(res.success);
+                        M.toast({html: res.success, classes: 'rounded'}, 3000);
                     })
             },
             updateDisMeat() {
                 fetch('api/dis_update_meat')
                     .then(res => res.json())
                     .then(res => {
-                        alert(res.success);
+                        M.toast({html: res.success, classes: 'rounded'}, 3000);
+                    })
+            },
+            updateDisFreeze() {
+                fetch('api/dis_update_freeze')
+                    .then(res => res.json())
+                    .then(res => {
+                        M.toast({html: res.success, classes: 'rounded'}, 3000);
                     })
             }
         }

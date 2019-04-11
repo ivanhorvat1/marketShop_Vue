@@ -57,8 +57,8 @@
                              :src="'https://www.idea.rs/online/'+articlea.imageUrl" width="180px" height="180px">
                         <img center v-else-if="articlea.imageUrl !== null && articlea.shop == 'dis'" class="center"
                              :src="'https://www.idea.rs/online/'+articlea.imageUrl" width="180px" height="180px">
-                        <img v-else center style="height: 200px; width: 180px" :src=articlea.imageDefault>
-                        <p align="center"><b>{{ articlea.title }}:</b> {{ articlea.body }}</p>
+                        <img v-else center style="height: 200px; width: 180px" :src="'https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694'">
+                        <p class="textOverflow" align="center">{{ articlea.body }}</p>
                         <hr>
                         <p align="right"><img v-if="articlea.shop == 'maxi'" style="height: 50px; width: 80px"
                                               src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"/>
@@ -141,7 +141,7 @@
                 document.documentElement.scrollTop = 0;
             },
             handleScroll() {
-                if (this.products.length > 0) {
+                if (this.products.length > 0 || this.articles.length > 0) {
                     let scroll = Math.ceil($(window).scrollTop() + $(window).height());
                     let windowHeight = Math.round($(document).height());
 
@@ -170,7 +170,9 @@
                 fetch('api/action_freeze_fetch')
                     .then(res => res.json())
                     .then(res => {
-                        this.products = res;
+                        this.endSlice = 12;
+                        this.articles = '';
+                        this.products = _.orderBy(res, 'price','desc');
                         $('body').addClass('loaded');
                     })
             }, fetchArticles(shop) {

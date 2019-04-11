@@ -115,7 +115,7 @@ class FreezeController extends Controller
             $this->sort = 'DESC';
         }
 
-        $cache = Cache::remember($this->shop.'Drinks'.$this->sort, 10, function () {
+        $cache = Cache::remember($this->shop.'Freeze'.$this->sort, 10, function () {
 
             if($this->shop == 'maxi'){
                 return Freeze::where('shop', 'maxi')->orderBy('price', $this->sort)->get();
