@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\dis_freeze;
 use App\dis_meat;
+use App\dis_sweet;
 use App\Freeze;
 use App\Meat;
+use App\Sweets;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\dis_drink;
@@ -278,7 +280,7 @@ class DisMarketController extends Controller
                     'newPrice' => $artikal_cena_nova,
                     'oldPrice' => $artikal_cena_stara,
                     'salePrice' => $artikal_cena_akcija,
-                    'category' => 'pice'
+                    'category' => 'meso'
                     //'category' => $match[2][$i]
                 ];
             }
@@ -403,7 +405,7 @@ class DisMarketController extends Controller
                     'newPrice' => $artikal_cena_nova,
                     'oldPrice' => $artikal_cena_stara,
                     'salePrice' => $artikal_cena_akcija,
-                    'category' => 'pice'
+                    'category' => 'smrznuti'
                     //'category' => $match[2][$i]
                 ];
             }
@@ -449,6 +451,131 @@ class DisMarketController extends Controller
         return $database;
     }
 
+    public function disMarketSweet()
+    {
+        ini_set('max_execution_time', 30000); //300 seconds = 5 minutes
+        $this->login("http://online.dis.rs/inc/inc.nalog.prijava.php", "email=nemixbg%40gmail.com&lozinka=n3m4nj41982&radi=da");
+
+        $drinkUrl = ['M1'];
+        foreach ($drinkUrl as $driUrl) {
+            $url = 'http://online.dis.rs/proizvodi.php?&kat=' . $driUrl;
+            $htmlKAT = $this->grab_page($url . '&brArtPoStr=96');
+
+            $htmlKAT = iconv("Windows-1250", "UTF-8", $htmlKAT);
+            preg_match_all("!<a href=\'#\' onclick=\"proslediNaStranicu\('.*?limit=(\d*)&.*?'\);return .*?;\s*\"\s*>(.*?)<\/a>!",
+                $htmlKAT,
+                $limit);
+
+            if (array_filter($limit)) {
+                $limit = max($limit[1]) + 96;
+            } else {
+                $limit = 0;
+            }
+
+            $urlFinal = $url . '&sortArt=sortNazart&brArtPoStr=' . $limit;
+
+            $htmlContent = $this->grab_page($urlFinal);
+
+            $htmlContent = iconv("Windows-1250", "UTF-8", $htmlContent);
+
+            $artikal_start = '<div id="artikal">';
+            $artikliHTML = array_slice(explode($artikal_start, $htmlContent), 1);
+
+            foreach ($artikliHTML as &$artikal) {
+                // Matching artical name
+                preg_match_all('!<div id="artikal-naziv">\s*(.*?)\s*<\/div>\s*!',
+                    $artikal,
+                    $artikal_nazivi);
+                // Matching artical cod
+                preg_match_all('!<div id="artikal-slika-okvir">\s*.*?data-target="#slikaModal(.*?)".*?\s*<\/div>\s*!',
+                    $artikal,
+                    $artikal_kodovi);
+
+                // Matching artical newPrice
+                preg_match_all("!<span class='tekst-artikal-cena'>(\d*,\d{2}).*?<!",
+                    $artikal,
+                    $artikal_cena_nova);
+
+                if (!empty($artikal_cena_nova[1])) {
+                    $artikal_cena_nova = $artikal_cena_nova[1][0];
+                } else {
+                    $artikal_cena_nova = null;
+                }
+
+                // Matching artical oldPrice
+                preg_match_all("!<span class='tekst-artikal-cena-stara'>(\d*,\d{2}).*?<!",
+                    $artikal,
+                    $artikal_cena_stara);
+
+                if (!empty($artikal_cena_stara[1])) {
+                    $artikal_cena_stara = $artikal_cena_stara[1][0];
+                } else {
+                    $artikal_cena_stara = null;
+                }
+
+                // Matching artical salePrice
+                preg_match_all("!<span class='tekst-artikal-cena-akcija'>(\d*,\d{2}).*?<!",
+                    $artikal,
+                    $artikal_cena_akcija);
+
+                if (!empty($artikal_cena_akcija[1])) {
+                    $artikal_cena_akcija = $artikal_cena_akcija[1][0];
+                } else {
+                    $artikal_cena_akcija = null;
+                }
+
+                $this->artikli[] = [
+                    'name' => $artikal_nazivi[1][0],
+                    'code' => $artikal_kodovi[1][0],
+                    'newPrice' => $artikal_cena_nova,
+                    'oldPrice' => $artikal_cena_stara,
+                    'salePrice' => $artikal_cena_akcija,
+                    'category' => 'slatkisi'
+                    //'category' => $match[2][$i]
+                ];
+            }
+
+            // echo $i . '<br>';
+
+            //}
+
+            //$i++;
+
+            //}
+        }
+
+        return $this->artikli;
+        // echo "Ima ukupno : " . count($this->artikli) . " artikala u DIS marketu!";
+        //var_dump($this->artikli);
+    }
+
+    public function getDisSweet()
+    {
+
+        $disArtikli = $this->disMarketSweet();
+
+        $database = [];
+        foreach ($disArtikli as $dis) {
+            $explo = explode(' ', $dis['name']);
+
+            $duzina = count($explo);
+
+            //foreach ($explo as $ex){
+            // if($duzina > 3){
+            //->where('body', 'like', '%'.$explo[3].'%')
+            $databasee = ['dis' => $dis, 'sweet' => Sweets::select('body', 'barcodes', 'supplementaryPriceLabel2', 'imageUrl')->whereNotNull('barcodes')->where('body', 'like', '%' . $explo[0] . '%')->where('body', 'like', '%' . $explo[1] . '%')->get()];
+            // }
+            //}
+            //var_dump($databasee['drink']->isEmpty()); continue;
+            if ($databasee['sweet']->isNotEmpty()) {
+                $database[] = $databasee;
+            }
+
+        }
+
+        return $database;
+    }
+
     public function getView()
     {
         return view('frontend.compareDisMarket')->with('showStore', false);
@@ -462,6 +589,11 @@ class DisMarketController extends Controller
     public function getViewFreeze()
     {
         return view('frontend.compareDisMarketFreeze')->with('showStore', false);
+    }
+
+    public function getViewSweet()
+    {
+        return view('frontend.compareDisMarketSweet')->with('showStore', false);
     }
 
     public function store(Request $request)
@@ -485,6 +617,8 @@ class DisMarketController extends Controller
             $article = dis_meat::firstOrNew(array('code' => $request->code));
         } elseif ($request->category == 'smrznuti') {
             $article = dis_freeze::firstOrNew(array('code' => $request->code));
+        } elseif ($request->category == 'slatkisi') {
+            $article = dis_sweet::firstOrNew(array('code' => $request->code));
         }
 
         $article->code = $request->code;
@@ -688,6 +822,78 @@ class DisMarketController extends Controller
             }
 
             $article = dis_freeze::where('code', $disArtikli['code'])->first();
+
+            if ($article) {
+                $code = $article->code;
+                $barcodes = $article->barcodes;
+                $title = $article->title;
+                $body = $article->body;
+                $category = $article->category;
+                $shop = $article->shop;
+                $imageDefault = $article->imageDefault;
+                $article->formattedPrice = $formattedPrice;
+                $article->price = $price;
+
+                $saved = $article->save();
+                if ($disArtikli['salePrice'] != null) {
+                    $formattedPrice = $disArtikli['salePrice'] . " RSD";
+
+                    $data = [
+                        'code' => $code,
+                        'title' => $title,
+                        'body' => $body,
+                        'barcodes' => $barcodes,
+                        'category' => $category,
+                        'shop' => $shop,
+                        'imageDefault' => $imageDefault,
+                        'formattedPrice' => $formattedPrice,
+                        'price' => str_replace(',', '', $disArtikli['salePrice'])
+                    ];
+
+                    $saved = dis_action_sale::create($data);
+                }
+            }
+
+            if ($saved) {
+                $success = true;
+            } else {
+                return response()->json([
+                    "success" => false
+                ]);
+            }
+        }
+
+        $data = [
+            "success" => $success
+        ];
+
+        return response()->json($data);
+    }
+
+    public function updateExistingSweet()
+    {
+        $dis = $this->disMarketSweet();
+
+        $success = false;
+        $saved = true;
+
+        dis_action_sale::where('category', 'slatkisi')->delete();
+
+        foreach ($dis as $disArtikli) {
+
+            if ($disArtikli['salePrice'] != null) {
+                $formattedPrice = $disArtikli['oldPrice'] . " RSD";
+                $price = str_replace(',', '', $disArtikli['oldPrice']);
+            } else {
+                $formattedPrice = $disArtikli['newPrice'] . " RSD";
+                $price = str_replace(',', '', $disArtikli['newPrice']);
+            }
+
+            if (!$price) {
+                $price = null;
+            }
+
+            $article = dis_sweet::where('code', $disArtikli['code'])->first();
 
             if ($article) {
                 $code = $article->code;

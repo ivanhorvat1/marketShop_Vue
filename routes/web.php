@@ -66,7 +66,17 @@ Route::get('/disFreeze',[
     'as' => 'disFreeze'
 ]);
 
+Route::get('/disSweet',[
+    'uses' => 'DisMarketController@getViewSweet',
+    'as' => 'disSweet'
+]);
+
 Route::get('/disUpdateDrinks',[
     'uses' => 'DisMarketController@updateExistingDrinks',
     'as' => 'disUpdateDrinks'
+]);
+
+Route::get('/univerexportDrinks',[
+    'uses' => 'UniverexportMarketController@getViewDrink',
+    'as' => 'univerexportDrinks'
 ]);

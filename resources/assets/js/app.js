@@ -28,6 +28,8 @@ Vue.component('meats', require('./components/Meats.vue').default);
 Vue.component('comparedismarket', require('./components/CompareDisMarketDrink.vue').default);
 Vue.component('comparedismarketmeat', require('./components/CompareDisMarketMeat.vue').default);
 Vue.component('comparedismarketfreeze', require('./components/CompareDisMarketFreeze.vue').default);
+Vue.component('comparedismarketsweet', require('./components/CompareDisMarketSweet.vue').default);
+Vue.component('compareuniverexportmarketdrink', require('./components/CompareUniverexportMarketDrink.vue').default);
 
 const app = new Vue({
     el: '#app'

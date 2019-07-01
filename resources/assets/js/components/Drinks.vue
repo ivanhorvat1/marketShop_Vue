@@ -3,6 +3,7 @@
         <button @click="fetchArticles('maxi')" class="btn btn-primary">Maxi Pice</button>
         <button @click="fetchArticles('idea')" class="btn btn-primary">Idea Pice</button>
         <button @click="fetchArticles('dis')" class="btn btn-primary">Dis Pice</button>
+        <button @click="fetchArticles('univerexport')" class="btn btn-primary">Univerexport Pice</button>
         <br><br>
         <button @click="fetchProducts()" class="btn btn-primary">Compare All Products</button>
         <h4 v-if="products.length > 0" align="left">Total compared products: {{products.length}}</h4>
@@ -23,7 +24,7 @@
                              :src="'https://d3el976p2k4mvu.cloudfront.net'+article.imageUrl" width="180px"
                              height="180px"
                              @click="modalClick(article.code, article.title, article.body, article.imageUrl, article.supplementaryPriceIdea, article.supplementaryPriceMaxi,
-                              article.ideaCena, article.maxiCena, article.disCena)"
+                              article.ideaCena, article.maxiCena, article.disCena, article.univerexportCena)"
                              :href="'#modal'+article.code" style="cursor: pointer;" title="dupli klik za dodatne info">
                         <!--<img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center"
                              :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">-->
@@ -31,7 +32,7 @@
                         <p class="textOverflow" align="center"><!--<b>{{ article.title }}:</b>--> {{ article.body }}</p>
                         <hr>
                         <p v-if="article.maxiCena" align="right"><img style="height: 50px; width: 80px"
-                                                                      src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"/><b>
+                                                                      src="images/delhaize-maxi-logo-vector.png"/><b>
                             {{ article.maxiCena.substring(0, article.maxiCena.length - 3) }}</b></p>
                         <p v-if="article.ideaCena" align="right"><img style="height: 25px; width: 75px"
                                                                       src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/><b>
@@ -40,8 +41,11 @@
                                                      src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/><b>
                             {{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></p>-->
                         <p v-if="article.disCena" align="right"><img style="height: 50px; width: 80px"
-                                                                     src="http://www.serbianlogo.com/thumbnails/dis_krnjevo.gif"/><b>
+                                                                     src="images/dis_krnjevo.gif"/><b>
                             {{ article.disCena.substring(0, article.disCena.length - 3) }}</b></p>
+                        <p v-if="article.univerexportCena" align="right"><img style="height: 35px; width: 100px"
+                                                                     src="images/univer.png"/><b>
+                            {{ article.univerexportCena.substring(0, article.univerexportCena.length - 3) }}</b></p>
                         <hr>
                     </div>
                 </div>
@@ -57,15 +61,20 @@
                              :src="'https://www.idea.rs/online/'+articlea.imageUrl" width="180px" height="180px">
                         <img center v-else-if="articlea.imageUrl !== null && articlea.shop == 'dis'" class="center"
                              :src="'https://www.idea.rs/online/'+articlea.imageUrl" width="180px" height="180px">
+                        <img center v-else-if="articlea.imageUrl !== null && articlea.shop == 'univerexport'" class="center"
+                             :src="'https://www.idea.rs/online/'+articlea.imageUrl" width="180px" height="180px">
                         <img v-else center style="height: 200px; width: 180px" :src=articlea.imageDefault>
                         <p class="textOverflow" align="center"> {{ articlea.body }}</p>
                         <hr>
                         <p align="right"><img v-if="articlea.shop == 'maxi'" style="height: 50px; width: 80px"
-                                              src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"/>
+                                              src="images/delhaize-maxi-logo-vector.png"/>
                             <img v-else-if="articlea.shop == 'idea'" style="height: 25px; width: 75px"
                                  src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/>
-                            <img v-else-if="articlea.shop == 'dis'" style="height: 50px; width: 80px"
-                                 src="http://www.serbianlogo.com/thumbnails/dis_krnjevo.gif"/>
+                            <img v-else-if="articlea.shop == 'dis'" style="height: 50px; width: 100px"
+                                 src="images/dis_krnjevo.gif"/>
+                            <img v-else-if="articlea.shop == 'univerexport'" style="height: 35px; width: 100px"
+                                 src="images/univer.png"/>
+                            <!--http://www.serbianlogo.com/thumbnails/univerexport.gif-->
                             <b>{{articlea.formattedPrice }}</b></p>
                         <hr>
                     </div>
@@ -86,7 +95,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <img style="height: 55px; width: 80px"
-                                 src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"/>
+                                 src="images/delhaize-maxi-logo-vector.png"/>
                             <h6><b>{{maxiCena}}</b></h6>
                             <h6><b>{{supplementaryPriceMaxi}}</b></h6><br>
                         </div>
@@ -98,8 +107,13 @@
                         </div>
                         <div class="col-sm-6">
                             <img style="height: 50px; width: 75px"
-                                 src="http://www.serbianlogo.com/thumbnails/dis_krnjevo.gif"/>
+                                 src="images/dis_krnjevo.gif"/>
                             <h6><b>{{disCena}}</b></h6>
+                        </div>
+                        <div class="col-sm-6">
+                            <img style="height: 35px; width: 100px"
+                                 src="images/univer.png"/>
+                            <h6><b>{{univerexportCena}}</b></h6>
                         </div>
                     </div>
                 </div>
@@ -128,6 +142,7 @@
                 ideaCena: '',
                 maxiCena: '',
                 disCena: '',
+                univerexportCena: '',
                 shop: ''
             }
         },
@@ -189,7 +204,7 @@
                         this.articles = res.data;
                     })
             },
-            modalClick(modalId, title, body, imageurl, supplementaryPriceIdea, supplementaryPriceMaxi, ideaCena, maxiCena, disCena) {
+            modalClick(modalId, title, body, imageurl, supplementaryPriceIdea, supplementaryPriceMaxi, ideaCena, maxiCena, disCena, univerexportCena) {
                 this.modalId = modalId;
                 this.title = title;
                 this.body = body;
@@ -204,6 +219,7 @@
                 this.ideaCena = ideaCena.substring(0, ideaCena.length - 3) + 'Din';
                 this.maxiCena = maxiCena.substring(0, maxiCena.length - 3) + 'Din';
                 this.disCena = disCena.substring(0, disCena.length - 3) + 'Din';
+                this.univerexportCena = univerexportCena.substring(0, univerexportCena.length - 3) + 'Din';
             }
         }
     }

@@ -39,9 +39,13 @@
             <button class="btn btn-primary"><a href="/disDrink" style="color: white">Dis Market Pice</a></button>
             <button class="btn btn-primary"><a href="/disMeat" style="color: white">Dis Market Meso</a></button>
             <button class="btn btn-primary"><a href="/disFreeze" style="color: white">Dis Market Smrznuto</a></button>
+            <button class="btn btn-primary"><a href="/disSweet" style="color: white">Dis Market Slatkisi</a></button>
             <button @click="updateDisDrinks()" class="btn blue">Dis update Drinks</button>
             <button @click="updateDisMeat()" class="btn blue">Dis update Meat</button>
             <button @click="updateDisFreeze()" class="btn blue">Dis update Freeze</button>
+            <button @click="updateDisSweet()" class="btn blue">Dis update Sweet</button>
+            <br><br>
+            <button class="btn btn-primary"><a href="/univerexportDrinks" style="color: white">Univerexport Market Pice</a></button>
             <br><br>
         </div>
         <h4>Total products on Action: {{akcija.length}}</h4><br>
@@ -503,6 +507,13 @@
             },
             updateDisFreeze() {
                 fetch('api/dis_update_freeze')
+                    .then(res => res.json())
+                    .then(res => {
+                        M.toast({html: res.success, classes: 'rounded'}, 3000);
+                    })
+            },
+            updateDisSweet() {
+                fetch('api/dis_update_sweet')
                     .then(res => res.json())
                     .then(res => {
                         M.toast({html: res.success, classes: 'rounded'}, 3000);

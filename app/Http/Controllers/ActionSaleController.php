@@ -24,7 +24,7 @@ class ActionSaleController extends Controller
 
             $maxi = action_sale::where('shop','maxi')->where('category','akcija')->get();
             $idea = action_sale::where('shop','idea')->where('category','akcija')->get();
-            $dis = dis_action_sale::all();
+            $dis = dis_action_sale::orderBy('price', 'DESC')->get();
 
             $maxiIdea = [];
             foreach ($maxi as $max) {
