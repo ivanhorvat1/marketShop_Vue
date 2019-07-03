@@ -18,6 +18,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
+    {{--<meta name="user-id" content="{{ Auth::user() }}">--}}
+
     <title>Najjeftinije</title>
     <!-- Fonts -->
     {{--<link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">--}}
@@ -25,6 +27,37 @@
 <body>
 <div id="app">
     @include('includes.navbar')
+
+    <div class="float-right">
+        <!-- Authentication Links -->
+        <div class="dropdown">
+            @guest
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Login/Register
+                    <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+
+                    <li><a href="{{ route('login') }}">Login</a></li>
+                    <li><a href="{{ route('register') }}">Register</a></li>
+                </ul>
+                    @else
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{Auth::user()->name}}
+                            <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                        <li><a href="{{ route('home') }}">Profile</a></li>
+                        <li>
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Logout
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+                        </li>
+                    @endguest
+                </ul>
+        </div>
+
+    </div>
 
     <div id="preloader-wrapper">
         <div id="preloader"></div>

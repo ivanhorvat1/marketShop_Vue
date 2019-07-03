@@ -85,6 +85,7 @@
                     .then(res => {
                         this.products = res;
                         $('body').addClass('loaded');
+                        console.log(res);
                     })
             },
         }

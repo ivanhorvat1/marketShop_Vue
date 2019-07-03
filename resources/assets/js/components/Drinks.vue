@@ -7,7 +7,7 @@
         <br><br>
         <button @click="fetchProducts()" class="btn btn-primary">Compare All Products</button>
         <h4 v-if="products.length > 0" align="left">Total compared products: {{products.length}}</h4>
-        <h4 v-else align="left">Total products {{shop}}: {{articles.length}}</h4><br>
+        <h4 v-else align="left">Total productss {{shop}}: {{articles.length}}</h4><br>
         <div class="col-sm-8"></div>
         <div v-if="articles.length > 0" class="form-group col-sm-4">
             <label for="sel1">Sortiranje</label>

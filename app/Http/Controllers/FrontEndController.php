@@ -4,12 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class FrontEndController extends Controller
 {
     public function index()
     {
         return view('welcome')->with('showStore', true);
+    }
+
+    public function checkAuth()
+    {
+        return json_encode(Auth::check());
     }
 
     /*public function login1(){
