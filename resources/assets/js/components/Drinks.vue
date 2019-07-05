@@ -35,7 +35,7 @@
                                                                       src="images/delhaize-maxi-logo-vector.png"/><b>
                             {{ article.maxiCena.substring(0, article.maxiCena.length - 3) }}</b></p>
                         <p v-if="article.ideaCena" align="right"><img style="height: 25px; width: 75px"
-                                                                      src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/><b>
+                                                                      src="images/Idea_Logo.png"/><b>
                             {{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></p>
                         <!--<p v-else align="right"><img style="height: 18px; width: 75px"
                                                      src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/><b>
@@ -69,7 +69,7 @@
                         <p align="right"><img v-if="articlea.shop == 'maxi'" style="height: 50px; width: 80px"
                                               src="images/delhaize-maxi-logo-vector.png"/>
                             <img v-else-if="articlea.shop == 'idea'" style="height: 25px; width: 75px"
-                                 src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/>
+                                 src="images/Idea_Logo.png"/>
                             <img v-else-if="articlea.shop == 'dis'" style="height: 50px; width: 100px"
                                  src="images/dis_krnjevo.gif"/>
                             <img v-else-if="articlea.shop == 'univerexport'" style="height: 35px; width: 100px"
@@ -81,7 +81,7 @@
                 </div>
             </div>
         </div>
-        <div :id="'modal'+modalId" class="modal">
+        <div :id="'modal'+modalId" class="modal" style="width: 60%">
             <div class="row">
                 <div class="modal-header col-sm-12">
                     <h4 style="align: center">{{title}}</h4>
@@ -101,7 +101,7 @@
                         </div>
                         <div class="col-sm-6 mt-3">
                             <img style="height: 25px; width: 75px"
-                                 src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/>
+                                 src="images/Idea_Logo.png"/>
                             <h6 class="mt-4"><b>{{ideaCena}}</b></h6>
                             <h6><b>{{supplementaryPriceIdea}}</b></h6>
                         </div>
@@ -188,6 +188,7 @@
                         this.endSlice = 12;
                         this.articles = '';
                         this.products = _.orderBy(res, 'price','desc');
+                        // $('#preloader-wrapper').css("display", "none");
                         $('body').addClass('loaded');
                     })
             }, fetchArticles(shop) {

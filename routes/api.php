@@ -19,6 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //Admin Methods
 Route::get('fetchAllUsers', 'AdminController@index');
+Route::post('update_user', 'AdminController@updateUser');
+Route::post('remove_user', 'AdminController@removeUser');
+Route::get('getAllFreezeArticles', 'AdminController@getAllFreezeArticles');
 
 // List articles
 Route::get('articles', 'ArticleController@index');

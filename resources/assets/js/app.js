@@ -9,6 +9,11 @@ require('./bootstrap');
 
 import Vue from 'vue';
 import VTooltip from 'v-tooltip';
+import BootstrapVue from 'bootstrap-vue';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+
+Vue.use(BootstrapVue);
 
 //window.Vue = require('vue');
 Vue.use(VTooltip);

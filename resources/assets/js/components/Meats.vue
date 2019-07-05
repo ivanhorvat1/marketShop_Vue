@@ -128,6 +128,7 @@
                         this.endSlice = 12;
                         this.articles = '';
                         this.products = _.orderBy(res, 'price','desc');
+                        // $('#preloader-wrapper').css("display", "none");
                         $('body').addClass('loaded');
                     })
             },fetchArticles(shop) {

@@ -21,21 +21,21 @@
     background-color: #555;
 }
 
-#loader {
-    display: none;
-    position: fixed;
-    left: 820px;
-    bottom: 50px;
-    z-index: 1;
-    width: 50px;
-    height: 50px;
-    margin: -75px 0 0 -75px;
-    border: 8px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 8px solid #3498db;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
-}
+/*#loader {*/
+    /*display: none;*/
+    /*position: fixed;*/
+    /*left: 820px;*/
+    /*bottom: 50px;*/
+    /*z-index: 1;*/
+    /*width: 50px;*/
+    /*height: 50px;*/
+    /*margin: -75px 0 0 -75px;*/
+    /*border: 8px solid #f3f3f3;*/
+    /*border-radius: 50%;*/
+    /*border-top: 8px solid #3498db;*/
+    /*-webkit-animation: spin 2s linear infinite;*/
+    /*animation: spin 2s linear infinite;*/
+/*}*/
 
 /* Safari */
 @-webkit-keyframes spin {
@@ -78,12 +78,16 @@
 
 #preloader{
     display: block;
-    position: relative;
-    left: 50%;
+    position: fixed;
+    left: 45%;
     top: 50%;
     width: 150px;
     height: 150px;
-    margin: -75px 0 0 -75px;
+    /*
+        height of loader
+    */
+    /*margin: -75px 0 0 -75px;*/
+    margin-top: -100px;
     border-radius: 50%;
     border: 5px solid transparent;
     border-top-color: #3498db;
