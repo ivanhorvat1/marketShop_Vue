@@ -10,43 +10,43 @@
                 </div>
             </form>-->
 
-            <button @click="fetchArticles(0,'maxi','akcija')" class="btn btn-primary waves-effect waves-light">Maxi Akcija</button>
-            <button @click="storeArticles('maxi','akcija')" class="btn blue">Ubaci Akcija Maxi</button>
-            <button @click="fetchArticles(0, 'maxi', 'pice')" class="btn blue">Ubaci Maxi Pice</button>
-            <!--<button @click="storeArticles('maxi','pice')" class="btn btn-primary">Ubaci Pice Maxi</button>-->
-            <button @click="fetchArticles(0, 'maxi', 'meso')" class="btn blue">Ubaci Maxi Meso</button>
-            <!--<button @click="storeArticles('maxi','meso')" class="btn btn-primary">Ubaci Meso Maxi</button>-->
-            <button @click="fetchArticles(0, 'maxi', 'slatkisi')" class="btn blue">Ubaci Maxi Slatkisi</button>
-            <!--<button @click="storeArticles('maxi','slatkisi')" class="btn btn-primary">Ubaci Slatkise Maxi</button>-->
-            <button @click="fetchArticles(0, 'maxi', 'smrznuti')" class="btn blue">Ubaci Maxi Smrznuto</button>
-            <!--<button @click="storeArticles('maxi','smrznuti')" class="btn btn-primary">Ubaci Smrznuto Maxi</button>-->
+            <!--<b-button pill @click="fetchArticles(0,'maxi','akcija')" class="btn btn-primary waves-effect waves-light">Maxi Akcija</b-button>
+            <button @click="storeArticles('maxi','akcija')" class="btn btn-warning">Ubaci Akcija Maxi</button>
+            <button @click="fetchArticles(0, 'maxi', 'pice')" class="btn btn-warning">Ubaci Maxi Pice</button>
+            &lt;!&ndash;<button @click="storeArticles('maxi','pice')" class="btn btn-primary">Ubaci Pice Maxi</button>&ndash;&gt;
+            <button @click="fetchArticles(0, 'maxi', 'meso')" class="btn btn-warning">Ubaci Maxi Meso</button>
+            &lt;!&ndash;<button @click="storeArticles('maxi','meso')" class="btn btn-primary">Ubaci Meso Maxi</button>&ndash;&gt;
+            <button @click="fetchArticles(0, 'maxi', 'slatkisi')" class="btn btn-warning">Ubaci Maxi Slatkisi</button>
+            &lt;!&ndash;<button @click="storeArticles('maxi','slatkisi')" class="btn btn-primary">Ubaci Slatkise Maxi</button>&ndash;&gt;
+            <button @click="fetchArticles(0, 'maxi', 'smrznuti')" class="btn btn-warning">Ubaci Maxi Smrznuto</button>
+            &lt;!&ndash;<button @click="storeArticles('maxi','smrznuti')" class="btn btn-primary">Ubaci Smrznuto Maxi</button>&ndash;&gt;
             <br>
             <br>
             <button @click="fetchArticles(0,'idea','akcija')" class="btn btn-primary">Idea Akcija</button>
-            <button @click="storeArticles('idea','akcija')" class="btn btn-info">Ubaci Akcija Idea</button>
+            <button @click="storeArticles('idea','akcija')" class="btn btn-info">Ubaci Akcija Idea</button><br><br>
             <button @click="getCategoriesIdea('60007883')" class="btn btn-primary">Pice Idea</button>
             <button @click="getCategoriesIdea('60007823')" class="btn btn-primary">Meso Idea</button>
             <button @click="getCategoriesIdea('60007780')" class="btn btn-primary">Meso2 Idea</button>
             <button @click="getCategoriesIdea('60007896')" class="btn btn-primary">Slatkisi Idea</button>
-            <button @click="getCategoriesIdea('60007907')" class="btn btn-primary">Smrznuti Proiz Idea</button>
-            <button @click="checkChildren()" class="btn red">check idea children</button>
-            <!--:disabled="this.categoryArray.length < 16"-->
-            <button @click="storeArticles('idea','pice')" class="btn blue">Ubaci Pice Idea</button>
-            <button @click="storeArticles('idea','meso')" class="btn blue">Ubaci Meso Idea</button>
-            <button @click="storeArticles('idea','slatkisi')" class="btn blue">Ubaci Slatkisi Idea</button>
-            <button @click="storeArticles('idea','smrznuti')" class="btn blue">Ubaci smrznuti Idea</button>
+            <button @click="getCategoriesIdea('60007907')" class="btn btn-primary">Smrznuti Proiz Idea</button><br>
+            <button @click="checkChildren()" class="btn btn-danger">check idea children</button>
+            &lt;!&ndash;:disabled="this.categoryArray.length < 16"&ndash;&gt;
+            <button @click="storeArticles('idea','pice')" class="btn btn-warning">Ubaci Pice Idea</button>
+            <button @click="storeArticles('idea','meso')" class="btn btn-warning">Ubaci Meso Idea</button>
+            <button @click="storeArticles('idea','slatkisi')" class="btn btn-warning">Ubaci Slatkisi Idea</button>
+            <button @click="storeArticles('idea','smrznuti')" class="btn btn-warning">Ubaci smrznuti Idea</button>
             <br><br>
             <button class="btn btn-primary"><a href="/disDrink" style="color: white">Dis Market Pice</a></button>
             <button class="btn btn-primary"><a href="/disMeat" style="color: white">Dis Market Meso</a></button>
             <button class="btn btn-primary"><a href="/disFreeze" style="color: white">Dis Market Smrznuto</a></button>
             <button class="btn btn-primary"><a href="/disSweet" style="color: white">Dis Market Slatkisi</a></button>
-            <button @click="updateDisDrinks()" class="btn blue">Dis update Drinks</button>
-            <button @click="updateDisMeat()" class="btn blue">Dis update Meat</button>
-            <button @click="updateDisFreeze()" class="btn blue">Dis update Freeze</button>
-            <button @click="updateDisSweet()" class="btn blue">Dis update Sweet</button>
+            <button @click="updateDisDrinks()" class="btn btn-warning">Dis update Drinks</button>
+            <button @click="updateDisMeat()" class="btn btn-warning">Dis update Meat</button>
+            <button @click="updateDisFreeze()" class="btn btn-warning">Dis update Freeze</button>
+            <button @click="updateDisSweet()" class="btn btn-warning">Dis update Sweet</button>
             <br><br>
             <button class="btn btn-primary"><a href="/univerexportDrinks" style="color: white">Univerexport Market Pice</a></button>
-            <br><br>
+            <br><br>-->
         </div>
         <h4>Total products on Action: {{akcija.length}}</h4><br>
         <!-- slideshow -->

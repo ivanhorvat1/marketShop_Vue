@@ -45,6 +45,12 @@ Route::get('/meats', [
     'as' => 'meats'
 ]);
 
+Route::get('/test', [
+    'uses' => 'DrinkController@index',
+    'as' => 'test'
+]);
+
+
 Route::group(['middleware' => ['web', 'auth']], function () {
 
     Route::get('/loginDis', [

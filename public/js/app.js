@@ -2169,17 +2169,76 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AdminHome",
   data: function data() {
     return {
+      articles: [],
+      akcija: [],
+      maxi: [],
+      idea: [],
+      maxi_idea: [],
+      article: {
+        id: '',
+        title: '',
+        body: ''
+      },
+      article_id: '',
+      pagination: {},
+      edit: false,
+      shop: '',
+      products: [],
+      categoryArray: [],
       response: '',
       users: [],
       freeze: [],
       totalRows: 1,
       perPage: 5,
       currentPage: 1,
-      pageOptions: [2, 5, 10, 15],
+      pageOptions: [5, 10, 15],
       filter: null,
       fields: [{
         key: 'id',
@@ -2213,6 +2272,12 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         key: 'body',
         label: 'body'
+      }, {
+        key: 'shop',
+        label: 'shop'
+      }, {
+        key: 'formattedPrice',
+        label: 'formattedPrice'
       }, {
         key: 'actions',
         label: 'Actions'
@@ -2264,6 +2329,7 @@ __webpack_require__.r(__webpack_exports__);
     getFreezeArticles: function getFreezeArticles() {
       var _this2 = this;
 
+      // $('body').removeClass('loaded');
       fetch('api/getAllFreezeArticles').then(function (res) {
         return res.json();
       }).then(function (res) {
@@ -2374,6 +2440,246 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$nextTick(function () {
         _this4.$refs.modal.hide();
+      });
+    },
+    dinamicUrl: function dinamicUrl(currentPage, shop, category) {
+      var url; //https://cors-anywhere.herokuapp.com/
+      //https://crossorigin.me/
+
+      if (shop === 'maxi' && category === 'akcija') {
+        /*if (currentPage == 0) {
+            url = 'https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
+        } else {
+            url = 'https://www.maxi.rs/view/QlProductListComponentController/loadMore?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
+        }*/
+        url = 'https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=40&sort=promotion';
+      } else if (shop === 'idea' && category === 'akcija') {
+        url = 'https://cors-anywhere.herokuapp.com/https://www.idea.rs/online/v2/offers?per_page=48&page=' + currentPage + '&filter%5Bsort%5D=offerSoldStatisticsDesc';
+      } else if (shop === 'maxi' && category === 'pice') {
+        url = 'https://www.maxi.rs/online/Pice%2C-kafa-i-caj/c/01/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion';
+      } else if (shop === 'maxi' && category === 'meso') {
+        url = 'https://www.maxi.rs/online/Meso%2C-mesne-i-riblje-prera%C4%91evine/c/02/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion';
+      } else if (shop === 'maxi' && category === 'slatkisi') {
+        url = 'https://www.maxi.rs/online/Cokolade%2C-keks%2C-slane-i-slatke-grickalice/c/09/getSearchPageData?q=%3Apopularity&sort=promotion&pageSize=5000&pageNumber=0';
+      } else if (shop === 'maxi' && category === 'smrznuti') {
+        url = 'https://www.maxi.rs/online/Smrznuti-proizvodi/c/10/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion';
+      }
+      /*else if (shop === 'idea' && category === 'alkpica') {
+          url = 'https://www.idea.rs/online/v2/categories/60007888/products?per_page=5000&page=1&filter%5Bsort%5D=offerSoldStatisticsDesc';
+      }
+      else if(this.shop === 'meso'){
+          if(currentPage == 0) {
+               url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/online/Meso%2C-mesne-i-riblje-prera%C4%91evine/c/02/getSearchPageData?pageSize=12&pageNumber=' + currentPage + '&sort=promotion';
+          }else{
+               url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/online/Meso,-mesne-i-riblje-prera%C4%91evine/c/02/loadMore?pageSize=12&pageNumber=' + currentPage + '&sort=promotion';
+          }
+      }
+      else if(this.shop === 'slatkisi') {
+          if (currentPage == 0) {
+              url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/online/Cokolade%2C-keks%2C-slane-i-slatke-grickalice/c/09/getSearchPageData?pageSize=12';
+          } else {
+              url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/online/Cokolade%2C-keks%2C-slane-i-slatke-grickalice/c/09/loadMore?pageSize=12&pageNumber=' + currentPage + '&sort=popularity';
+          }
+      }
+      else{
+          if(currentPage == 0) {
+              url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
+          }else{
+              url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/view/QlProductListComponentController/loadMore?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
+          }
+      }*/
+
+
+      return url;
+    },
+    fetchArticles: function fetchArticles(currentPage, shop, category) {
+      var _this5 = this;
+
+      var vm = this;
+      var url;
+      this.shop = shop;
+
+      if (currentPage == 0) {
+        this.articles = [];
+      }
+
+      currentPage = currentPage || '0';
+      url = vm.dinamicUrl(currentPage, shop, category);
+
+      if (shop == 'idea') {
+        fetch(url).then(function (res) {
+          return res.json();
+        }).then(function (res) {
+          if (currentPage == 0) {
+            if (_this5.shop === 'idea') {
+              //this.articles = res.products;
+              _this5.idea = res.products;
+              vm.makePagination(res._page, currentPage, category);
+            } else {
+              //this.articles = res.results;
+              _this5.maxi = res.results;
+              vm.makePagination(res.pagination, currentPage, category);
+            }
+          } else {
+            if (_this5.shop === 'idea') {
+              //this.articles = this.articles.concat(res.products);
+              _this5.idea = _this5.idea.concat(res.products);
+              vm.makePagination(_this5.pagination, currentPage, category);
+            } else {
+              //this.articles = this.articles.concat(res);
+              _this5.maxi = _this5.maxi.concat(res);
+              vm.makePagination(_this5.pagination, currentPage, category);
+            }
+          }
+        })["catch"](function (err) {
+          return console.log(err);
+        });
+      } else {
+        if (category == 'akcija') {
+          var _loop = function _loop(i) {
+            $.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent("https://www.maxi.rs/search/promotions/getSearchPageData?pageSize=20&pageNumber=" + i + "&sort=promotion") + '&callback=?', function (data) {
+              var res = JSON.parse(data.contents);
+              vm.storeMaxi(res, i);
+            });
+            /*if(i > 59){
+                alert('done');
+            }*/
+          };
+
+          //https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber="+i+"&sort=promotion
+          //http://api.allorigins.ml
+          for (var i = 0; i <= 60; i++) {
+            _loop(i);
+          }
+        } else {
+          $.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent(url) + '&callback=?', function (data) {
+            var res = JSON.parse(data.contents);
+            vm.storeMaxi(res);
+            vm.storeArticles(shop, category);
+            M.toast({
+              html: 'Succesfully added',
+              classes: 'rounded'
+            });
+          });
+        }
+      }
+    },
+    storeMaxi: function storeMaxi(res, i) {
+      if (i == 0) {
+        this.maxi = [];
+        this.maxi = res.results;
+      } else if (i > 0) {
+        this.maxi = this.maxi.concat(res.results);
+      } else {
+        this.maxi = res.results;
+      }
+    },
+    storeArticles: function storeArticles(shop, category) {
+      var vm = this;
+      var picaIdea = [];
+
+      if (shop == 'maxi') {
+        vm.storeVisit(this.maxi, shop, category);
+      } else if (shop == 'idea' && category == 'pice' || category == 'meso' || category == 'slatkisi' || category == 'smrznuti') {
+        this.idea.forEach(function (item) {
+          item.forEach(function (data) {
+            picaIdea.push(data);
+          });
+        });
+        vm.storeVisit(picaIdea, shop, category);
+      } else if (shop == 'idea' && category == 'akcija') {
+        vm.storeVisit(this.idea, shop, category);
+      }
+    },
+    storeVisit: function storeVisit(article, shop, category) {
+      this.products = [];
+      this.products.push(article);
+      axios({
+        method: 'post',
+        url: '/api/action_sale_store',
+        data: {
+          products: this.products,
+          shop: shop,
+          category: category
+        }
+      });
+    },
+    getCategoriesIdea: function getCategoriesIdea(categoryNumber, data) {
+      var vm = this;
+      var url = 'https://cors-anywhere.herokuapp.com/https://www.idea.rs/online/v2/categories/' + categoryNumber;
+
+      if (data != undefined) {
+        this.categoryArray.push(data);
+      } else {
+        this.categoryArray = [];
+      }
+
+      fetch(url).then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        if (res.has_children) {
+          res.children.forEach(function (item) {
+            vm.getCategoriesIdea(item.id, item);
+          });
+        }
+      });
+    },
+    checkChildren: function checkChildren() {
+      var noChildren = [];
+      var ideapice = [];
+      this.categoryArray.forEach(function (item) {
+        if (!item.has_children) {
+          noChildren.push(item.id);
+        }
+      });
+      noChildren.forEach(function (items) {
+        var url = 'https://cors-anywhere.herokuapp.com/https://www.idea.rs/online/v2/categories/' + items + '/products?per_page=5000&page=1&filter%5Bsort%5D=offerSoldStatisticsDesc';
+        fetch(url).then(function (res) {
+          return res.json();
+        }).then(function (res) {
+          ideapice.push(res.products);
+        });
+      });
+      this.idea = ideapice;
+    },
+    updateDisDrinks: function updateDisDrinks() {
+      fetch('api/dis_update_drinks').then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        M.toast({
+          html: res.success,
+          classes: 'rounded'
+        }, 3000);
+      });
+    },
+    updateDisMeat: function updateDisMeat() {
+      fetch('api/dis_update_meat').then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        M.toast({
+          html: res.success,
+          classes: 'rounded'
+        }, 3000);
+      });
+    },
+    updateDisFreeze: function updateDisFreeze() {
+      fetch('api/dis_update_freeze').then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        M.toast({
+          html: res.success,
+          classes: 'rounded'
+        }, 3000);
+      });
+    },
+    updateDisSweet: function updateDisSweet() {
+      fetch('api/dis_update_sweet').then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        M.toast({
+          html: res.success,
+          classes: 'rounded'
+        }, 3000);
       });
     }
   }
@@ -3728,6 +4034,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3746,8 +4058,32 @@ __webpack_require__.r(__webpack_exports__);
       maxiCena: '',
       disCena: '',
       univerexportCena: '',
-      shop: ''
+      shop: '',
+      search: ''
     };
+  },
+  computed: {
+    filteredComparedProducts: function filteredComparedProducts() {
+      var _this = this;
+
+      if (this.search) {
+        if (this.products.length > 0) {
+          return this.products.filter(function (item) {
+            return item.body.toLowerCase().includes(_this.search.toLowerCase());
+          });
+        } else {
+          return this.articles.filter(function (item) {
+            return item.body.toLowerCase().includes(_this.search.toLowerCase());
+          });
+        }
+      } else {
+        if (this.products.length > 0) {
+          return this.products;
+        } else {
+          return this.articles;
+        }
+      }
+    }
   },
   created: function created() {
     this.fetchProducts();
@@ -3784,20 +4120,20 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     fetchProducts: function fetchProducts() {
-      var _this = this;
+      var _this2 = this;
 
       fetch('api/action_drink_fetch').then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this.endSlice = 12;
-        _this.articles = '';
-        _this.products = _.orderBy(res, 'price', 'desc'); // $('#preloader-wrapper').css("display", "none");
+        _this2.endSlice = 12;
+        _this2.articles = '';
+        _this2.products = _.orderBy(res, 'price', 'desc'); // $('#preloader-wrapper').css("display", "none");
 
         $('body').addClass('loaded');
       });
     },
     fetchArticles: function fetchArticles(shop) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.shop = shop;
       axios.get('api/action_drink_fetch_separate', {
@@ -3806,9 +4142,18 @@ __webpack_require__.r(__webpack_exports__);
           sort: this.key
         }
       }).then(function (res) {
-        _this2.endSlice = 12;
-        _this2.products = '';
-        _this2.articles = res.data;
+        /*res.data.forEach(function(result){
+            let pp = result.formattedPrice.substring(0, result.formattedPrice.length - 4);
+            //console.log(pp);
+            let pri = pp.substr( pp.length - 3);
+            if(pri == ',00'){
+                result.price+'00';
+                console.log(result.price);
+            }
+        });*/
+        _this3.endSlice = 12;
+        _this3.products = '';
+        _this3.articles = res.data;
       });
     },
     modalClick: function modalClick(modalId, title, body, imageurl, supplementaryPriceIdea, supplementaryPriceMaxi, ideaCena, maxiCena, disCena, univerexportCena) {
@@ -3955,6 +4300,53 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3972,14 +4364,48 @@ __webpack_require__.r(__webpack_exports__);
       ideaCena: '',
       maxiCena: '',
       disCena: '',
-      shop: ''
+      shop: '',
+      infoModal: {
+        id: 'info-modal'
+      },
+      search: ''
     };
+  },
+  computed: {
+    filteredResources: function filteredResources() {
+      var _this = this;
+
+      if (this.search) {
+        return this.products.filter(function (item) {
+          return item.body.toLowerCase().includes(_this.search.toLowerCase());
+        });
+      } else {
+        return this.products;
+      }
+    }
   },
   created: function created() {
     this.fetchProducts();
     window.addEventListener('scroll', this.handleScroll);
   },
   methods: {
+    info: function info(article, button) {
+      this.title = article.title;
+      this.body = article.body;
+      this.imageUrl = article.imageUrl;
+      this.supplementaryPriceIdea = article.supplementaryPriceIdea;
+
+      if (article.supplementaryPriceMaxi) {
+        this.supplementaryPriceMaxi = article.supplementaryPriceMaxi.replace('rsd/Kg', 'Din/Kg');
+      } else {
+        this.supplementaryPriceMaxi = '';
+      }
+
+      this.ideaCena = article.ideaCena.substring(0, article.ideaCena.length - 3) + 'Din';
+      this.maxiCena = article.maxiCena.substring(0, article.maxiCena.length - 3) + 'Din';
+      this.disCena = article.disCena.substring(0, article.disCena.length - 3) + 'Din';
+      this.$root.$emit('bv::show::modal', this.infoModal.id, button);
+    },
     toTopFunction: function toTopFunction() {
       document.body.scrollTop = 0;
       document.documentElement.scrollTop = 0;
@@ -4010,20 +4436,20 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     fetchProducts: function fetchProducts() {
-      var _this = this;
+      var _this2 = this;
 
       fetch('api/action_freeze_fetch').then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this.endSlice = 12;
-        _this.articles = '';
-        _this.products = _.orderBy(res, 'price', 'desc'); // $('#preloader-wrapper').css("display", "none");
+        _this2.endSlice = 12;
+        _this2.articles = '';
+        _this2.products = _.orderBy(res, 'price', 'desc'); // $('#preloader-wrapper').css("display", "none");
 
         $('body').addClass('loaded');
       });
     },
     fetchArticles: function fetchArticles(shop) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.shop = shop;
       axios.get('api/action_freeze_fetch_separate', {
@@ -4032,9 +4458,9 @@ __webpack_require__.r(__webpack_exports__);
           sort: this.key
         }
       }).then(function (res) {
-        _this2.endSlice = 12;
-        _this2.products = '';
-        _this2.articles = res.data;
+        _this3.endSlice = 12;
+        _this3.products = '';
+        _this3.articles = res.data;
       });
     },
     modalClick: function modalClick(modalId, title, body, imageurl, supplementaryPriceIdea, supplementaryPriceMaxi, ideaCena, maxiCena, disCena) {
@@ -4230,6 +4656,44 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -72147,11 +72611,13 @@ var render = function() {
       _c("br"),
       _vm._v(" "),
       _c("ul", { staticClass: "nav nav-tabs" }, [
+        _vm._m(1),
+        _vm._v(" "),
         _c("li", { staticClass: "nav-item" }, [
           _c(
             "a",
             {
-              staticClass: "nav-link active",
+              staticClass: "nav-link",
               attrs: { "data-toggle": "tab", href: "#home" },
               on: { click: _vm.fetchAllUsers }
             },
@@ -72167,17 +72633,335 @@ var render = function() {
               attrs: { "data-toggle": "tab", href: "#menu1" },
               on: { click: _vm.getFreezeArticles }
             },
-            [_vm._v("Menu 1")]
+            [_vm._v("Freezed Articles")]
           )
-        ]),
-        _vm._v(" "),
-        _vm._m(1)
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "tab-content" }, [
         _c(
           "div",
-          { staticClass: "container tab-pane active", attrs: { id: "home" } },
+          { staticClass: "container tab-pane active", attrs: { id: "menu2" } },
+          [
+            _c("br"),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary waves-effect waves-light",
+                on: {
+                  click: function($event) {
+                    return _vm.fetchArticles(0, "maxi", "akcija")
+                  }
+                }
+              },
+              [_vm._v("Maxi Akcija")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning",
+                on: {
+                  click: function($event) {
+                    return _vm.storeArticles("maxi", "akcija")
+                  }
+                }
+              },
+              [_vm._v("Ubaci Akcija Maxi")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning",
+                on: {
+                  click: function($event) {
+                    return _vm.fetchArticles(0, "maxi", "pice")
+                  }
+                }
+              },
+              [_vm._v("Ubaci Maxi Pice")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning",
+                on: {
+                  click: function($event) {
+                    return _vm.fetchArticles(0, "maxi", "meso")
+                  }
+                }
+              },
+              [_vm._v("Ubaci Maxi Meso")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning",
+                on: {
+                  click: function($event) {
+                    return _vm.fetchArticles(0, "maxi", "slatkisi")
+                  }
+                }
+              },
+              [_vm._v("Ubaci Maxi Slatkisi")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning",
+                on: {
+                  click: function($event) {
+                    return _vm.fetchArticles(0, "maxi", "smrznuti")
+                  }
+                }
+              },
+              [_vm._v("Ubaci Maxi Smrznuto")]
+            ),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                on: {
+                  click: function($event) {
+                    return _vm.fetchArticles(0, "idea", "akcija")
+                  }
+                }
+              },
+              [_vm._v("Idea Akcija")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-info",
+                on: {
+                  click: function($event) {
+                    return _vm.storeArticles("idea", "akcija")
+                  }
+                }
+              },
+              [_vm._v("Ubaci Akcija Idea")]
+            ),
+            _c("br"),
+            _c("br"),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                on: {
+                  click: function($event) {
+                    return _vm.getCategoriesIdea("60007883")
+                  }
+                }
+              },
+              [_vm._v("Pice Idea")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                on: {
+                  click: function($event) {
+                    return _vm.getCategoriesIdea("60007823")
+                  }
+                }
+              },
+              [_vm._v("Meso Idea")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                on: {
+                  click: function($event) {
+                    return _vm.getCategoriesIdea("60007780")
+                  }
+                }
+              },
+              [_vm._v("Meso2 Idea")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                on: {
+                  click: function($event) {
+                    return _vm.getCategoriesIdea("60007896")
+                  }
+                }
+              },
+              [_vm._v("Slatkisi Idea")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                on: {
+                  click: function($event) {
+                    return _vm.getCategoriesIdea("60007907")
+                  }
+                }
+              },
+              [_vm._v("Smrznuti Proiz Idea")]
+            ),
+            _c("br"),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-danger",
+                on: {
+                  click: function($event) {
+                    return _vm.checkChildren()
+                  }
+                }
+              },
+              [_vm._v("check idea children")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning",
+                on: {
+                  click: function($event) {
+                    return _vm.storeArticles("idea", "pice")
+                  }
+                }
+              },
+              [_vm._v("Ubaci Pice Idea")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning",
+                on: {
+                  click: function($event) {
+                    return _vm.storeArticles("idea", "meso")
+                  }
+                }
+              },
+              [_vm._v("Ubaci Meso Idea")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning",
+                on: {
+                  click: function($event) {
+                    return _vm.storeArticles("idea", "slatkisi")
+                  }
+                }
+              },
+              [_vm._v("Ubaci Slatkisi Idea")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning",
+                on: {
+                  click: function($event) {
+                    return _vm.storeArticles("idea", "smrznuti")
+                  }
+                }
+              },
+              [_vm._v("Ubaci smrznuti Idea")]
+            ),
+            _vm._v(" "),
+            _c("br"),
+            _c("br"),
+            _vm._v(" "),
+            _vm._m(2),
+            _vm._v(" "),
+            _vm._m(3),
+            _vm._v(" "),
+            _vm._m(4),
+            _vm._v(" "),
+            _vm._m(5),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning",
+                on: {
+                  click: function($event) {
+                    return _vm.updateDisDrinks()
+                  }
+                }
+              },
+              [_vm._v("Dis update Drinks")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning",
+                on: {
+                  click: function($event) {
+                    return _vm.updateDisMeat()
+                  }
+                }
+              },
+              [_vm._v("Dis update Meat")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning",
+                on: {
+                  click: function($event) {
+                    return _vm.updateDisFreeze()
+                  }
+                }
+              },
+              [_vm._v("Dis update Freeze")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning",
+                on: {
+                  click: function($event) {
+                    return _vm.updateDisSweet()
+                  }
+                }
+              },
+              [_vm._v("Dis update Sweet")]
+            ),
+            _vm._v(" "),
+            _c("br"),
+            _c("br"),
+            _vm._v(" "),
+            _vm._m(6),
+            _vm._v(" "),
+            _c("br"),
+            _c("br")
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "container tab-pane fade", attrs: { id: "home" } },
           [
             _c("br"),
             _vm._v(" "),
@@ -72278,6 +73062,8 @@ var render = function() {
                   attrs: {
                     striped: "",
                     hover: "",
+                    stacked: "md",
+                    "show-empty": "",
                     id: "my-table",
                     items: _vm.users,
                     fields: _vm.fields,
@@ -72593,6 +73379,8 @@ var render = function() {
                   attrs: {
                     striped: "",
                     hover: "",
+                    stacked: "md",
+                    "show-empty": "",
                     id: "my-table",
                     items: _vm.freeze,
                     fields: _vm.fieldsFreeze,
@@ -72803,9 +73591,7 @@ var render = function() {
             )
           ],
           1
-        ),
-        _vm._v(" "),
-        _vm._m(2)
+        )
       ])
     ])
   ])
@@ -72837,394 +73623,13 @@ var staticRenderFns = [
       _c(
         "a",
         {
-          staticClass: "nav-link",
+          staticClass: "nav-link active",
           attrs: { "data-toggle": "tab", href: "#menu2" }
         },
-        [_vm._v("Menu 2")]
+        [_vm._v("Updating articles")]
       )
     ])
   },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "container tab-pane fade", attrs: { id: "menu2" } },
-      [
-        _c("br"),
-        _vm._v(" "),
-        _c("h3", [_vm._v("Menu 2")]),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v(
-            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam."
-          )
-        ])
-      ]
-    )
-  }
-]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/Articles.vue?vue&type=template&id=59e03618&":
-/*!******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/Articles.vue?vue&type=template&id=59e03618& ***!
-  \******************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", [
-      _c("h2", [_vm._v("Products")]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary waves-effect waves-light",
-          on: {
-            click: function($event) {
-              return _vm.fetchArticles(0, "maxi", "akcija")
-            }
-          }
-        },
-        [_vm._v("Maxi Akcija")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn blue",
-          on: {
-            click: function($event) {
-              return _vm.storeArticles("maxi", "akcija")
-            }
-          }
-        },
-        [_vm._v("Ubaci Akcija Maxi")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn blue",
-          on: {
-            click: function($event) {
-              return _vm.fetchArticles(0, "maxi", "pice")
-            }
-          }
-        },
-        [_vm._v("Ubaci Maxi Pice")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn blue",
-          on: {
-            click: function($event) {
-              return _vm.fetchArticles(0, "maxi", "meso")
-            }
-          }
-        },
-        [_vm._v("Ubaci Maxi Meso")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn blue",
-          on: {
-            click: function($event) {
-              return _vm.fetchArticles(0, "maxi", "slatkisi")
-            }
-          }
-        },
-        [_vm._v("Ubaci Maxi Slatkisi")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn blue",
-          on: {
-            click: function($event) {
-              return _vm.fetchArticles(0, "maxi", "smrznuti")
-            }
-          }
-        },
-        [_vm._v("Ubaci Maxi Smrznuto")]
-      ),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.fetchArticles(0, "idea", "akcija")
-            }
-          }
-        },
-        [_vm._v("Idea Akcija")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-info",
-          on: {
-            click: function($event) {
-              return _vm.storeArticles("idea", "akcija")
-            }
-          }
-        },
-        [_vm._v("Ubaci Akcija Idea")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.getCategoriesIdea("60007883")
-            }
-          }
-        },
-        [_vm._v("Pice Idea")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.getCategoriesIdea("60007823")
-            }
-          }
-        },
-        [_vm._v("Meso Idea")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.getCategoriesIdea("60007780")
-            }
-          }
-        },
-        [_vm._v("Meso2 Idea")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.getCategoriesIdea("60007896")
-            }
-          }
-        },
-        [_vm._v("Slatkisi Idea")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.getCategoriesIdea("60007907")
-            }
-          }
-        },
-        [_vm._v("Smrznuti Proiz Idea")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn red",
-          on: {
-            click: function($event) {
-              return _vm.checkChildren()
-            }
-          }
-        },
-        [_vm._v("check idea children")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn blue",
-          on: {
-            click: function($event) {
-              return _vm.storeArticles("idea", "pice")
-            }
-          }
-        },
-        [_vm._v("Ubaci Pice Idea")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn blue",
-          on: {
-            click: function($event) {
-              return _vm.storeArticles("idea", "meso")
-            }
-          }
-        },
-        [_vm._v("Ubaci Meso Idea")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn blue",
-          on: {
-            click: function($event) {
-              return _vm.storeArticles("idea", "slatkisi")
-            }
-          }
-        },
-        [_vm._v("Ubaci Slatkisi Idea")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn blue",
-          on: {
-            click: function($event) {
-              return _vm.storeArticles("idea", "smrznuti")
-            }
-          }
-        },
-        [_vm._v("Ubaci smrznuti Idea")]
-      ),
-      _vm._v(" "),
-      _c("br"),
-      _c("br"),
-      _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
-      _vm._m(1),
-      _vm._v(" "),
-      _vm._m(2),
-      _vm._v(" "),
-      _vm._m(3),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn blue",
-          on: {
-            click: function($event) {
-              return _vm.updateDisDrinks()
-            }
-          }
-        },
-        [_vm._v("Dis update Drinks")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn blue",
-          on: {
-            click: function($event) {
-              return _vm.updateDisMeat()
-            }
-          }
-        },
-        [_vm._v("Dis update Meat")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn blue",
-          on: {
-            click: function($event) {
-              return _vm.updateDisFreeze()
-            }
-          }
-        },
-        [_vm._v("Dis update Freeze")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn blue",
-          on: {
-            click: function($event) {
-              return _vm.updateDisSweet()
-            }
-          }
-        },
-        [_vm._v("Dis update Sweet")]
-      ),
-      _vm._v(" "),
-      _c("br"),
-      _c("br"),
-      _vm._v(" "),
-      _vm._m(4),
-      _vm._v(" "),
-      _c("br"),
-      _c("br")
-    ]),
-    _vm._v(" "),
-    _c("h4", [
-      _vm._v("Total products on Action: " + _vm._s(_vm.akcija.length))
-    ]),
-    _c("br"),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        attrs: { id: "BtnToTop", title: "Go to top" },
-        on: {
-          click: function($event) {
-            return _vm.toTopFunction()
-          }
-        }
-      },
-      [_vm._v("↑")]
-    ),
-    _vm._v(" "),
-    _c("div", { attrs: { id: "loader" } }),
-    _vm._v(" "),
-    _c("br"),
-    _c("br")
-  ])
-}
-var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -73287,6 +73692,62 @@ var staticRenderFns = [
         [_vm._v("Univerexport Market Pice")]
       )
     ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/Articles.vue?vue&type=template&id=59e03618&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/Articles.vue?vue&type=template&id=59e03618& ***!
+  \******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("h4", [
+      _vm._v("Total products on Action: " + _vm._s(_vm.akcija.length))
+    ]),
+    _c("br"),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        attrs: { id: "BtnToTop", title: "Go to top" },
+        on: {
+          click: function($event) {
+            return _vm.toTopFunction()
+          }
+        }
+      },
+      [_vm._v("↑")]
+    ),
+    _vm._v(" "),
+    _c("div", { attrs: { id: "loader" } }),
+    _vm._v(" "),
+    _c("br"),
+    _c("br")
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("h2", [_vm._v("Products")])])
   }
 ]
 render._withStripped = true
@@ -74078,17 +74539,46 @@ var render = function() {
     _vm._v(" "),
     _vm.products.length > 0
       ? _c("h4", { attrs: { align: "left" } }, [
-          _vm._v("Total compared products: " + _vm._s(_vm.products.length))
+          _vm._v(
+            "Total compared products: " +
+              _vm._s(_vm.filteredComparedProducts.length)
+          )
         ])
       : _c("h4", { attrs: { align: "left" } }, [
           _vm._v(
             "Total productss " +
               _vm._s(_vm.shop) +
               ": " +
-              _vm._s(_vm.articles.length)
+              _vm._s(_vm.filteredComparedProducts.length)
           )
         ]),
     _c("br"),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group has-search col-sm-3" }, [
+      _c("span", { staticClass: "fa fa-search form-control-feedback" }),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.search,
+            expression: "search"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: { type: "text", placeholder: "Search" },
+        domProps: { value: _vm.search },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.search = $event.target.value
+          }
+        }
+      })
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "col-sm-8" }),
     _vm._v(" "),
@@ -74152,249 +74642,254 @@ var render = function() {
       "div",
       { staticClass: "row" },
       [
-        _vm._l(_vm.products.slice(_vm.startSlice, _vm.endSlice), function(
-          article
-        ) {
-          return _vm.products.length > 0
-            ? _c("div", { key: article.code, staticClass: "col-sm-3" }, [
-                _c("div", { staticClass: "card" }, [
-                  _c("div", { staticClass: "card-body" }, [
-                    article.imageUrl /*&& article.shop == 'maxi'*/
-                      ? _c("img", {
-                          staticClass: "center modal-trigger",
-                          staticStyle: { cursor: "pointer" },
-                          attrs: {
-                            center: "",
-                            src:
-                              "https://d3el976p2k4mvu.cloudfront.net" +
-                              article.imageUrl,
-                            width: "180px",
-                            height: "180px",
-                            href: "#modal" + article.code,
-                            title: "dupli klik za dodatne info"
-                          },
-                          on: {
-                            click: function($event) {
-                              return _vm.modalClick(
-                                article.code,
-                                article.title,
-                                article.body,
+        _vm._l(
+          _vm.filteredComparedProducts.slice(_vm.startSlice, _vm.endSlice),
+          function(article) {
+            return _vm.products.length > 0
+              ? _c("div", { key: article.code, staticClass: "col-sm-3" }, [
+                  _c("div", { staticClass: "card" }, [
+                    _c("div", { staticClass: "card-body" }, [
+                      article.imageUrl /*&& article.shop == 'maxi'*/
+                        ? _c("img", {
+                            staticClass: "center modal-trigger",
+                            staticStyle: { cursor: "pointer" },
+                            attrs: {
+                              center: "",
+                              src:
+                                "https://d3el976p2k4mvu.cloudfront.net" +
                                 article.imageUrl,
-                                article.supplementaryPriceIdea,
-                                article.supplementaryPriceMaxi,
-                                article.ideaCena,
-                                article.maxiCena,
-                                article.disCena,
-                                article.univerexportCena
-                              )
+                              width: "180px",
+                              height: "180px",
+                              href: "#modal" + article.code,
+                              title: "dupli klik za dodatne info"
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.modalClick(
+                                  article.code,
+                                  article.title,
+                                  article.body,
+                                  article.imageUrl,
+                                  article.supplementaryPriceIdea,
+                                  article.supplementaryPriceMaxi,
+                                  article.ideaCena,
+                                  article.maxiCena,
+                                  article.disCena,
+                                  article.univerexportCena
+                                )
+                              }
                             }
-                          }
-                        })
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c(
-                      "p",
-                      {
-                        staticClass: "textOverflow",
-                        attrs: { align: "center" }
-                      },
-                      [_vm._v(" " + _vm._s(article.body))]
-                    ),
-                    _vm._v(" "),
-                    _c("hr"),
-                    _vm._v(" "),
-                    article.maxiCena
-                      ? _c("p", { attrs: { align: "right" } }, [
-                          _c("img", {
-                            staticStyle: { height: "50px", width: "80px" },
-                            attrs: {
-                              src: "images/delhaize-maxi-logo-vector.png"
-                            }
-                          }),
-                          _c("b", [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(
-                                  article.maxiCena.substring(
-                                    0,
-                                    article.maxiCena.length - 3
-                                  )
-                                )
-                            )
-                          ])
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    article.ideaCena
-                      ? _c("p", { attrs: { align: "right" } }, [
-                          _c("img", {
-                            staticStyle: { height: "25px", width: "75px" },
-                            attrs: { src: "images/Idea_Logo.png" }
-                          }),
-                          _c("b", [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(
-                                  article.ideaCena.substring(
-                                    0,
-                                    article.ideaCena.length - 3
-                                  )
-                                )
-                            )
-                          ])
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    article.disCena
-                      ? _c("p", { attrs: { align: "right" } }, [
-                          _c("img", {
-                            staticStyle: { height: "50px", width: "80px" },
-                            attrs: { src: "images/dis_krnjevo.gif" }
-                          }),
-                          _c("b", [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(
-                                  article.disCena.substring(
-                                    0,
-                                    article.disCena.length - 3
-                                  )
-                                )
-                            )
-                          ])
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    article.univerexportCena
-                      ? _c("p", { attrs: { align: "right" } }, [
-                          _c("img", {
-                            staticStyle: { height: "35px", width: "100px" },
-                            attrs: { src: "images/univer.png" }
-                          }),
-                          _c("b", [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(
-                                  article.univerexportCena.substring(
-                                    0,
-                                    article.univerexportCena.length - 3
-                                  )
-                                )
-                            )
-                          ])
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("hr")
-                  ])
-                ])
-              ])
-            : _vm._e()
-        }),
-        _vm._v(" "),
-        _vm._l(_vm.articles.slice(_vm.startSlice, _vm.endSlice), function(
-          articlea
-        ) {
-          return _vm.articles.length > 0
-            ? _c("div", { key: articlea.code, staticClass: "col-sm-3" }, [
-                _c("div", { staticClass: "card" }, [
-                  _c("div", { staticClass: "card-body" }, [
-                    articlea.imageUrl !== null && articlea.shop == "maxi"
-                      ? _c("img", {
-                          staticClass: "center",
-                          attrs: {
-                            center: "",
-                            src:
-                              "https://d3el976p2k4mvu.cloudfront.net" +
-                              articlea.imageUrl,
-                            width: "180px",
-                            height: "180px"
-                          }
-                        })
-                      : articlea.imageUrl !== null && articlea.shop == "idea"
-                      ? _c("img", {
-                          staticClass: "center",
-                          attrs: {
-                            center: "",
-                            src:
-                              "https://www.idea.rs/online/" + articlea.imageUrl,
-                            width: "180px",
-                            height: "180px"
-                          }
-                        })
-                      : articlea.imageUrl !== null && articlea.shop == "dis"
-                      ? _c("img", {
-                          staticClass: "center",
-                          attrs: {
-                            center: "",
-                            src:
-                              "https://www.idea.rs/online/" + articlea.imageUrl,
-                            width: "180px",
-                            height: "180px"
-                          }
-                        })
-                      : articlea.imageUrl !== null &&
-                        articlea.shop == "univerexport"
-                      ? _c("img", {
-                          staticClass: "center",
-                          attrs: {
-                            center: "",
-                            src:
-                              "https://www.idea.rs/online/" + articlea.imageUrl,
-                            width: "180px",
-                            height: "180px"
-                          }
-                        })
-                      : _c("img", {
-                          staticStyle: { height: "200px", width: "180px" },
-                          attrs: { center: "", src: articlea.imageDefault }
-                        }),
-                    _vm._v(" "),
-                    _c(
-                      "p",
-                      {
-                        staticClass: "textOverflow",
-                        attrs: { align: "center" }
-                      },
-                      [_vm._v(" " + _vm._s(articlea.body))]
-                    ),
-                    _vm._v(" "),
-                    _c("hr"),
-                    _vm._v(" "),
-                    _c("p", { attrs: { align: "right" } }, [
-                      articlea.shop == "maxi"
-                        ? _c("img", {
-                            staticStyle: { height: "50px", width: "80px" },
-                            attrs: {
-                              src: "images/delhaize-maxi-logo-vector.png"
-                            }
-                          })
-                        : articlea.shop == "idea"
-                        ? _c("img", {
-                            staticStyle: { height: "25px", width: "75px" },
-                            attrs: { src: "images/Idea_Logo.png" }
-                          })
-                        : articlea.shop == "dis"
-                        ? _c("img", {
-                            staticStyle: { height: "50px", width: "100px" },
-                            attrs: { src: "images/dis_krnjevo.gif" }
-                          })
-                        : articlea.shop == "univerexport"
-                        ? _c("img", {
-                            staticStyle: { height: "35px", width: "100px" },
-                            attrs: { src: "images/univer.png" }
                           })
                         : _vm._e(),
                       _vm._v(" "),
-                      _c("b", [_vm._v(_vm._s(articlea.formattedPrice))])
-                    ]),
-                    _vm._v(" "),
-                    _c("hr")
+                      _c(
+                        "p",
+                        {
+                          staticClass: "textOverflow",
+                          attrs: { align: "center" }
+                        },
+                        [_vm._v(" " + _vm._s(article.body))]
+                      ),
+                      _vm._v(" "),
+                      _c("hr"),
+                      _vm._v(" "),
+                      article.maxiCena
+                        ? _c("p", { attrs: { align: "right" } }, [
+                            _c("img", {
+                              staticStyle: { height: "50px", width: "80px" },
+                              attrs: {
+                                src: "images/delhaize-maxi-logo-vector.png"
+                              }
+                            }),
+                            _c("b", [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(
+                                    article.maxiCena.substring(
+                                      0,
+                                      article.maxiCena.length - 3
+                                    )
+                                  )
+                              )
+                            ])
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      article.ideaCena
+                        ? _c("p", { attrs: { align: "right" } }, [
+                            _c("img", {
+                              staticStyle: { height: "25px", width: "75px" },
+                              attrs: { src: "images/Idea_Logo.png" }
+                            }),
+                            _c("b", [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(
+                                    article.ideaCena.substring(
+                                      0,
+                                      article.ideaCena.length - 3
+                                    )
+                                  )
+                              )
+                            ])
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      article.disCena
+                        ? _c("p", { attrs: { align: "right" } }, [
+                            _c("img", {
+                              staticStyle: { height: "50px", width: "80px" },
+                              attrs: { src: "images/dis_krnjevo.gif" }
+                            }),
+                            _c("b", [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(
+                                    article.disCena.substring(
+                                      0,
+                                      article.disCena.length - 3
+                                    )
+                                  )
+                              )
+                            ])
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      article.univerexportCena
+                        ? _c("p", { attrs: { align: "right" } }, [
+                            _c("img", {
+                              staticStyle: { height: "35px", width: "100px" },
+                              attrs: { src: "images/univer.png" }
+                            }),
+                            _c("b", [
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(
+                                    article.univerexportCena.substring(
+                                      0,
+                                      article.univerexportCena.length - 3
+                                    )
+                                  )
+                              )
+                            ])
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("hr")
+                    ])
                   ])
                 ])
-              ])
-            : _vm._e()
-        })
+              : _vm._e()
+          }
+        ),
+        _vm._v(" "),
+        _vm._l(
+          _vm.filteredComparedProducts.slice(_vm.startSlice, _vm.endSlice),
+          function(articlea) {
+            return _vm.articles.length > 0
+              ? _c("div", { key: articlea.code, staticClass: "col-sm-3" }, [
+                  _c("div", { staticClass: "card" }, [
+                    _c("div", { staticClass: "card-body" }, [
+                      articlea.imageUrl !== null && articlea.shop == "maxi"
+                        ? _c("img", {
+                            staticClass: "center",
+                            attrs: {
+                              center: "",
+                              src:
+                                "https://d3el976p2k4mvu.cloudfront.net" +
+                                articlea.imageUrl,
+                              width: "180px",
+                              height: "180px"
+                            }
+                          })
+                        : articlea.imageUrl !== null && articlea.shop == "idea"
+                        ? _c("img", {
+                            staticClass: "center",
+                            attrs: {
+                              center: "",
+                              src:
+                                "https://www.idea.rs/online/" +
+                                articlea.imageUrl,
+                              width: "180px",
+                              height: "180px"
+                            }
+                          })
+                        : articlea.imageUrl !== null && articlea.shop == "dis"
+                        ? _c("img", {
+                            staticClass: "center",
+                            attrs: {
+                              center: "",
+                              src:
+                                "https://www.idea.rs/online/" +
+                                articlea.imageUrl,
+                              width: "180px",
+                              height: "180px"
+                            }
+                          })
+                        : articlea.imageUrl !== null &&
+                          articlea.shop == "univerexport"
+                        ? _c("img", {
+                            staticClass: "center",
+                            attrs: {
+                              center: "",
+                              src:
+                                "https://www.idea.rs/online/" +
+                                articlea.imageUrl,
+                              width: "180px",
+                              height: "180px"
+                            }
+                          })
+                        : _c("img", {
+                            staticStyle: { height: "200px", width: "180px" },
+                            attrs: { center: "", src: articlea.imageDefault }
+                          }),
+                      _vm._v(" "),
+                      _c(
+                        "p",
+                        {
+                          staticClass: "textOverflow",
+                          attrs: { align: "center" }
+                        },
+                        [_vm._v(" " + _vm._s(articlea.body))]
+                      ),
+                      _vm._v(" "),
+                      _c("hr"),
+                      _vm._v(" "),
+                      _c("p", { attrs: { align: "right" } }, [
+                        articlea.shop == "maxi"
+                          ? _c("img", {
+                              staticStyle: { height: "50px", width: "80px" },
+                              attrs: {
+                                src: "images/delhaize-maxi-logo-vector.png"
+                              }
+                            })
+                          : articlea.shop == "idea"
+                          ? _c("img", {
+                              staticStyle: { height: "25px", width: "75px" },
+                              attrs: { src: "images/Idea_Logo.png" }
+                            })
+                          : articlea.shop == "dis"
+                          ? _c("img", {
+                              staticStyle: { height: "50px", width: "100px" },
+                              attrs: { src: "images/dis_krnjevo.gif" }
+                            })
+                          : articlea.shop == "univerexport"
+                          ? _c("img", {
+                              staticStyle: { height: "35px", width: "100px" },
+                              attrs: { src: "images/univer.png" }
+                            })
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("b", [_vm._v(_vm._s(articlea.formattedPrice))])
+                      ]),
+                      _vm._v(" "),
+                      _c("hr")
+                    ])
+                  ])
+                ])
+              : _vm._e()
+          }
+        )
       ],
       2
     ),
@@ -74520,440 +75015,490 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { align: "center" } }, [
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-primary",
-        on: {
-          click: function($event) {
-            return _vm.fetchArticles("maxi")
+  return _c(
+    "div",
+    { attrs: { align: "center" } },
+    [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary",
+          on: {
+            click: function($event) {
+              return _vm.fetchArticles("maxi")
+            }
           }
-        }
-      },
-      [_vm._v("Maxi Smrznuto")]
-    ),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-primary",
-        on: {
-          click: function($event) {
-            return _vm.fetchArticles("idea")
+        },
+        [_vm._v("Maxi Smrznuto")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary",
+          on: {
+            click: function($event) {
+              return _vm.fetchArticles("idea")
+            }
           }
-        }
-      },
-      [_vm._v("Idea Smrznuto")]
-    ),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-primary",
-        on: {
-          click: function($event) {
-            return _vm.fetchArticles("dis")
+        },
+        [_vm._v("Idea Smrznuto")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary",
+          on: {
+            click: function($event) {
+              return _vm.fetchArticles("dis")
+            }
           }
-        }
-      },
-      [_vm._v("Dis Smrznuto")]
-    ),
-    _vm._v(" "),
-    _c("br"),
-    _c("br"),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-primary",
-        on: {
-          click: function($event) {
-            return _vm.fetchProducts()
+        },
+        [_vm._v("Dis Smrznuto")]
+      ),
+      _vm._v(" "),
+      _c("br"),
+      _c("br"),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary",
+          on: {
+            click: function($event) {
+              return _vm.fetchProducts()
+            }
           }
-        }
-      },
-      [_vm._v("Compare All Products")]
-    ),
-    _vm._v(" "),
-    _vm.products.length > 0
-      ? _c("h4", { attrs: { align: "left" } }, [
-          _vm._v("Total compared products: " + _vm._s(_vm.products.length))
-        ])
-      : _c("h4", { attrs: { align: "left" } }, [
-          _vm._v(
-            "Total products " +
-              _vm._s(_vm.shop) +
-              ": " +
-              _vm._s(_vm.articles.length)
-          )
-        ]),
-    _c("br"),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-sm-8" }),
-    _vm._v(" "),
-    _vm.articles.length > 0
-      ? _c("div", { staticClass: "form-group col-sm-4" }, [
-          _c("label", { attrs: { for: "sel1" } }, [_vm._v("Sortiranje")]),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.key,
-                  expression: "key"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { id: "sel1" },
-              on: {
-                change: [
-                  function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.key = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  },
-                  function($event) {
-                    return _vm.fetchArticles(_vm.shop)
-                  }
-                ]
-              }
-            },
-            [
-              _c(
-                "option",
-                {
-                  attrs: { value: "opadajuce" },
-                  domProps: { selected: _vm.key == "opadajuce" }
-                },
-                [_vm._v("Sortiranje po opadajucim cenama")]
-              ),
-              _vm._v(" "),
-              _c("option", { attrs: { value: "rastuce" } }, [
-                _vm._v("Sortiranje po rastucim Cenama")
-              ])
-            ]
-          )
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "row" },
-      [
-        _vm._l(_vm.products.slice(_vm.startSlice, _vm.endSlice), function(
-          article
-        ) {
-          return _vm.products.length > 0
-            ? _c("div", { key: article.code, staticClass: "col-sm-3" }, [
-                _c("div", { staticClass: "card" }, [
-                  _c("div", { staticClass: "card-body" }, [
-                    article.imageUrl /*&& article.shop == 'maxi'*/
-                      ? _c("img", {
-                          staticClass: "center modal-trigger",
-                          staticStyle: { cursor: "pointer" },
-                          attrs: {
-                            center: "",
-                            src:
-                              "https://d3el976p2k4mvu.cloudfront.net" +
-                              article.imageUrl,
-                            width: "180px",
-                            height: "180px",
-                            href: "#modal" + article.code,
-                            title: "klik za dodatne info"
-                          },
-                          on: {
-                            click: function($event) {
-                              return _vm.modalClick(
-                                article.code,
-                                article.title,
-                                article.body,
-                                article.imageUrl,
-                                article.supplementaryPriceIdea,
-                                article.supplementaryPriceMaxi,
-                                article.ideaCena,
-                                article.maxiCena,
-                                article.disCena
-                              )
-                            }
-                          }
-                        })
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c(
-                      "p",
-                      {
-                        staticClass: "textOverflow",
-                        attrs: { align: "center" }
-                      },
-                      [_vm._v(" " + _vm._s(article.body))]
-                    ),
-                    _vm._v(" "),
-                    _c("hr"),
-                    _vm._v(" "),
-                    article.maxiCena
-                      ? _c("p", { attrs: { align: "right" } }, [
-                          _c("img", {
-                            staticStyle: { height: "50px", width: "80px" },
-                            attrs: {
-                              src: "images/delhaize-maxi-logo-vector.png"
-                            }
-                          }),
-                          _c("b", [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(
-                                  article.maxiCena.substring(
-                                    0,
-                                    article.maxiCena.length - 3
-                                  )
-                                )
-                            )
-                          ])
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    article.ideaCena
-                      ? _c("p", { attrs: { align: "right" } }, [
-                          _c("img", {
-                            staticStyle: { height: "25px", width: "75px" },
-                            attrs: { src: "images/Idea_Logo.png" }
-                          }),
-                          _c("b", [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(
-                                  article.ideaCena.substring(
-                                    0,
-                                    article.ideaCena.length - 3
-                                  )
-                                )
-                            )
-                          ])
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    article.disCena
-                      ? _c("p", { attrs: { align: "right" } }, [
-                          _c("img", {
-                            staticStyle: { height: "50px", width: "80px" },
-                            attrs: { src: "images/dis_krnjevo.gif" }
-                          }),
-                          _c("b", [
-                            _vm._v(
-                              "\n                        " +
-                                _vm._s(
-                                  article.disCena.substring(
-                                    0,
-                                    article.disCena.length - 3
-                                  )
-                                )
-                            )
-                          ])
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("hr")
-                  ])
-                ])
-              ])
-            : _vm._e()
-        }),
+        },
+        [_vm._v("Compare All Products")]
+      ),
+      _vm._v(" "),
+      _vm.products.length > 0
+        ? _c("h4", { attrs: { align: "left" } }, [
+            _vm._v(
+              "Total compared products: " + _vm._s(_vm.filteredResources.length)
+            )
+          ])
+        : _c("h4", { attrs: { align: "left" } }, [
+            _vm._v(
+              "Total products " +
+                _vm._s(_vm.shop) +
+                ": " +
+                _vm._s(_vm.articles.length)
+            )
+          ]),
+      _c("br"),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group has-search col-sm-3" }, [
+        _c("span", { staticClass: "fa fa-search form-control-feedback" }),
         _vm._v(" "),
-        _vm._l(_vm.articles.slice(_vm.startSlice, _vm.endSlice), function(
-          articlea
-        ) {
-          return _vm.articles.length > 0
-            ? _c("div", { key: articlea.code, staticClass: "col-sm-3" }, [
-                _c("div", { staticClass: "card" }, [
-                  _c("div", { staticClass: "card-body" }, [
-                    articlea.imageUrl !== null && articlea.shop == "maxi"
-                      ? _c("img", {
-                          staticClass: "center",
-                          attrs: {
-                            center: "",
-                            src:
-                              "https://d3el976p2k4mvu.cloudfront.net" +
-                              articlea.imageUrl,
-                            width: "180px",
-                            height: "180px"
-                          }
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.search,
+              expression: "search"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text", placeholder: "Search" },
+          domProps: { value: _vm.search },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.search = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-8" }),
+      _vm._v(" "),
+      _vm.articles.length > 0
+        ? _c("div", { staticClass: "form-group col-sm-4" }, [
+            _c("label", { attrs: { for: "sel1" } }, [_vm._v("Sortiranje")]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.key,
+                    expression: "key"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { id: "sel1" },
+                on: {
+                  change: [
+                    function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
                         })
-                      : articlea.imageUrl !== null && articlea.shop == "idea"
-                      ? _c("img", {
-                          staticClass: "center",
-                          attrs: {
-                            center: "",
-                            src:
-                              "https://www.idea.rs/online/" + articlea.imageUrl,
-                            width: "180px",
-                            height: "180px"
-                          }
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
                         })
-                      : articlea.imageUrl !== null && articlea.shop == "dis"
-                      ? _c("img", {
-                          staticClass: "center",
-                          attrs: {
-                            center: "",
-                            src:
-                              "https://www.idea.rs/online/" + articlea.imageUrl,
-                            width: "180px",
-                            height: "180px"
-                          }
-                        })
-                      : _c("img", {
-                          staticStyle: { height: "200px", width: "180px" },
-                          attrs: {
-                            center: "",
-                            src:
-                              "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694"
-                          }
-                        }),
-                    _vm._v(" "),
-                    _c(
-                      "p",
-                      {
-                        staticClass: "textOverflow",
-                        attrs: { align: "center" }
-                      },
-                      [_vm._v(_vm._s(articlea.body))]
-                    ),
-                    _vm._v(" "),
-                    _c("hr"),
-                    _vm._v(" "),
-                    _c("p", { attrs: { align: "right" } }, [
-                      articlea.shop == "maxi"
+                      _vm.key = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    function($event) {
+                      return _vm.fetchArticles(_vm.shop)
+                    }
+                  ]
+                }
+              },
+              [
+                _c(
+                  "option",
+                  {
+                    attrs: { value: "opadajuce" },
+                    domProps: { selected: _vm.key == "opadajuce" }
+                  },
+                  [_vm._v("Sortiranje po opadajucim cenama")]
+                ),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "rastuce" } }, [
+                  _vm._v("Sortiranje po rastucim Cenama")
+                ])
+              ]
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "row" },
+        [
+          _vm._l(
+            _vm.filteredResources.slice(_vm.startSlice, _vm.endSlice),
+            function(article) {
+              return _vm.products.length > 0
+                ? _c("div", { key: article.code, staticClass: "col-sm-3" }, [
+                    _c("div", { staticClass: "card" }, [
+                      _c(
+                        "div",
+                        { staticClass: "card-body" },
+                        [
+                          article.imageUrl /*&& article.shop == 'maxi'*/
+                            ? _c("img", {
+                                staticClass: "center modal-trigger",
+                                attrs: {
+                                  center: "",
+                                  src:
+                                    "https://d3el976p2k4mvu.cloudfront.net" +
+                                    article.imageUrl,
+                                  width: "180px",
+                                  height: "180px"
+                                }
+                              })
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c(
+                            "p",
+                            {
+                              staticClass: "textOverflow",
+                              attrs: { align: "center" }
+                            },
+                            [_vm._v(" " + _vm._s(article.body))]
+                          ),
+                          _vm._v(" "),
+                          _c("hr"),
+                          _vm._v(" "),
+                          article.maxiCena
+                            ? _c("p", { attrs: { align: "right" } }, [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "50px",
+                                    width: "80px"
+                                  },
+                                  attrs: {
+                                    src: "images/delhaize-maxi-logo-vector.png"
+                                  }
+                                }),
+                                _c("b", [
+                                  _vm._v(
+                                    "\n                        " +
+                                      _vm._s(
+                                        article.maxiCena.substring(
+                                          0,
+                                          article.maxiCena.length - 3
+                                        )
+                                      )
+                                  )
+                                ])
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          article.ideaCena
+                            ? _c("p", { attrs: { align: "right" } }, [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "25px",
+                                    width: "75px"
+                                  },
+                                  attrs: { src: "images/Idea_Logo.png" }
+                                }),
+                                _c("b", [
+                                  _vm._v(
+                                    "\n                        " +
+                                      _vm._s(
+                                        article.ideaCena.substring(
+                                          0,
+                                          article.ideaCena.length - 3
+                                        )
+                                      )
+                                  )
+                                ])
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          article.disCena
+                            ? _c("p", { attrs: { align: "right" } }, [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "50px",
+                                    width: "80px"
+                                  },
+                                  attrs: { src: "images/dis_krnjevo.gif" }
+                                }),
+                                _c("b", [
+                                  _vm._v(
+                                    "\n                        " +
+                                      _vm._s(
+                                        article.disCena.substring(
+                                          0,
+                                          article.disCena.length - 3
+                                        )
+                                      )
+                                  )
+                                ])
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c("hr"),
+                          _vm._v(" "),
+                          _c(
+                            "b-button",
+                            {
+                              staticClass: "mr-1",
+                              attrs: { variant: "primary" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.info(article, $event.target)
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                        Info\n                    "
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ])
+                  ])
+                : _vm._e()
+            }
+          ),
+          _vm._v(" "),
+          _vm._l(_vm.articles.slice(_vm.startSlice, _vm.endSlice), function(
+            articlea
+          ) {
+            return _vm.articles.length > 0
+              ? _c("div", { key: articlea.code, staticClass: "col-sm-3" }, [
+                  _c("div", { staticClass: "card" }, [
+                    _c("div", { staticClass: "card-body" }, [
+                      articlea.imageUrl !== null && articlea.shop == "maxi"
                         ? _c("img", {
-                            staticStyle: { height: "50px", width: "80px" },
+                            staticClass: "center",
                             attrs: {
-                              src: "images/delhaize-maxi-logo-vector.png"
+                              center: "",
+                              src:
+                                "https://d3el976p2k4mvu.cloudfront.net" +
+                                articlea.imageUrl,
+                              width: "180px",
+                              height: "180px"
                             }
                           })
-                        : articlea.shop == "idea"
+                        : articlea.imageUrl !== null && articlea.shop == "idea"
                         ? _c("img", {
-                            staticStyle: { height: "25px", width: "75px" },
-                            attrs: { src: "images/Idea_Logo.png" }
+                            staticClass: "center",
+                            attrs: {
+                              center: "",
+                              src:
+                                "https://www.idea.rs/online/" +
+                                articlea.imageUrl,
+                              width: "180px",
+                              height: "180px"
+                            }
                           })
-                        : articlea.shop == "dis"
+                        : articlea.imageUrl !== null && articlea.shop == "dis"
                         ? _c("img", {
-                            staticStyle: { height: "50px", width: "80px" },
-                            attrs: { src: "images/dis_krnjevo.gif" }
+                            staticClass: "center",
+                            attrs: {
+                              center: "",
+                              src:
+                                "https://www.idea.rs/online/" +
+                                articlea.imageUrl,
+                              width: "180px",
+                              height: "180px"
+                            }
                           })
-                        : _vm._e(),
+                        : _c("img", {
+                            staticStyle: { height: "200px", width: "180px" },
+                            attrs: {
+                              center: "",
+                              src:
+                                "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694"
+                            }
+                          }),
                       _vm._v(" "),
-                      _c("b", [_vm._v(_vm._s(articlea.formattedPrice))])
-                    ]),
-                    _vm._v(" "),
-                    _c("hr")
+                      _c(
+                        "p",
+                        {
+                          staticClass: "textOverflow",
+                          attrs: { align: "center" }
+                        },
+                        [_vm._v(_vm._s(articlea.body))]
+                      ),
+                      _vm._v(" "),
+                      _c("hr"),
+                      _vm._v(" "),
+                      _c("p", { attrs: { align: "right" } }, [
+                        articlea.shop == "maxi"
+                          ? _c("img", {
+                              staticStyle: { height: "50px", width: "80px" },
+                              attrs: {
+                                src: "images/delhaize-maxi-logo-vector.png"
+                              }
+                            })
+                          : articlea.shop == "idea"
+                          ? _c("img", {
+                              staticStyle: { height: "25px", width: "75px" },
+                              attrs: { src: "images/Idea_Logo.png" }
+                            })
+                          : articlea.shop == "dis"
+                          ? _c("img", {
+                              staticStyle: { height: "50px", width: "80px" },
+                              attrs: { src: "images/dis_krnjevo.gif" }
+                            })
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("b", [_vm._v(_vm._s(articlea.formattedPrice))])
+                      ]),
+                      _vm._v(" "),
+                      _c("hr")
+                    ])
                   ])
                 ])
+              : _vm._e()
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          ref: "modal",
+          attrs: { id: _vm.infoModal.id, size: "xl", "ok-only": "" }
+        },
+        [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "modal-header col-sm-12" }, [
+              _c("h4", { staticStyle: { align: "center" } }, [
+                _vm._v(_vm._s(_vm.title))
               ])
-            : _vm._e()
-        })
-      ],
-      2
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "modal",
-        staticStyle: { width: "60%" },
-        attrs: { id: "modal" + _vm.modalId }
-      },
-      [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "modal-header col-sm-12" }, [
-            _c("h4", { staticStyle: { align: "center" } }, [
-              _vm._v(_vm._s(_vm.title))
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "modal-content col-sm-6" }, [
-            _c("img", {
-              staticStyle: { height: "330px", width: "300px" },
-              attrs: {
-                src: "https://d3el976p2k4mvu.cloudfront.net" + _vm.imageUrl
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "modal-content col-sm-6" }, [
-            _c("h6", [_vm._v(_vm._s(_vm.body))]),
+            ]),
             _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-sm-6" }, [
-                _c("img", {
-                  staticStyle: { height: "55px", width: "80px" },
-                  attrs: { src: "images/delhaize-maxi-logo-vector.png" }
-                }),
-                _vm._v(" "),
-                _c("h6", [_c("b", [_vm._v(_vm._s(_vm.maxiCena))])]),
-                _vm._v(" "),
-                _c("h6", [
-                  _c("b", [_vm._v(_vm._s(_vm.supplementaryPriceMaxi))])
-                ]),
-                _c("br")
-              ]),
+            _c("div", { staticClass: "modal-content col-sm-6" }, [
+              _c("img", {
+                staticClass: "mx-auto d-block",
+                staticStyle: { height: "330px", width: "300px" },
+                attrs: {
+                  src: "https://d3el976p2k4mvu.cloudfront.net" + _vm.imageUrl
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-content col-sm-6" }, [
+              _c("h6", [_vm._v(_vm._s(_vm.body))]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-sm-6 mt-3" }, [
-                _c("img", {
-                  staticStyle: { height: "25px", width: "75px" },
-                  attrs: { src: "images/Idea_Logo.png" }
-                }),
-                _vm._v(" "),
-                _c("h6", { staticClass: "mt-4" }, [
-                  _c("b", [_vm._v(_vm._s(_vm.ideaCena))])
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-sm-6" }, [
+                  _c("img", {
+                    staticStyle: { height: "55px", width: "80px" },
+                    attrs: { src: "images/delhaize-maxi-logo-vector.png" }
+                  }),
+                  _vm._v(" "),
+                  _c("h6", [_c("b", [_vm._v(_vm._s(_vm.maxiCena))])]),
+                  _vm._v(" "),
+                  _c("h6", [
+                    _c("b", [_vm._v(_vm._s(_vm.supplementaryPriceMaxi))])
+                  ]),
+                  _c("br")
                 ]),
                 _vm._v(" "),
-                _c("h6", [
-                  _c("b", [_vm._v(_vm._s(_vm.supplementaryPriceIdea))])
+                _c("div", { staticClass: "col-sm-6 mt-3" }, [
+                  _c("img", {
+                    staticStyle: { height: "25px", width: "75px" },
+                    attrs: { src: "images/Idea_Logo.png" }
+                  }),
+                  _vm._v(" "),
+                  _c("h6", { staticClass: "mt-4" }, [
+                    _c("b", [_vm._v(_vm._s(_vm.ideaCena))])
+                  ]),
+                  _vm._v(" "),
+                  _c("h6", [
+                    _c("b", [_vm._v(_vm._s(_vm.supplementaryPriceIdea))])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-sm-6" }, [
+                  _c("img", {
+                    staticStyle: { height: "50px", width: "75px" },
+                    attrs: { src: "images/dis_krnjevo.gif" }
+                  }),
+                  _vm._v(" "),
+                  _c("h6", [_c("b", [_vm._v(_vm._s(_vm.disCena))])])
                 ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-sm-6" }, [
-                _c("img", {
-                  staticStyle: { height: "50px", width: "75px" },
-                  attrs: { src: "images/dis_krnjevo.gif" }
-                }),
-                _vm._v(" "),
-                _c("h6", [_c("b", [_vm._v(_vm._s(_vm.disCena))])])
               ])
             ])
           ])
-        ])
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        attrs: { id: "BtnToTop", title: "Go to top" },
-        on: {
-          click: function($event) {
-            return _vm.toTopFunction()
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          attrs: { id: "BtnToTop", title: "Go to top" },
+          on: {
+            click: function($event) {
+              return _vm.toTopFunction()
+            }
           }
-        }
-      },
-      [_vm._v("↑")]
-    ),
-    _vm._v(" "),
-    _c("div", { attrs: { id: "loader" } }),
-    _vm._v(" "),
-    _c("br"),
-    _c("br")
-  ])
+        },
+        [_vm._v("↑")]
+      ),
+      _vm._v(" "),
+      _c("div", { attrs: { id: "loader" } }),
+      _vm._v(" "),
+      _c("br"),
+      _c("br")
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -75151,8 +75696,7 @@ var render = function() {
                           _c("img", {
                             staticStyle: { height: "50px", width: "80px" },
                             attrs: {
-                              src:
-                                "https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"
+                              src: "images/delhaize-maxi-logo-vector.png"
                             }
                           }),
                           _c("b", [
@@ -75173,10 +75717,7 @@ var render = function() {
                       ? _c("p", { attrs: { align: "right" } }, [
                           _c("img", {
                             staticStyle: { height: "20px", width: "75px" },
-                            attrs: {
-                              src:
-                                "https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"
-                            }
+                            attrs: { src: "images/Idea_Logo.png" }
                           }),
                           _c("b", [
                             _vm._v(
@@ -75196,10 +75737,7 @@ var render = function() {
                       ? _c("p", { attrs: { align: "right" } }, [
                           _c("img", {
                             staticStyle: { height: "50px", width: "80px" },
-                            attrs: {
-                              src:
-                                "http://www.serbianlogo.com/thumbnails/dis_krnjevo.gif"
-                            }
+                            attrs: { src: "images/dis_krnjevo.gif" }
                           }),
                           _c("b", [
                             _vm._v(
@@ -75280,25 +75818,18 @@ var render = function() {
                         ? _c("img", {
                             staticStyle: { height: "50px", width: "80px" },
                             attrs: {
-                              src:
-                                "https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"
+                              src: "images/delhaize-maxi-logo-vector.png"
                             }
                           })
                         : articlea.shop == "idea"
                         ? _c("img", {
                             staticStyle: { height: "20px", width: "75px" },
-                            attrs: {
-                              src:
-                                "https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"
-                            }
+                            attrs: { src: "images/Idea_Logo.png" }
                           })
                         : articlea.shop == "dis"
                         ? _c("img", {
                             staticStyle: { height: "50px", width: "80px" },
-                            attrs: {
-                              src:
-                                "http://www.serbianlogo.com/thumbnails/dis_krnjevo.gif"
-                            }
+                            attrs: { src: "images/dis_krnjevo.gif" }
                           })
                         : _vm._e(),
                       _vm._v(" "),
@@ -75356,159 +75887,79 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("nav", { staticStyle: { height: "150px" } }, [
-        _c("div", { staticClass: "nav-wrapper" }, [
-          _c("span", { staticClass: "brand-logo" }, [
+  return _c(
+    "div",
+    [
+      _c(
+        "b-navbar",
+        { attrs: { toggleable: "lg", type: "dark" } },
+        [
+          _c("b-navbar-brand", { attrs: { href: "/" } }, [
             _c("img", {
               staticStyle: { height: "150px", width: "150px" },
               attrs: { center: "", src: "images/Logo6.png" }
             })
           ]),
           _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "sidenav-trigger btn",
-              attrs: { href: "#", "data-target": "mobile-demo" }
-            },
-            [_c("i", { staticClass: "material-icons" }, [_vm._v("menu")])]
-          ),
+          _c("b-navbar-toggle", {
+            staticStyle: { "background-color": "#591259" },
+            attrs: { target: "nav-collapse" }
+          }),
           _vm._v(" "),
           _c(
-            "div",
-            {
-              staticClass: "container",
-              staticStyle: { "padding-top": "20px" }
-            },
+            "b-collapse",
+            { attrs: { id: "nav-collapse", "is-nav": "" } },
             [
-              _c("ul", { staticClass: "hide-on-med-and-down" }, [
-                _c("li", { staticClass: "nav-item" }, [
-                  _c("a", { staticClass: "nav-link", attrs: { href: "/" } }, [
+              _c(
+                "b-navbar-nav",
+                [
+                  _c("b-nav-item", { attrs: { href: "/" } }, [
                     _c("i", { staticClass: "fas fa-home fa-3x" }),
                     _c("span", { staticClass: "menuspan" }, [_vm._v("Home")])
+                  ]),
+                  _vm._v(" "),
+                  _c("b-nav-item", { attrs: { href: "/action" } }, [
+                    _c("i", { staticClass: "fas fa-percentage fa-3x" }),
+                    _c("span", { staticClass: "menuspan" }, [_vm._v("Akcija")])
+                  ]),
+                  _vm._v(" "),
+                  _c("b-nav-item", { attrs: { href: "/freeze" } }, [
+                    _c("i", { staticClass: "fas fa-snowflake fa-3x" }),
+                    _c("span", { staticClass: "menuspan" }, [
+                      _vm._v("Smrznuto")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("b-nav-item", { attrs: { href: "/drinks" } }, [
+                    _c("i", { staticClass: "fas fa-glass-cheers fa-3x" }),
+                    _c("span", { staticClass: "menuspan" }, [_vm._v("Pice")])
+                  ]),
+                  _vm._v(" "),
+                  _c("b-nav-item", { attrs: { href: "/sweets" } }, [
+                    _c("i", { staticClass: "fas fa-candy-cane fa-3x" }),
+                    _c("span", { staticClass: "menuspan" }, [
+                      _vm._v("Slatkisi")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("b-nav-item", { attrs: { href: "/meats" } }, [
+                    _c("i", { staticClass: "fas fa-drumstick-bite fa-3x" }),
+                    _c("span", { staticClass: "menuspan" }, [_vm._v("Meso")])
                   ])
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "nav-item" }, [
-                  _c(
-                    "a",
-                    { staticClass: "nav-link", attrs: { href: "/action" } },
-                    [
-                      _c("i", { staticClass: "fas fa-percentage fa-3x" }),
-                      _c("span", { staticClass: "menuspan" }, [
-                        _vm._v("Akcija")
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "nav-item" }, [
-                  _c(
-                    "a",
-                    { staticClass: "nav-link", attrs: { href: "/freeze" } },
-                    [
-                      _c("i", { staticClass: "fas fa-snowflake fa-3x" }),
-                      _c("span", { staticClass: "menuspan" }, [
-                        _vm._v("Smrznuto")
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "nav-item" }, [
-                  _c(
-                    "a",
-                    { staticClass: "nav-link", attrs: { href: "/drinks" } },
-                    [
-                      _c("i", { staticClass: "fas fa-glass-cheers fa-3x" }),
-                      _c("span", { staticClass: "menuspan" }, [_vm._v("Pice")])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "nav-item" }, [
-                  _c(
-                    "a",
-                    { staticClass: "nav-link", attrs: { href: "/sweets" } },
-                    [
-                      _c("i", { staticClass: "fas fa-candy-cane fa-3x" }),
-                      _c("span", { staticClass: "menuspan" }, [
-                        _vm._v("Slatkisi")
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "nav-item" }, [
-                  _c(
-                    "a",
-                    { staticClass: "nav-link", attrs: { href: "/meats" } },
-                    [
-                      _c("i", { staticClass: "fas fa-drumstick-bite fa-3x" }),
-                      _c("span", { staticClass: "menuspan" }, [_vm._v("Meso")])
-                    ]
-                  )
-                ])
-              ])
-            ]
+                ],
+                1
+              )
+            ],
+            1
           )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("ul", { staticClass: "sidenav", attrs: { id: "mobile-demo" } }, [
-        _c("li", { staticClass: "nav-item" }, [
-          _c("a", { staticClass: "nav-link", attrs: { href: "/" } }, [
-            _c("i", { staticClass: "fas fa-home fa-3x" }),
-            _c("span", [_vm._v("Home")])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c("a", { staticClass: "nav-link", attrs: { href: "/action" } }, [
-            _c("i", { staticClass: "fas fa-percentage fa-3x" }),
-            _c("span", [_vm._v("Akcija")])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c("a", { staticClass: "nav-link", attrs: { href: "/freeze" } }, [
-            _c("i", { staticClass: "fas fa-snowflake fa-3x" }),
-            _c("span", [_vm._v("Smrznuto")])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c("a", { staticClass: "nav-link", attrs: { href: "/drinks" } }, [
-            _c("i", { staticClass: "fas fa-glass-cheers fa-3x" }),
-            _c("span", [_vm._v("Pice")])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c("a", { staticClass: "nav-link", attrs: { href: "/sweets" } }, [
-            _c("i", { staticClass: "fas fa-candy-cane fa-3x" }),
-            _c("span", [_vm._v("Slatkisi")])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c("a", { staticClass: "nav-link", attrs: { href: "/meats" } }, [
-            _c("i", { staticClass: "fas fa-drumstick-bite fa-3x" }),
-            _c("span", [_vm._v("Meso")])
-          ])
-        ])
-      ])
-    ])
-  }
-]
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -75610,7 +76061,7 @@ var render = function() {
               article.disCena
                 ? _c("p", { attrs: { align: "right" } }, [
                     _c("img", {
-                      staticStyle: { height: "70px", width: "100px" },
+                      staticStyle: { height: "50px", width: "80px" },
                       attrs: { src: "images/dis_krnjevo.gif" }
                     }),
                     _c("b", [
@@ -88114,15 +88565,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************************!*\
   !*** ./resources/assets/js/components/AdminHome.vue ***!
   \******************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AdminHome_vue_vue_type_template_id_443a54b2_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminHome.vue?vue&type=template&id=443a54b2&scoped=true& */ "./resources/assets/js/components/AdminHome.vue?vue&type=template&id=443a54b2&scoped=true&");
 /* harmony import */ var _AdminHome_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminHome.vue?vue&type=script&lang=js& */ "./resources/assets/js/components/AdminHome.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _AdminHome_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _AdminHome_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -88152,7 +88602,7 @@ component.options.__file = "resources/assets/js/components/AdminHome.vue"
 /*!*******************************************************************************!*\
   !*** ./resources/assets/js/components/AdminHome.vue?vue&type=script&lang=js& ***!
   \*******************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -88736,14 +89186,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!**************************************************!*\
   !*** ./resources/assets/js/components/Meats.vue ***!
   \**************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Meats_vue_vue_type_template_id_3c09aa61___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Meats.vue?vue&type=template&id=3c09aa61& */ "./resources/assets/js/components/Meats.vue?vue&type=template&id=3c09aa61&");
 /* harmony import */ var _Meats_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Meats.vue?vue&type=script&lang=js& */ "./resources/assets/js/components/Meats.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Meats_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Meats_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -88773,7 +89224,7 @@ component.options.__file = "resources/assets/js/components/Meats.vue"
 /*!***************************************************************************!*\
   !*** ./resources/assets/js/components/Meats.vue?vue&type=script&lang=js& ***!
   \***************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

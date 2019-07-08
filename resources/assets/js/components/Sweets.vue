@@ -22,7 +22,7 @@
                         <!--<p v-else align="right"><img style="height: 18px; width: 75px"
                                                      src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/><b>
                             {{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></p>-->
-                        <p v-if="article.disCena" align="right"><img style="height: 70px; width: 100px"
+                        <p v-if="article.disCena" align="right"><img style="height: 50px; width: 80px"
                                                                      src="images/dis_krnjevo.gif"/><b>
                             {{ article.disCena.substring(0, article.disCena.length - 3) }}</b></p>
                         <hr>

@@ -27,17 +27,17 @@
                         <p class="textOverflow" align="center"><!--<b>{{ article.title }}:</b>--> {{ article.body }}</p>
                         <hr>
                         <p v-if="article.maxiCena" align="right"><img style="height: 50px; width: 80px"
-                                                                      src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"/><b>
+                                                                      src="images/delhaize-maxi-logo-vector.png"/><b>
                             {{ article.maxiCena.substring(0, article.maxiCena.length - 3) }}</b></p>
                         <p v-if="article.ideaCena" align="right"><img style="height: 20px; width: 75px"
-                                                                      src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/><b>
+                                                                      src="images/Idea_Logo.png"/><b>
                             {{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></p>
                         <!--<p v-else align="right"><img style="height: 18px; width: 75px"
                                                      src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/><b>
                             {{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></p>-->
                         <!--https://liftoglasi.rs/wp-content/uploads/2015/02/dis-logo1.jpg-->
                         <p v-if="article.disCena" align="right"><img style="height: 50px; width: 80px"
-                                                                     src="http://www.serbianlogo.com/thumbnails/dis_krnjevo.gif"/><b>
+                                                                     src="images/dis_krnjevo.gif"/><b>
                             {{ article.disCena.substring(0, article.disCena.length - 3) }}</b></p>
                         <hr>
                     </div>
@@ -57,11 +57,11 @@
                         <p align="center"><b>{{ articlea.title }}:</b> {{ articlea.body }}</p>
                         <hr>
                         <p align="right"><img v-if="articlea.shop == 'maxi'" style="height: 50px; width: 80px"
-                                              src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"/>
+                                              src="images/delhaize-maxi-logo-vector.png"/>
                             <img v-else-if="articlea.shop == 'idea'" style="height: 20px; width: 75px"
-                                 src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/>
+                                 src="images/Idea_Logo.png"/>
                             <img v-else-if="articlea.shop == 'dis'" style="height: 50px; width: 80px"
-                                 src="http://www.serbianlogo.com/thumbnails/dis_krnjevo.gif"/>
+                                 src="images/dis_krnjevo.gif"/>
                             <b>{{articlea.formattedPrice }}</b></p>
                         <hr>
                     </div>

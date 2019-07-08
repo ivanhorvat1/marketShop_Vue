@@ -6,8 +6,14 @@
         <button @click="fetchArticles('univerexport')" class="btn btn-primary">Univerexport Pice</button>
         <br><br>
         <button @click="fetchProducts()" class="btn btn-primary">Compare All Products</button>
-        <h4 v-if="products.length > 0" align="left">Total compared products: {{products.length}}</h4>
-        <h4 v-else align="left">Total productss {{shop}}: {{articles.length}}</h4><br>
+        <h4 v-if="products.length > 0" align="left">Total compared products: {{filteredComparedProducts.length}}</h4>
+        <h4 v-else align="left">Total productss {{shop}}: {{filteredComparedProducts.length}}</h4><br>
+
+        <div class="form-group has-search col-sm-3">
+            <span class="fa fa-search form-control-feedback"></span>
+            <input type="text" v-model="search" class="form-control" placeholder="Search">
+        </div>
+
         <div class="col-sm-8"></div>
         <div v-if="articles.length > 0" class="form-group col-sm-4">
             <label for="sel1">Sortiranje</label>
@@ -17,7 +23,7 @@
             </select>
         </div>
         <div class="row">
-            <div v-if="products.length > 0" class="col-sm-3" v-for="article in products.slice(startSlice,endSlice)" v-bind:key="article.code">
+            <div v-if="products.length > 0" class="col-sm-3" v-for="article in filteredComparedProducts.slice(startSlice,endSlice)" v-bind:key="article.code">
                 <div class="card">
                     <div class="card-body">
                         <img center v-if="article.imageUrl /*&& article.shop == 'maxi'*/" class="center modal-trigger"
@@ -50,7 +56,7 @@
                     </div>
                 </div>
             </div>
-            <div v-if="articles.length > 0" class="col-sm-3" v-for="articlea in articles.slice(startSlice,endSlice)"
+            <div v-if="articles.length > 0" class="col-sm-3" v-for="articlea in filteredComparedProducts.slice(startSlice,endSlice)"
                  v-bind:key="articlea.code">
                 <div class="card">
                     <div class="card-body">
@@ -143,7 +149,29 @@
                 maxiCena: '',
                 disCena: '',
                 univerexportCena: '',
-                shop: ''
+                shop: '',
+                search: '',
+            }
+        },
+        computed: {
+            filteredComparedProducts (){
+                if(this.search){
+                    if(this.products.length > 0){
+                        return this.products.filter((item)=>{
+                            return item.body.toLowerCase().includes(this.search.toLowerCase());
+                        })
+                    }else{
+                        return this.articles.filter((item)=>{
+                            return item.body.toLowerCase().includes(this.search.toLowerCase());
+                        })
+                    }
+                }else{
+                    if(this.products.length > 0) {
+                        return this.products;
+                    }else {
+                        return this.articles;
+                    }
+                }
             }
         },
         created() {
@@ -200,6 +228,16 @@
                     }
                 })
                     .then(res => {
+                        /*res.data.forEach(function(result){
+                            let pp = result.formattedPrice.substring(0, result.formattedPrice.length - 4);
+                            //console.log(pp);
+                            let pri = pp.substr( pp.length - 3);
+                            if(pri == ',00'){
+                                result.price+'00';
+                                console.log(result.price);
+                            }
+                        });*/
+
                         this.endSlice = 12;
                         this.products = '';
                         this.articles = res.data;

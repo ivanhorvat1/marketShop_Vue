@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\dis_sweet;
 use App\Sweets;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,11 +20,12 @@ class SweetsController extends Controller
     {
         $expiresAt = Carbon::now()->endOfDay()->subHour()->addMinutes(30);
 
-        $maxiIdea = Cache::remember('maxiIdeaDisSweets', 10, function () {
+        $cache = Cache::remember('maxiIdeaDisSweets', 10, function () {
             $maxiIdea = [];
             // Get articles
             $maxi = Sweets::where('shop', 'maxi')->where('category', 'slatkisi')->whereNotNull('barcodes')->get();
             $idea = Sweets::where('shop', 'idea')->where('category', 'slatkisi')->whereNotNull('barcodes')->get();
+            $dis = dis_sweet::orderBy('price', 'DESC')->get();
 
             foreach ($maxi as $max) {
                 foreach ($idea as $ide) {
@@ -43,10 +45,54 @@ class SweetsController extends Controller
                 }
             }
 
-            return $maxiIdea;
+            $maxiIdeaDis = [];
+
+            foreach ($dis as $di) {
+                foreach ($maxiIdea as $maxide) {
+                    if (explode(',', $di['barcodes']) == explode(',', $maxide['barcodes'])) {
+                        if ($di['price'] >= $maxide['price']) {
+
+                            if (!$maxide['ideaCena']) {
+                                $maxide['ideaCena'] = $maxide['formattedPrice'];
+                            }
+
+                            if (!$maxide['maxiCena']) {
+                                $maxide['maxiCena'] = $maxide['formattedPrice'];
+                            }
+
+                            $maxide[$di['shop'] . 'Cena'] = $di['formattedPrice'];
+                            if (!in_array($maxide['barcodes'], array_column($maxiIdeaDis, 'barcodes'))) {
+                                array_push($maxiIdeaDis, $maxide);
+                            }
+                        } else {
+                            if ($maxide['ideaCena']) {
+                                $ideaCena = $maxide['ideaCena'];
+                            } else {
+                                $ideaCena = $maxide['formattedPrice'];
+                            }
+                            if ($maxide['maxiCena']) {
+                                $maxiCena = $maxide['maxiCena'];
+                            } else {
+                                $maxiCena = $maxide['formattedPrice'];
+                            }
+                            $di['ideaCena'] = $ideaCena;
+                            $di['disCena'] = $di['formattedPrice'];
+                            $di['imageUrl'] = $maxide['imageUrl'];
+                            $di['maxiCena'] = $maxiCena;
+                            if (!in_array($di['barcodes'], array_column($maxiIdeaDis, 'barcodes'))) {
+                                array_push($maxiIdeaDis, $di);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (empty($maxiIdeaDis)) return $maxiIdea;
+
+            return $maxiIdeaDis;
         });
 
-        return $maxiIdea;
+        return $cache;
     }
 
     public function getView(){
