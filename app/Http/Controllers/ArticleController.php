@@ -68,6 +68,14 @@ class ArticleController extends Controller
                     $imageDefault = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
                 }
 
+                $pricesub = substr($request->products[0][$i]['price']['formatted_price'], 0, -4);
+
+                $subs = substr($pricesub, -3);
+
+                if($subs == ',00'){
+                    $request->products[0][$i]['price']['amount'] = $request->products[0][$i]['price']['amount'].'00';
+                }
+
                 array_push($storeRecords, ['code'=>$request->products[0][$i]['code'], 'title' => $request->products[0][$i]['manufacturer'],
                     'body' => $request->products[0][$i]['name'], 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => implode(',', $request->products[0][$i]['barcodes']),
                     'formattedPrice' => $request->products[0][$i]['price']['formatted_price'], 'price' => $request->products[0][$i]['price']['amount'],
@@ -79,6 +87,14 @@ class ArticleController extends Controller
                     $imageUrl = $request->products[0][$i]['images'][2]['url'];
                 } else {
                     $imageDefault = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
+                }
+
+                $pricesub = substr($request->products[0][$i]['price']['formattedValue'], 0, -4);
+
+                $subs = substr($pricesub, -3);
+
+                if($subs == ',00'){
+                    $request->products[0][$i]['price']['value'] = $request->products[0][$i]['price']['value'].'00';
                 }
 
                 array_push($storeRecords, ['code'=>$request->products[0][$i]['code'], 'title' => $request->products[0][$i]['manufacturerName'],

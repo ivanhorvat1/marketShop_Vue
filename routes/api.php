@@ -32,6 +32,7 @@ Route::get('action_drink_fetch_separate', 'DrinkController@getSeparatedMarket');
 Route::get('action_meat_fetch', 'MeatController@index');
 Route::get('action_meat_fetch_separate', 'MeatController@getSeparatedMarket');
 Route::get('action_sweet_fetch', 'SweetsController@index');
+Route::get('action_sweet_fetch_separate', 'SweetsController@getSeparatedMarket');
 Route::get('action_freeze_fetch', 'FreezeController@index');
 Route::get('action_freeze_fetch_separate', 'FreezeController@getSeparatedMarket');
 //Dis market

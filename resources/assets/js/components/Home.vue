@@ -192,16 +192,16 @@
             }
         },
         created() {
-            // $('body').addClass('loaded');
-            this.fetchSaleProducts();
+            $('body').addClass('loaded');
+            //this.fetchSaleProducts();
             /*this.fetchDrinkProducts();
             this.fetchFreezeProducts();
             this.fetchSweetProducts();
             this.fetchMeatProducts();*/
-            window.addEventListener('scroll', this.handleScroll);
+            //window.addEventListener('scroll', this.handleScroll);
         },
         methods: {
-            toTopFunction() {
+            /*toTopFunction() {
                 document.body.scrollTop = 0;
                 document.documentElement.scrollTop = 0;
             },
@@ -239,11 +239,11 @@
                 //https://cors-anywhere.herokuapp.com/
                 //https://crossorigin.me/
                 if (shop === 'maxi' && category === 'akcija') {
-                    /*if (currentPage == 0) {
+                    /!*if (currentPage == 0) {
                         url = 'https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
                     } else {
                         url = 'https://www.maxi.rs/view/QlProductListComponentController/loadMore?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
-                    }*/
+                    }*!/
                     url = 'https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=40&sort=promotion'
                 }
                 else if (shop === 'idea' && category === 'akcija') {
@@ -261,7 +261,7 @@
                 else if (shop === 'maxi' && category === 'smrznuti') {
                     url = 'https://www.maxi.rs/online/Smrznuti-proizvodi/c/10/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion';
                 }
-                /*else if (shop === 'idea' && category === 'alkpica') {
+                /!*else if (shop === 'idea' && category === 'alkpica') {
                     url = 'https://www.idea.rs/online/v2/categories/60007888/products?per_page=5000&page=1&filter%5Bsort%5D=offerSoldStatisticsDesc';
                 }
                 else if(this.shop === 'meso'){
@@ -284,7 +284,7 @@
                     }else{
                         url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/view/QlProductListComponentController/loadMore?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
                     }
-                }*/
+                }*!/
 
                 return url;
             },
@@ -356,9 +356,9 @@
                                 vm.storeMaxi(res, i);
                             });
 
-                            /*if(i > 59){
+                            /!*if(i > 59){
                                 alert('done');
-                            }*/
+                            }*!/
                         }
                     } else {
                         $.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent(url) + '&callback=?', function (data) {
@@ -435,11 +435,11 @@
                             this.fetchArticles(i, this.shop, category);
                         }
                     }
-                    /* else if (this.shop === 'maxi' && category == 'akcija') {
+                    /!* else if (this.shop === 'maxi' && category == 'akcija') {
                                             for (let i = 1; i <= 60; i++) {
                                                 this.fetchArticles(i, this.shop, category);
                                             }
-                                        }*/
+                                        }*!/
                 } else {
                     document.getElementById("loader").style.display = "none";
                     pagination = {
@@ -518,7 +518,7 @@
                     .then(res => {
                         M.toast({html: res.success, classes: 'rounded'}, 3000);
                     })
-            }
+            }*/
         }
     }
 </script>

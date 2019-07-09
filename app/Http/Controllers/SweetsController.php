@@ -99,6 +99,30 @@ class SweetsController extends Controller
         return view('frontend.sweetsArticles')->with('showStore',false);
     }
 
+    public function getSeparatedMarket(Request $request){
+
+        $this->shop = $request->shop;
+
+        if($request->sort == 'rastuce'){
+            $this->sort = 'ASC';
+        }else{
+            $this->sort = 'DESC';
+        }
+
+        $cache = Cache::remember($this->shop.'Sweets'.$this->sort, 10, function () {
+
+            if($this->shop == 'maxi'){
+                return Sweets::where('shop', 'maxi')->orderBy('price', $this->sort)->get();
+            }elseif ($this->shop == 'idea'){
+                return Sweets::where('shop', 'idea')->orderBy('price', $this->sort)->get();
+            }elseif ($this->shop == 'dis'){
+                return dis_sweet::orderBy('price', $this->sort)->get();
+            }
+        });
+
+        return $cache;
+    }
+
     /**
      * Show the form for creating a new resource.
      *

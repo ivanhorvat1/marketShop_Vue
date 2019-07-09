@@ -6,8 +6,8 @@
         <button @click="fetchArticles('univerexport')" class="btn btn-primary">Univerexport Pice</button>
         <br><br>
         <button @click="fetchProducts()" class="btn btn-primary">Compare All Products</button>
-        <h4 v-if="products.length > 0" align="left">Total compared products: {{filteredComparedProducts.length}}</h4>
-        <h4 v-else align="left">Total productss {{shop}}: {{filteredComparedProducts.length}}</h4><br>
+        <h4 v-if="products.length > 0" align="left">Total compared products: {{filteredProducts.length}}</h4>
+        <h4 v-else align="left">Total productss {{shop}}: {{filteredProducts.length}}</h4><br>
 
         <div class="form-group has-search col-sm-3">
             <span class="fa fa-search form-control-feedback"></span>
@@ -23,19 +23,19 @@
             </select>
         </div>
         <div class="row">
-            <div v-if="products.length > 0" class="col-sm-3" v-for="article in filteredComparedProducts.slice(startSlice,endSlice)" v-bind:key="article.code">
-                <div class="card">
+            <div v-if="products.length > 0" class="col-sm-3" v-for="article in filteredProducts.slice(startSlice,endSlice)" v-bind:key="article.code">
+                <div class="card shadow-lg p-3 mb-5 bg-white rounded">
                     <div class="card-body">
                         <img center v-if="article.imageUrl /*&& article.shop == 'maxi'*/" class="center modal-trigger"
                              :src="'https://d3el976p2k4mvu.cloudfront.net'+article.imageUrl" width="180px"
                              height="180px"
-                             @click="modalClick(article.code, article.title, article.body, article.imageUrl, article.supplementaryPriceIdea, article.supplementaryPriceMaxi,
-                              article.ideaCena, article.maxiCena, article.disCena, article.univerexportCena)"
-                             :href="'#modal'+article.code" style="cursor: pointer;" title="dupli klik za dodatne info">
+                             @click="info(article,$event.target)"
+                             style="cursor: pointer;" title="klik za dodatne info">
+                        <img center v-if="article.imageUrl == null" :src=article.imageDefault>
                         <!--<img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center"
                              :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">-->
                         <!--<img center v-else :src="'article.imageDefault'">-->
-                        <p class="textOverflow" align="center"><!--<b>{{ article.title }}:</b>--> {{ article.body }}</p>
+                        <p class="textOverflow" align="center">{{ article.body }}</p>
                         <hr>
                         <p v-if="article.maxiCena" align="right"><img style="height: 50px; width: 80px"
                                                                       src="images/delhaize-maxi-logo-vector.png"/><b>
@@ -56,7 +56,7 @@
                     </div>
                 </div>
             </div>
-            <div v-if="articles.length > 0" class="col-sm-3" v-for="articlea in filteredComparedProducts.slice(startSlice,endSlice)"
+            <div v-if="articles.length > 0" class="col-sm-3" v-for="articlea in filteredProducts.slice(startSlice,endSlice)"
                  v-bind:key="articlea.code">
                 <div class="card">
                     <div class="card-body">
@@ -70,7 +70,7 @@
                         <img center v-else-if="articlea.imageUrl !== null && articlea.shop == 'univerexport'" class="center"
                              :src="'https://www.idea.rs/online/'+articlea.imageUrl" width="180px" height="180px">
                         <img v-else center style="height: 200px; width: 180px" :src=articlea.imageDefault>
-                        <p class="textOverflow" align="center"> {{ articlea.body }}</p>
+                        <p align="center"><b>{{ articlea.title }}:</b> {{ articlea.body }}</p>
                         <hr>
                         <p align="right"><img v-if="articlea.shop == 'maxi'" style="height: 50px; width: 80px"
                                               src="images/delhaize-maxi-logo-vector.png"/>
@@ -87,7 +87,49 @@
                 </div>
             </div>
         </div>
-        <div :id="'modal'+modalId" class="modal" style="width: 60%">
+        <b-modal :id="infoModal.id"
+                 ref="modal"
+                 size="xl"
+                 ok-only
+        >
+            <div class="row">
+                <div class="modal-header col-sm-12">
+                    <h4 style="align: center">{{title}}</h4>
+                </div>
+                <div class="modal-content col-sm-6">
+                    <img class="mx-auto d-block" style="height: 330px; width: 300px"
+                         :src="'https://d3el976p2k4mvu.cloudfront.net'+imageUrl"/>
+                </div>
+                <div class="modal-content col-sm-6">
+                    <h6>{{body}}</h6>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <img style="height: 55px; width: 80px"
+                                 src="images/delhaize-maxi-logo-vector.png"/>
+                            <h6><b>{{maxiCena}}</b></h6>
+                            <h6><b>{{supplementaryPriceMaxi}}</b></h6><br>
+                        </div>
+                        <div class="col-sm-6 mt-3">
+                            <img style="height: 25px; width: 75px"
+                                 src="images/Idea_Logo.png"/>
+                            <h6 class="mt-4"><b>{{ideaCena}}</b></h6>
+                            <h6><b>{{supplementaryPriceIdea}}</b></h6><br>
+                        </div>
+                        <div class="col-sm-6">
+                            <img style="height: 50px; width: 75px"
+                                 src="images/dis_krnjevo.gif"/>
+                            <h6><b>{{disCena}}</b></h6>
+                        </div>
+                        <div class="col-sm-6">
+                            <img style="height: 35px; width: 100px"
+                                 src="images/univer.png"/>
+                            <h6><b>{{univerexportCena}}</b></h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </b-modal>
+        <!--<div :id="'modal'+modalId" class="modal" style="width: 60%">
             <div class="row">
                 <div class="modal-header col-sm-12">
                     <h4 style="align: center">{{title}}</h4>
@@ -124,7 +166,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
         <button @click="toTopFunction()" id="BtnToTop" title="Go to top">&uarr;</button>
         <div id="loader"></div>
         <br><br>
@@ -151,10 +193,13 @@
                 univerexportCena: '',
                 shop: '',
                 search: '',
+                infoModal: {
+                    id: 'info-modal'
+                },
             }
         },
         computed: {
-            filteredComparedProducts (){
+            filteredProducts (){
                 if(this.search){
                     if(this.products.length > 0){
                         return this.products.filter((item)=>{
@@ -179,12 +224,36 @@
             window.addEventListener('scroll', this.handleScroll);
         },
         methods: {
+            info(article, button) {
+                this.title = article.title;
+                this.body = article.body;
+                this.imageUrl = article.imageUrl;
+                this.supplementaryPriceIdea = article.supplementaryPriceIdea;
+                this.supplementaryPriceMaxi = article.supplementaryPriceMaxi;
+
+                if (article.ideaCena) {
+                    this.ideaCena = article.ideaCena.substring(0, article.ideaCena.length - 3) + 'Din';
+                }
+
+                if (article.maxiCena) {
+                    this.maxiCena = article.maxiCena.substring(0, article.maxiCena.length - 3) + 'Din';
+                }
+
+                if (article.disCena) {
+                    this.disCena = article.disCena.substring(0, article.disCena.length - 3) + 'Din';
+                }
+
+                if (article.univerexportCena) {
+                    this.univerexportCena = article.univerexportCena.substring(0, article.univerexportCena.length - 3) + 'Din';
+                }
+                this.$root.$emit('bv::show::modal', this.infoModal.id, button)
+            },
             toTopFunction() {
                 document.body.scrollTop = 0;
                 document.documentElement.scrollTop = 0;
             },
             handleScroll() {
-                if (this.products.length > 0 || this.articles.length > 0) {
+                if(this.products.length > 0 || this.articles.length > 0) {
                     let scroll = Math.ceil($(window).scrollTop() + $(window).height());
                     let windowHeight = Math.round($(document).height());
 
@@ -226,23 +295,12 @@
                         shop: shop,
                         sort: this.key
                     }
-                })
-                    .then(res => {
-                        /*res.data.forEach(function(result){
-                            let pp = result.formattedPrice.substring(0, result.formattedPrice.length - 4);
-                            //console.log(pp);
-                            let pri = pp.substr( pp.length - 3);
-                            if(pri == ',00'){
-                                result.price+'00';
-                                console.log(result.price);
-                            }
-                        });*/
-
+                }).then(res => {
                         this.endSlice = 12;
                         this.products = '';
                         this.articles = res.data;
                     })
-            },
+            }/*,
             modalClick(modalId, title, body, imageurl, supplementaryPriceIdea, supplementaryPriceMaxi, ideaCena, maxiCena, disCena, univerexportCena) {
                 this.modalId = modalId;
                 this.title = title;
@@ -259,7 +317,7 @@
                 this.maxiCena = maxiCena.substring(0, maxiCena.length - 3) + 'Din';
                 this.disCena = disCena.substring(0, disCena.length - 3) + 'Din';
                 this.univerexportCena = univerexportCena.substring(0, univerexportCena.length - 3) + 'Din';
-            }
+            }*/
         }
     }
 </script>

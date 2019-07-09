@@ -5,8 +5,8 @@
         <button @click="fetchArticles('dis')" class="btn btn-primary">Dis Smrznuto</button>
         <br><br>
         <button @click="fetchProducts()" class="btn btn-primary">Compare All Products</button>
-        <h4 v-if="products.length > 0" align="left">Total compared products: {{filteredResources.length}}</h4>
-        <h4 v-else align="left">Total products {{shop}}: {{articles.length}}</h4><br>
+        <h4 v-if="products.length > 0" align="left">Total compared products: {{filteredProducts.length}}</h4>
+        <h4 v-else align="left">Total products {{shop}}: {{filteredProducts.length}}</h4><br>
         <!--<input type="text" v-model="search" placeholder="Search title.."/>-->
 
         <div class="form-group has-search col-sm-3">
@@ -23,19 +23,18 @@
             </select>
         </div>
         <div class="row">
-            <div v-if="products.length > 0" class="col-sm-3" v-for="article in filteredResources.slice(startSlice,endSlice)" v-bind:key="article.code">
+            <div v-if="products.length > 0" class="col-sm-3" v-for="article in filteredProducts.slice(startSlice,endSlice)" v-bind:key="article.code">
                 <div class="card">
                     <div class="card-body">
                         <img center v-if="article.imageUrl /*&& article.shop == 'maxi'*/" class="center modal-trigger"
                              :src="'https://d3el976p2k4mvu.cloudfront.net'+article.imageUrl" width="180px"
-                             height="180px">
-                             <!--@click="modalClick(article.code, article.title, article.body, article.imageUrl, article.supplementaryPriceIdea, article.supplementaryPriceMaxi,
-                              article.ideaCena, article.maxiCena, article.disCena)"
-                             :href="'#modal'+article.code" style="cursor: pointer;" title="klik za dodatne info">-->
+                             height="180px"
+                             @click="info(article,$event.target)"
+                              style="cursor: pointer;" title="klik za dodatne info">
                         <!--<img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center"
                              :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">-->
                         <!--<img center v-else :src="'article.imageDefault'">-->
-                        <p class="textOverflow" align="center"><!--<b>{{ article.title }}:</b>--> {{ article.body }}</p>
+                        <p class="textOverflow" align="center">{{ article.body }}</p>
                         <hr>
                         <p v-if="article.maxiCena" align="right"><img style="height: 50px; width: 80px"
                                                                       src="images/delhaize-maxi-logo-vector.png"/><b>
@@ -50,25 +49,24 @@
                                                                      src="images/dis_krnjevo.gif"/><b>
                             {{ article.disCena.substring(0, article.disCena.length - 3) }}</b></p>
                         <hr>
-                        <b-button @click="info(article,$event.target)" class="mr-1" variant="primary">
+                        <!--<b-button @click="info(article,$event.target)" class="mr-1" variant="primary">
                             Info
-                        </b-button>
+                        </b-button>-->
                     </div>
                 </div>
             </div>
-            <div v-if="articles.length > 0" class="col-sm-3" v-for="articlea in articles.slice(startSlice,endSlice)"
+            <div v-if="articles.length > 0" class="col-sm-3" v-for="articlea in filteredProducts.slice(startSlice,endSlice)"
                  v-bind:key="articlea.code">
                 <div class="card">
                     <div class="card-body">
                         <img center v-if="articlea.imageUrl !== null && articlea.shop == 'maxi'" class="center"
-                             :src="'https://d3el976p2k4mvu.cloudfront.net'+articlea.imageUrl" width="180px"
-                             height="180px">
+                             :src="'https://d3el976p2k4mvu.cloudfront.net'+articlea.imageUrl" width="180px">
                         <img center v-else-if="articlea.imageUrl !== null && articlea.shop == 'idea'" class="center"
                              :src="'https://www.idea.rs/online/'+articlea.imageUrl" width="180px" height="180px">
                         <img center v-else-if="articlea.imageUrl !== null && articlea.shop == 'dis'" class="center"
                              :src="'https://www.idea.rs/online/'+articlea.imageUrl" width="180px" height="180px">
-                        <img v-else center style="height: 200px; width: 180px" :src="'https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694'">
-                        <p class="textOverflow" align="center">{{ articlea.body }}</p>
+                        <img v-else center style="height: 200px; width: 180px;" :src=articlea.imageDefault>
+                        <p align="center"><b>{{ articlea.title }}:</b> {{ articlea.body }}</p>
                         <hr>
                         <p align="right"><img v-if="articlea.shop == 'maxi'" style="height: 50px; width: 80px"
                                               src="images/delhaize-maxi-logo-vector.png"/>
@@ -183,13 +181,23 @@
             }
         },
         computed: {
-            filteredResources (){
+            filteredProducts (){
                 if(this.search){
-                    return this.products.filter((item)=>{
-                        return item.body.toLowerCase().includes(this.search.toLowerCase());
-                    })
+                    if(this.products.length > 0){
+                        return this.products.filter((item)=>{
+                            return item.body.toLowerCase().includes(this.search.toLowerCase());
+                        })
+                    }else{
+                        return this.articles.filter((item)=>{
+                            return item.body.toLowerCase().includes(this.search.toLowerCase());
+                        })
+                    }
                 }else{
-                    return this.products;
+                    if(this.products.length > 0) {
+                        return this.products;
+                    }else {
+                        return this.articles;
+                    }
                 }
             }
         },
@@ -209,9 +217,17 @@
                     this.supplementaryPriceMaxi = '';
                 }
 
-                this.ideaCena = article.ideaCena.substring(0, article.ideaCena.length - 3) + 'Din';
-                this.maxiCena = article.maxiCena.substring(0, article.maxiCena.length - 3) + 'Din';
-                this.disCena = article.disCena.substring(0, article.disCena.length - 3) + 'Din';
+                if (article.ideaCena) {
+                    this.ideaCena = article.ideaCena.substring(0, article.ideaCena.length - 3) + 'Din';
+                }
+
+                if (article.maxiCena) {
+                    this.maxiCena = article.maxiCena.substring(0, article.maxiCena.length - 3) + 'Din';
+                }
+
+                if (article.disCena) {
+                    this.disCena = article.disCena.substring(0, article.disCena.length - 3) + 'Din';
+                }
                 this.$root.$emit('bv::show::modal', this.infoModal.id, button)
             },
             toTopFunction() {

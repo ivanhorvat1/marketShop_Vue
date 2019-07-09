@@ -23,7 +23,8 @@ Vue.use(VTooltip);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('articles', require('./components/Articles.vue').default);
+Vue.component('test', require('./components/test.vue').default);
+Vue.component('home', require('./components/Home.vue').default);
 Vue.component('navbar', require('./components/Navbar.vue').default);
 Vue.component('action', require('./components/Action.vue').default);
 Vue.component('freeze', require('./components/Freeze.vue').default);

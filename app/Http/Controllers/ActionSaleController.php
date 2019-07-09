@@ -102,8 +102,6 @@ class ActionSaleController extends Controller
         $storeRecords = [];
         $arrayLengt = sizeof($request->products[0]) - 1;
 
-
-
         if($request->shop == 'idea') {
             for ($i = 0; $i <= $arrayLengt; $i++) {
                 if (array_key_exists('images', $request->products[0][$i]) && !empty($request->products[0][$i]['images'])) {
@@ -119,6 +117,7 @@ class ActionSaleController extends Controller
             }
         }else{
             for ($i = 0; $i <= $arrayLengt; $i++) {
+
                 if (array_key_exists('images', $request->products[0][$i]) && !empty($request->products[0][$i]['images'])) {
                     $imageUrl = $request->products[0][$i]['images'][2]['url'];
                 } else {
@@ -131,9 +130,19 @@ class ActionSaleController extends Controller
                     $barcode = null;
                 }
 
+                /*$pricesub = substr($request->products[0][$i]['price']['formattedValue'], 0, -4);
+
+                $subs = substr($pricesub, -3);*/
+
+                if($request->products[0][$i]['price']['fractionValue'] == '00'){
+                    $price = $request->products[0][$i]['price']['value'].$request->products[0][$i]['price']['fractionValue'];
+                }else{
+                    $price = str_replace('.','',$request->products[0][$i]['price']['value']);
+                }
+
                 array_push($storeRecords, ['code'=>$request->products[0][$i]['code'], 'title' => $request->products[0][$i]['manufacturerName'],
                     'body' => $request->products[0][$i]['name'], 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => $barcode,
-                    'formattedPrice' => $request->products[0][$i]['price']['formattedValue'], 'price' => str_replace('.','',$request->products[0][$i]['price']['value']),
+                    'formattedPrice' => $request->products[0][$i]['price']['formattedValue'], 'price' => $price,
                     'supplementaryPriceLabel1' => $request->products[0][$i]['price']['supplementaryPriceLabel1'],
                     'supplementaryPriceLabel2' => $request->products[0][$i]['price']['supplementaryPriceLabel2'], 'shop' => $request->shop, 'category' => $request->category]);
             }
@@ -167,6 +176,12 @@ class ActionSaleController extends Controller
                 $article->save();
             }
         }elseif ($request->category == 'pice'){
+            if($request->shop == 'idea') {
+                drink::where('shop', 'idea')->delete();
+            }else{
+                drink::where('shop', 'maxi')->delete();
+            }
+
             foreach ($storeRecords as $record){
                 $article = drink::firstOrNew(array('code'=>$record['code']));
                 $article->code = $record['code'];
@@ -184,6 +199,12 @@ class ActionSaleController extends Controller
                 $article->save();
             }
         }elseif ($request->category == 'meso'){
+            if($request->shop == 'idea') {
+                Meat::where('shop', 'idea')->delete();
+            }else{
+                Meat::where('shop', 'maxi')->delete();
+            }
+
             foreach ($storeRecords as $record){
                 $article = Meat::firstOrNew(array('code'=>$record['code']));
                 $article->code = $record['code'];
@@ -201,6 +222,12 @@ class ActionSaleController extends Controller
                 $article->save();
             }
         }elseif ($request->category == 'slatkisi'){
+            if($request->shop == 'idea') {
+                Sweets::where('shop', 'idea')->delete();
+            }else{
+                Sweets::where('shop', 'maxi')->delete();
+            }
+
             foreach ($storeRecords as $record){
                 $article = Sweets::firstOrNew(array('code'=>$record['code']));
                 $article->code = $record['code'];
@@ -218,6 +245,12 @@ class ActionSaleController extends Controller
                 $article->save();
             }
         }elseif ($request->category == 'smrznuti'){
+            if($request->shop == 'idea') {
+                Freeze::where('shop', 'idea')->delete();
+            }else{
+                Freeze::where('shop', 'maxi')->delete();
+            }
+
             foreach ($storeRecords as $record){
                 $article = Freeze::firstOrNew(array('code'=>$record['code']));
                 $article->code = $record['code'];

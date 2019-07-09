@@ -686,7 +686,7 @@ class DisMarketController extends Controller
                 $body = $article->body;
                 $category = $article->category;
                 $shop = $article->shop;
-                $imageDefault = $article->imageDefault;
+                $imageDefault = 'https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694';
                 $article->formattedPrice = $formattedPrice;
                 $article->price = $price;
                 $saved = $article->save();
@@ -756,7 +756,7 @@ class DisMarketController extends Controller
                 $body = $article->body;
                 $category = $article->category;
                 $shop = $article->shop;
-                $imageDefault = $article->imageDefault;
+                $imageDefault = 'https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694';
                 $article->formattedPrice = $formattedPrice;
                 $article->price = $price;
                 $saved = $article->save();
@@ -830,7 +830,7 @@ class DisMarketController extends Controller
                 $body = $article->body;
                 $category = $article->category;
                 $shop = $article->shop;
-                $imageDefault = $article->imageDefault;
+                $imageDefault = 'https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694';
                 $article->formattedPrice = $formattedPrice;
                 $article->price = $price;
 
@@ -902,7 +902,7 @@ class DisMarketController extends Controller
                 $body = $article->body;
                 $category = $article->category;
                 $shop = $article->shop;
-                $imageDefault = $article->imageDefault;
+                $imageDefault = 'https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694';
                 $article->formattedPrice = $formattedPrice;
                 $article->price = $price;
 

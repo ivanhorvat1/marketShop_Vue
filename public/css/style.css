@@ -1,3 +1,4 @@
+/* BUTTON TO TOP */
 #BtnToTop {
     display: none;
     position: fixed;
@@ -21,21 +22,27 @@
     background-color: #555;
 }
 
-/*#loader {*/
-    /*display: none;*/
-    /*position: fixed;*/
-    /*left: 820px;*/
-    /*bottom: 50px;*/
-    /*z-index: 1;*/
-    /*width: 50px;*/
-    /*height: 50px;*/
-    /*margin: -75px 0 0 -75px;*/
-    /*border: 8px solid #f3f3f3;*/
-    /*border-radius: 50%;*/
-    /*border-top: 8px solid #3498db;*/
-    /*-webkit-animation: spin 2s linear infinite;*/
-    /*animation: spin 2s linear infinite;*/
-/*}*/
+/* END BUTTON TO TOP */
+
+/* LOADER ON END PAGE FOR PAGINATION */
+
+/*#loader {
+    display: none;
+    position: fixed;
+    left: 820px;
+    bottom: 50px;
+    z-index: 1;
+    width: 50px;
+    height: 50px;
+    margin: -75px 0 0 -75px;
+    border: 8px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 8px solid #3498db;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}*/
+
+/* END LOADER ON END PAGE FOR PAGINATION */
 
 /* Safari */
 @-webkit-keyframes spin {
@@ -56,7 +63,7 @@
     }
 }
 
-.carousel-item {
+/*.carousel-item {
     height: 50vh;
     min-height: 150px;
     background: no-repeat center center scroll;
@@ -64,7 +71,9 @@
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-}
+}*/
+
+/* LOADER FOR EVERY PAGE IN BEGGINING */
 
 #preloader-wrapper{
     postion: fixed;
@@ -79,7 +88,7 @@
 #preloader{
     display: block;
     position: fixed;
-    left: 40%;
+    left: 42%;
     top: 50%;
     width: 150px;
     height: 150px;
@@ -203,6 +212,8 @@
     transition: all 0.3s 1s ease-out;
 }
 
+/* END LOADER FOR EVERY PAGE IN BEGGINING */
+
 /*.navbar-container{
     background: powderblue;
 }*/
@@ -227,13 +238,18 @@ nav {
     background-color: #ffffff !important;
 }
 
+/* SUBSTRING TITLE */
+
 .textOverflow {
     display: block;
-    width: 180px;
+    width: 100%;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
+/* END SUBSTRING TITLE */
+
 /*.container .navbar-container{
     background-image: url("/public/images/navbar.jpg");
 }
@@ -243,6 +259,8 @@ nav {
     height: 30px;
     width: 30px;
 }*/
+
+/* SEARCH FILTER */
 
 .has-search .form-control {
     padding-left: 2.375rem;
@@ -260,91 +278,106 @@ nav {
     color: #aaa;
 }
 
+/* END SEARCH FILTER */
 
-.card {
+/* ARTICLE CARDS */
+
+.wrap {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-around;
+    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 50px 20px 0;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
 }
 
-.card__item {
-    width: 29%;
-    margin: 10px 20px;
-}
-
-.card__item-title {
+.box {
+    margin: 10px;
+    width: 250px;
+    height: 450px;
     text-align: center;
+    border-radius: 3px;
+    -webkit-transition: 200ms ease-in-out;
+    -o-transition: 200ms ease-in-out;
+    transition: 200ms ease-in-out;
+    -webkit-box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+.box:hover {
+    margin-bottom: -10px;
+    -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.7);
+    box-shadow: 0 0 5px rgba(0,0,0,0.7);
+}
+.box p {
     color: #fff;
-    font-weight: normal;
-    font-size: 20px;
-    letter-spacing: 1px;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+    font-weight: 100;
+    font-size: 18px;
+    background: rgba(89, 18, 89, 0.8);
+    -webkit-box-shadow: 0 0 30px rgba(0,0,0,0.7);
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
 }
 
-.atvImg {
-    border-radius: 5px;
-    transform-style: preserve-3d;
-    -webkit-tap-highlight-color: transparent;
+.date h4 {
+    color: #fff;
+    font-weight: 300;
+    text-align: center;
+    letter-spacing: 3px;
+    text-shadow: 0 0 3px rgba(0,0,0,0.9);
+}
+.poster {
     width: 100%;
-    height: 350px;
-    display: inline-block;
-}
-.atvImg img {
-    border-radius: 5px;
-    box-shadow: 0 2px 8px rgba(14, 21, 47, 0.25);
-}
-
-.atvImg-container {
+    height:130px;
+    margin: 120px auto;
     position: relative;
-    width: 100%;
-    height: 100%;
-    border-radius: 5px;
-    transition: all 0.2s ease-out;
+    border-radius: 100px;
 }
-.atvImg-container.over .atvImg-shadow {
-    box-shadow: 0 45px 100px rgba(14, 21, 47, 0.4), 0 16px 40px rgba(14, 21, 47, 0.4);
-}
-
-.atvImg-layers {
+.poster h4 {
+    top: 60px;
+    color: black;
     position: relative;
-    width: 100%;
-    height: 100%;
-    border-radius: 5px;
-    overflow: hidden;
-    transform-style: preserve-3d;
+    font-size: 25px;
+    text-align: center;
+    font-weight: 100;
+    /*background: rgba(255,255,255,0.4);*/
 }
-
-.atvImg-rendered-layer {
-    position: absolute;
-    width: 104%;
-    height: 104%;
-    top: -2%;
-    left: -2%;
+.one {
+    /*background: url('https://source.unsplash.com/900x920');*/
     background-repeat: no-repeat;
-    background-position: center;
-    background-color: transparent;
-    background-size: cover;
-    transition: all 0.1s ease-out;
+    background-size: 80% 40%;
+    background-position: 30px 80px;
 }
 
-.atvImg-shadow {
-    position: absolute;
-    top: 5%;
-    left: 5%;
-    width: 90%;
-    height: 90%;
-    transition: all 0.2s ease-out;
-    box-shadow: 0 8px 30px rgba(14, 21, 47, 0.6);
+/* POSTER*/
+/*.p1 {
+    background: #2b5876;  !* fallback for old browsers *!
+    background: -webkit-linear-gradient(to right, #4e4376, #2b5876);  !* Chrome 10-25, Safari 5.1-6 *!
+    background: -webkit-gradient(linear, left top, right top, from(#4e4376), to(#2b5876));
+    background: -webkit-linear-gradient(left, #4e4376, #2b5876);
+    background: -o-linear-gradient(left, #4e4376, #2b5876);
+    background: linear-gradient(to right, #4e4376, #2b5876); !* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ *!
+    -webkit-box-shadow: 0 0 20px darkblue;
+    box-shadow: 0 0 20px darkblue;
+}*/
+
+@-webkit-keyframes rotation {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(359deg);
+    }
 }
 
-.atvImg-shine {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 5px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 60%);
-}
+/* END ARTICLE CARDS */

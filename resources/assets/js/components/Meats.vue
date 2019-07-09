@@ -4,8 +4,14 @@
         <button @click="fetchArticles('idea')" class="btn btn-primary">Idea Meso</button>
         <button @click="fetchArticles('dis')" class="btn btn-primary">Dis Meso</button><br><br>
         <button @click="fetchProducts()" class="btn btn-primary">Compare All Products</button>
-        <h4 v-if="products.length > 0" align="left">Total compared products: {{products.length}}</h4>
-        <h4 v-else align="left">Total products {{shop}}: {{articles.length}}</h4><br>
+        <h4 v-if="products.length > 0" align="left">Total compared products: {{filteredProducts.length}}</h4>
+        <h4 v-else align="left">Total products {{shop}}: {{filteredProducts.length}}</h4><br>
+
+        <div class="form-group has-search col-sm-3">
+            <span class="fa fa-search form-control-feedback"></span>
+            <input type="text" v-model="search" class="form-control" placeholder="Search">
+        </div>
+
         <div class="col-sm-8"></div>
         <div v-if="articles.length > 0" class="form-group col-sm-4">
             <label for="sel1">Sortiranje</label>
@@ -15,12 +21,13 @@
             </select>
         </div>
         <div class="row">
-            <div v-if="products.length > 0" class="col-sm-3" v-for="article in products.slice(startSlice,endSlice)" v-bind:key="article.code">
+            <div v-if="products.length > 0" class="col-sm-3" v-for="article in filteredProducts.slice(startSlice,endSlice)" v-bind:key="article.code">
                 <div class="card">
                     <div class="card-body">
                         <img center v-if="article.imageUrl !== null /*&& article.shop == 'maxi'*/" class="center"
                              :src="'https://d3el976p2k4mvu.cloudfront.net'+article.imageUrl" width="180px"
-                             height="180px">
+                             height="180px" @click="info(article,$event.target)"
+                             style="cursor: pointer;" title="klik za dodatne info">
                         <img center v-if="article.imageUrl == null" :src=article.imageDefault>
                         <!--<img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center"
                              :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">-->
@@ -43,7 +50,7 @@
                     </div>
                 </div>
             </div>
-            <div v-if="articles.length > 0" class="col-sm-3" v-for="articlea in articles.slice(startSlice,endSlice)" v-bind:key="articlea.code">
+            <div v-if="articles.length > 0" class="col-sm-3" v-for="articlea in filteredProducts.slice(startSlice,endSlice)" v-bind:key="articlea.code">
                 <div class="card">
                     <div class="card-body">
                         <img center v-if="articlea.imageUrl !== null && articlea.shop == 'maxi'" class="center"
@@ -68,6 +75,43 @@
                 </div>
             </div>
         </div>
+        <b-modal :id="infoModal.id"
+                 ref="modal"
+                 size="xl"
+                 ok-only
+        >
+            <div class="row">
+                <div class="modal-header col-sm-12">
+                    <h4 style="align: center">{{title}}</h4>
+                </div>
+                <div class="modal-content col-sm-6">
+                    <img class="mx-auto d-block" style="height: 330px; width: 300px"
+                         :src="'https://d3el976p2k4mvu.cloudfront.net'+imageUrl"/>
+                </div>
+                <div class="modal-content col-sm-6">
+                    <h6>{{body}}</h6>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <img style="height: 55px; width: 80px"
+                                 src="images/delhaize-maxi-logo-vector.png"/>
+                            <h6><b>{{maxiCena}}</b></h6>
+                            <h6><b>{{supplementaryPriceMaxi}}</b></h6><br>
+                        </div>
+                        <div class="col-sm-6 mt-3">
+                            <img style="height: 25px; width: 75px"
+                                 src="images/Idea_Logo.png"/>
+                            <h6 class="mt-4"><b>{{ideaCena}}</b></h6>
+                            <h6><b>{{supplementaryPriceIdea}}</b></h6>
+                        </div>
+                        <div class="col-sm-6">
+                            <img style="height: 50px; width: 75px"
+                                 src="images/dis_krnjevo.gif"/>
+                            <h6><b>{{disCena}}</b></h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </b-modal>
         <button @click="toTopFunction()" id="BtnToTop" title="Go to top">&uarr;</button>
         <div id="loader"></div>
         <br><br>
@@ -82,7 +126,41 @@
                 products: [],
                 articles: [],
                 key: 'opadajuce',
-                shop: ''
+                shop: '',
+                title: '',
+                body: '',
+                imageUrl: '',
+                supplementaryPriceIdea: '',
+                supplementaryPriceMaxi: '',
+                ideaCena: '',
+                maxiCena: '',
+                disCena: '',
+                shop: '',
+                infoModal: {
+                    id: 'info-modal'
+                },
+                search: '',
+            }
+        },
+        computed: {
+            filteredProducts (){
+                if(this.search){
+                    if(this.products.length > 0){
+                        return this.products.filter((item)=>{
+                            return item.body.toLowerCase().includes(this.search.toLowerCase());
+                        })
+                    }else{
+                        return this.articles.filter((item)=>{
+                            return item.body.toLowerCase().includes(this.search.toLowerCase());
+                        })
+                    }
+                }else{
+                    if(this.products.length > 0) {
+                        return this.products;
+                    }else {
+                        return this.articles;
+                    }
+                }
             }
         },
         created() {
@@ -90,6 +168,30 @@
             window.addEventListener('scroll', this.handleScroll);
         },
         methods: {
+            info(article,button) {
+                this.title = article.title;
+                this.body = article.body;
+                this.imageUrl = article.imageUrl;
+                this.supplementaryPriceIdea = article.supplementaryPriceIdea;
+                if (article.supplementaryPriceMaxi) {
+                    this.supplementaryPriceMaxi = article.supplementaryPriceMaxi.replace('rsd/Kg', 'Din/Kg');
+                } else {
+                    this.supplementaryPriceMaxi = '';
+                }
+
+                if (article.ideaCena) {
+                    this.ideaCena = article.ideaCena.substring(0, article.ideaCena.length - 3) + 'Din';
+                }
+
+                if (article.maxiCena) {
+                    this.maxiCena = article.maxiCena.substring(0, article.maxiCena.length - 3) + 'Din';
+                }
+
+                if (article.disCena) {
+                    this.disCena = article.disCena.substring(0, article.disCena.length - 3) + 'Din';
+                }
+                this.$root.$emit('bv::show::modal', this.infoModal.id, button)
+            },
             toTopFunction() {
                 document.body.scrollTop = 0;
                 document.documentElement.scrollTop = 0;
