@@ -1876,6 +1876,71 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1896,7 +1961,8 @@ __webpack_require__.r(__webpack_exports__);
       supplementaryPriceMaxi: '',
       ideaCena: '--',
       maxiCena: '--',
-      disCena: '--'
+      disCena: '--',
+      univerexportCena: '--'
     };
   },
   computed: {
@@ -1920,6 +1986,22 @@ __webpack_require__.r(__webpack_exports__);
           return this.articles;
         }
       }
+    },
+    styles: function styles() {
+      var height = 450;
+
+      if (this.products[0].disCena) {
+        height = 500;
+      }
+
+      if (this.products[0].univerexportCena) {
+        height = 550;
+      }
+
+      return {
+        height: height + 'px',
+        'cursor': 'pointer'
+      };
     }
   },
   created: function created() {
@@ -1950,6 +2032,10 @@ __webpack_require__.r(__webpack_exports__);
 
       if (article.disCena) {
         this.disCena = article.disCena.substring(0, article.disCena.length - 3) + 'Din';
+      }
+
+      if (article.univerexportCena) {
+        this.univerexportCena = article.univerexportCena.substring(0, article.univerexportCena.length - 3) + 'Din';
       }
 
       this.$root.$emit('bv::show::modal', this.infoModal.id, button);
@@ -3625,6 +3711,84 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3639,10 +3803,10 @@ __webpack_require__.r(__webpack_exports__);
       imageUrl: '',
       supplementaryPriceIdea: '',
       supplementaryPriceMaxi: '',
-      ideaCena: '',
-      maxiCena: '',
-      disCena: '',
-      univerexportCena: '',
+      ideaCena: '--',
+      maxiCena: '--',
+      disCena: '--',
+      univerexportCena: '--',
       shop: '',
       search: '',
       infoModal: {
@@ -3671,6 +3835,22 @@ __webpack_require__.r(__webpack_exports__);
           return this.articles;
         }
       }
+    },
+    styles: function styles() {
+      var height = 450;
+
+      if (this.products[0].disCena) {
+        height = 500;
+      }
+
+      if (this.products[0].univerexportCena) {
+        height = 550;
+      }
+
+      return {
+        height: height + 'px',
+        'cursor': 'pointer'
+      };
     }
   },
   created: function created() {
@@ -3949,6 +4129,71 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3963,9 +4208,10 @@ __webpack_require__.r(__webpack_exports__);
       imageUrl: '',
       supplementaryPriceIdea: '',
       supplementaryPriceMaxi: '',
-      ideaCena: '',
-      maxiCena: '',
-      disCena: '',
+      ideaCena: '--',
+      maxiCena: '--',
+      disCena: '--',
+      univerexportCena: '--',
       shop: '',
       infoModal: {
         id: 'info-modal'
@@ -3994,6 +4240,22 @@ __webpack_require__.r(__webpack_exports__);
           return this.articles;
         }
       }
+    },
+    styles: function styles() {
+      var height = 450;
+
+      if (this.products[0].disCena) {
+        height = 500;
+      }
+
+      if (this.products[0].univerexportCena) {
+        height = 550;
+      }
+
+      return {
+        height: height + 'px',
+        'cursor': 'pointer'
+      };
     }
   },
   created: function created() {
@@ -4023,6 +4285,10 @@ __webpack_require__.r(__webpack_exports__);
 
       if (article.disCena) {
         this.disCena = article.disCena.substring(0, article.disCena.length - 3) + 'Din';
+      }
+
+      if (article.univerexportCena) {
+        this.univerexportCena = article.univerexportCena.substring(0, article.univerexportCena.length - 3) + 'Din';
       }
 
       this.$root.$emit('bv::show::modal', this.infoModal.id, button);
@@ -4638,8 +4904,71 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4761,9 +5090,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    var _ref;
-
-    return _ref = {
+    return {
       startSlice: 0,
       endSlice: 12,
       products: [],
@@ -4775,12 +5102,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       imageUrl: '',
       supplementaryPriceIdea: '',
       supplementaryPriceMaxi: '',
-      ideaCena: '',
-      maxiCena: '',
-      disCena: ''
-    }, _defineProperty(_ref, "shop", ''), _defineProperty(_ref, "infoModal", {
-      id: 'info-modal'
-    }), _defineProperty(_ref, "search", ''), _ref;
+      ideaCena: '--',
+      maxiCena: '--',
+      disCena: '--',
+      univerexportCena: '--',
+      infoModal: {
+        id: 'info-modal'
+      },
+      search: ''
+    };
   },
   computed: {
     filteredProducts: function filteredProducts() {
@@ -4803,6 +5133,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           return this.articles;
         }
       }
+    },
+    styles: function styles() {
+      var height = 450;
+
+      if (this.products[0].disCena) {
+        height = 500;
+      }
+
+      if (this.products[0].univerexportCena) {
+        height = 550;
+      }
+
+      return {
+        height: height + 'px',
+        'cursor': 'pointer'
+      };
     }
   },
   created: function created() {
@@ -4832,6 +5178,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (article.disCena) {
         this.disCena = article.disCena.substring(0, article.disCena.length - 3) + 'Din';
+      }
+
+      if (article.univerexportCena) {
+        this.univerexportCena = article.univerexportCena.substring(0, article.univerexportCena.length - 3) + 'Din';
       }
 
       this.$root.$emit('bv::show::modal', this.infoModal.id, button);
@@ -5187,6 +5537,53 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -5207,7 +5604,8 @@ __webpack_require__.r(__webpack_exports__);
       supplementaryPriceMaxi: '',
       ideaCena: '--',
       maxiCena: '--',
-      disCena: '--'
+      disCena: '--',
+      univerexportCena: '--'
     };
   },
   computed: {
@@ -5231,6 +5629,22 @@ __webpack_require__.r(__webpack_exports__);
           return this.articles;
         }
       }
+    },
+    styles: function styles() {
+      var height = 450;
+
+      if (this.products[0].disCena) {
+        height = 500;
+      }
+
+      if (this.products[0].univerexportCena) {
+        height = 550;
+      }
+
+      return {
+        height: height + 'px',
+        'cursor': 'pointer'
+      };
     }
   },
   created: function created() {
@@ -5260,6 +5674,10 @@ __webpack_require__.r(__webpack_exports__);
 
       if (article.disCena) {
         this.disCena = article.disCena.substring(0, article.disCena.length - 3) + 'Din';
+      }
+
+      if (article.univerexportCena) {
+        this.univerexportCena = article.univerexportCena.substring(0, article.univerexportCena.length - 3) + 'Din';
       }
 
       this.$root.$emit('bv::show::modal', this.infoModal.id, button);
@@ -72847,15 +73265,23 @@ var render = function() {
             }
           }
         },
-        [_vm._v("Compare All Products")]
+        [_vm._v("Uporedi artikle")]
       ),
       _vm._v(" "),
       _vm.products.length > 0
         ? _c("h4", { attrs: { align: "left" } }, [
-            _vm._v("Total products: " + _vm._s(_vm.filteredProducts.length))
+            _vm._v(
+              "Ukupan broj uporedjenih artikala: " +
+                _vm._s(_vm.filteredProducts.length)
+            )
           ])
         : _c("h4", { attrs: { align: "left" } }, [
-            _vm._v("Total products: " + _vm._s(_vm.filteredProducts.length))
+            _vm._v(
+              "Ukupan broj artikala " +
+                _vm._s(_vm.shop) +
+                ": " +
+                _vm._s(_vm.filteredProducts.length)
+            )
           ]),
       _c("br"),
       _vm._v(" "),
@@ -72943,132 +73369,184 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "row" },
-        [
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "wrap" },
           _vm._l(
             _vm.filteredProducts.slice(_vm.startSlice, _vm.endSlice),
             function(article) {
               return _vm.products.length > 0
-                ? _c("div", { key: article.code, staticClass: "col-sm-3" }, [
-                    _c("div", { staticClass: "card" }, [
-                      _c("div", { staticClass: "card-body" }, [
-                        article.imageUrl !== null /*&& article.shop == 'maxi'*/
-                          ? _c("img", {
-                              staticClass: "center",
-                              staticStyle: { cursor: "pointer" },
-                              attrs: {
-                                center: "",
-                                src:
-                                  "https://d3el976p2k4mvu.cloudfront.net" +
-                                  article.imageUrl,
-                                width: "180px",
-                                height: "180px",
-                                title: "klik za dodatne info"
-                              },
-                              on: {
-                                click: function($event) {
-                                  return _vm.info(article, $event.target)
-                                }
-                              }
-                            })
-                          : _vm._e(),
-                        _vm._v(" "),
-                        article.imageUrl == null
-                          ? _c("img", {
-                              attrs: { center: "", src: article.imageDefault }
-                            })
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c(
-                          "p",
-                          {
-                            staticClass: "textOverflow",
-                            attrs: { align: "center" }
-                          },
-                          [_vm._v(_vm._s(article.body))]
-                        ),
-                        _vm._v(" "),
-                        _c("hr"),
-                        _vm._v(" "),
+                ? _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "b-tooltip",
+                          rawName: "v-b-tooltip.hover",
+                          modifiers: { hover: true }
+                        }
+                      ],
+                      key: article.code,
+                      staticClass: "box one",
+                      style: [
+                        {
+                          "background-image":
+                            "url(https://d3el976p2k4mvu.cloudfront.net" +
+                            article.imageUrl +
+                            ")"
+                        },
+                        _vm.styles
+                      ],
+                      attrs: { title: article.body },
+                      on: {
+                        click: function($event) {
+                          return _vm.info(article, $event.target)
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "p",
+                        {
+                          staticClass: "textOverflow",
+                          attrs: { align: "center" }
+                        },
+                        [_vm._v(_vm._s(article.body))]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "poster p1" }, [
                         article.maxiCena
-                          ? _c("p", { attrs: { align: "right" } }, [
+                          ? _c("h4", [
                               _c("img", {
                                 staticStyle: { height: "50px", width: "80px" },
                                 attrs: {
                                   src: "images/delhaize-maxi-logo-vector.png"
                                 }
                               }),
-                              _c("b", [
-                                _vm._v(
-                                  "\n                        " +
+                              _vm._v(" "),
+                              _c("span", [
+                                _c("b", [
+                                  _vm._v(
                                     _vm._s(
                                       article.maxiCena.substring(
                                         0,
                                         article.maxiCena.length - 3
                                       )
                                     )
-                                )
+                                  )
+                                ])
                               ])
                             ])
                           : _vm._e(),
                         _vm._v(" "),
                         article.ideaCena
-                          ? _c("p", { attrs: { align: "right" } }, [
+                          ? _c("h4", [
                               _c("img", {
-                                staticStyle: { height: "25px", width: "75px" },
-                                attrs: { src: "images/Idea_Logo.png" }
+                                staticStyle: { height: "50px", width: "80px" },
+                                attrs: { src: "images/Idea_Logo_resized.png" }
                               }),
-                              _c("b", [
-                                _vm._v(
-                                  "\n                        " +
+                              _vm._v(" "),
+                              _c("span", [
+                                _c("b", [
+                                  _vm._v(
                                     _vm._s(
                                       article.ideaCena.substring(
                                         0,
                                         article.ideaCena.length - 3
                                       )
                                     )
-                                )
+                                  )
+                                ])
                               ])
                             ])
                           : _vm._e(),
                         _vm._v(" "),
                         article.disCena
-                          ? _c("p", { attrs: { align: "right" } }, [
+                          ? _c("h4", [
                               _c("img", {
                                 staticStyle: { height: "50px", width: "80px" },
-                                attrs: { src: "images/dis_krnjevo.gif" }
+                                attrs: { src: "images/dis_krnjevo_resized.gif" }
                               }),
-                              _c("b", [
-                                _vm._v(
-                                  "\n                        " +
+                              _vm._v(" "),
+                              _c("span", [
+                                _c("b", [
+                                  _vm._v(
                                     _vm._s(
                                       article.disCena.substring(
                                         0,
                                         article.disCena.length - 3
                                       )
                                     )
-                                )
+                                  )
+                                ])
                               ])
                             ])
                           : _vm._e(),
                         _vm._v(" "),
-                        _c("hr")
+                        article.univerexportCena
+                          ? _c("h4", [
+                              _c("img", {
+                                staticStyle: { height: "50px", width: "80px" },
+                                attrs: { src: "images/univer_resized.png" }
+                              }),
+                              _vm._v(" "),
+                              _c("span", [
+                                _c("b", [
+                                  _vm._v(
+                                    _vm._s(
+                                      article.univerexportCena.substring(
+                                        0,
+                                        article.univerexportCena.length - 3
+                                      )
+                                    )
+                                  )
+                                ])
+                              ])
+                            ])
+                          : _vm._e()
                       ])
-                    ])
-                  ])
+                    ]
+                  )
                 : _vm._e()
             }
           ),
-          _vm._v(" "),
+          0
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "wrap" },
           _vm._l(
             _vm.filteredProducts.slice(_vm.startSlice, _vm.endSlice),
             function(articlea) {
               return _vm.articles.length > 0
-                ? _c("div", { key: articlea.code, staticClass: "col-sm-3" }, [
-                    _c("div", { staticClass: "card" }, [
-                      _c("div", { staticClass: "card-body" }, [
+                ? _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "b-tooltip",
+                          rawName: "v-b-tooltip.hover",
+                          modifiers: { hover: true }
+                        }
+                      ],
+                      key: articlea.code,
+                      staticClass: "box one",
+                      staticStyle: { height: "450px" },
+                      attrs: { title: articlea.body }
+                    },
+                    [
+                      _c(
+                        "p",
+                        {
+                          staticClass: "textOverflowSeparated",
+                          attrs: { align: "center" }
+                        },
+                        [_vm._v(_vm._s(articlea.body))]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticStyle: { "margin-top": "50px" } }, [
                         articlea.imageUrl !== null && articlea.shop == "maxi"
                           ? _c("img", {
                               staticClass: "center",
@@ -73108,48 +73586,93 @@ var render = function() {
                           : _c("img", {
                               staticStyle: { height: "200px", width: "180px" },
                               attrs: { center: "", src: articlea.imageDefault }
-                            }),
-                        _vm._v(" "),
-                        _c("p", { attrs: { align: "center" } }, [
-                          _c("b", [_vm._v(_vm._s(articlea.title) + ":")]),
-                          _vm._v(" " + _vm._s(articlea.body))
-                        ]),
-                        _vm._v(" "),
-                        _c("hr"),
-                        _vm._v(" "),
-                        _c("p", { attrs: { align: "right" } }, [
+                            })
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "poster p1",
+                          staticStyle: { "margin-top": "50px" }
+                        },
+                        [
                           articlea.shop == "maxi"
-                            ? _c("img", {
-                                staticStyle: { height: "50px", width: "80px" },
-                                attrs: {
-                                  src: "images/delhaize-maxi-logo-vector.png"
-                                }
-                              })
-                            : articlea.shop == "idea"
-                            ? _c("img", {
-                                staticStyle: { height: "25px", width: "75px" },
-                                attrs: { src: "images/Idea_Logo.png" }
-                              })
-                            : articlea.shop == "dis"
-                            ? _c("img", {
-                                staticStyle: { height: "50px", width: "80px" },
-                                attrs: { src: "images/dis_krnjevo.gif" }
-                              })
+                            ? _c("h5", [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "50px",
+                                    width: "80px"
+                                  },
+                                  attrs: {
+                                    src: "images/delhaize-maxi-logo-vector.png"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("b", [
+                                  _vm._v(_vm._s(articlea.formattedPrice))
+                                ])
+                              ])
                             : _vm._e(),
                           _vm._v(" "),
-                          _c("b", [_vm._v(_vm._s(articlea.formattedPrice))])
-                        ]),
-                        _vm._v(" "),
-                        _c("hr")
-                      ])
-                    ])
-                  ])
+                          articlea.shop == "idea"
+                            ? _c("h5", [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "50px",
+                                    width: "80px"
+                                  },
+                                  attrs: { src: "images/Idea_Logo_resized.png" }
+                                }),
+                                _vm._v(" "),
+                                _c("b", [
+                                  _vm._v(_vm._s(articlea.formattedPrice))
+                                ])
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          articlea.shop == "dis"
+                            ? _c("h5", [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "50px",
+                                    width: "80px"
+                                  },
+                                  attrs: {
+                                    src: "images/dis_krnjevo_resized.gif"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("b", [
+                                  _vm._v(_vm._s(articlea.formattedPrice))
+                                ])
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          articlea.shop == "univerexport"
+                            ? _c("h5", [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "50px",
+                                    width: "80px"
+                                  },
+                                  attrs: { src: "images/univer_resized.png" }
+                                }),
+                                _vm._v(" "),
+                                _c("b", [
+                                  _vm._v(_vm._s(articlea.formattedPrice))
+                                ])
+                              ])
+                            : _vm._e()
+                        ]
+                      )
+                    ]
+                  )
                 : _vm._e()
             }
-          )
-        ],
-        2
-      ),
+          ),
+          0
+        )
+      ]),
       _vm._v(" "),
       _c(
         "b-modal",
@@ -73215,6 +73738,15 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("h6", [_c("b", [_vm._v(_vm._s(_vm.disCena))])])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-sm-6" }, [
+                  _c("img", {
+                    staticStyle: { height: "50px", width: "80px" },
+                    attrs: { src: "images/univer_resized.png" }
+                  }),
+                  _vm._v(" "),
+                  _c("h6", [_c("b", [_vm._v(_vm._s(_vm.univerexportCena))])])
                 ])
               ])
             ])
@@ -75152,18 +75684,19 @@ var render = function() {
             }
           }
         },
-        [_vm._v("Compare All Products")]
+        [_vm._v("Uporedi artikle")]
       ),
       _vm._v(" "),
       _vm.products.length > 0
         ? _c("h4", { attrs: { align: "left" } }, [
             _vm._v(
-              "Total compared products: " + _vm._s(_vm.filteredProducts.length)
+              "Ukupan broj uporedjenih artikala: " +
+                _vm._s(_vm.filteredProducts.length)
             )
           ])
         : _c("h4", { attrs: { align: "left" } }, [
             _vm._v(
-              "Total productss " +
+              "Ukupan broj artikala " +
                 _vm._s(_vm.shop) +
                 ": " +
                 _vm._s(_vm.filteredProducts.length)
@@ -75255,170 +75788,185 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "row" },
-        [
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "wrap" },
           _vm._l(
             _vm.filteredProducts.slice(_vm.startSlice, _vm.endSlice),
             function(article) {
               return _vm.products.length > 0
-                ? _c("div", { key: article.code, staticClass: "col-sm-3" }, [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "card shadow-lg p-3 mb-5 bg-white rounded"
-                      },
-                      [
-                        _c("div", { staticClass: "card-body" }, [
-                          article.imageUrl /*&& article.shop == 'maxi'*/
-                            ? _c("img", {
-                                staticClass: "center modal-trigger",
-                                staticStyle: { cursor: "pointer" },
+                ? _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "b-tooltip",
+                          rawName: "v-b-tooltip.hover",
+                          modifiers: { hover: true }
+                        }
+                      ],
+                      key: article.code,
+                      staticClass: "box one",
+                      staticStyle: { cursor: "pointer", height: "550px" },
+                      style: [
+                        {
+                          "background-image":
+                            "url(https://d3el976p2k4mvu.cloudfront.net" +
+                            article.imageUrl +
+                            ")"
+                        },
+                        _vm.styles
+                      ],
+                      attrs: { title: article.body },
+                      on: {
+                        click: function($event) {
+                          return _vm.info(article, $event.target)
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "p",
+                        {
+                          staticClass: "textOverflow",
+                          attrs: { align: "center" }
+                        },
+                        [_vm._v(_vm._s(article.body))]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "poster p1" }, [
+                        article.maxiCena
+                          ? _c("h4", [
+                              _c("img", {
+                                staticStyle: { height: "50px", width: "80px" },
                                 attrs: {
-                                  center: "",
-                                  src:
-                                    "https://d3el976p2k4mvu.cloudfront.net" +
-                                    article.imageUrl,
-                                  width: "180px",
-                                  height: "180px",
-                                  title: "klik za dodatne info"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.info(article, $event.target)
-                                  }
+                                  src: "images/delhaize-maxi-logo-vector.png"
                                 }
-                              })
-                            : _vm._e(),
-                          _vm._v(" "),
-                          article.imageUrl == null
-                            ? _c("img", {
-                                attrs: { center: "", src: article.imageDefault }
-                              })
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _c(
-                            "p",
-                            {
-                              staticClass: "textOverflow",
-                              attrs: { align: "center" }
-                            },
-                            [_vm._v(_vm._s(article.body))]
-                          ),
-                          _vm._v(" "),
-                          _c("hr"),
-                          _vm._v(" "),
-                          article.maxiCena
-                            ? _c("p", { attrs: { align: "right" } }, [
-                                _c("img", {
-                                  staticStyle: {
-                                    height: "50px",
-                                    width: "80px"
-                                  },
-                                  attrs: {
-                                    src: "images/delhaize-maxi-logo-vector.png"
-                                  }
-                                }),
+                              }),
+                              _vm._v(" "),
+                              _c("span", [
                                 _c("b", [
                                   _vm._v(
-                                    "\n                        " +
-                                      _vm._s(
-                                        article.maxiCena.substring(
-                                          0,
-                                          article.maxiCena.length - 3
-                                        )
+                                    _vm._s(
+                                      article.maxiCena.substring(
+                                        0,
+                                        article.maxiCena.length - 3
                                       )
+                                    )
                                   )
                                 ])
                               ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          article.ideaCena
-                            ? _c("p", { attrs: { align: "right" } }, [
-                                _c("img", {
-                                  staticStyle: {
-                                    height: "25px",
-                                    width: "75px"
-                                  },
-                                  attrs: { src: "images/Idea_Logo.png" }
-                                }),
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        article.ideaCena
+                          ? _c("h4", [
+                              _c("img", {
+                                staticStyle: { height: "50px", width: "80px" },
+                                attrs: { src: "images/Idea_Logo_resized.png" }
+                              }),
+                              _vm._v(" "),
+                              _c("span", [
                                 _c("b", [
                                   _vm._v(
-                                    "\n                        " +
-                                      _vm._s(
-                                        article.ideaCena.substring(
-                                          0,
-                                          article.ideaCena.length - 3
-                                        )
+                                    _vm._s(
+                                      article.ideaCena.substring(
+                                        0,
+                                        article.ideaCena.length - 3
                                       )
+                                    )
                                   )
                                 ])
                               ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          article.disCena
-                            ? _c("p", { attrs: { align: "right" } }, [
-                                _c("img", {
-                                  staticStyle: {
-                                    height: "50px",
-                                    width: "80px"
-                                  },
-                                  attrs: { src: "images/dis_krnjevo.gif" }
-                                }),
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        article.disCena
+                          ? _c("h4", [
+                              _c("img", {
+                                staticStyle: { height: "50px", width: "80px" },
+                                attrs: { src: "images/dis_krnjevo_resized.gif" }
+                              }),
+                              _vm._v(" "),
+                              _c("span", [
                                 _c("b", [
                                   _vm._v(
-                                    "\n                        " +
-                                      _vm._s(
-                                        article.disCena.substring(
-                                          0,
-                                          article.disCena.length - 3
-                                        )
+                                    _vm._s(
+                                      article.disCena.substring(
+                                        0,
+                                        article.disCena.length - 3
                                       )
+                                    )
                                   )
                                 ])
                               ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          article.univerexportCena
-                            ? _c("p", { attrs: { align: "right" } }, [
-                                _c("img", {
-                                  staticStyle: {
-                                    height: "35px",
-                                    width: "100px"
-                                  },
-                                  attrs: { src: "images/univer.png" }
-                                }),
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        article.univerexportCena
+                          ? _c("h4", [
+                              _c("img", {
+                                staticStyle: { height: "50px", width: "80px" },
+                                attrs: { src: "images/univer_resized.png" }
+                              }),
+                              _vm._v(" "),
+                              _c("span", [
                                 _c("b", [
                                   _vm._v(
-                                    "\n                        " +
-                                      _vm._s(
-                                        article.univerexportCena.substring(
-                                          0,
-                                          article.univerexportCena.length - 3
-                                        )
+                                    _vm._s(
+                                      article.univerexportCena.substring(
+                                        0,
+                                        article.univerexportCena.length - 3
                                       )
+                                    )
                                   )
                                 ])
                               ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _c("hr")
-                        ])
-                      ]
-                    )
-                  ])
+                            ])
+                          : _vm._e()
+                      ])
+                    ]
+                  )
                 : _vm._e()
             }
           ),
-          _vm._v(" "),
+          0
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "wrap" },
           _vm._l(
             _vm.filteredProducts.slice(_vm.startSlice, _vm.endSlice),
             function(articlea) {
               return _vm.articles.length > 0
-                ? _c("div", { key: articlea.code, staticClass: "col-sm-3" }, [
-                    _c("div", { staticClass: "card" }, [
-                      _c("div", { staticClass: "card-body" }, [
+                ? _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "b-tooltip",
+                          rawName: "v-b-tooltip.hover",
+                          modifiers: { hover: true }
+                        }
+                      ],
+                      key: articlea.code,
+                      staticClass: "box one",
+                      staticStyle: { height: "450px" },
+                      attrs: { title: articlea.body }
+                    },
+                    [
+                      _c(
+                        "p",
+                        {
+                          staticClass: "textOverflowSeparated",
+                          attrs: { align: "center" }
+                        },
+                        [_vm._v(_vm._s(articlea.body))]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticStyle: { "margin-top": "50px" } }, [
                         articlea.imageUrl !== null && articlea.shop == "maxi"
                           ? _c("img", {
                               staticClass: "center",
@@ -75427,8 +75975,7 @@ var render = function() {
                                 src:
                                   "https://d3el976p2k4mvu.cloudfront.net" +
                                   articlea.imageUrl,
-                                width: "180px",
-                                height: "180px"
+                                width: "180px"
                               }
                             })
                           : articlea.imageUrl !== null &&
@@ -75456,69 +76003,96 @@ var render = function() {
                                 height: "180px"
                               }
                             })
-                          : articlea.imageUrl !== null &&
-                            articlea.shop == "univerexport"
-                          ? _c("img", {
-                              staticClass: "center",
-                              attrs: {
-                                center: "",
-                                src:
-                                  "https://www.idea.rs/online/" +
-                                  articlea.imageUrl,
-                                width: "180px",
-                                height: "180px"
-                              }
-                            })
                           : _c("img", {
                               staticStyle: { height: "200px", width: "180px" },
                               attrs: { center: "", src: articlea.imageDefault }
-                            }),
-                        _vm._v(" "),
-                        _c("p", { attrs: { align: "center" } }, [
-                          _c("b", [_vm._v(_vm._s(articlea.title) + ":")]),
-                          _vm._v(" " + _vm._s(articlea.body))
-                        ]),
-                        _vm._v(" "),
-                        _c("hr"),
-                        _vm._v(" "),
-                        _c("p", { attrs: { align: "right" } }, [
+                            })
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "poster p1",
+                          staticStyle: { "margin-top": "50px" }
+                        },
+                        [
                           articlea.shop == "maxi"
-                            ? _c("img", {
-                                staticStyle: { height: "50px", width: "80px" },
-                                attrs: {
-                                  src: "images/delhaize-maxi-logo-vector.png"
-                                }
-                              })
-                            : articlea.shop == "idea"
-                            ? _c("img", {
-                                staticStyle: { height: "25px", width: "75px" },
-                                attrs: { src: "images/Idea_Logo.png" }
-                              })
-                            : articlea.shop == "dis"
-                            ? _c("img", {
-                                staticStyle: { height: "50px", width: "100px" },
-                                attrs: { src: "images/dis_krnjevo.gif" }
-                              })
-                            : articlea.shop == "univerexport"
-                            ? _c("img", {
-                                staticStyle: { height: "35px", width: "100px" },
-                                attrs: { src: "images/univer.png" }
-                              })
+                            ? _c("h5", [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "50px",
+                                    width: "80px"
+                                  },
+                                  attrs: {
+                                    src: "images/delhaize-maxi-logo-vector.png"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("b", [
+                                  _vm._v(_vm._s(articlea.formattedPrice))
+                                ])
+                              ])
                             : _vm._e(),
                           _vm._v(" "),
-                          _c("b", [_vm._v(_vm._s(articlea.formattedPrice))])
-                        ]),
-                        _vm._v(" "),
-                        _c("hr")
-                      ])
-                    ])
-                  ])
+                          articlea.shop == "idea"
+                            ? _c("h5", [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "50px",
+                                    width: "80px"
+                                  },
+                                  attrs: { src: "images/Idea_Logo_resized.png" }
+                                }),
+                                _vm._v(" "),
+                                _c("b", [
+                                  _vm._v(_vm._s(articlea.formattedPrice))
+                                ])
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          articlea.shop == "dis"
+                            ? _c("h5", [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "50px",
+                                    width: "80px"
+                                  },
+                                  attrs: {
+                                    src: "images/dis_krnjevo_resized.gif"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("b", [
+                                  _vm._v(_vm._s(articlea.formattedPrice))
+                                ])
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          articlea.shop == "univerexport"
+                            ? _c("h5", [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "50px",
+                                    width: "80px"
+                                  },
+                                  attrs: { src: "images/univer_resized.png" }
+                                }),
+                                _vm._v(" "),
+                                _c("b", [
+                                  _vm._v(_vm._s(articlea.formattedPrice))
+                                ])
+                              ])
+                            : _vm._e()
+                        ]
+                      )
+                    ]
+                  )
                 : _vm._e()
             }
-          )
-        ],
-        2
-      ),
+          ),
+          0
+        )
+      ]),
       _vm._v(" "),
       _c(
         "b-modal",
@@ -75589,8 +76163,8 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "col-sm-6" }, [
                   _c("img", {
-                    staticStyle: { height: "35px", width: "100px" },
-                    attrs: { src: "images/univer.png" }
+                    staticStyle: { height: "50px", width: "80px" },
+                    attrs: { src: "images/univer_resized.png" }
                   }),
                   _vm._v(" "),
                   _c("h6", [_c("b", [_vm._v(_vm._s(_vm.univerexportCena))])])
@@ -75700,18 +76274,19 @@ var render = function() {
             }
           }
         },
-        [_vm._v("Compare All Products")]
+        [_vm._v("Uporedi artikle")]
       ),
       _vm._v(" "),
       _vm.products.length > 0
         ? _c("h4", { attrs: { align: "left" } }, [
             _vm._v(
-              "Total compared products: " + _vm._s(_vm.filteredProducts.length)
+              "Ukupan broj uporedjenih artikala: " +
+                _vm._s(_vm.filteredProducts.length)
             )
           ])
         : _c("h4", { attrs: { align: "left" } }, [
             _vm._v(
-              "Total products " +
+              "Ukupan broj artikala " +
                 _vm._s(_vm.shop) +
                 ": " +
                 _vm._s(_vm.filteredProducts.length)
@@ -75803,126 +76378,185 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "row" },
-        [
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "wrap" },
           _vm._l(
             _vm.filteredProducts.slice(_vm.startSlice, _vm.endSlice),
             function(article) {
               return _vm.products.length > 0
-                ? _c("div", { key: article.code, staticClass: "col-sm-3" }, [
-                    _c("div", { staticClass: "card" }, [
-                      _c("div", { staticClass: "card-body" }, [
-                        article.imageUrl /*&& article.shop == 'maxi'*/
-                          ? _c("img", {
-                              staticClass: "center modal-trigger",
-                              staticStyle: { cursor: "pointer" },
-                              attrs: {
-                                center: "",
-                                src:
-                                  "https://d3el976p2k4mvu.cloudfront.net" +
-                                  article.imageUrl,
-                                width: "180px",
-                                height: "180px",
-                                title: "klik za dodatne info"
-                              },
-                              on: {
-                                click: function($event) {
-                                  return _vm.info(article, $event.target)
-                                }
-                              }
-                            })
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c(
-                          "p",
-                          {
-                            staticClass: "textOverflow",
-                            attrs: { align: "center" }
-                          },
-                          [_vm._v(_vm._s(article.body))]
-                        ),
-                        _vm._v(" "),
-                        _c("hr"),
-                        _vm._v(" "),
+                ? _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "b-tooltip",
+                          rawName: "v-b-tooltip.hover",
+                          modifiers: { hover: true }
+                        }
+                      ],
+                      key: article.code,
+                      staticClass: "box one",
+                      staticStyle: { cursor: "pointer", height: "550px" },
+                      style: [
+                        {
+                          "background-image":
+                            "url(https://d3el976p2k4mvu.cloudfront.net" +
+                            article.imageUrl +
+                            ")"
+                        },
+                        _vm.styles
+                      ],
+                      attrs: { title: article.body },
+                      on: {
+                        click: function($event) {
+                          return _vm.info(article, $event.target)
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "p",
+                        {
+                          staticClass: "textOverflow",
+                          attrs: { align: "center" }
+                        },
+                        [_vm._v(_vm._s(article.body))]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "poster p1" }, [
                         article.maxiCena
-                          ? _c("p", { attrs: { align: "right" } }, [
+                          ? _c("h4", [
                               _c("img", {
                                 staticStyle: { height: "50px", width: "80px" },
                                 attrs: {
                                   src: "images/delhaize-maxi-logo-vector.png"
                                 }
                               }),
-                              _c("b", [
-                                _vm._v(
-                                  "\n                        " +
+                              _vm._v(" "),
+                              _c("span", [
+                                _c("b", [
+                                  _vm._v(
                                     _vm._s(
                                       article.maxiCena.substring(
                                         0,
                                         article.maxiCena.length - 3
                                       )
                                     )
-                                )
+                                  )
+                                ])
                               ])
                             ])
                           : _vm._e(),
                         _vm._v(" "),
                         article.ideaCena
-                          ? _c("p", { attrs: { align: "right" } }, [
+                          ? _c("h4", [
                               _c("img", {
-                                staticStyle: { height: "25px", width: "75px" },
-                                attrs: { src: "images/Idea_Logo.png" }
+                                staticStyle: { height: "50px", width: "80px" },
+                                attrs: { src: "images/Idea_Logo_resized.png" }
                               }),
-                              _c("b", [
-                                _vm._v(
-                                  "\n                        " +
+                              _vm._v(" "),
+                              _c("span", [
+                                _c("b", [
+                                  _vm._v(
                                     _vm._s(
                                       article.ideaCena.substring(
                                         0,
                                         article.ideaCena.length - 3
                                       )
                                     )
-                                )
+                                  )
+                                ])
                               ])
                             ])
                           : _vm._e(),
                         _vm._v(" "),
                         article.disCena
-                          ? _c("p", { attrs: { align: "right" } }, [
+                          ? _c("h4", [
                               _c("img", {
                                 staticStyle: { height: "50px", width: "80px" },
-                                attrs: { src: "images/dis_krnjevo.gif" }
+                                attrs: { src: "images/dis_krnjevo_resized.gif" }
                               }),
-                              _c("b", [
-                                _vm._v(
-                                  "\n                        " +
+                              _vm._v(" "),
+                              _c("span", [
+                                _c("b", [
+                                  _vm._v(
                                     _vm._s(
                                       article.disCena.substring(
                                         0,
                                         article.disCena.length - 3
                                       )
                                     )
-                                )
+                                  )
+                                ])
                               ])
                             ])
                           : _vm._e(),
                         _vm._v(" "),
-                        _c("hr")
+                        article.univerexportCena
+                          ? _c("h4", [
+                              _c("img", {
+                                staticStyle: { height: "50px", width: "80px" },
+                                attrs: { src: "images/univer_resized.png" }
+                              }),
+                              _vm._v(" "),
+                              _c("span", [
+                                _c("b", [
+                                  _vm._v(
+                                    _vm._s(
+                                      article.univerexportCena.substring(
+                                        0,
+                                        article.univerexportCena.length - 3
+                                      )
+                                    )
+                                  )
+                                ])
+                              ])
+                            ])
+                          : _vm._e()
                       ])
-                    ])
-                  ])
+                    ]
+                  )
                 : _vm._e()
             }
           ),
-          _vm._v(" "),
+          0
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "wrap" },
           _vm._l(
             _vm.filteredProducts.slice(_vm.startSlice, _vm.endSlice),
             function(articlea) {
               return _vm.articles.length > 0
-                ? _c("div", { key: articlea.code, staticClass: "col-sm-3" }, [
-                    _c("div", { staticClass: "card" }, [
-                      _c("div", { staticClass: "card-body" }, [
+                ? _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "b-tooltip",
+                          rawName: "v-b-tooltip.hover",
+                          modifiers: { hover: true }
+                        }
+                      ],
+                      key: articlea.code,
+                      staticClass: "box one",
+                      staticStyle: { height: "450px" },
+                      attrs: { title: articlea.body }
+                    },
+                    [
+                      _c(
+                        "p",
+                        {
+                          staticClass: "textOverflowSeparated",
+                          attrs: { align: "center" }
+                        },
+                        [_vm._v(_vm._s(articlea.body))]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticStyle: { "margin-top": "50px" } }, [
                         articlea.imageUrl !== null && articlea.shop == "maxi"
                           ? _c("img", {
                               staticClass: "center",
@@ -75962,48 +76596,93 @@ var render = function() {
                           : _c("img", {
                               staticStyle: { height: "200px", width: "180px" },
                               attrs: { center: "", src: articlea.imageDefault }
-                            }),
-                        _vm._v(" "),
-                        _c("p", { attrs: { align: "center" } }, [
-                          _c("b", [_vm._v(_vm._s(articlea.title) + ":")]),
-                          _vm._v(" " + _vm._s(articlea.body))
-                        ]),
-                        _vm._v(" "),
-                        _c("hr"),
-                        _vm._v(" "),
-                        _c("p", { attrs: { align: "right" } }, [
+                            })
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "poster p1",
+                          staticStyle: { "margin-top": "50px" }
+                        },
+                        [
                           articlea.shop == "maxi"
-                            ? _c("img", {
-                                staticStyle: { height: "50px", width: "80px" },
-                                attrs: {
-                                  src: "images/delhaize-maxi-logo-vector.png"
-                                }
-                              })
-                            : articlea.shop == "idea"
-                            ? _c("img", {
-                                staticStyle: { height: "25px", width: "75px" },
-                                attrs: { src: "images/Idea_Logo.png" }
-                              })
-                            : articlea.shop == "dis"
-                            ? _c("img", {
-                                staticStyle: { height: "50px", width: "80px" },
-                                attrs: { src: "images/dis_krnjevo.gif" }
-                              })
+                            ? _c("h5", [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "50px",
+                                    width: "80px"
+                                  },
+                                  attrs: {
+                                    src: "images/delhaize-maxi-logo-vector.png"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("b", [
+                                  _vm._v(_vm._s(articlea.formattedPrice))
+                                ])
+                              ])
                             : _vm._e(),
                           _vm._v(" "),
-                          _c("b", [_vm._v(_vm._s(articlea.formattedPrice))])
-                        ]),
-                        _vm._v(" "),
-                        _c("hr")
-                      ])
-                    ])
-                  ])
+                          articlea.shop == "idea"
+                            ? _c("h5", [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "50px",
+                                    width: "80px"
+                                  },
+                                  attrs: { src: "images/Idea_Logo_resized.png" }
+                                }),
+                                _vm._v(" "),
+                                _c("b", [
+                                  _vm._v(_vm._s(articlea.formattedPrice))
+                                ])
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          articlea.shop == "dis"
+                            ? _c("h5", [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "50px",
+                                    width: "80px"
+                                  },
+                                  attrs: {
+                                    src: "images/dis_krnjevo_resized.gif"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("b", [
+                                  _vm._v(_vm._s(articlea.formattedPrice))
+                                ])
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          articlea.shop == "univerexport"
+                            ? _c("h5", [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "50px",
+                                    width: "80px"
+                                  },
+                                  attrs: { src: "images/univer_resized.png" }
+                                }),
+                                _vm._v(" "),
+                                _c("b", [
+                                  _vm._v(_vm._s(articlea.formattedPrice))
+                                ])
+                              ])
+                            : _vm._e()
+                        ]
+                      )
+                    ]
+                  )
                 : _vm._e()
             }
-          )
-        ],
-        2
-      ),
+          ),
+          0
+        )
+      ]),
       _vm._v(" "),
       _c(
         "b-modal",
@@ -76069,6 +76748,15 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("h6", [_c("b", [_vm._v(_vm._s(_vm.disCena))])])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-sm-6" }, [
+                  _c("img", {
+                    staticStyle: { height: "50px", width: "80px" },
+                    attrs: { src: "images/univer_resized.png" }
+                  }),
+                  _vm._v(" "),
+                  _c("h6", [_c("b", [_vm._v(_vm._s(_vm.univerexportCena))])])
                 ])
               ])
             ])
@@ -76230,18 +76918,19 @@ var render = function() {
             }
           }
         },
-        [_vm._v("Compare All Products")]
+        [_vm._v("Uporedi artikle")]
       ),
       _vm._v(" "),
       _vm.products.length > 0
         ? _c("h4", { attrs: { align: "left" } }, [
             _vm._v(
-              "Total compared products: " + _vm._s(_vm.filteredProducts.length)
+              "Ukupan broj uporedjenih artikala: " +
+                _vm._s(_vm.filteredProducts.length)
             )
           ])
         : _c("h4", { attrs: { align: "left" } }, [
             _vm._v(
-              "Total products " +
+              "Ukupan broj artikala " +
                 _vm._s(_vm.shop) +
                 ": " +
                 _vm._s(_vm.filteredProducts.length)
@@ -76333,132 +77022,185 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "row" },
-        [
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "wrap" },
           _vm._l(
             _vm.filteredProducts.slice(_vm.startSlice, _vm.endSlice),
             function(article) {
               return _vm.products.length > 0
-                ? _c("div", { key: article.code, staticClass: "col-sm-3" }, [
-                    _c("div", { staticClass: "card" }, [
-                      _c("div", { staticClass: "card-body" }, [
-                        article.imageUrl !== null /*&& article.shop == 'maxi'*/
-                          ? _c("img", {
-                              staticClass: "center",
-                              staticStyle: { cursor: "pointer" },
-                              attrs: {
-                                center: "",
-                                src:
-                                  "https://d3el976p2k4mvu.cloudfront.net" +
-                                  article.imageUrl,
-                                width: "180px",
-                                height: "180px",
-                                title: "klik za dodatne info"
-                              },
-                              on: {
-                                click: function($event) {
-                                  return _vm.info(article, $event.target)
-                                }
-                              }
-                            })
-                          : _vm._e(),
-                        _vm._v(" "),
-                        article.imageUrl == null
-                          ? _c("img", {
-                              attrs: { center: "", src: article.imageDefault }
-                            })
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c(
-                          "p",
-                          {
-                            staticClass: "textOverflow",
-                            attrs: { align: "center" }
-                          },
-                          [_vm._v(" " + _vm._s(article.body))]
-                        ),
-                        _vm._v(" "),
-                        _c("hr"),
-                        _vm._v(" "),
+                ? _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "b-tooltip",
+                          rawName: "v-b-tooltip.hover",
+                          modifiers: { hover: true }
+                        }
+                      ],
+                      key: article.code,
+                      staticClass: "box one",
+                      staticStyle: { cursor: "pointer", height: "550px" },
+                      style: [
+                        {
+                          "background-image":
+                            "url(https://d3el976p2k4mvu.cloudfront.net" +
+                            article.imageUrl +
+                            ")"
+                        },
+                        _vm.styles
+                      ],
+                      attrs: { title: article.body },
+                      on: {
+                        click: function($event) {
+                          return _vm.info(article, $event.target)
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "p",
+                        {
+                          staticClass: "textOverflow",
+                          attrs: { align: "center" }
+                        },
+                        [_vm._v(_vm._s(article.body))]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "poster p1" }, [
                         article.maxiCena
-                          ? _c("p", { attrs: { align: "right" } }, [
+                          ? _c("h4", [
                               _c("img", {
                                 staticStyle: { height: "50px", width: "80px" },
                                 attrs: {
                                   src: "images/delhaize-maxi-logo-vector.png"
                                 }
                               }),
-                              _c("b", [
-                                _vm._v(
-                                  "\n                        " +
+                              _vm._v(" "),
+                              _c("span", [
+                                _c("b", [
+                                  _vm._v(
                                     _vm._s(
                                       article.maxiCena.substring(
                                         0,
                                         article.maxiCena.length - 3
                                       )
                                     )
-                                )
+                                  )
+                                ])
                               ])
                             ])
                           : _vm._e(),
                         _vm._v(" "),
                         article.ideaCena
-                          ? _c("p", { attrs: { align: "right" } }, [
+                          ? _c("h4", [
                               _c("img", {
-                                staticStyle: { height: "20px", width: "75px" },
-                                attrs: { src: "images/Idea_Logo.png" }
+                                staticStyle: { height: "50px", width: "80px" },
+                                attrs: { src: "images/Idea_Logo_resized.png" }
                               }),
-                              _c("b", [
-                                _vm._v(
-                                  "\n                        " +
+                              _vm._v(" "),
+                              _c("span", [
+                                _c("b", [
+                                  _vm._v(
                                     _vm._s(
                                       article.ideaCena.substring(
                                         0,
                                         article.ideaCena.length - 3
                                       )
                                     )
-                                )
+                                  )
+                                ])
                               ])
                             ])
                           : _vm._e(),
                         _vm._v(" "),
                         article.disCena
-                          ? _c("p", { attrs: { align: "right" } }, [
+                          ? _c("h4", [
                               _c("img", {
                                 staticStyle: { height: "50px", width: "80px" },
-                                attrs: { src: "images/dis_krnjevo.gif" }
+                                attrs: { src: "images/dis_krnjevo_resized.gif" }
                               }),
-                              _c("b", [
-                                _vm._v(
-                                  "\n                        " +
+                              _vm._v(" "),
+                              _c("span", [
+                                _c("b", [
+                                  _vm._v(
                                     _vm._s(
                                       article.disCena.substring(
                                         0,
                                         article.disCena.length - 3
                                       )
                                     )
-                                )
+                                  )
+                                ])
                               ])
                             ])
                           : _vm._e(),
                         _vm._v(" "),
-                        _c("hr")
+                        article.univerexportCena
+                          ? _c("h4", [
+                              _c("img", {
+                                staticStyle: { height: "50px", width: "80px" },
+                                attrs: { src: "images/univer_resized.png" }
+                              }),
+                              _vm._v(" "),
+                              _c("span", [
+                                _c("b", [
+                                  _vm._v(
+                                    _vm._s(
+                                      article.univerexportCena.substring(
+                                        0,
+                                        article.univerexportCena.length - 3
+                                      )
+                                    )
+                                  )
+                                ])
+                              ])
+                            ])
+                          : _vm._e()
                       ])
-                    ])
-                  ])
+                    ]
+                  )
                 : _vm._e()
             }
           ),
-          _vm._v(" "),
+          0
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "wrap" },
           _vm._l(
             _vm.filteredProducts.slice(_vm.startSlice, _vm.endSlice),
             function(articlea) {
               return _vm.articles.length > 0
-                ? _c("div", { key: articlea.code, staticClass: "col-sm-3" }, [
-                    _c("div", { staticClass: "card" }, [
-                      _c("div", { staticClass: "card-body" }, [
+                ? _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "b-tooltip",
+                          rawName: "v-b-tooltip.hover",
+                          modifiers: { hover: true }
+                        }
+                      ],
+                      key: articlea.code,
+                      staticClass: "box one",
+                      staticStyle: { height: "450px" },
+                      attrs: { title: articlea.body }
+                    },
+                    [
+                      _c(
+                        "p",
+                        {
+                          staticClass: "textOverflowSeparated",
+                          attrs: { align: "center" }
+                        },
+                        [_vm._v(_vm._s(articlea.body))]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticStyle: { "margin-top": "50px" } }, [
                         articlea.imageUrl !== null && articlea.shop == "maxi"
                           ? _c("img", {
                               staticClass: "center",
@@ -76467,8 +77209,7 @@ var render = function() {
                                 src:
                                   "https://d3el976p2k4mvu.cloudfront.net" +
                                   articlea.imageUrl,
-                                width: "180px",
-                                height: "180px"
+                                width: "180px"
                               }
                             })
                           : articlea.imageUrl !== null &&
@@ -76499,48 +77240,93 @@ var render = function() {
                           : _c("img", {
                               staticStyle: { height: "200px", width: "180px" },
                               attrs: { center: "", src: articlea.imageDefault }
-                            }),
-                        _vm._v(" "),
-                        _c("p", { attrs: { align: "center" } }, [
-                          _c("b", [_vm._v(_vm._s(articlea.title) + ":")]),
-                          _vm._v(" " + _vm._s(articlea.body))
-                        ]),
-                        _vm._v(" "),
-                        _c("hr"),
-                        _vm._v(" "),
-                        _c("p", { attrs: { align: "right" } }, [
+                            })
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "poster p1",
+                          staticStyle: { "margin-top": "50px" }
+                        },
+                        [
                           articlea.shop == "maxi"
-                            ? _c("img", {
-                                staticStyle: { height: "50px", width: "80px" },
-                                attrs: {
-                                  src: "images/delhaize-maxi-logo-vector.png"
-                                }
-                              })
-                            : articlea.shop == "idea"
-                            ? _c("img", {
-                                staticStyle: { height: "20px", width: "75px" },
-                                attrs: { src: "images/Idea_Logo.png" }
-                              })
-                            : articlea.shop == "dis"
-                            ? _c("img", {
-                                staticStyle: { height: "50px", width: "80px" },
-                                attrs: { src: "images/dis_krnjevo.gif" }
-                              })
+                            ? _c("h5", [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "50px",
+                                    width: "80px"
+                                  },
+                                  attrs: {
+                                    src: "images/delhaize-maxi-logo-vector.png"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("b", [
+                                  _vm._v(_vm._s(articlea.formattedPrice))
+                                ])
+                              ])
                             : _vm._e(),
                           _vm._v(" "),
-                          _c("b", [_vm._v(_vm._s(articlea.formattedPrice))])
-                        ]),
-                        _vm._v(" "),
-                        _c("hr")
-                      ])
-                    ])
-                  ])
+                          articlea.shop == "idea"
+                            ? _c("h5", [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "50px",
+                                    width: "80px"
+                                  },
+                                  attrs: { src: "images/Idea_Logo_resized.png" }
+                                }),
+                                _vm._v(" "),
+                                _c("b", [
+                                  _vm._v(_vm._s(articlea.formattedPrice))
+                                ])
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          articlea.shop == "dis"
+                            ? _c("h5", [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "50px",
+                                    width: "80px"
+                                  },
+                                  attrs: {
+                                    src: "images/dis_krnjevo_resized.gif"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("b", [
+                                  _vm._v(_vm._s(articlea.formattedPrice))
+                                ])
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          articlea.shop == "univerexport"
+                            ? _c("h5", [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "50px",
+                                    width: "80px"
+                                  },
+                                  attrs: { src: "images/univer_resized.png" }
+                                }),
+                                _vm._v(" "),
+                                _c("b", [
+                                  _vm._v(_vm._s(articlea.formattedPrice))
+                                ])
+                              ])
+                            : _vm._e()
+                        ]
+                      )
+                    ]
+                  )
                 : _vm._e()
             }
-          )
-        ],
-        2
-      ),
+          ),
+          0
+        )
+      ]),
       _vm._v(" "),
       _c(
         "b-modal",
@@ -76606,6 +77392,15 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("h6", [_c("b", [_vm._v(_vm._s(_vm.disCena))])])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-sm-6" }, [
+                  _c("img", {
+                    staticStyle: { height: "50px", width: "80px" },
+                    attrs: { src: "images/univer_resized.png" }
+                  }),
+                  _vm._v(" "),
+                  _c("h6", [_c("b", [_vm._v(_vm._s(_vm.univerexportCena))])])
                 ])
               ])
             ])
@@ -76806,15 +77601,23 @@ var render = function() {
             }
           }
         },
-        [_vm._v("Compare All Products")]
+        [_vm._v("Uporedi artikle")]
       ),
       _vm._v(" "),
       _vm.products.length > 0
         ? _c("h4", { attrs: { align: "left" } }, [
-            _vm._v("Total products: " + _vm._s(_vm.filteredProducts.length))
+            _vm._v(
+              "Ukupan broj uporedjenih artikala: " +
+                _vm._s(_vm.filteredProducts.length)
+            )
           ])
         : _c("h4", { attrs: { align: "left" } }, [
-            _vm._v("Total products: " + _vm._s(_vm.filteredProducts.length))
+            _vm._v(
+              "Ukupan broj artikala " +
+                _vm._s(_vm.shop) +
+                ": " +
+                _vm._s(_vm.filteredProducts.length)
+            )
           ]),
       _c("br"),
       _vm._v(" "),
@@ -76902,141 +77705,185 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "row" },
-        [
-          _c(
-            "div",
-            { staticClass: "wrap" },
-            _vm._l(
-              _vm.filteredProducts.slice(_vm.startSlice, _vm.endSlice),
-              function(article) {
-                return _vm.products.length > 0
-                  ? _c(
-                      "div",
-                      {
-                        key: article.code,
-                        staticClass: "box one",
-                        staticStyle: { cursor: "pointer" },
-                        style: {
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "wrap" },
+          _vm._l(
+            _vm.filteredProducts.slice(_vm.startSlice, _vm.endSlice),
+            function(article) {
+              return _vm.products.length > 0
+                ? _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "b-tooltip",
+                          rawName: "v-b-tooltip.hover",
+                          modifiers: { hover: true }
+                        }
+                      ],
+                      key: article.code,
+                      staticClass: "box one",
+                      staticStyle: { cursor: "pointer", height: "550px" },
+                      style: [
+                        {
                           "background-image":
                             "url(https://d3el976p2k4mvu.cloudfront.net" +
                             article.imageUrl +
                             ")"
                         },
-                        attrs: { title: "klik za dodatne info" },
-                        on: {
-                          click: function($event) {
-                            return _vm.info(article, $event.target)
-                          }
+                        _vm.styles
+                      ],
+                      attrs: { title: article.body },
+                      on: {
+                        click: function($event) {
+                          return _vm.info(article, $event.target)
                         }
-                      },
-                      [
-                        _c(
-                          "p",
-                          {
-                            staticClass: "textOverflow",
-                            attrs: { align: "center" }
-                          },
-                          [_vm._v(_vm._s(article.body))]
-                        ),
+                      }
+                    },
+                    [
+                      _c(
+                        "p",
+                        {
+                          staticClass: "textOverflow",
+                          attrs: { align: "center" }
+                        },
+                        [_vm._v(_vm._s(article.body))]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "poster p1" }, [
+                        article.maxiCena
+                          ? _c("h4", [
+                              _c("img", {
+                                staticStyle: { height: "50px", width: "80px" },
+                                attrs: {
+                                  src: "images/delhaize-maxi-logo-vector.png"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("span", [
+                                _c("b", [
+                                  _vm._v(
+                                    _vm._s(
+                                      article.maxiCena.substring(
+                                        0,
+                                        article.maxiCena.length - 3
+                                      )
+                                    )
+                                  )
+                                ])
+                              ])
+                            ])
+                          : _vm._e(),
                         _vm._v(" "),
-                        _c("div", { staticClass: "poster p1" }, [
-                          article.maxiCena
-                            ? _c("h4", [
-                                _c("img", {
-                                  staticStyle: {
-                                    height: "50px",
-                                    width: "80px"
-                                  },
-                                  attrs: {
-                                    src: "images/delhaize-maxi-logo-vector.png"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("span", [
-                                  _c("b", [
-                                    _vm._v(
-                                      _vm._s(
-                                        article.maxiCena.substring(
-                                          0,
-                                          article.maxiCena.length - 3
-                                        )
+                        article.ideaCena
+                          ? _c("h4", [
+                              _c("img", {
+                                staticStyle: { height: "50px", width: "80px" },
+                                attrs: { src: "images/Idea_Logo_resized.png" }
+                              }),
+                              _vm._v(" "),
+                              _c("span", [
+                                _c("b", [
+                                  _vm._v(
+                                    _vm._s(
+                                      article.ideaCena.substring(
+                                        0,
+                                        article.ideaCena.length - 3
                                       )
                                     )
-                                  ])
+                                  )
                                 ])
                               ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          article.ideaCena
-                            ? _c("h4", [
-                                _c("img", {
-                                  staticStyle: {
-                                    height: "50px",
-                                    width: "80px"
-                                  },
-                                  attrs: { src: "images/Idea_Logo_resized.png" }
-                                }),
-                                _vm._v(" "),
-                                _c("span", [
-                                  _c("b", [
-                                    _vm._v(
-                                      _vm._s(
-                                        article.ideaCena.substring(
-                                          0,
-                                          article.ideaCena.length - 3
-                                        )
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        article.disCena
+                          ? _c("h4", [
+                              _c("img", {
+                                staticStyle: { height: "50px", width: "80px" },
+                                attrs: { src: "images/dis_krnjevo_resized.gif" }
+                              }),
+                              _vm._v(" "),
+                              _c("span", [
+                                _c("b", [
+                                  _vm._v(
+                                    _vm._s(
+                                      article.disCena.substring(
+                                        0,
+                                        article.disCena.length - 3
                                       )
                                     )
-                                  ])
+                                  )
                                 ])
                               ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          article.disCena
-                            ? _c("h4", [
-                                _c("img", {
-                                  staticStyle: {
-                                    height: "50px",
-                                    width: "80px"
-                                  },
-                                  attrs: {
-                                    src: "images/dis_krnjevo_resized.gif"
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("span", [
-                                  _c("b", [
-                                    _vm._v(
-                                      _vm._s(
-                                        article.disCena.substring(
-                                          0,
-                                          article.disCena.length - 3
-                                        )
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        article.univerexportCena
+                          ? _c("h4", [
+                              _c("img", {
+                                staticStyle: { height: "50px", width: "80px" },
+                                attrs: { src: "images/univer_resized.png" }
+                              }),
+                              _vm._v(" "),
+                              _c("span", [
+                                _c("b", [
+                                  _vm._v(
+                                    _vm._s(
+                                      article.univerexportCena.substring(
+                                        0,
+                                        article.univerexportCena.length - 3
                                       )
                                     )
-                                  ])
+                                  )
                                 ])
                               ])
-                            : _vm._e()
-                        ])
-                      ]
-                    )
-                  : _vm._e()
-              }
-            ),
-            0
+                            ])
+                          : _vm._e()
+                      ])
+                    ]
+                  )
+                : _vm._e()
+            }
           ),
-          _vm._v(" "),
+          0
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "wrap" },
           _vm._l(
             _vm.filteredProducts.slice(_vm.startSlice, _vm.endSlice),
             function(articlea) {
               return _vm.articles.length > 0
-                ? _c("div", { key: articlea.code, staticClass: "col-sm-3" }, [
-                    _c("div", { staticClass: "card" }, [
-                      _c("div", { staticClass: "card-body" }, [
+                ? _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "b-tooltip",
+                          rawName: "v-b-tooltip.hover",
+                          modifiers: { hover: true }
+                        }
+                      ],
+                      key: articlea.code,
+                      staticClass: "box one",
+                      staticStyle: { height: "450px" },
+                      attrs: { title: articlea.body }
+                    },
+                    [
+                      _c(
+                        "p",
+                        {
+                          staticClass: "textOverflowSeparated",
+                          attrs: { align: "center" }
+                        },
+                        [_vm._v(_vm._s(articlea.body))]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticStyle: { "margin-top": "50px" } }, [
                         articlea.imageUrl !== null && articlea.shop == "maxi"
                           ? _c("img", {
                               staticClass: "center",
@@ -77076,48 +77923,93 @@ var render = function() {
                           : _c("img", {
                               staticStyle: { height: "200px", width: "180px" },
                               attrs: { center: "", src: articlea.imageDefault }
-                            }),
-                        _vm._v(" "),
-                        _c("p", { attrs: { align: "center" } }, [
-                          _c("b", [_vm._v(_vm._s(articlea.title) + ":")]),
-                          _vm._v(" " + _vm._s(articlea.body))
-                        ]),
-                        _vm._v(" "),
-                        _c("hr"),
-                        _vm._v(" "),
-                        _c("p", { attrs: { align: "right" } }, [
+                            })
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "poster p1",
+                          staticStyle: { "margin-top": "50px" }
+                        },
+                        [
                           articlea.shop == "maxi"
-                            ? _c("img", {
-                                staticStyle: { height: "50px", width: "80px" },
-                                attrs: {
-                                  src: "images/delhaize-maxi-logo-vector.png"
-                                }
-                              })
-                            : articlea.shop == "idea"
-                            ? _c("img", {
-                                staticStyle: { height: "25px", width: "75px" },
-                                attrs: { src: "images/Idea_Logo.png" }
-                              })
-                            : articlea.shop == "dis"
-                            ? _c("img", {
-                                staticStyle: { height: "50px", width: "80px" },
-                                attrs: { src: "images/dis_krnjevo.gif" }
-                              })
+                            ? _c("h5", [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "50px",
+                                    width: "80px"
+                                  },
+                                  attrs: {
+                                    src: "images/delhaize-maxi-logo-vector.png"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("b", [
+                                  _vm._v(_vm._s(articlea.formattedPrice))
+                                ])
+                              ])
                             : _vm._e(),
                           _vm._v(" "),
-                          _c("b", [_vm._v(_vm._s(articlea.formattedPrice))])
-                        ]),
-                        _vm._v(" "),
-                        _c("hr")
-                      ])
-                    ])
-                  ])
+                          articlea.shop == "idea"
+                            ? _c("h5", [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "50px",
+                                    width: "80px"
+                                  },
+                                  attrs: { src: "images/Idea_Logo_resized.png" }
+                                }),
+                                _vm._v(" "),
+                                _c("b", [
+                                  _vm._v(_vm._s(articlea.formattedPrice))
+                                ])
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          articlea.shop == "dis"
+                            ? _c("h5", [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "50px",
+                                    width: "80px"
+                                  },
+                                  attrs: {
+                                    src: "images/dis_krnjevo_resized.gif"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("b", [
+                                  _vm._v(_vm._s(articlea.formattedPrice))
+                                ])
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
+                          articlea.shop == "univerexport"
+                            ? _c("h5", [
+                                _c("img", {
+                                  staticStyle: {
+                                    height: "50px",
+                                    width: "80px"
+                                  },
+                                  attrs: { src: "images/univer_resized.png" }
+                                }),
+                                _vm._v(" "),
+                                _c("b", [
+                                  _vm._v(_vm._s(articlea.formattedPrice))
+                                ])
+                              ])
+                            : _vm._e()
+                        ]
+                      )
+                    ]
+                  )
                 : _vm._e()
             }
-          )
-        ],
-        2
-      ),
+          ),
+          0
+        )
+      ]),
       _vm._v(" "),
       _c(
         "b-modal",
@@ -77184,6 +78076,24 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("h6", [_c("b", [_vm._v(_vm._s(_vm.disCena))])])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-sm-6" }, [
+                  _c("img", {
+                    staticStyle: { height: "50px", width: "80px" },
+                    attrs: { src: "images/univer_resized.png" }
+                  }),
+                  _vm._v(" "),
+                  _c("h6", [_c("b", [_vm._v(_vm._s(_vm.univerexportCena))])])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-sm-6" }, [
+                  _c("img", {
+                    staticStyle: { height: "50px", width: "80px" },
+                    attrs: { src: "images/univer_resized.png" }
+                  }),
+                  _vm._v(" "),
+                  _c("h6", [_c("b", [_vm._v(_vm._s(_vm.univerexportCena))])])
                 ])
               ])
             ])

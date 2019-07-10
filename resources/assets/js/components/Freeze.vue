@@ -4,9 +4,9 @@
         <button @click="fetchArticles('idea')" class="btn btn-primary">Idea Smrznuto</button>
         <button @click="fetchArticles('dis')" class="btn btn-primary">Dis Smrznuto</button>
         <br><br>
-        <button @click="fetchProducts()" class="btn btn-primary">Compare All Products</button>
-        <h4 v-if="products.length > 0" align="left">Total compared products: {{filteredProducts.length}}</h4>
-        <h4 v-else align="left">Total products {{shop}}: {{filteredProducts.length}}</h4><br>
+        <button @click="fetchProducts()" class="btn btn-primary">Uporedi artikle</button>
+        <h4 v-if="products.length > 0" align="left">Ukupan broj uporedjenih artikala: {{filteredProducts.length}}</h4>
+        <h4 v-else align="left">Ukupan broj artikala {{shop}}: {{filteredProducts.length}}</h4><br>
         <!--<input type="text" v-model="search" placeholder="Search title.."/>-->
 
         <div class="form-group has-search col-sm-3">
@@ -23,7 +23,34 @@
             </select>
         </div>
         <div class="row">
-            <div v-if="products.length > 0" class="col-sm-3" v-for="article in filteredProducts.slice(startSlice,endSlice)" v-bind:key="article.code">
+            <div class="wrap">
+                <div class="box one" v-if="products.length > 0"
+                     v-for="article in filteredProducts.slice(startSlice,endSlice)" v-bind:key="article.code"
+                     v-bind:style="[{ 'background-image': 'url(https://d3el976p2k4mvu.cloudfront.net' + article.imageUrl + ')' },styles]"
+                     @click="info(article,$event.target)"
+                     style="cursor: pointer; height: 550px;" v-b-tooltip.hover :title="article.body">
+                    <p class="textOverflow" align="center">{{ article.body }}</p>
+                    <div class="poster p1">
+                        <h4 v-if="article.maxiCena">
+                            <img style="height: 50px; width: 80px" src="images/delhaize-maxi-logo-vector.png"/>
+                            <span><b>{{ article.maxiCena.substring(0, article.maxiCena.length - 3) }}</b></span>
+                        </h4>
+                        <h4 v-if="article.ideaCena">
+                            <img style="height: 50px; width: 80px" src="images/Idea_Logo_resized.png"/>
+                            <span><b>{{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></span>
+                        </h4>
+                        <h4 v-if="article.disCena">
+                            <img style="height: 50px; width: 80px" src="images/dis_krnjevo_resized.gif"/>
+                            <span><b>{{ article.disCena.substring(0, article.disCena.length - 3) }}</b></span>
+                        </h4>
+                        <h4 v-if="article.univerexportCena">
+                            <img style="height: 50px; width: 80px" src="images/univer_resized.png"/>
+                            <span><b>{{ article.univerexportCena.substring(0, article.univerexportCena.length - 3) }}</b></span>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <!--<div v-if="products.length > 0" class="col-sm-3" v-for="article in filteredProducts.slice(startSlice,endSlice)" v-bind:key="article.code">
                 <div class="card">
                     <div class="card-body">
                         <img center v-if="article.imageUrl /*&& article.shop == 'maxi'*/" class="center modal-trigger"
@@ -31,9 +58,9 @@
                              height="180px"
                              @click="info(article,$event.target)"
                               style="cursor: pointer;" title="klik za dodatne info">
-                        <!--<img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center"
-                             :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">-->
-                        <!--<img center v-else :src="'article.imageDefault'">-->
+                        &lt;!&ndash;<img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center"
+                             :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">&ndash;&gt;
+                        &lt;!&ndash;<img center v-else :src="'article.imageDefault'">&ndash;&gt;
                         <p class="textOverflow" align="center">{{ article.body }}</p>
                         <hr>
                         <p v-if="article.maxiCena" align="right"><img style="height: 50px; width: 80px"
@@ -42,20 +69,53 @@
                         <p v-if="article.ideaCena" align="right"><img style="height: 25px; width: 75px"
                                                                       src="images/Idea_Logo.png"/><b>
                             {{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></p>
-                        <!--<p v-else align="right"><img style="height: 18px; width: 75px"
+                        &lt;!&ndash;<p v-else align="right"><img style="height: 18px; width: 75px"
                                                      src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/><b>
-                            {{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></p>-->
+                            {{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></p>&ndash;&gt;
                         <p v-if="article.disCena" align="right"><img style="height: 50px; width: 80px"
                                                                      src="images/dis_krnjevo.gif"/><b>
                             {{ article.disCena.substring(0, article.disCena.length - 3) }}</b></p>
                         <hr>
-                        <!--<b-button @click="info(article,$event.target)" class="mr-1" variant="primary">
+                        &lt;!&ndash;<b-button @click="info(article,$event.target)" class="mr-1" variant="primary">
                             Info
-                        </b-button>-->
+                        </b-button>&ndash;&gt;
+                    </div>
+                </div>
+            </div>-->
+            <div class="wrap">
+                <div style="height: 450px;" class="box one" v-if="articles.length > 0"
+                     v-for="articlea in filteredProducts.slice(startSlice,endSlice)" v-bind:key="articlea.code" v-b-tooltip.hover :title="articlea.body">
+                    <p class="textOverflowSeparated" align="center">{{ articlea.body }}</p>
+                    <div  style="margin-top: 50px">
+                        <img center v-if="articlea.imageUrl !== null && articlea.shop == 'maxi'" class="center"
+                             :src="'https://d3el976p2k4mvu.cloudfront.net'+articlea.imageUrl" width="180px">
+                        <img center v-else-if="articlea.imageUrl !== null && articlea.shop == 'idea'" class="center"
+                             :src="'https://www.idea.rs/online/'+articlea.imageUrl" width="180px" height="180px">
+                        <img center v-else-if="articlea.imageUrl !== null && articlea.shop == 'dis'" class="center"
+                             :src="'https://www.idea.rs/online/'+articlea.imageUrl" width="180px" height="180px">
+                        <img v-else center style="height: 200px; width: 180px;" :src=articlea.imageDefault>
+                    </div>
+                    <div class="poster p1"  style="margin-top: 50px">
+                        <h5 v-if="articlea.shop == 'maxi'">
+                            <img style="height: 50px; width: 80px" src="images/delhaize-maxi-logo-vector.png"/>
+                            <b>{{articlea.formattedPrice }}</b>
+                        </h5>
+                        <h5 v-if="articlea.shop == 'idea'">
+                            <img style="height: 50px; width: 80px" src="images/Idea_Logo_resized.png"/>
+                            <b>{{articlea.formattedPrice }}</b>
+                        </h5>
+                        <h5 v-if="articlea.shop == 'dis'">
+                            <img style="height: 50px; width: 80px" src="images/dis_krnjevo_resized.gif"/>
+                            <b>{{articlea.formattedPrice }}</b>
+                        </h5>
+                        <h5 v-if="articlea.shop == 'univerexport'">
+                            <img style="height: 50px; width: 80px" src="images/univer_resized.png"/>
+                            <b>{{articlea.formattedPrice }}</b>
+                        </h5>
                     </div>
                 </div>
             </div>
-            <div v-if="articles.length > 0" class="col-sm-3" v-for="articlea in filteredProducts.slice(startSlice,endSlice)"
+            <!--<div v-if="articles.length > 0" class="col-sm-3" v-for="articlea in filteredProducts.slice(startSlice,endSlice)"
                  v-bind:key="articlea.code">
                 <div class="card">
                     <div class="card-body">
@@ -78,7 +138,7 @@
                         <hr>
                     </div>
                 </div>
-            </div>
+            </div>-->
         </div>
         <b-modal :id="infoModal.id"
                  ref="modal"
@@ -112,6 +172,11 @@
                             <img style="height: 50px; width: 75px"
                                  src="images/dis_krnjevo.gif"/>
                             <h6><b>{{disCena}}</b></h6>
+                        </div>
+                        <div class="col-sm-6">
+                            <img style="height: 50px; width: 80px"
+                                 src="images/univer_resized.png"/>
+                            <h6><b>{{univerexportCena}}</b></h6>
                         </div>
                     </div>
                 </div>
@@ -170,9 +235,10 @@
                 imageUrl: '',
                 supplementaryPriceIdea: '',
                 supplementaryPriceMaxi: '',
-                ideaCena: '',
-                maxiCena: '',
-                disCena: '',
+                ideaCena: '--',
+                maxiCena: '--',
+                disCena: '--',
+                univerexportCena: '--',
                 shop: '',
                 infoModal: {
                     id: 'info-modal'
@@ -199,6 +265,23 @@
                         return this.articles;
                     }
                 }
+            },
+            styles: function() {
+                var height = 450;
+
+
+                if(this.products[0].disCena){
+                    height = 500;
+                }
+
+                if(this.products[0].univerexportCena) {
+                    height = 550;
+                }
+
+                return {
+                    height: height+'px',
+                    'cursor': 'pointer'
+                };
             }
         },
         created() {
@@ -227,6 +310,10 @@
 
                 if (article.disCena) {
                     this.disCena = article.disCena.substring(0, article.disCena.length - 3) + 'Din';
+                }
+
+                if (article.univerexportCena) {
+                    this.univerexportCena = article.univerexportCena.substring(0, article.univerexportCena.length - 3) + 'Din';
                 }
                 this.$root.$emit('bv::show::modal', this.infoModal.id, button)
             },
