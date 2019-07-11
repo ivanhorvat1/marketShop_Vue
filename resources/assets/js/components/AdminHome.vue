@@ -587,10 +587,53 @@
                             let res = JSON.parse(data.contents);
                             vm.storeMaxi(res);
                             vm.storeArticles(shop, category);
-                            M.toast({html: 'Succesfully added', classes: 'rounded'});
+                            //M.toast({html: 'Succesfully added', classes: 'rounded'});
                         });
                     }
                 }
+            },
+            makePagination(paginate, currentPage, category) {
+                let pagination;
+                if (currentPage == 0) {
+                    if (this.shop === 'idea') {
+                        pagination = {
+                            totalArticles: paginate.item_count,
+                            currentPage: paginate.current,
+                            lastPage: paginate.page_count,
+                            nextPage: paginate.current + 1,
+                            prevPage: paginate.current - 1
+                        };
+                    } else {
+                        pagination = {
+                            totalArticles: paginate.totalNumberOfResults,
+                            currentPage: paginate.currentPage,
+                            lastPage: paginate.numberOfPages,
+                            nextPage: paginate.currentPage + 1,
+                            prevPage: paginate.currentPage - 1
+                        };
+                    }
+                    if (this.shop === 'idea' && category == 'akcija') {
+                        for (let i = 2; i <= pagination.lastPage; i++) {
+                            this.fetchArticles(i, this.shop, category);
+                        }
+                    } else if (this.shop === 'maxi' && category == 'akcija') {
+                    }/* else if (this.shop === 'maxi' && category == 'akcija') {
+                        for (let i = 1; i <= 60; i++) {
+                            this.fetchArticles(i, this.shop, category);
+                        }
+                    }
+                    }*/
+                } else {
+                    document.getElementById("loader").style.display = "none";
+                    pagination = {
+                        totalArticles: this.pagination.totalArticles,
+                        currentPage: currentPage,
+                        lastPage: this.pagination.lastPage,
+                        nextPage: currentPage + 1,
+                        prevPage: currentPage - 1
+                    };
+                }
+                this.pagination = pagination;
             },
             storeMaxi(res, i) {
                 if (i == 0) {
@@ -674,28 +717,28 @@
                 fetch('api/dis_update_drinks')
                     .then(res => res.json())
                     .then(res => {
-                        M.toast({html: res.success, classes: 'rounded'}, 3000);
+                        //M.toast({html: res.success, classes: 'rounded'}, 3000);
                     })
             },
             updateDisMeat() {
                 fetch('api/dis_update_meat')
                     .then(res => res.json())
                     .then(res => {
-                        M.toast({html: res.success, classes: 'rounded'}, 3000);
+                       // M.toast({html: res.success, classes: 'rounded'}, 3000);
                     })
             },
             updateDisFreeze() {
                 fetch('api/dis_update_freeze')
                     .then(res => res.json())
                     .then(res => {
-                        M.toast({html: res.success, classes: 'rounded'}, 3000);
+                        //M.toast({html: res.success, classes: 'rounded'}, 3000);
                     })
             },
             updateDisSweet() {
                 fetch('api/dis_update_sweet')
                     .then(res => res.json())
                     .then(res => {
-                        M.toast({html: res.success, classes: 'rounded'}, 3000);
+                        //M.toast({html: res.success, classes: 'rounded'}, 3000);
                     })
             }
         }

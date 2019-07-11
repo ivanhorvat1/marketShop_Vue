@@ -45,7 +45,7 @@
                 <button style="background-color: #8CC276" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{Auth::user()->name}}</button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="{{ route('home') }}">Profile</a>
-
+                            <div class="form-group">
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 Logout
                             </a>
@@ -53,7 +53,7 @@
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 {{ csrf_field() }}
                             </form>
-
+                            </div>
                     @endguest
                 </div>
         </div>--}}
@@ -61,33 +61,32 @@
             @guest
                 <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Login/Register
                     <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-
-                    <li><a href="{{ route('login') }}">Login</a></li>
-                    <li><a href="{{ route('register') }}">Register</a></li>
-                </ul>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="{{ route('login') }}">Login</a>
+                    <a class="dropdown-item" href="{{ route('register') }}">Register</a>
+                </div>
             @else
-                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">{{Auth::user()->name}}
+                <button class="btn btn-primary dropdown-toggle" type="button"
+                        data-toggle="dropdown">{{Auth::user()->name}}
                     <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                    <li><a href="{{ route('home') }}">Profile</a></li>
-                    <li>
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            Logout
-                        </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="{{ route('home') }}">Profile</a>
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Logout
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
+                </div>
+            @endguest
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            {{ csrf_field() }}
-                        </form>
-                    </li>
-                    @endguest
-                </ul>
         </div>
 
     </div>
 
-<br>
-<br>
+    <br>
+    <br>
     <div class="container">
         @if($showStore)
             @include('frontend.articlesHomePage')
@@ -97,9 +96,9 @@
     </div>
 </div>
 <script src="{{ asset('js/app.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>--}}
 <script>
-    $(document).ready(function(){
+    /*$(document).ready(function () {
         // $('#preloader-wrapper').css("display", "none");
         $('.collapsible').collapsible();
         $('.modal').modal();
@@ -109,11 +108,12 @@
             indicators: true
         });
         autoplay();
+
         function autoplay() {
             $('.carousel').carousel('next');
             setTimeout(autoplay, 4500);
         }
-    });
+    });*/
 
     window.onbeforeunload = function () {
         window.scrollTo(0, 0);

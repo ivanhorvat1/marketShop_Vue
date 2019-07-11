@@ -45,7 +45,7 @@ class ActionSaleController extends Controller
                 }
             }
 
-            $maxiIdeaDis = [];
+            /*$maxiIdeaDis = [];
 
             foreach ($dis as $di){
                 foreach ($maxiIdea as $maxide){
@@ -80,6 +80,56 @@ class ActionSaleController extends Controller
                             $di['imageUrl'] = $maxide['imageUrl'];
                             $di['maxiCena'] = $maxiCena;
                             if(!in_array($di['barcodes'],array_column($maxiIdeaDis, 'barcodes'))) {
+                                array_push($maxiIdeaDis, $di);
+                            }
+                        }
+                    }
+                }
+            }*/
+
+            $maxiIdeaDis = [];
+
+            foreach ($dis as $di) {
+                foreach ($maxiIdea as $maxide) {
+                    if (explode(',', $di['barcodes']) == explode(',', $maxide['barcodes'])) {
+                        if ($di['price'] >= $maxide['price']) {
+
+                            if (!$maxide['ideaCena']) {
+                                $maxide['ideaCena'] = $maxide['formattedPrice'];
+                            }
+
+                            if (!$maxide['maxiCena']) {
+                                $maxide['maxiCena'] = $maxide['formattedPrice'];
+                            }
+
+                            $maxide[$di['shop'] . 'Cena'] = $di['formattedPrice'];
+                            $maxide['disPriceCompare'] = $di['price'];
+//                            $maxide['maxiPriceCompare'] = $maxide['maxiPriceCompare'];
+//                            $maxide['ideaPriceCompare'] = $maxide['ideaPriceCompare'];
+                            if (!in_array($maxide['barcodes'], array_column($maxiIdeaDis, 'barcodes'))) {
+                                array_push($maxiIdeaDis, $maxide);
+                            }
+                        } else {
+                            if ($maxide['ideaCena']) {
+                                $ideaCena = $maxide['ideaCena'];
+                            } else {
+                                $ideaCena = $maxide['formattedPrice'];
+                            }
+
+                            if ($maxide['maxiCena']) {
+                                $maxiCena = $maxide['maxiCena'];
+                            } else {
+                                $maxiCena = $maxide['formattedPrice'];
+                            }
+
+                            $di['ideaCena'] = $ideaCena;
+                            $di['disCena'] = $di['formattedPrice'];
+                            $di['disPriceCompare'] = $di['price'];
+//                            $maxide['maxiPriceCompare'] = $maxide['maxiPriceCompare'];
+//                            $maxide['ideaPriceCompare'] = $maxide['ideaPriceCompare'];
+                            $di['imageUrl'] = $maxide['imageUrl'];
+                            $di['maxiCena'] = $maxiCena;
+                            if (!in_array($di['barcodes'], array_column($maxiIdeaDis, 'barcodes'))) {
                                 array_push($maxiIdeaDis, $di);
                             }
                         }
