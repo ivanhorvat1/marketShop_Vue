@@ -49,74 +49,57 @@
             <br><br>-->
         </div>
         <h4>Total products on Action: {{akcija.length}}</h4><br>
-        <!-- slideshow -->
+        <div>
+            <b-carousel
+                    id="carousel-1"
+                    v-model="slide"
+                    :interval="4000"
+                    controls
+                    indicators
+                    background="#ababab"
+                    img-width="1024"
+                    img-height="480"
+                    style="text-shadow: 1px 1px 2px #333;"
+                    @sliding-start="onSlideStart"
+                    @sliding-end="onSlideEnd"
+            >
+                <!-- Text slides with image -->
+                <b-carousel-slide
+                        caption="First slide"
+                        text="Nulla vitae elit libero, a pharetra augue mollis interdum."
+                        img-src="https://picsum.photos/1024/480/?image=52"
+                ></b-carousel-slide>
 
-        <!--<div class="carousel carousel-slider">
-            <div class="carousel-item" v-for="article in akcija.slice(startSlice,endSlice)"
-                 v-bind:key="article.code" style="height: 400px">
-                <img center v-if="article.imageUrl /*&& article.shop == 'maxi'*/" class="center"
-                     :src="'https://d3el976p2k4mvu.cloudfront.net'+article.imageUrl" width="180px"
-                     height="180px">
-                &lt;!&ndash;<img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center"
-                                 :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">&ndash;&gt;
-                <img center v-else :src="'article.imageDefault'">
-                <h6 align="center"><b>{{ article.title }}:</b> {{ article.body }}</h6>
-                <hr>
-                <h5 v-if="article.maxiCena" align="center"><img style="height: 50px; width: 80px"
-                                                                src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"/><b>
-                    {{ article.maxiCena.substring(0, article.maxiCena.length - 3) }}</b></h5>
-                <h5 v-if="article.ideaCena" align="center"><img style="height: 20px; width: 75px"
-                                                                src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/><b>
-                    {{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></h5>
-                <h5 v-if="article.disCena" align="center"><img style="height: 50px; width: 80px"
-                                                               src="http://www.serbianlogo.com/thumbnails/dis_krnjevo.gif"/><b>
-                    {{ article.disCena.substring(0, article.disCena.length - 3) }}</b></h5>
-            </div>
-        </div>-->
+                <!-- Slides with custom text -->
+                <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54">
+                    <h1>Hello world!</h1>
+                </b-carousel-slide>
 
-        <!--<div align="center" class="container">
-            <div id="demo" class="carousel slide mb-5 " data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active" style="height: 400px">
-                        <h3 style="padding-top: 200px">Izdvajamo</h3>
-                    </div>
-                    <div class="carousel-item" v-for="article in akcija.slice(startSlice,endSlice)"
-                         v-bind:key="article.code" style="height: 400px">
-                        <img center v-if="article.imageUrl /*&& article.shop == 'maxi'*/" class="center"
-                             :src="'https://d3el976p2k4mvu.cloudfront.net'+article.imageUrl" width="180px"
-                             height="180px">
-                        &lt;!&ndash;<img center v-else-if="article.imageUrl && article.shop == 'idea'" class="center"
-                             :src="'https://www.idea.rs/online/'+article.imageUrl" width="180px" height="180px">&ndash;&gt;
-                        <img center v-else :src="'article.imageDefault'">
-                        <h6 align="center"><b>{{ article.title }}:</b> {{ article.body }}</h6>
-                        <hr>
-                        <h5 v-if="article.maxiCena" align="center"><img style="height: 50px; width: 80px"
-                                                                        src="https://www.seeklogovector.com/wp-content/uploads/2018/06/delhaize-maxi-logo-vector.png"/><b>
-                            {{ article.maxiCena.substring(0, article.maxiCena.length - 3) }}</b></h5>
-                        <h5 v-if="article.ideaCena" align="center"><img style="height: 20px; width: 75px"
-                                                                        src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Idea_Logo.svg"/><b>
-                            {{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></h5>
-                        <h5 v-if="article.disCena" align="center"><img style="height: 50px; width: 80px"
-                                                                       src="http://www.serbianlogo.com/thumbnails/dis_krnjevo.gif"/><b>
-                            {{ article.disCena.substring(0, article.disCena.length - 3) }}</b></h5>
-                    </div>
-                </div>
+                <!-- Slides with image only -->
+                <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
 
-                &lt;!&ndash; Left and right controls &ndash;&gt;
-                <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                    <span class="carousel-control-prev-icon"
-                          style="background-color: black; border-radius: 50%; width: 30px; height: 30px;"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#demo" data-slide="next">
-                    <span class="carousel-control-next-icon"
-                          style="background-color: black; border-radius: 50%; width: 30px; height: 30px;"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        </div>-->
+                <!-- Slides with img slot -->
+                <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
+                <b-carousel-slide>
+                    <img
+                            slot="img"
+                            class="d-block img-fluid w-100"
+                            width="1024"
+                            height="480"
+                            src="https://picsum.photos/1024/480/?image=55"
+                            alt="image slot"
+                    >
+                </b-carousel-slide>
 
-        <!-- end slideshow -->
+                <!-- Slide with blank fluid image to maintain slide aspect ratio -->
+                <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eros felis, tincidunt
+                        a tincidunt eget, convallis vel est. Ut pellentesque ut lacus vel interdum.
+                    </p>
+                </b-carousel-slide>
+            </b-carousel>
+        </div>
 
         <!--<h4 v-if="articles.length > 0">Total products: {{articles.length}}</h4><br>
 
@@ -151,20 +134,6 @@
         <button @click="toTopFunction()" id="BtnToTop" title="Go to top">&uarr;</button>
         <div id="loader"></div>
         <br><br>
-        <!--<div class="col-md-12 text-center">
-            <button :disabled="pagination.nextPage >= pagination.lastPage" @click="fetchArticles(pagination.nextPage,category)" class="btn btn-primary">Load More</button>
-        </div>
-        <br>-->
-        <!--<nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <li v-bind:class="[{disabled: pagination.prevPage<0}]" class="page-item"><a class="page-link" href="#"
-                                                                                        @click="fetchArticles(pagination.prevPage)">Previous</a>
-            </li>
-            <li class="page-item disabled"><a class="page-link text-dark" href="#">Page {{ pagination.currentPage }} of {{ pagination.lastPage }}</a></li>
-            <li v-bind:class="[{disabled: pagination.currentPage===pagination.lastPage}]" class="page-item"><a
-                    class="page-link" href="#" @click="fetchArticles(pagination.nextPage)">Next</a></li>
-        </ul>
-    </nav>-->
     </div>
 </template>
 <script>
@@ -188,7 +157,9 @@
                 edit: false,
                 shop: '',
                 products: [],
-                categoryArray: []
+                categoryArray: [],
+                slide: 0,
+                sliding: null
             }
         },
         created() {
@@ -201,12 +172,18 @@
             //window.addEventListener('scroll', this.handleScroll);
         },
         methods: {
-            /*toTopFunction() {
+            onSlideStart(slide) {
+                this.sliding = true
+            },
+            onSlideEnd(slide) {
+                this.sliding = false
+            },
+            toTopFunction() {
                 document.body.scrollTop = 0;
                 document.documentElement.scrollTop = 0;
             },
             handleScroll() {
-                if (this.articles.length > 0) {
+                // if (this.articles.length > 0) {
                     let scroll = Math.ceil($(window).scrollTop() + $(window).height());
                     let windowHeight = Math.round($(document).height());
 
@@ -229,9 +206,9 @@
                     } else {
                         document.getElementById("BtnToTop").style.display = "none";
                     }
-                }
+                // }
             },
-            hideLoader() {
+            /*hideLoader() {
                 document.getElementById("loader").style.display = "none";
             },
             dinamicUrl(currentPage, shop, category) {

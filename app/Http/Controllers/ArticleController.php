@@ -81,7 +81,38 @@ class ArticleController extends Controller
                     'formattedPrice' => $request->products[0][$i]['price']['formatted_price'], 'price' => $request->products[0][$i]['price']['amount'],
                     'supplementaryPriceLabel1' => $request->products[0][$i]['statistical_price'], 'supplementaryPriceLabel2' => null, 'shop' => $request->shop, 'category' => $request->category]);
             }
-        }else{
+        }
+        elseif ($request->category == 'akcija' && $request->shop == 'maxi'){
+            for ($i = 0; $i <= $arrayLengt; $i++) {
+                if (array_key_exists('images', $request->products[0][$i]) && !empty($request->products[0][$i]['images'])) {
+                    $imageUrl = $request->products[0][$i]['images'][2]['url'];
+                } else {
+                    $imageDefault = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
+                }
+
+                preg_match_all('!\d+!', $request->products[0][$i]['potentialPromotions'][0]['description'], $matches);
+
+                foreach($matches as $match){
+                    $count = sizeof($match);
+
+                    if($count == 2){
+                        $formattedPrice = $match[1].' RSD';
+                        $string = $match[1].'00';
+                        $price = (int)$string;
+                    }elseif($count == 3){
+                        $formattedPrice = $match[1].','.$match[2].' RSD';
+                        $string = $match[1].$match[2];
+                        $price = (int)$string;
+                    }
+                }
+
+                array_push($storeRecords, ['code'=>$request->products[0][$i]['code'], 'title' => $request->products[0][$i]['manufacturerName'],
+                    'body' => $request->products[0][$i]['name'], 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => implode(',', $request->products[0][$i]['eanCodes']),
+                    'formattedPrice' => $formattedPrice, 'price' => $price,
+                    'supplementaryPriceLabel1' => $request->products[0][$i]['price']['supplementaryPriceLabel1'],
+                    'supplementaryPriceLabel2' => $request->products[0][$i]['price']['supplementaryPriceLabel2'], 'shop' => $request->shop, 'category' => $request->category]);
+            }
+        } else{
             for ($i = 0; $i <= $arrayLengt; $i++) {
                 if (array_key_exists('images', $request->products[0][$i]) && !empty($request->products[0][$i]['images'])) {
                     $imageUrl = $request->products[0][$i]['images'][2]['url'];

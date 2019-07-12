@@ -24,56 +24,134 @@
 </head>
 <body>
 <div id="app">
-    <b-navbar toggleable="lg" type="dark">
-        <b-navbar-brand href="/"><img center src="images/Logo6.png" style="height: 150px; width: 150px">
-        </b-navbar-brand>
+    <div>
+        {{--<b-navbar toggleable="lg" type="dark">
+            <b-navbar-brand href="/"><img center src="images/Logo6.png" style="height: 150px; width: 150px"></b-navbar-brand>
 
-        <b-navbar-toggle target="nav-collapse" style="background-color: #591259"></b-navbar-toggle>
+            <b-navbar-toggle target="nav-collapse" style="background-color: #591259"></b-navbar-toggle>
 
-        <b-collapse id="nav-collapse" is-nav>
-            <b-navbar-nav>
-                <b-nav-item href="/"><i class="fas fa-home fa-3x"></i><span class="menuspan">Home</span></b-nav-item>
-                <b-nav-item href="/action"><i class="fas fa-percentage fa-3x"></i><span class="menuspan">Akcija</span>
-                </b-nav-item>
-                <b-nav-item href="/freeze"><i class="fas fa-snowflake fa-3x"></i><span class="menuspan">Smrznuto</span>
-                </b-nav-item>
-                <b-nav-item href="/drinks"><i class="fas fa-glass-cheers fa-3x"></i><span class="menuspan">Pice</span>
-                </b-nav-item>
-                <b-nav-item href="/sweets"><i class="fas fa-candy-cane fa-3x"></i><span class="menuspan">Slatkisi</span>
-                </b-nav-item>
-                <b-nav-item href="/meats"><i class="fas fa-drumstick-bite fa-3x"></i><span class="menuspan">Meso</span>
-                </b-nav-item>
-            </b-navbar-nav>
-        </b-collapse>
-    </b-navbar>
-    <div class="float-right">
-        <!-- Authentication Links -->
-        <div class="dropdown">
-            @guest
-                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Login/Register
-                    <span class="caret"></span></button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="{{ route('login') }}">Login</a>
-                    <a class="dropdown-item" href="{{ route('register') }}">Register</a>
-                </div>
-            @else
-                <button class="btn btn-primary dropdown-toggle" type="button"
-                        data-toggle="dropdown">{{Auth::user()->name}}
-                    <span class="caret"></span></button>
+            <b-collapse id="nav-collapse" is-nav>
+                <b-navbar-nav>
+                    <b-nav-item href="/"><i class="fas fa-home fa-3x"></i><span class="menuspan">Home</span></b-nav-item>
+                    <b-nav-item href="/action"><i class="fas fa-percentage fa-3x"></i><span class="menuspan">Akcija</span></b-nav-item>
+                    <b-nav-item href="/freeze"><i class="fas fa-snowflake fa-3x"></i><span class="menuspan">Smrznuto</span></b-nav-item>
+                    <b-nav-item href="/drinks"><i class="fas fa-glass-cheers fa-3x"></i><span class="menuspan">Pice</span></b-nav-item>
+                    <b-nav-item href="/sweets"><i class="fas fa-candy-cane fa-3x"></i><span class="menuspan">Slatkisi</span></b-nav-item>
+                    <b-nav-item href="/meats"><i class="fas fa-drumstick-bite fa-3x"></i><span class="menuspan">Meso</span></b-nav-item>
+                </b-navbar-nav>
 
-                <a class="dropdown-item" href="{{ route('home') }}">Profile</a>
-                <div class="form-group">
-                    <a class="dropdown-item" href="{{ route('logout') }}"
-                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        Logout
-                    </a>
+                <!-- Right aligned nav items -->
+                <b-navbar-nav class="ml-auto">
 
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        {{ csrf_field() }}
-                    </form>
-                </div>
-            @endguest
-        </div>
+                    <div class="dropdown">
+                        @guest
+                            <button style="background-color: #153607" class="btn btn-primary dropdown-toggle" type="button"
+                                    data-toggle="dropdown">Login/Register
+                                <span class="caret"></span></button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="{{ route('login') }}">Login</a>
+                                <a class="dropdown-item" href="{{ route('register') }}">Register</a>
+                            </div>
+                        @else
+                            <button style="background-color: #153607" class="btn btn-primary dropdown-toggle" type="button"
+                                    data-toggle="dropdown">{{Auth::user()->name}}
+                                <span class="caret"></span></button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="{{ route('home') }}">Profile</a>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    Logout
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    {{ csrf_field() }}
+                                </form>
+                            </div>
+                        @endguest
+
+                    </div>
+                </b-navbar-nav>
+            </b-collapse>
+        </b-navbar>--}}
+        <nav class="mb-1 navbar navbar-expand-lg navbar-dark default-color">
+            <a class="navbar-brand" href="/"><img center src="images/Logo6.png" style="height: 150px; width: 150px"></a>
+            <button style="background-color: #591259" class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent-333"
+                    aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/"><i class="fas fa-home fa-3x"></i><span class="menuspan">Home</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/action"><i class="fas fa-percentage fa-3x"></i><span
+                                    class="menuspan">Akcija</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/freeze"><i class="fas fa-snowflake fa-3x"></i><span class="menuspan">Smrznuto</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/drinks"><i class="fas fa-glass-cheers fa-3x"></i><span
+                                    class="menuspan">Pice</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/sweets"><i class="fas fa-candy-cane fa-3x"></i><span
+                                    class="menuspan">Slatkisi</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/meats"><i class="fas fa-drumstick-bite fa-3x"></i><span
+                                    class="menuspan">Meso</span></a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto nav-flex-icons">
+                    {{--<li class="nav-item">
+                        <a class="nav-link waves-effect waves-light">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item" >
+                        <a class="nav-link waves-effect waves-light">
+                            <i class="fab fa-google-plus-g"></i>
+                        </a>
+                    </li>--}}
+                    <li class="nav-item avatar dropdown">
+                        @guest
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false" style="color: #591259">
+                                <img src="images/default_avatar.png" style="width: 50px; height: 50px;"
+                                     class="rounded-circle z-depth-0"
+                                     alt="avatar image">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-secondary"
+                                 aria-labelledby="navbarDropdownMenuLink-55">
+                                <a class="dropdown-item" href="{{ route('login') }}">Login</a>
+                                <a class="dropdown-item" href="{{ route('register') }}">Register</a>
+                            </div>
+                        @else
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false" style="color: #591259">
+                                <img src="images/default_avatar.png" style="width: 50px; height: 50px;"
+                                     class="rounded-circle z-depth-0"
+                                     alt="avatar image">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-secondary"
+                                 aria-labelledby="navbarDropdownMenuLink-55">
+                                <a class="dropdown-item" href="{{ route('home') }}">Profile</a>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    Logout
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                      style="display: none;">
+                                    {{ csrf_field() }}
+                                </form>
+                            </div>
+                        @endguest
+                    </li>
+                </ul>
+            </div>
+        </nav>
     </div>
     @yield('content')
 </div>

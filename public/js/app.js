@@ -4546,37 +4546,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4597,7 +4566,9 @@ __webpack_require__.r(__webpack_exports__);
       edit: false,
       shop: '',
       products: [],
-      categoryArray: []
+      categoryArray: [],
+      slide: 0,
+      sliding: null
     };
   },
   created: function created() {
@@ -4610,313 +4581,41 @@ __webpack_require__.r(__webpack_exports__);
     //window.addEventListener('scroll', this.handleScroll);
   },
   methods: {
-    /*toTopFunction() {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
+    onSlideStart: function onSlideStart(slide) {
+      this.sliding = true;
     },
-    handleScroll() {
-        if (this.articles.length > 0) {
-            let scroll = Math.ceil($(window).scrollTop() + $(window).height());
-            let windowHeight = Math.round($(document).height());
-             if (scroll == windowHeight) {
-                //if(this.pagination.nextPage <= this.pagination.lastPage) {
-                document.getElementById("loader").style.display = "block";
-                this.endSlice += 12;
-                //}
-            } else {
-                document.getElementById("loader").style.display = "none";
-            }
-             if (this.articles.length < this.endSlice && this.articles.length < this.endSlice) {
-                document.getElementById("loader").style.display = "none";
-                return;
-            }
-             if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                document.getElementById("BtnToTop").style.display = "block";
-            } else {
-                document.getElementById("BtnToTop").style.display = "none";
-            }
-        }
+    onSlideEnd: function onSlideEnd(slide) {
+      this.sliding = false;
     },
-    hideLoader() {
+    toTopFunction: function toTopFunction() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    },
+    handleScroll: function handleScroll() {
+      // if (this.articles.length > 0) {
+      var scroll = Math.ceil($(window).scrollTop() + $(window).height());
+      var windowHeight = Math.round($(document).height());
+
+      if (scroll == windowHeight) {
+        //if(this.pagination.nextPage <= this.pagination.lastPage) {
+        document.getElementById("loader").style.display = "block";
+        this.endSlice += 12; //}
+      } else {
         document.getElementById("loader").style.display = "none";
-    },
-    dinamicUrl(currentPage, shop, category) {
-        let url;
-        //https://cors-anywhere.herokuapp.com/
-        //https://crossorigin.me/
-        if (shop === 'maxi' && category === 'akcija') {
-            /!*if (currentPage == 0) {
-                url = 'https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
-            } else {
-                url = 'https://www.maxi.rs/view/QlProductListComponentController/loadMore?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
-            }*!/
-            url = 'https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=40&sort=promotion'
-        }
-        else if (shop === 'idea' && category === 'akcija') {
-            url = 'https://cors-anywhere.herokuapp.com/https://www.idea.rs/online/v2/offers?per_page=48&page=' + currentPage + '&filter%5Bsort%5D=offerSoldStatisticsDesc';
-        }
-        else if (shop === 'maxi' && category === 'pice') {
-            url = 'https://www.maxi.rs/online/Pice%2C-kafa-i-caj/c/01/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion';
-        }
-        else if (shop === 'maxi' && category === 'meso') {
-            url = 'https://www.maxi.rs/online/Meso%2C-mesne-i-riblje-prera%C4%91evine/c/02/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion';
-        }
-        else if (shop === 'maxi' && category === 'slatkisi') {
-            url = 'https://www.maxi.rs/online/Cokolade%2C-keks%2C-slane-i-slatke-grickalice/c/09/getSearchPageData?q=%3Apopularity&sort=promotion&pageSize=5000&pageNumber=0';
-        }
-        else if (shop === 'maxi' && category === 'smrznuti') {
-            url = 'https://www.maxi.rs/online/Smrznuti-proizvodi/c/10/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion';
-        }
-        /!*else if (shop === 'idea' && category === 'alkpica') {
-            url = 'https://www.idea.rs/online/v2/categories/60007888/products?per_page=5000&page=1&filter%5Bsort%5D=offerSoldStatisticsDesc';
-        }
-        else if(this.shop === 'meso'){
-            if(currentPage == 0) {
-                 url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/online/Meso%2C-mesne-i-riblje-prera%C4%91evine/c/02/getSearchPageData?pageSize=12&pageNumber=' + currentPage + '&sort=promotion';
-            }else{
-                 url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/online/Meso,-mesne-i-riblje-prera%C4%91evine/c/02/loadMore?pageSize=12&pageNumber=' + currentPage + '&sort=promotion';
-            }
-        }
-        else if(this.shop === 'slatkisi') {
-            if (currentPage == 0) {
-                url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/online/Cokolade%2C-keks%2C-slane-i-slatke-grickalice/c/09/getSearchPageData?pageSize=12';
-            } else {
-                url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/online/Cokolade%2C-keks%2C-slane-i-slatke-grickalice/c/09/loadMore?pageSize=12&pageNumber=' + currentPage + '&sort=popularity';
-            }
-        }
-        else{
-            if(currentPage == 0) {
-                url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
-            }else{
-                url = 'https://cors-anywhere.herokuapp.com/https://www.maxi.rs/view/QlProductListComponentController/loadMore?componentId=PromotionListingProductListingComponent&pageNumber=' + currentPage + '&sort=promotionType';
-            }
-        }*!/
-         return url;
-    },
-    fetchSaleProducts() {
-        fetch('api/action_sale_fetch')
-            .then(res => res.json())
-            .then(res => {
-                this.akcija = _.orderBy(res, 'price', 'desc');
-                $('body').addClass('loaded');
-            })
-    },
-    fetchDrinkProducts() {
-        fetch('api/action_drink_fetch')
-    },
-    fetchMeatProducts() {
-        fetch('api/action_meat_fetch')
-    },
-    fetchSweetProducts() {
-        fetch('api/action_sweet_fetch')
-    },
-    fetchFreezeProducts() {
-        fetch('api/action_freeze_fetch')
-    },
-    fetchArticles(currentPage, shop, category) {
-        let vm = this;
-        let url;
-         this.shop = shop;
-        if (currentPage == 0) {
-            this.articles = [];
-        }
-        currentPage = currentPage || '0';
-        url = vm.dinamicUrl(currentPage, shop, category);
-         if (shop == 'idea') {
-            fetch(url)
-                .then(res => res.json())
-                .then(res => {
-                    if (currentPage == 0) {
-                        if (this.shop === 'idea') {
-                            //this.articles = res.products;
-                            this.idea = res.products;
-                            vm.makePagination(res._page, currentPage, category);
-                        } else {
-                            //this.articles = res.results;
-                            this.maxi = res.results;
-                            vm.makePagination(res.pagination, currentPage, category);
-                        }
-                    } else {
-                        if (this.shop === 'idea') {
-                            //this.articles = this.articles.concat(res.products);
-                            this.idea = this.idea.concat(res.products);
-                            vm.makePagination(this.pagination, currentPage, category);
-                        } else {
-                            //this.articles = this.articles.concat(res);
-                            this.maxi = this.maxi.concat(res);
-                            vm.makePagination(this.pagination, currentPage, category);
-                        }
-                    }
-                })
-                .catch(err => console.log(err));
-        } else {
-            if (category == 'akcija') {
-                //https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber="+i+"&sort=promotion
-                //http://api.allorigins.ml
-                for (let i = 0; i <= 60; i++) {
-                    $.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent("https://www.maxi.rs/search/promotions/getSearchPageData?pageSize=20&pageNumber=" + i + "&sort=promotion") + '&callback=?', function (data) {
-                        let res = JSON.parse(data.contents);
-                        vm.storeMaxi(res, i);
-                    });
-                     /!*if(i > 59){
-                        alert('done');
-                    }*!/
-                }
-            } else {
-                $.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent(url) + '&callback=?', function (data) {
-                    let res = JSON.parse(data.contents);
-                    vm.storeMaxi(res);
-                    vm.storeArticles(shop, category);
-                    M.toast({html: 'Succesfully added', classes: 'rounded'});
-                });
-            }
-        }
-    },
-    storeMaxi(res, i) {
-        if (i == 0) {
-            this.maxi = [];
-            this.maxi = res.results;
-        } else if (i > 0) {
-            this.maxi = this.maxi.concat(res.results);
-        } else {
-            this.maxi = res.results;
-        }
-    },
-    storeArticles(shop, category) {
-        let vm = this;
-        let picaIdea = [];
-        if (shop == 'maxi') {
-            vm.storeVisit(this.maxi, shop, category);
-        } else if (shop == 'idea' && category == 'pice' || category == 'meso' || category == 'slatkisi' || category == 'smrznuti') {
-            this.idea.forEach(function (item) {
-                item.forEach(function (data) {
-                    picaIdea.push(data);
-                })
-            })
-            vm.storeVisit(picaIdea, shop, category);
-        } else if (shop == 'idea' && category == 'akcija') {
-            vm.storeVisit(this.idea, shop, category);
-        }
-    },
-    storeVisit(article, shop, category) {
-        this.products = [];
-        this.products.push(article);
-        axios({
-            method: 'post',
-            url: '/api/action_sale_store',
-            data: {
-                products: this.products,
-                shop: shop,
-                category: category
-            }
-        });
-    },
-    makePagination(paginate, currentPage, category) {
-        let pagination;
-        if (currentPage == 0) {
-            if (this.shop === 'idea') {
-                pagination = {
-                    totalArticles: paginate.item_count,
-                    currentPage: paginate.current,
-                    lastPage: paginate.page_count,
-                    nextPage: paginate.current + 1,
-                    prevPage: paginate.current - 1
-                };
-            } else {
-                pagination = {
-                    totalArticles: paginate.totalNumberOfResults,
-                    currentPage: paginate.currentPage,
-                    lastPage: paginate.numberOfPages,
-                    nextPage: paginate.currentPage + 1,
-                    prevPage: paginate.currentPage - 1
-                };
-            }
-             if (this.shop === 'idea' && category == 'akcija') {
-                for (let i = 2; i <= pagination.lastPage; i++) {
-                    this.fetchArticles(i, this.shop, category);
-                }
-            }
-            /!* else if (this.shop === 'maxi' && category == 'akcija') {
-                                    for (let i = 1; i <= 60; i++) {
-                                        this.fetchArticles(i, this.shop, category);
-                                    }
-                                }*!/
-        } else {
-            document.getElementById("loader").style.display = "none";
-            pagination = {
-                totalArticles: this.pagination.totalArticles,
-                currentPage: currentPage,
-                lastPage: this.pagination.lastPage,
-                nextPage: currentPage + 1,
-                prevPage: currentPage - 1
-            };
-        }
-        this.pagination = pagination;
-    },
-    getCategoriesIdea(categoryNumber, data) {
-        let vm = this;
-        let url = 'https://cors-anywhere.herokuapp.com/https://www.idea.rs/online/v2/categories/' + categoryNumber;
-         if (data != undefined) {
-            this.categoryArray.push(data);
-        } else {
-            this.categoryArray = [];
-        }
-        fetch(url)
-            .then(res => res.json())
-            .then(res => {
-                if (res.has_children) {
-                    res.children.forEach(function (item) {
-                        vm.getCategoriesIdea(item.id, item);
-                    })
-                }
-            })
-    },
-    checkChildren() {
-        let noChildren = [];
-        let ideapice = [];
-        this.categoryArray.forEach(function (item) {
-            if (!item.has_children) {
-                noChildren.push(item.id)
-            }
-        });
-         noChildren.forEach(function (items) {
-            let url = 'https://cors-anywhere.herokuapp.com/https://www.idea.rs/online/v2/categories/' + items + '/products?per_page=5000&page=1&filter%5Bsort%5D=offerSoldStatisticsDesc';
-            fetch(url)
-                .then(res => res.json())
-                .then(res => {
-                    ideapice.push(res.products);
-                })
-        });
-         this.idea = ideapice;
-    },
-    updateDisDrinks() {
-        fetch('api/dis_update_drinks')
-            .then(res => res.json())
-            .then(res => {
-                M.toast({html: res.success, classes: 'rounded'}, 3000);
-            })
-    },
-    updateDisMeat() {
-        fetch('api/dis_update_meat')
-            .then(res => res.json())
-            .then(res => {
-                M.toast({html: res.success, classes: 'rounded'}, 3000);
-            })
-    },
-    updateDisFreeze() {
-        fetch('api/dis_update_freeze')
-            .then(res => res.json())
-            .then(res => {
-                M.toast({html: res.success, classes: 'rounded'}, 3000);
-            })
-    },
-    updateDisSweet() {
-        fetch('api/dis_update_sweet')
-            .then(res => res.json())
-            .then(res => {
-                M.toast({html: res.success, classes: 'rounded'}, 3000);
-            })
-    }*/
+      }
+
+      if (this.articles.length < this.endSlice && this.articles.length < this.endSlice) {
+        document.getElementById("loader").style.display = "none";
+        return;
+      }
+
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("BtnToTop").style.display = "block";
+      } else {
+        document.getElementById("BtnToTop").style.display = "none";
+      } // }
+
+    }
   }
 });
 
@@ -5273,128 +4972,6 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/Navbar.vue?vue&type=script&lang=js&":
-/*!************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/Navbar.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-$(window).on('load', function () {
-  var current = location.pathname;
-  $('nav li a').each(function () {
-    var $this = $(this); // if the current path is like this link, make it active
-
-    if ($this.attr('href') === current) {
-      $this.children().addClass("activeMenu");
-    }
-  });
-  $('.nav-item a').each(function () {
-    var $this = $(this); // if the current path is like this link, make it active
-
-    if ($this.attr('href') === current) {
-      $this.children().addClass("activeMenu");
-    }
-  });
 });
 
 /***/ }),
@@ -76843,6 +76420,94 @@ var render = function() {
     _c("br"),
     _vm._v(" "),
     _c(
+      "div",
+      [
+        _c(
+          "b-carousel",
+          {
+            staticStyle: { "text-shadow": "1px 1px 2px #333" },
+            attrs: {
+              id: "carousel-1",
+              interval: 4000,
+              controls: "",
+              indicators: "",
+              background: "#ababab",
+              "img-width": "1024",
+              "img-height": "480"
+            },
+            on: {
+              "sliding-start": _vm.onSlideStart,
+              "sliding-end": _vm.onSlideEnd
+            },
+            model: {
+              value: _vm.slide,
+              callback: function($$v) {
+                _vm.slide = $$v
+              },
+              expression: "slide"
+            }
+          },
+          [
+            _c("b-carousel-slide", {
+              attrs: {
+                caption: "First slide",
+                text:
+                  "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+                "img-src": "https://picsum.photos/1024/480/?image=52"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "b-carousel-slide",
+              {
+                attrs: { "img-src": "https://picsum.photos/1024/480/?image=54" }
+              },
+              [_c("h1", [_vm._v("Hello world!")])]
+            ),
+            _vm._v(" "),
+            _c("b-carousel-slide", {
+              attrs: { "img-src": "https://picsum.photos/1024/480/?image=58" }
+            }),
+            _vm._v(" "),
+            _c("b-carousel-slide", [
+              _c("img", {
+                staticClass: "d-block img-fluid w-100",
+                attrs: {
+                  slot: "img",
+                  width: "1024",
+                  height: "480",
+                  src: "https://picsum.photos/1024/480/?image=55",
+                  alt: "image slot"
+                },
+                slot: "img"
+              })
+            ]),
+            _vm._v(" "),
+            _c(
+              "b-carousel-slide",
+              {
+                attrs: {
+                  caption: "Blank Image",
+                  "img-blank": "",
+                  "img-alt": "Blank image"
+                }
+              },
+              [
+                _c("p", [
+                  _vm._v(
+                    "\n                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eros felis, tincidunt\n                    a tincidunt eget, convallis vel est. Ut pellentesque ut lacus vel interdum.\n                "
+                  )
+                ])
+              ]
+            )
+          ],
+          1
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
       "button",
       {
         attrs: { id: "BtnToTop", title: "Go to top" },
@@ -77452,100 +77117,6 @@ var render = function() {
       _vm._v(" "),
       _c("br"),
       _c("br")
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/Navbar.vue?vue&type=template&id=cadbadf2&":
-/*!****************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/Navbar.vue?vue&type=template&id=cadbadf2& ***!
-  \****************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c(
-        "b-navbar",
-        { attrs: { toggleable: "lg", type: "dark" } },
-        [
-          _c("b-navbar-brand", { attrs: { href: "/" } }, [
-            _c("img", {
-              staticStyle: { height: "150px", width: "150px" },
-              attrs: { center: "", src: "images/Logo6.png" }
-            })
-          ]),
-          _vm._v(" "),
-          _c("b-navbar-toggle", {
-            staticStyle: { "background-color": "#591259" },
-            attrs: { target: "nav-collapse" }
-          }),
-          _vm._v(" "),
-          _c(
-            "b-collapse",
-            { attrs: { id: "nav-collapse", "is-nav": "" } },
-            [
-              _c(
-                "b-navbar-nav",
-                [
-                  _c("b-nav-item", { attrs: { href: "/" } }, [
-                    _c("i", { staticClass: "fas fa-home fa-3x" }),
-                    _c("span", { staticClass: "menuspan" }, [_vm._v("Home")])
-                  ]),
-                  _vm._v(" "),
-                  _c("b-nav-item", { attrs: { href: "/action" } }, [
-                    _c("i", { staticClass: "fas fa-percentage fa-3x" }),
-                    _c("span", { staticClass: "menuspan" }, [_vm._v("Akcija")])
-                  ]),
-                  _vm._v(" "),
-                  _c("b-nav-item", { attrs: { href: "/freeze" } }, [
-                    _c("i", { staticClass: "fas fa-snowflake fa-3x" }),
-                    _c("span", { staticClass: "menuspan" }, [
-                      _vm._v("Smrznuto")
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("b-nav-item", { attrs: { href: "/drinks" } }, [
-                    _c("i", { staticClass: "fas fa-glass-cheers fa-3x" }),
-                    _c("span", { staticClass: "menuspan" }, [_vm._v("Pice")])
-                  ]),
-                  _vm._v(" "),
-                  _c("b-nav-item", { attrs: { href: "/sweets" } }, [
-                    _c("i", { staticClass: "fas fa-candy-cane fa-3x" }),
-                    _c("span", { staticClass: "menuspan" }, [
-                      _vm._v("Slatkisi")
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("b-nav-item", { attrs: { href: "/meats" } }, [
-                    _c("i", { staticClass: "fas fa-drumstick-bite fa-3x" }),
-                    _c("span", { staticClass: "menuspan" }, [_vm._v("Meso")])
-                  ])
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
     ],
     1
   )
@@ -90546,8 +90117,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(v_tooltip__WEBPACK_IMPORTED_MODUL
  */
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('test', __webpack_require__(/*! ./components/test.vue */ "./resources/assets/js/components/test.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('home', __webpack_require__(/*! ./components/Home.vue */ "./resources/assets/js/components/Home.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('navbar', __webpack_require__(/*! ./components/Navbar.vue */ "./resources/assets/js/components/Navbar.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('home', __webpack_require__(/*! ./components/Home.vue */ "./resources/assets/js/components/Home.vue")["default"]); // Vue.component('navbar', require('./components/Navbar.vue').default);
+
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('action', __webpack_require__(/*! ./components/Action.vue */ "./resources/assets/js/components/Action.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('freeze', __webpack_require__(/*! ./components/Freeze.vue */ "./resources/assets/js/components/Freeze.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('drinks', __webpack_require__(/*! ./components/Drinks.vue */ "./resources/assets/js/components/Drinks.vue")["default"]);
@@ -91375,78 +90946,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Meats_vue_vue_type_template_id_3c09aa61___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Meats_vue_vue_type_template_id_3c09aa61___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/components/Navbar.vue":
-/*!***************************************************!*\
-  !*** ./resources/assets/js/components/Navbar.vue ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Navbar_vue_vue_type_template_id_cadbadf2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Navbar.vue?vue&type=template&id=cadbadf2& */ "./resources/assets/js/components/Navbar.vue?vue&type=template&id=cadbadf2&");
-/* harmony import */ var _Navbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Navbar.vue?vue&type=script&lang=js& */ "./resources/assets/js/components/Navbar.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Navbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Navbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _Navbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Navbar_vue_vue_type_template_id_cadbadf2___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _Navbar_vue_vue_type_template_id_cadbadf2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/assets/js/components/Navbar.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/assets/js/components/Navbar.vue?vue&type=script&lang=js&":
-/*!****************************************************************************!*\
-  !*** ./resources/assets/js/components/Navbar.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Navbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Navbar.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/Navbar.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Navbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Navbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Navbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Navbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Navbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default.a); 
-
-/***/ }),
-
-/***/ "./resources/assets/js/components/Navbar.vue?vue&type=template&id=cadbadf2&":
-/*!**********************************************************************************!*\
-  !*** ./resources/assets/js/components/Navbar.vue?vue&type=template&id=cadbadf2& ***!
-  \**********************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Navbar_vue_vue_type_template_id_cadbadf2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Navbar.vue?vue&type=template&id=cadbadf2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/Navbar.vue?vue&type=template&id=cadbadf2&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Navbar_vue_vue_type_template_id_cadbadf2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Navbar_vue_vue_type_template_id_cadbadf2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

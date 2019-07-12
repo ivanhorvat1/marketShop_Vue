@@ -32,41 +32,19 @@
         <div class="preloader-section section-right"></div>
     </div>
     @include('includes.navbar')
-    <div class="float-right">
+    {{--<div class="pull-right">
         <!-- Authentication Links -->
-        {{--<div class="dropdown">
-            @guest
-                <button style="background-color: #8CC276" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Login/Register</button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="{{ route('login') }}">Login</a>
-                    <a class="dropdown-item" href="{{ route('register') }}">Register</a>
-                </div>
-                    @else
-                <button style="background-color: #8CC276" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{Auth::user()->name}}</button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="{{ route('home') }}">Profile</a>
-                            <div class="form-group">
-                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                Logout
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                {{ csrf_field() }}
-                            </form>
-                            </div>
-                    @endguest
-                </div>
-        </div>--}}
         <div class="dropdown">
             @guest
-                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Login/Register
+                <button style="background-color: #153607" class="btn btn-primary dropdown-toggle" type="button"
+                        data-toggle="dropdown">Login/Register
                     <span class="caret"></span></button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="{{ route('login') }}">Login</a>
                     <a class="dropdown-item" href="{{ route('register') }}">Register</a>
                 </div>
             @else
-                <button class="btn btn-primary dropdown-toggle" type="button"
+                <button style="background-color: #153607" class="btn btn-primary dropdown-toggle" type="button"
                         data-toggle="dropdown">{{Auth::user()->name}}
                     <span class="caret"></span></button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -82,9 +60,7 @@
             @endguest
 
         </div>
-
-    </div>
-
+    </div>--}}
     <br>
     <br>
     <div class="container">
@@ -97,23 +73,25 @@
 </div>
 <script src="{{ asset('js/app.js') }}"></script>
 {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>--}}
-<script>
-    /*$(document).ready(function () {
-        // $('#preloader-wrapper').css("display", "none");
-        $('.collapsible').collapsible();
-        $('.modal').modal();
-        $('.sidenav').sidenav();
-        $('.carousel.carousel-slider').carousel({
-            fullWidth: true,
-            indicators: true
+<script type="text/javascript">
+    $(window).on('load', function () {
+        var current = location.pathname;
+        $('nav li a').each(function () {
+            var $this = $(this);
+            // if the current path is like this link, make it active
+            if ($this.attr('href') === current) {
+                $this.children().addClass("activeMenu");
+            }
         });
-        autoplay();
 
-        function autoplay() {
-            $('.carousel').carousel('next');
-            setTimeout(autoplay, 4500);
-        }
-    });*/
+        $('.nav-item a').each(function () {
+            var $this = $(this);
+            // if the current path is like this link, make it active
+            if ($this.attr('href') === current) {
+                $this.children().addClass("activeMenu");
+            }
+        });
+    });
 
     window.onbeforeunload = function () {
         window.scrollTo(0, 0);

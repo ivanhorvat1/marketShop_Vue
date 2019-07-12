@@ -45,10 +45,10 @@ Route::get('/meats', [
     'as' => 'meats'
 ]);
 
-/*Route::get('/test', [
-    'uses' => 'ActionSaleController@store',
+Route::get('/test', [
+    'uses' => 'ActionSaleController@index',
     'as' => 'test'
-]);*/
+]);
 
 
 Route::group(['middleware' => ['web', 'auth']], function () {
