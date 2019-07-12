@@ -5183,11 +5183,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -73320,15 +73315,13 @@ var render = function() {
                   _c("br")
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-sm-6 mt-3" }, [
+                _c("div", { staticClass: "col-sm-6" }, [
                   _c("img", {
-                    staticStyle: { height: "25px", width: "75px" },
-                    attrs: { src: "images/Idea_Logo.png" }
+                    staticStyle: { height: "50px", width: "80px" },
+                    attrs: { src: "images/Idea_Logo_resized.png" }
                   }),
                   _vm._v(" "),
-                  _c("h6", { staticClass: "mt-4" }, [
-                    _c("b", [_vm._v(_vm._s(_vm.ideaCena))])
-                  ]),
+                  _c("h6", [_c("b", [_vm._v(_vm._s(_vm.ideaCena))])]),
                   _vm._v(" "),
                   _c("h6", [
                     _c("b", [_vm._v(_vm._s(_vm.supplementaryPriceIdea))])
@@ -73337,8 +73330,8 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "col-sm-6" }, [
                   _c("img", {
-                    staticStyle: { height: "50px", width: "75px" },
-                    attrs: { src: "images/dis_krnjevo.gif" }
+                    staticStyle: { height: "50px", width: "80px" },
+                    attrs: { src: "images/dis_krnjevo_resized.gif" }
                   }),
                   _vm._v(" "),
                   _c("h6", [_c("b", [_vm._v(_vm._s(_vm.disCena))])])
@@ -75702,13 +75695,18 @@ var render = function() {
         "b-modal",
         {
           ref: "modal",
-          attrs: { id: _vm.infoModal.id, size: "xl", "ok-only": "" }
+          attrs: {
+            id: _vm.infoModal.id,
+            title: "Info",
+            size: "lg",
+            "ok-only": ""
+          }
         },
         [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "modal-header col-sm-12" }, [
               _c("h4", { staticStyle: { align: "center" } }, [
-                _vm._v(_vm._s(_vm.title))
+                _vm._v(_vm._s(_vm.body))
               ])
             ]),
             _vm._v(" "),
@@ -75723,8 +75721,6 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "modal-content col-sm-6" }, [
-              _c("h6", [_vm._v(_vm._s(_vm.body))]),
-              _vm._v(" "),
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-sm-6" }, [
                   _c("img", {
@@ -75740,26 +75736,23 @@ var render = function() {
                   _c("br")
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-sm-6 mt-3" }, [
+                _c("div", { staticClass: "col-sm-6" }, [
                   _c("img", {
-                    staticStyle: { height: "25px", width: "75px" },
-                    attrs: { src: "images/Idea_Logo.png" }
+                    staticStyle: { height: "50px", width: "80px" },
+                    attrs: { src: "images/Idea_Logo_resized.png" }
                   }),
                   _vm._v(" "),
-                  _c("h6", { staticClass: "mt-4" }, [
-                    _c("b", [_vm._v(_vm._s(_vm.ideaCena))])
-                  ]),
+                  _c("h6", [_c("b", [_vm._v(_vm._s(_vm.ideaCena))])]),
                   _vm._v(" "),
                   _c("h6", [
                     _c("b", [_vm._v(_vm._s(_vm.supplementaryPriceIdea))])
-                  ]),
-                  _c("br")
+                  ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-sm-6" }, [
                   _c("img", {
-                    staticStyle: { height: "50px", width: "75px" },
-                    attrs: { src: "images/dis_krnjevo.gif" }
+                    staticStyle: { height: "50px", width: "80px" },
+                    attrs: { src: "images/dis_krnjevo_resized.gif" }
                   }),
                   _vm._v(" "),
                   _c("h6", [_c("b", [_vm._v(_vm._s(_vm.disCena))])])
@@ -76292,13 +76285,18 @@ var render = function() {
         "b-modal",
         {
           ref: "modal",
-          attrs: { id: _vm.infoModal.id, size: "xl", "ok-only": "" }
+          attrs: {
+            id: _vm.infoModal.id,
+            title: "Info",
+            size: "lg",
+            "ok-only": ""
+          }
         },
         [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "modal-header col-sm-12" }, [
               _c("h4", { staticStyle: { align: "center" } }, [
-                _vm._v(_vm._s(_vm.title))
+                _vm._v(_vm._s(_vm.body))
               ])
             ]),
             _vm._v(" "),
@@ -76313,8 +76311,6 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "modal-content col-sm-6" }, [
-              _c("h6", [_vm._v(_vm._s(_vm.body))]),
-              _vm._v(" "),
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-sm-6" }, [
                   _c("img", {
@@ -76330,15 +76326,13 @@ var render = function() {
                   _c("br")
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-sm-6 mt-3" }, [
+                _c("div", { staticClass: "col-sm-6" }, [
                   _c("img", {
-                    staticStyle: { height: "25px", width: "75px" },
-                    attrs: { src: "images/Idea_Logo.png" }
+                    staticStyle: { height: "50px", width: "80px" },
+                    attrs: { src: "images/Idea_Logo_resized.png" }
                   }),
                   _vm._v(" "),
-                  _c("h6", { staticClass: "mt-4" }, [
-                    _c("b", [_vm._v(_vm._s(_vm.ideaCena))])
-                  ]),
+                  _c("h6", [_c("b", [_vm._v(_vm._s(_vm.ideaCena))])]),
                   _vm._v(" "),
                   _c("h6", [
                     _c("b", [_vm._v(_vm._s(_vm.supplementaryPriceIdea))])
@@ -76347,8 +76341,8 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "col-sm-6" }, [
                   _c("img", {
-                    staticStyle: { height: "50px", width: "75px" },
-                    attrs: { src: "images/dis_krnjevo.gif" }
+                    staticStyle: { height: "50px", width: "80px" },
+                    attrs: { src: "images/dis_krnjevo_resized.gif" }
                   }),
                   _vm._v(" "),
                   _c("h6", [_c("b", [_vm._v(_vm._s(_vm.disCena))])])
@@ -77024,13 +77018,18 @@ var render = function() {
         "b-modal",
         {
           ref: "modal",
-          attrs: { id: _vm.infoModal.id, size: "xl", "ok-only": "" }
+          attrs: {
+            id: _vm.infoModal.id,
+            title: "Info",
+            size: "lg",
+            "ok-only": ""
+          }
         },
         [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "modal-header col-sm-12" }, [
               _c("h4", { staticStyle: { align: "center" } }, [
-                _vm._v(_vm._s(_vm.title))
+                _vm._v(_vm._s(_vm.body))
               ])
             ]),
             _vm._v(" "),
@@ -77045,8 +77044,6 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "modal-content col-sm-6" }, [
-              _c("h6", [_vm._v(_vm._s(_vm.body))]),
-              _vm._v(" "),
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-sm-6" }, [
                   _c("img", {
@@ -77062,15 +77059,13 @@ var render = function() {
                   _c("br")
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-sm-6 mt-3" }, [
+                _c("div", { staticClass: "col-sm-6" }, [
                   _c("img", {
-                    staticStyle: { height: "25px", width: "75px" },
-                    attrs: { src: "images/Idea_Logo.png" }
+                    staticStyle: { height: "50px", width: "80px" },
+                    attrs: { src: "images/Idea_Logo_resized.png" }
                   }),
                   _vm._v(" "),
-                  _c("h6", { staticClass: "mt-4" }, [
-                    _c("b", [_vm._v(_vm._s(_vm.ideaCena))])
-                  ]),
+                  _c("h6", [_c("b", [_vm._v(_vm._s(_vm.ideaCena))])]),
                   _vm._v(" "),
                   _c("h6", [
                     _c("b", [_vm._v(_vm._s(_vm.supplementaryPriceIdea))])
@@ -77079,8 +77074,8 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "col-sm-6" }, [
                   _c("img", {
-                    staticStyle: { height: "50px", width: "75px" },
-                    attrs: { src: "images/dis_krnjevo.gif" }
+                    staticStyle: { height: "50px", width: "80px" },
+                    attrs: { src: "images/dis_krnjevo_resized.gif" }
                   }),
                   _vm._v(" "),
                   _c("h6", [_c("b", [_vm._v(_vm._s(_vm.disCena))])])
@@ -77674,15 +77669,6 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("h6", [_c("b", [_vm._v(_vm._s(_vm.disCena))])])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-sm-6" }, [
-                  _c("img", {
-                    staticStyle: { height: "50px", width: "80px" },
-                    attrs: { src: "images/univer_resized.png" }
-                  }),
-                  _vm._v(" "),
-                  _c("h6", [_c("b", [_vm._v(_vm._s(_vm.univerexportCena))])])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-sm-6" }, [

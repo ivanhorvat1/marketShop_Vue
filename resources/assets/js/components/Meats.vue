@@ -137,19 +137,19 @@
         </div>
         <b-modal :id="infoModal.id"
                  ref="modal"
-                 size="xl"
-                 ok-only
-        >
+                 title="Info"
+                 size="lg"
+                 ok-only>
             <div class="row">
                 <div class="modal-header col-sm-12">
-                    <h4 style="align: center">{{title}}</h4>
+                    <h4 style="align: center">{{body}}</h4>
                 </div>
                 <div class="modal-content col-sm-6">
                     <img class="mx-auto d-block" style="height: 330px; width: 300px"
                          :src="'https://d3el976p2k4mvu.cloudfront.net'+imageUrl"/>
                 </div>
                 <div class="modal-content col-sm-6">
-                    <h6>{{body}}</h6>
+                    <!--<h6>{{body}}</h6>-->
                     <div class="row">
                         <div class="col-sm-6">
                             <img style="height: 55px; width: 80px"
@@ -157,15 +157,15 @@
                             <h6><b>{{maxiCena}}</b></h6>
                             <h6><b>{{supplementaryPriceMaxi}}</b></h6><br>
                         </div>
-                        <div class="col-sm-6 mt-3">
-                            <img style="height: 25px; width: 75px"
-                                 src="images/Idea_Logo.png"/>
-                            <h6 class="mt-4"><b>{{ideaCena}}</b></h6>
+                        <div class="col-sm-6">
+                            <img style="height: 50px; width: 80px"
+                                 src="images/Idea_Logo_resized.png"/>
+                            <h6><b>{{ideaCena}}</b></h6>
                             <h6><b>{{supplementaryPriceIdea}}</b></h6>
                         </div>
                         <div class="col-sm-6">
-                            <img style="height: 50px; width: 75px"
-                                 src="images/dis_krnjevo.gif"/>
+                            <img style="height: 50px; width: 80px"
+                                 src="images/dis_krnjevo_resized.gif"/>
                             <h6><b>{{disCena}}</b></h6>
                         </div>
                         <div class="col-sm-6">

@@ -187,11 +187,6 @@
                                  src="images/univer_resized.png"/>
                             <h6><b>{{univerexportCena}}</b></h6>
                         </div>
-                        <div class="col-sm-6">
-                            <img style="height: 50px; width: 80px"
-                                 src="images/univer_resized.png"/>
-                            <h6><b>{{univerexportCena}}</b></h6>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -153,15 +153,15 @@
                             <h6><b>{{maxiCena}}</b></h6>
                             <h6><b>{{supplementaryPriceMaxi}}</b></h6><br>
                         </div>
-                        <div class="col-sm-6 mt-3">
-                            <img style="height: 25px; width: 75px"
-                                 src="images/Idea_Logo.png"/>
-                            <h6 class="mt-4"><b>{{ideaCena}}</b></h6>
+                        <div class="col-sm-6">
+                            <img style="height: 50px; width: 80px"
+                                 src="images/Idea_Logo_resized.png"/>
+                            <h6><b>{{ideaCena}}</b></h6>
                             <h6><b>{{supplementaryPriceIdea}}</b></h6>
                         </div>
                         <div class="col-sm-6">
-                            <img style="height: 50px; width: 75px"
-                                 src="images/dis_krnjevo.gif"/>
+                            <img style="height: 50px; width: 80px"
+                                 src="images/dis_krnjevo_resized.gif"/>
                             <h6><b>{{disCena}}</b></h6>
                         </div>
                         <div class="col-sm-6">
