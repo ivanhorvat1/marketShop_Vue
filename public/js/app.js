@@ -1941,6 +1941,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1962,7 +1986,13 @@ __webpack_require__.r(__webpack_exports__);
       ideaCena: '--',
       maxiCena: '--',
       disCena: '--',
-      univerexportCena: '--'
+      univerexportCena: '--',
+      selected: 'A'
+      /*options: [
+          { value: 'A', text: 'Option A (from options prop)' },
+          { value: 'B', text: 'Option B (from options prop)' }
+      ]*/
+
     };
   },
   computed: {
@@ -2072,7 +2102,6 @@ __webpack_require__.r(__webpack_exports__);
     fetchProducts: function fetchProducts() {
       var _this2 = this;
 
-      var vm = this;
       fetch('api/action_sale_fetch').then(function (res) {
         return res.json();
       }).then(function (res) {
@@ -2081,10 +2110,14 @@ __webpack_require__.r(__webpack_exports__);
         _this2.products = _.orderBy(res, 'price', 'desc');
         $('#preloader-wrapper').css("display", "none");
         $('body').addClass('loaded');
+        $('#overlay').fadeOut();
       });
     },
     fetchArticles: function fetchArticles(shop) {
       var _this3 = this;
+
+      var vm = this;
+      $('#overlay').fadeIn();
 
       if (shop == null) {
         shop = 'maxi';
@@ -2097,11 +2130,45 @@ __webpack_require__.r(__webpack_exports__);
           sort: this.key
         }
       }).then(function (res) {
+        _this3.selected = null;
         _this3.endSlice = 12;
         _this3.products = '';
         _this3.articles = res.data;
+        $('#overlay').fadeOut();
       });
+    },
+    compareDynamically: function compareDynamically(selected) {
+      var _this4 = this;
+
+      var vm = this; // vm.createOverlay();
+
+      $('#overlay').fadeIn();
+
+      if (selected == 'A') {
+        vm.fetchProducts();
+      } else {
+        fetch('api/action_action_fetch_compare_dynamically').then(function (res) {
+          return res.json();
+        }).then(function (res) {
+          _this4.endSlice = 12;
+          _this4.articles = '';
+          _this4.products = _.orderBy(res, 'price', 'desc');
+          $('#preloader-wrapper').css("display", "none");
+          $('body').addClass('loaded'); // $(".overlay").remove();
+
+          $('#overlay').fadeOut();
+        });
+      }
     }
+    /*, createOverlay(){
+        var div= document.createElement("div");
+       div.id += "overlay";
+       div.style += "display:none";
+       div.innerHTML = "<h5>Loading...</h5>";
+       $("#overlay").prepend('<div class="spinner"></div><br/>');
+       document.body.appendChild(div);
+    }*/
+
   }
 });
 
@@ -72855,16 +72922,43 @@ var render = function() {
       _c("br"),
       _vm._v(" "),
       _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.fetchProducts()
-            }
-          }
-        },
-        [_vm._v("Uporedi artikle")]
+        "div",
+        { staticClass: "col-md-3" },
+        [
+          _c(
+            "b-form-select",
+            {
+              staticClass: "mb-3",
+              on: { change: _vm.compareDynamically },
+              model: {
+                value: _vm.selected,
+                callback: function($$v) {
+                  _vm.selected = $$v
+                },
+                expression: "selected"
+              }
+            },
+            [
+              _c("template", { slot: "first" }, [
+                _c(
+                  "option",
+                  { attrs: { disabled: "" }, domProps: { value: null } },
+                  [_vm._v("Uporedi markete")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "MvI" } }, [
+                _vm._v("Uporedi Maxi/Idea")
+              ]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "A" } }, [
+                _vm._v("Uporedi sve markete")
+              ])
+            ],
+            2
+          )
+        ],
+        1
       ),
       _vm._v(" "),
       _vm.products.length > 0
@@ -72884,89 +72978,89 @@ var render = function() {
           ]),
       _c("br"),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group has-search col-sm-3" }, [
-        _c("span", { staticClass: "fa fa-search form-control-feedback" }),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-sm-3" }),
         _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.search,
-              expression: "search"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "text", placeholder: "Search" },
-          domProps: { value: _vm.search },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.search = $event.target.value
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-8" }),
-      _vm._v(" "),
-      _vm.articles.length > 0
-        ? _c("div", { staticClass: "form-group col-sm-4" }, [
-            _c("label", { attrs: { for: "sel1" } }, [_vm._v("Sortiranje")]),
-            _vm._v(" "),
-            _c(
-              "select",
+        _c("div", { staticClass: "form-group has-search col-sm-3" }, [
+          _c("span", { staticClass: "fa fa-search form-control-feedback" }),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
               {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.key,
-                    expression: "key"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { id: "sel1" },
-                on: {
-                  change: [
-                    function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.key = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    },
-                    function($event) {
-                      return _vm.fetchArticles(_vm.shop)
-                    }
-                  ]
+                name: "model",
+                rawName: "v-model",
+                value: _vm.search,
+                expression: "search"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", placeholder: "Search" },
+            domProps: { value: _vm.search },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
                 }
-              },
-              [
-                _c(
-                  "option",
-                  {
-                    attrs: { value: "opadajuce" },
-                    domProps: { selected: _vm.key == "opadajuce" }
-                  },
-                  [_vm._v("Sortiranje po opadajucim cenama")]
-                ),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "rastuce" } }, [
-                  _vm._v("Sortiranje po rastucim Cenama")
-                ])
-              ]
-            )
-          ])
-        : _vm._e(),
+                _vm.search = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _vm.articles.length > 0
+          ? _c("div", { staticClass: "form-group col-sm-4" }, [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.key,
+                      expression: "key"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { id: "sel1" },
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.key = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                      function($event) {
+                        return _vm.fetchArticles(_vm.shop)
+                      }
+                    ]
+                  }
+                },
+                [
+                  _c(
+                    "option",
+                    {
+                      attrs: { value: "opadajuce" },
+                      domProps: { selected: _vm.key == "opadajuce" }
+                    },
+                    [_vm._v("Sortiranje po opadajucim cenama")]
+                  ),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "rastuce" } }, [
+                    _vm._v("Sortiranje po rastucim Cenama")
+                  ])
+                ]
+              )
+            ])
+          : _vm._e()
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c(
@@ -73183,7 +73277,7 @@ var render = function() {
                               }
                             })
                           : _c("img", {
-                              staticStyle: { height: "200px", width: "180px" },
+                              staticStyle: { height: "180px", width: "180px" },
                               attrs: { center: "", src: articlea.imageDefault }
                             })
                       ]),
@@ -73351,6 +73445,8 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
       _c(
         "button",
         {
@@ -73372,7 +73468,24 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticStyle: { display: "none" }, attrs: { id: "overlay" } },
+      [
+        _c("div", { staticClass: "spinnerr" }),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("h5", [_vm._v("Loading...")])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 

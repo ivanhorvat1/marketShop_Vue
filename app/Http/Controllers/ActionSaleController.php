@@ -83,9 +83,9 @@ class ActionSaleController extends Controller
                 foreach ($maxiIdea as $maxide) {
                     $barcodesDis = explode(',', $di['barcodes']);
                     $barcodesMaxiIde = explode(',', $maxide['barcodes']);
-                    foreach ($barcodesIdea as $barIde) {
-                        foreach ($barcodesMaxi as $barMax) {
-                            if ($barIde == $barMax) {
+                    foreach ($barcodesDis as $barDis) {
+                        foreach ($barcodesMaxiIde as $barMaxIde) {
+                            if ($barDis == $barMaxIde) {
                                 //if (explode(',', $di['barcodes']) == explode(',', $maxide['barcodes'])) {
                                 if ($di['price'] >= $maxide['price']) {
 
@@ -378,5 +378,39 @@ class ActionSaleController extends Controller
         });
 
         return $cache;
+    }
+
+    public function compareDinamicly(Request $request)
+    {
+
+        $cached = Cache::remember('DvI', 10, function () {
+
+            $maxi = action_sale::where('shop', 'maxi')->where('category', 'akcija')->get();
+            $idea = action_sale::where('shop', 'idea')->where('category', 'akcija')->get();
+
+            $maxiIdea = [];
+
+            foreach ($maxi as $max) {
+                foreach ($idea as $ide) {
+                    $barcodesIdea = explode(',', $ide['barcodes']);
+                    $barcodesMaxi = explode(',', $max['barcodes']);
+                    foreach ($barcodesIdea as $barIde) {
+                        foreach ($barcodesMaxi as $barMax) {
+                            if ($barIde == $barMax) {
+                                $ide['maxiCena'] = $max['formattedPrice'];
+                                $ide['ideaCena'] = $ide['formattedPrice'];
+                                $ide['imageUrl'] = $max['imageUrl'];
+                                array_push($maxiIdea, $ide);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return array_map("unserialize", array_unique(array_map("serialize", $maxiIdea)));
+
+        });
+
+        return $cached;
     }
 }

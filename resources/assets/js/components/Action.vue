@@ -4,22 +4,40 @@
         <button @click="fetchArticles('idea')" class="btn btn-primary">Idea Akcija</button>
         <button @click="fetchArticles('dis')" class="btn btn-primary">Dis Akcija</button>
         <br><br>
-        <button @click="fetchProducts()" class="btn btn-primary">Uporedi artikle</button>
-        <h4 v-if="products.length > 0" align="left">Ukupan broj uporedjenih artikala: {{filteredProducts.length}}</h4>
-        <h4 v-else align="left">Ukupan broj artikala {{shop}}: {{filteredProducts.length}}</h4><br>
+        <!--<button @click="fetchProducts()" class="btn btn-primary">Uporedi artikle</button>-->
 
-        <div class="form-group has-search col-sm-3">
-            <span class="fa fa-search form-control-feedback"></span>
-            <input type="text" v-model="search" class="form-control" placeholder="Search">
+        <div class="col-md-3">
+            <b-form-select v-model="selected" @change="compareDynamically" class="mb-3">
+                <!-- This slot appears above the options from 'options' prop -->
+                <template slot="first">
+                    <option :value="null" disabled>Uporedi markete</option>
+                </template>
+
+                <!-- These options will appear after the ones from 'options' prop -->
+                <option value="MvI">Uporedi Maxi/Idea</option>
+                <option value="A">Uporedi sve markete</option>
+            </b-form-select>
+
+            <!--<div class="mt-3">Selected: <strong>{{ selected }}</strong></div>-->
         </div>
 
-        <div class="col-sm-8"></div>
-        <div v-if="articles.length > 0" class="form-group col-sm-4">
-            <label for="sel1">Sortiranje</label>
-            <select class="form-control" id="sel1" @change="fetchArticles(shop)" v-model="key">
-                <option :selected="key == 'opadajuce'" value="opadajuce">Sortiranje po opadajucim cenama</option>
-                <option value="rastuce">Sortiranje po rastucim Cenama</option>
-            </select>
+        <h4 v-if="products.length > 0" align="left">Ukupan broj uporedjenih artikala: {{filteredProducts.length}}</h4>
+        <h4 v-else align="left">Ukupan broj artikala {{shop}}: {{filteredProducts.length}}</h4><br>
+        <div class="row">
+
+            <div class="col-sm-3"></div>
+            <div class="form-group has-search col-sm-3">
+                <span class="fa fa-search form-control-feedback"></span>
+                <input type="text" v-model="search" class="form-control" placeholder="Search">
+            </div>
+
+            <div v-if="articles.length > 0" class="form-group col-sm-4">
+                <!--<label for="sel1">Sortiranje</label>-->
+                <select class="form-control" id="sel1" @change="fetchArticles(shop)" v-model="key">
+                    <option :selected="key == 'opadajuce'" value="opadajuce">Sortiranje po opadajucim cenama</option>
+                    <option value="rastuce">Sortiranje po rastucim Cenama</option>
+                </select>
+            </div>
         </div>
         <div class="row">
             <div class="wrap">
@@ -27,7 +45,7 @@
                      v-for="article in filteredProducts.slice(startSlice,endSlice)" v-bind:key="article.code"
                      v-bind:style="[{ 'background-image': 'url(https://d3el976p2k4mvu.cloudfront.net' + article.imageUrl + ')' },styles]"
                      @click="info(article,$event.target)"
-                      v-b-tooltip.hover :title="article.body">
+                     v-b-tooltip.hover :title="article.body">
                     <p class="textOverflow" align="center">{{ article.body }}</p>
                     <div class="poster p1">
                         <h4 v-if="article.maxiCena">
@@ -75,18 +93,19 @@
             </div>-->
             <div class="wrap">
                 <div style="height: 450px;" class="box one" v-if="articles.length > 0"
-                     v-for="articlea in filteredProducts.slice(startSlice,endSlice)" v-bind:key="articlea.code" v-b-tooltip.hover :title="articlea.body">
+                     v-for="articlea in filteredProducts.slice(startSlice,endSlice)" v-bind:key="articlea.code"
+                     v-b-tooltip.hover :title="articlea.body">
                     <p class="textOverflowSeparated" align="center">{{ articlea.body }}</p>
-                    <div  style="margin-top: 50px">
+                    <div style="margin-top: 50px">
                         <img center v-if="articlea.imageUrl !== null && articlea.shop == 'maxi'" class="center"
                              :src="'https://d3el976p2k4mvu.cloudfront.net'+articlea.imageUrl" width="180px">
                         <img center v-else-if="articlea.imageUrl !== null && articlea.shop == 'idea'" class="center"
                              :src="'https://www.idea.rs/online/'+articlea.imageUrl" width="180px" height="180px">
                         <img center v-else-if="articlea.imageUrl !== null && articlea.shop == 'dis'" class="center"
                              :src="'https://www.idea.rs/online/'+articlea.imageUrl" width="180px" height="180px">
-                        <img v-else center style="height: 200px; width: 180px;" :src=articlea.imageDefault>
+                        <img v-else center style="height: 180px; width: 180px;" :src=articlea.imageDefault>
                     </div>
-                    <div class="poster p1"  style="margin-top: 50px">
+                    <div class="poster p1" style="margin-top: 50px">
                         <h5 v-if="articlea.shop == 'maxi'">
                             <img style="height: 50px; width: 80px" src="images/delhaize-maxi-logo-vector.png"/>
                             <b>{{articlea.formattedPrice }}</b>
@@ -173,6 +192,11 @@
                 </div>
             </div>
         </b-modal>
+        <div id="overlay" style="display:none;">
+            <div class="spinnerr"></div>
+            <br/>
+            <h5>Loading...</h5>
+        </div>
         <button @click="toTopFunction()" id="BtnToTop" title="Go to top">&uarr;</button>
         <div id="loader"></div>
         <br><br>
@@ -200,7 +224,12 @@
                 ideaCena: '--',
                 maxiCena: '--',
                 disCena: '--',
-                univerexportCena: '--'
+                univerexportCena: '--',
+                selected: 'A',
+                /*options: [
+                    { value: 'A', text: 'Option A (from options prop)' },
+                    { value: 'B', text: 'Option B (from options prop)' }
+                ]*/
             }
         },
         computed: {
@@ -223,19 +252,19 @@
                     }
                 }
             },
-            styles: function() {
+            styles: function () {
                 var height = 450;
 
-                if(this.products[0].disCena){
+                if (this.products[0].disCena) {
                     height = 500;
                 }
 
-                if(this.products[0].univerexportCena) {
+                if (this.products[0].univerexportCena) {
                     height = 550;
                 }
 
                 return {
-                    height: height+'px',
+                    height: height + 'px',
                     'cursor': 'pointer'
                 };
             }
@@ -305,7 +334,6 @@
                 }
             },
             fetchProducts() {
-                let vm = this;
                 fetch('api/action_sale_fetch')
                     .then(res => res.json())
                     .then(res => {
@@ -314,8 +342,11 @@
                         this.products = _.orderBy(res, 'price', 'desc');
                         $('#preloader-wrapper').css("display", "none");
                         $('body').addClass('loaded');
+                        $('#overlay').fadeOut();
                     })
             }, fetchArticles(shop) {
+                let vm = this;
+                $('#overlay').fadeIn();
                 if (shop == null) {
                     shop = 'maxi';
                 }
@@ -326,11 +357,41 @@
                         sort: this.key
                     }
                 }).then(res => {
+                    this.selected = null;
                     this.endSlice = 12;
                     this.products = '';
                     this.articles = res.data;
+                    $('#overlay').fadeOut();
                 })
-            }
+            }, compareDynamically(selected) {
+                let vm = this;
+                // vm.createOverlay();
+                $('#overlay').fadeIn();
+
+                if (selected == 'A') {
+                    vm.fetchProducts();
+                } else {
+                    fetch('api/action_action_fetch_compare_dynamically')
+                        .then(res => res.json())
+                        .then(res => {
+                            this.endSlice = 12;
+                            this.articles = '';
+                            this.products = _.orderBy(res, 'price', 'desc');
+                            $('#preloader-wrapper').css("display", "none");
+                            $('body').addClass('loaded');
+                            // $(".overlay").remove();
+                            $('#overlay').fadeOut();
+                        });
+                }
+            }/*, createOverlay(){
+
+                var div= document.createElement("div");
+                div.id += "overlay";
+                div.style += "display:none";
+                div.innerHTML = "<h5>Loading...</h5>";
+                $("#overlay").prepend('<div class="spinner"></div><br/>');
+                document.body.appendChild(div);
+            }*/
         }
     }
 </script>

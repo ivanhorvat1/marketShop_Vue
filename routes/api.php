@@ -27,6 +27,7 @@ Route::get('getAllFreezeArticles', 'AdminController@getAllFreezeArticles');
 Route::get('articles', 'ArticleController@index');
 Route::get('action_sale_fetch', 'ActionSaleController@index');
 Route::get('action_action_fetch_separate', 'ActionSaleController@getSeparatedMarket');
+Route::get('action_action_fetch_compare_dynamically', 'ActionSaleController@compareDinamicly');
 Route::get('action_drink_fetch', 'DrinkController@index');
 Route::get('action_drink_fetch_separate', 'DrinkController@getSeparatedMarket');
 Route::get('action_meat_fetch', 'MeatController@index');

@@ -13,7 +13,7 @@ class CreateUniverexportActionSalesTable extends Migration
      */
     public function up()
     {
-        Schema::create('dis_drinks', function (Blueprint $table) {
+        Schema::create('univerexport_action_sales', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('code');
             $table->string('title')->nullable();

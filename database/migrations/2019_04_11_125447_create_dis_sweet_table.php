@@ -13,7 +13,7 @@ class CreateDisSweetTable extends Migration
      */
     public function up()
     {
-        Schema::create('dis_drinks', function (Blueprint $table) {
+        Schema::create('dis_sweets', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('code');
             $table->string('title')->nullable();

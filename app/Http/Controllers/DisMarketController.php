@@ -600,7 +600,7 @@ class DisMarketController extends Controller
     {
         /*var_dump($request->code);
         die;*/
-
+        dis_action_sale::truncate();
         $imageDefault = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
 
         if ($request->salePrice != null) {
