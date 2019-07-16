@@ -1,10 +1,17 @@
 <template>
     <div align="center">
-        <button @click="fetchArticles('maxi')" class="btn btn-primary">Maxi Akcija</button>
+        <!--<button @click="fetchArticles('maxi')" class="btn btn-primary">Maxi Akcija</button>
         <button @click="fetchArticles('idea')" class="btn btn-primary">Idea Akcija</button>
         <button @click="fetchArticles('dis')" class="btn btn-primary">Dis Akcija</button>
-        <br><br>
+        <br><br>-->
         <!--<button @click="fetchProducts()" class="btn btn-primary">Uporedi artikle</button>-->
+
+        <div class="row mb-3">
+            <div class="col-sm-3"></div>
+            <div @click="fetchArticles('maxi')" class="buttonCustom1 col-lg-2">Maxi Akcija</div>
+            <div @click="fetchArticles('idea')" class="buttonCustom1 col-lg-2">Idea Akcija</div>
+            <div @click="fetchArticles('dis')" class="buttonCustom1 col-lg-2">Dis Akcija</div>
+        </div>
 
         <div class="col-md-3">
             <b-form-select v-model="selected" @change="compareDynamically" class="mb-3">
@@ -14,8 +21,8 @@
                 </template>
 
                 <!-- These options will appear after the ones from 'options' prop -->
-                <option value="MvI">Uporedi Maxi/Idea</option>
-                <option value="A">Uporedi sve markete</option>
+                <option value="ActionMvI">Uporedi Maxi/Idea</option>
+                <option value="ActionAll">Uporedi sve markete</option>
             </b-form-select>
 
             <!--<div class="mt-3">Selected: <strong>{{ selected }}</strong></div>-->
@@ -25,10 +32,10 @@
         <h4 v-else align="left">Ukupan broj artikala {{shop}}: {{filteredProducts.length}}</h4><br>
         <div class="row">
 
-            <div class="col-sm-3"></div>
-            <div class="form-group has-search col-sm-3">
+            <div class="col-sm-2"></div>
+            <div class="form-group has-search col-sm-4">
                 <span class="fa fa-search form-control-feedback"></span>
-                <input type="text" v-model="search" class="form-control" placeholder="Search">
+                <input type="text" v-model="search" class="form-control" placeholder="Unesite proizvod ili marku (pivo,coca-cola,..)">
             </div>
 
             <div v-if="articles.length > 0" class="form-group col-sm-4">
@@ -197,7 +204,9 @@
             <br/>
             <h5>Loading...</h5>
         </div>
-        <button @click="toTopFunction()" id="BtnToTop" title="Go to top">&uarr;</button>
+        <!--<button @click="toTopFunction()" id="BtnToTop" title="Go to top">&uarr;</button>-->
+        <div id="BtnToTop1" class="bg"></div>
+        <button @click="toTopFunction()" id="BtnToTop" class="buttonToTop" target="_blank"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
         <div id="loader"></div>
         <br><br>
     </div>
@@ -225,7 +234,7 @@
                 maxiCena: '--',
                 disCena: '--',
                 univerexportCena: '--',
-                selected: 'A',
+                selected: 'ActionAll',
                 /*options: [
                     { value: 'A', text: 'Option A (from options prop)' },
                     { value: 'B', text: 'Option B (from options prop)' }
@@ -304,15 +313,23 @@
                 this.$root.$emit('bv::show::modal', this.infoModal.id, button)
             },
             toTopFunction() {
-                document.body.scrollTop = 0;
-                document.documentElement.scrollTop = 0;
+                /*document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;*/
+                const scrollToTop = () => {
+                    const c = document.documentElement.scrollTop || document.body.scrollTop;
+                    if (c > 0) {
+                        window.requestAnimationFrame(scrollToTop);
+                        window.scrollTo(0, c - c / 8);
+                    }
+                };
+                scrollToTop();
             },
             handleScroll() {
                 if (this.products.length > 0 || this.articles.length > 0) {
                     let scroll = Math.ceil($(window).scrollTop() + $(window).height());
                     let windowHeight = Math.round($(document).height());
 
-                    if (scroll == windowHeight) {
+                    if (scroll >= windowHeight) {
                         //if(this.pagination.nextPage <= this.pagination.lastPage) {
                         document.getElementById("loader").style.display = "block";
                         this.endSlice += 12;
@@ -328,8 +345,10 @@
 
                     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
                         document.getElementById("BtnToTop").style.display = "block";
+                        document.getElementById("BtnToTop1").style.display = "block";
                     } else {
                         document.getElementById("BtnToTop").style.display = "none";
+                        document.getElementById("BtnToTop1").style.display = "none";
                     }
                 }
             },
@@ -340,16 +359,17 @@
                         this.endSlice = 12;
                         this.articles = '';
                         this.products = _.orderBy(res, 'price', 'desc');
-                        $('#preloader-wrapper').css("display", "none");
+                        // $('#preloader-wrapper').css("display", "none");
                         $('body').addClass('loaded');
+                        window.scrollTo(0, 0);
                         $('#overlay').fadeOut();
                     })
             }, fetchArticles(shop) {
                 let vm = this;
-                $('#overlay').fadeIn();
                 if (shop == null) {
                     shop = 'maxi';
                 }
+                $('#overlay').fadeIn();
                 this.shop = shop;
                 axios.get('api/action_action_fetch_separate', {
                     params: {
@@ -361,6 +381,7 @@
                     this.endSlice = 12;
                     this.products = '';
                     this.articles = res.data;
+                    window.scrollTo(0, 0);
                     $('#overlay').fadeOut();
                 })
             }, compareDynamically(selected) {
@@ -368,7 +389,7 @@
                 // vm.createOverlay();
                 $('#overlay').fadeIn();
 
-                if (selected == 'A') {
+                if (selected == 'ActionAll') {
                     vm.fetchProducts();
                 } else {
                     fetch('api/action_action_fetch_compare_dynamically')
@@ -380,6 +401,7 @@
                             $('#preloader-wrapper').css("display", "none");
                             $('body').addClass('loaded');
                             // $(".overlay").remove();
+                            window.scrollTo(0, 0);
                             $('#overlay').fadeOut();
                         });
                 }

@@ -1,5 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400');
 /* BUTTON TO TOP */
-#BtnToTop {
+/*#BtnToTop {
     display: none;
     position: fixed;
     bottom: 40px;
@@ -8,18 +9,76 @@
     font-size: 25px;
     border: none;
     outline: none;
-    background-color: red;
-    color: white;
     cursor: pointer;
     padding-left: 15px;
     padding-right: 15px;
     padding-top: 5px;
     padding-bottom: 5px;
     border-radius: 4px;
+    background-color: red;
+    color: white;
 }
 
 #BtnToTop:hover {
     background-color: #555;
+}*/
+
+.bg,
+.buttonToTop {
+    display: none;
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    bottom: 40px;
+    right: 30px;
+    border-radius: 100%;
+}
+
+.bg {
+    animation: pulse 1.2s ease infinite;
+    background: #153607;
+}
+
+.buttonToTop {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    z-index: 99;
+    border: none;
+    background: #153607;
+    background-size: 18px;
+    cursor: pointer;
+    outline: none;
+}
+
+.buttonToTop:hover {
+    background-color: #555;
+}
+
+.fa-chevron-up{
+    color: #ffffff;
+}
+
+/*.buttonToTop a {
+    position: absolute;
+    color: #FFF;
+    font-size: 17px;
+}*/
+
+@keyframes pulse {
+    0% {
+        transform: scale(1, 1);
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
 }
 
 /* END BUTTON TO TOP */
@@ -432,7 +491,7 @@ poster h5 {
     height: 64px;
     width: 64px;
     animation: rotate 0.8s infinite linear;
-    border: 5px solid firebrick;
+    border: 5px solid #153607;
     border-right-color: transparent;
     border-radius: 50%;
 }
@@ -446,4 +505,125 @@ poster h5 {
 }
 
 /* END OVERLAY ON EVERY FETCH */
+
+/* INPUT PLACEHOLDER FONT SIZE*/
+
+input::-webkit-input-placeholder {
+    font-size: 15px;
+    line-height: 3;
+}
+
+/* END INPUT PLACEHOLDER FONT SIZE*/
+
+/*@keyframes comeFromBottom{
+    0%{
+        opacity:0;
+        transform:translateY(40px);
+    }
+    100%{
+        opacity:1;
+        transform:translateY(0);
+    }
+}*/
+
+/* CUSTOMISED BUTTONS FOR FETCH SEPARATE MARKET */
+
+.buttonCustom1 {
+    cursor: pointer;
+    font-size: 18px;
+    width: 8em;
+    height: 2em;
+    text-align: center;
+    line-height: 2em;
+    font-family: sans-serif;
+    text-transform: capitalize;
+    position: relative;
+    transition: 0.5s;
+    margin: 0.8em;
+}
+
+.buttonCustom1::before,
+.buttonCustom1::after {
+    content: '';
+    position: absolute;
+    width: 0.6em;
+    height: 0.6em;
+    background-color: #591259;
+    border-radius: 50%;
+    transition: 0.5s cubic-bezier(0.5, -0.5, 0.25, 1.5);
+    top: calc(50% - 0.6em / 2);
+}
+
+.buttonCustom1::before {left: 0; z-index: -1;}
+.buttonCustom1::after {right: 0; z-index: -2;}
+
+.buttonCustom1:hover {
+    color: white;
+}
+
+.buttonCustom1:hover::before,
+.buttonCustom1:hover::after {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    background-color: #153607;
+}
+
+.buttonCustom1:hover::before {
+    top: 0;
+}
+
+.buttonCustom1:hover::after {
+    right: -0.4em;
+    filter: brightness(0.8);
+}
+
+/* END CUSTOMISED BUTTONS FOR FETCH SEPARATE MARKET */
+
+.search > div {
+    display: inline-block;
+    position: relative;
+}
+
+.search > div:after {
+    content: "";
+    background: black;
+    width: 4px;
+    height: 15px;
+    position: absolute;
+    top: 20px;
+    right: -6px;
+    transform: rotate(135deg);
+    box-shadow: 2px 0 #0091c2;
+}
+
+.search > div > input {
+    color: black;
+    font-size: 20px;
+    background: transparent;
+    width: 25px;
+    height: 25px;
+    padding: 5px;
+    border: solid 3px black;
+    outline: none;
+    border-radius: 35px;
+    box-shadow: 0 2px #0091c2;
+    transition: width 0.5s;
+}
+
+.search > div > input::placeholder {
+    color: black;
+    opacity: 1;
+    font-size: 15px;
+}
+
+.search > div > input::-ms-input-placeholder {
+    color: black;
+}
+
+.search > div > input:focus,
+.search > div > input:valid {
+    width: 250px;
+}
+
 

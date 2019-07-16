@@ -380,10 +380,10 @@ class ActionSaleController extends Controller
         return $cache;
     }
 
-    public function compareDinamicly(Request $request)
+    public function compareDynamically(Request $request)
     {
 
-        $cached = Cache::remember('DvI', 10, function () {
+        $cached = Cache::remember('ActionDvI', 10, function () {
 
             $maxi = action_sale::where('shop', 'maxi')->where('category', 'akcija')->get();
             $idea = action_sale::where('shop', 'idea')->where('category', 'akcija')->get();

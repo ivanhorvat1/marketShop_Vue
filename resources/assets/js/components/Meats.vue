@@ -1,24 +1,53 @@
 <template>
     <div align="center">
-        <button @click="fetchArticles('maxi')" class="btn btn-primary">Maxi Meso</button>
+        <!--<button @click="fetchArticles('maxi')" class="btn btn-primary">Maxi Meso</button>
         <button @click="fetchArticles('idea')" class="btn btn-primary">Idea Meso</button>
-        <button @click="fetchArticles('dis')" class="btn btn-primary">Dis Meso</button><br><br>
-        <button @click="fetchProducts()" class="btn btn-primary">Uporedi artikle</button>
+        <button @click="fetchArticles('dis')" class="btn btn-primary">Dis Meso</button>-->
+        <div class="row mb-3">
+            <div class="col-sm-3"></div>
+            <div @click="fetchArticles('maxi')" class="buttonCustom1 col-lg-2">Maxi Meso</div>
+            <div @click="fetchArticles('idea')" class="buttonCustom1 col-lg-2">Idea Meso</div>
+            <div @click="fetchArticles('dis')" class="buttonCustom1 col-lg-2">Dis Meso</div>
+        </div>
+        <!--<button @click="fetchProducts()" class="btn btn-primary">Uporedi artikle</button>-->
+
+        <div class="col-md-3">
+            <b-form-select v-model="selected" @change="compareDynamically" class="mb-3">
+                <!-- This slot appears above the options from 'options' prop -->
+                <template slot="first">
+                    <option :value="null" disabled>Uporedi markete</option>
+                </template>
+
+                <!-- These options will appear after the ones from 'options' prop -->
+                <option value="MeatsMvI">Uporedi Maxi/Idea</option>
+                <option value="MeatsAll">Uporedi sve markete</option>
+            </b-form-select>
+        </div>
+
         <h4 v-if="products.length > 0" align="left">Ukupan broj uporedjenih artikala: {{filteredProducts.length}}</h4>
         <h4 v-else align="left">Ukupan broj artikala {{shop}}: {{filteredProducts.length}}</h4><br>
 
-        <div class="form-group has-search col-sm-3">
-            <span class="fa fa-search form-control-feedback"></span>
-            <input type="text" v-model="search" class="form-control" placeholder="Search">
-        </div>
+        <div class="row mb-2">
 
-        <div class="col-sm-8"></div>
-        <div v-if="articles.length > 0" class="form-group col-sm-4">
-            <label for="sel1">Sortiranje</label>
-            <select class="form-control" id="sel1" @change="fetchArticles(shop)" v-model="key">
-                <option :selected="key == 'opadajuce'" value="opadajuce">Sortiranje po opadajucim cenama</option>
-                <option value="rastuce">Sortiranje po rastucim Cenama</option>
-            </select>
+            <div class="col-sm-2"></div>
+            <div class="form-group has-search col-sm-4">
+                <!--<span class="fa fa-search form-control-feedback"></span>
+                <input type="text" v-model="search" class="form-control"
+                       placeholder="Unesite proizvod ili marku (pivo,coca-cola,..)">-->
+                <div class="search">
+                    <div>
+                        <input v-model="search" type="text" placeholder="       Search . . ." required>
+                    </div>
+                </div>
+            </div>
+
+            <div v-if="articles.length > 0" class="form-group col-sm-4">
+                <!--<label for="sel1">Sortiranje</label>-->
+                <select class="form-control" id="sel1" @change="fetchArticles(shop)" v-model="key">
+                    <option :selected="key == 'opadajuce'" value="opadajuce">Sortiranje po opadajucim cenama</option>
+                    <option value="rastuce">Sortiranje po rastucim Cenama</option>
+                </select>
+            </div>
         </div>
         <div class="row">
             <div class="wrap">
@@ -79,18 +108,19 @@
             </div>-->
             <div class="wrap">
                 <div style="height: 450px;" class="box one" v-if="articles.length > 0"
-                     v-for="articlea in filteredProducts.slice(startSlice,endSlice)" v-bind:key="articlea.code" v-b-tooltip.hover :title="articlea.body">
+                     v-for="articlea in filteredProducts.slice(startSlice,endSlice)" v-bind:key="articlea.code"
+                     v-b-tooltip.hover :title="articlea.body">
                     <p class="textOverflowSeparated" align="center">{{ articlea.body }}</p>
-                    <div  style="margin-top: 50px">
+                    <div style="margin-top: 50px">
                         <img center v-if="articlea.imageUrl !== null && articlea.shop == 'maxi'" class="center"
                              :src="'https://d3el976p2k4mvu.cloudfront.net'+articlea.imageUrl" width="180px">
                         <img center v-else-if="articlea.imageUrl !== null && articlea.shop == 'idea'" class="center"
                              :src="'https://www.idea.rs/online/'+articlea.imageUrl" width="180px" height="180px">
                         <img center v-else-if="articlea.imageUrl !== null && articlea.shop == 'dis'" class="center"
                              :src="'https://www.idea.rs/online/'+articlea.imageUrl" width="180px" height="180px">
-                        <img v-else center style="height: 200px; width: 180px;" :src=articlea.imageDefault>
+                        <img v-else center style="height: 180px; width: 180px;" :src=articlea.imageDefault>
                     </div>
-                    <div class="poster p1"  style="margin-top: 50px">
+                    <div class="poster p1" style="margin-top: 50px">
                         <h5 v-if="articlea.shop == 'maxi'">
                             <img style="height: 50px; width: 80px" src="images/delhaize-maxi-logo-vector.png"/>
                             <b>{{articlea.formattedPrice }}</b>
@@ -177,7 +207,16 @@
                 </div>
             </div>
         </b-modal>
-        <button @click="toTopFunction()" id="BtnToTop" title="Go to top">&uarr;</button>
+        <div id="overlay" style="display:none;">
+            <div class="spinnerr"></div>
+            <br/>
+            <h5>Loading...</h5>
+        </div>
+        <div id="BtnToTop1" class="bg"></div>
+        <button @click="toTopFunction()" id="BtnToTop" class="buttonToTop" target="_blank"><i class="fa fa-chevron-up"
+                                                                                              aria-hidden="true"></i>
+        </button>
+        <!--<button @click="toTopFunction()" id="BtnToTop" title="Go to top">&uarr;</button>-->
         <div id="loader"></div>
         <br><br>
     </div>
@@ -205,41 +244,42 @@
                     id: 'info-modal'
                 },
                 search: '',
+                selected: 'MeatsAll',
             }
         },
         computed: {
-            filteredProducts (){
-                if(this.search){
-                    if(this.products.length > 0){
-                        return this.products.filter((item)=>{
+            filteredProducts() {
+                if (this.search) {
+                    if (this.products.length > 0) {
+                        return this.products.filter((item) => {
                             return item.body.toLowerCase().includes(this.search.toLowerCase());
                         })
-                    }else{
-                        return this.articles.filter((item)=>{
+                    } else {
+                        return this.articles.filter((item) => {
                             return item.body.toLowerCase().includes(this.search.toLowerCase());
                         })
                     }
-                }else{
-                    if(this.products.length > 0) {
+                } else {
+                    if (this.products.length > 0) {
                         return this.products;
-                    }else {
+                    } else {
                         return this.articles;
                     }
                 }
             },
-            styles: function() {
+            styles: function () {
                 var height = 450;
 
-                if(this.products[0].disCena){
+                if (this.products[0].disCena) {
                     height = 500;
                 }
 
-                if(this.products[0].univerexportCena) {
+                if (this.products[0].univerexportCena) {
                     height = 550;
                 }
 
                 return {
-                    height: height+'px',
+                    height: height + 'px',
                     'cursor': 'pointer'
                 };
             }
@@ -249,7 +289,8 @@
             window.addEventListener('scroll', this.handleScroll);
         },
         methods: {
-            info(article,button) {
+            info(article, button) {
+                console.log(article.supplementaryPriceIdea);
                 this.title = article.title;
                 this.body = article.body;
                 this.imageUrl = article.imageUrl;
@@ -278,15 +319,23 @@
                 this.$root.$emit('bv::show::modal', this.infoModal.id, button)
             },
             toTopFunction() {
-                document.body.scrollTop = 0;
-                document.documentElement.scrollTop = 0;
+                /*document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;*/
+                const scrollToTop = () => {
+                    const c = document.documentElement.scrollTop || document.body.scrollTop;
+                    if (c > 0) {
+                        window.requestAnimationFrame(scrollToTop);
+                        window.scrollTo(0, c - c / 8);
+                    }
+                };
+                scrollToTop();
             },
             handleScroll() {
-                if(this.products.length > 0 || this.articles.length > 0) {
+                if (this.products.length > 0 || this.articles.length > 0) {
                     let scroll = Math.ceil($(window).scrollTop() + $(window).height());
                     let windowHeight = Math.round($(document).height());
 
-                    if (scroll == windowHeight) {
+                    if (scroll >= windowHeight) {
                         //if(this.pagination.nextPage <= this.pagination.lastPage) {
                         document.getElementById("loader").style.display = "block";
                         this.endSlice += 12;
@@ -302,8 +351,10 @@
 
                     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
                         document.getElementById("BtnToTop").style.display = "block";
+                        document.getElementById("BtnToTop1").style.display = "block";
                     } else {
                         document.getElementById("BtnToTop").style.display = "none";
+                        document.getElementById("BtnToTop1").style.display = "none";
                     }
                 }
             },
@@ -314,24 +365,54 @@
                     .then(res => {
                         this.endSlice = 12;
                         this.articles = '';
-                        this.products = _.orderBy(res, 'price','desc');
+                        this.products = _.orderBy(res, 'price', 'desc');
                         // $('#preloader-wrapper').css("display", "none");
                         $('body').addClass('loaded');
+                        window.scrollTo(0, 0);
+                        $('#overlay').fadeOut();
                     })
-            },fetchArticles(shop) {
+            }, fetchArticles(shop) {
+                if (shop == null) {
+                    shop = 'maxi';
+                }
                 this.shop = shop;
+                this.selected = null;
+                $('#overlay').fadeIn();
                 axios.get('api/action_meat_fetch_separate', {
                     params: {
                         shop: shop,
                         sort: this.key
                     }
                 })
-                    //.then(res => res.json())
+                //.then(res => res.json())
                     .then(res => {
                         this.endSlice = 12;
                         this.products = '';
                         this.articles = res.data;
+                        window.scrollTo(0, 0);
+                        $('#overlay').fadeOut();
                     })
+            }, compareDynamically(selected) {
+                let vm = this;
+                // vm.createOverlay();
+                $('#overlay').fadeIn();
+
+                if (selected == 'MeatsAll') {
+                    vm.fetchProducts();
+                } else {
+                    fetch('api/meats_fetch_compare_dynamically')
+                        .then(res => res.json())
+                        .then(res => {
+                            this.endSlice = 12;
+                            this.articles = '';
+                            this.products = _.orderBy(res, 'price', 'desc');
+                            $('#preloader-wrapper').css("display", "none");
+                            $('body').addClass('loaded');
+                            // $(".overlay").remove();
+                            window.scrollTo(0, 0);
+                            $('#overlay').fadeOut();
+                        });
+                }
             }
         }
     }

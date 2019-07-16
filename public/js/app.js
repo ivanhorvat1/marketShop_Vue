@@ -1965,6 +1965,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1987,7 +1996,7 @@ __webpack_require__.r(__webpack_exports__);
       maxiCena: '--',
       disCena: '--',
       univerexportCena: '--',
-      selected: 'A'
+      selected: 'ActionAll'
       /*options: [
           { value: 'A', text: 'Option A (from options prop)' },
           { value: 'B', text: 'Option B (from options prop)' }
@@ -2071,15 +2080,25 @@ __webpack_require__.r(__webpack_exports__);
       this.$root.$emit('bv::show::modal', this.infoModal.id, button);
     },
     toTopFunction: function toTopFunction() {
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
+      /*document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;*/
+      var scrollToTop = function scrollToTop() {
+        var c = document.documentElement.scrollTop || document.body.scrollTop;
+
+        if (c > 0) {
+          window.requestAnimationFrame(scrollToTop);
+          window.scrollTo(0, c - c / 8);
+        }
+      };
+
+      scrollToTop();
     },
     handleScroll: function handleScroll() {
       if (this.products.length > 0 || this.articles.length > 0) {
         var scroll = Math.ceil($(window).scrollTop() + $(window).height());
         var windowHeight = Math.round($(document).height());
 
-        if (scroll == windowHeight) {
+        if (scroll >= windowHeight) {
           //if(this.pagination.nextPage <= this.pagination.lastPage) {
           document.getElementById("loader").style.display = "block";
           this.endSlice += 12; //}
@@ -2094,8 +2113,10 @@ __webpack_require__.r(__webpack_exports__);
 
         if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
           document.getElementById("BtnToTop").style.display = "block";
+          document.getElementById("BtnToTop1").style.display = "block";
         } else {
           document.getElementById("BtnToTop").style.display = "none";
+          document.getElementById("BtnToTop1").style.display = "none";
         }
       }
     },
@@ -2107,9 +2128,10 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         _this2.endSlice = 12;
         _this2.articles = '';
-        _this2.products = _.orderBy(res, 'price', 'desc');
-        $('#preloader-wrapper').css("display", "none");
+        _this2.products = _.orderBy(res, 'price', 'desc'); // $('#preloader-wrapper').css("display", "none");
+
         $('body').addClass('loaded');
+        window.scrollTo(0, 0);
         $('#overlay').fadeOut();
       });
     },
@@ -2117,12 +2139,12 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       var vm = this;
-      $('#overlay').fadeIn();
 
       if (shop == null) {
         shop = 'maxi';
       }
 
+      $('#overlay').fadeIn();
       this.shop = shop;
       axios.get('api/action_action_fetch_separate', {
         params: {
@@ -2134,6 +2156,7 @@ __webpack_require__.r(__webpack_exports__);
         _this3.endSlice = 12;
         _this3.products = '';
         _this3.articles = res.data;
+        window.scrollTo(0, 0);
         $('#overlay').fadeOut();
       });
     },
@@ -2144,7 +2167,7 @@ __webpack_require__.r(__webpack_exports__);
 
       $('#overlay').fadeIn();
 
-      if (selected == 'A') {
+      if (selected == 'ActionAll') {
         vm.fetchProducts();
       } else {
         fetch('api/action_action_fetch_compare_dynamically').then(function (res) {
@@ -2156,6 +2179,7 @@ __webpack_require__.r(__webpack_exports__);
           $('#preloader-wrapper').css("display", "none");
           $('body').addClass('loaded'); // $(".overlay").remove();
 
+          window.scrollTo(0, 0);
           $('#overlay').fadeOut();
         });
       }
@@ -3883,6 +3907,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3905,7 +3963,8 @@ __webpack_require__.r(__webpack_exports__);
       search: '',
       infoModal: {
         id: 'info-modal'
-      }
+      },
+      selected: 'DrinksAll'
     };
   },
   computed: {
@@ -3978,15 +4037,25 @@ __webpack_require__.r(__webpack_exports__);
       this.$root.$emit('bv::show::modal', this.infoModal.id, button);
     },
     toTopFunction: function toTopFunction() {
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
+      /*document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;*/
+      var scrollToTop = function scrollToTop() {
+        var c = document.documentElement.scrollTop || document.body.scrollTop;
+
+        if (c > 0) {
+          window.requestAnimationFrame(scrollToTop);
+          window.scrollTo(0, c - c / 8);
+        }
+      };
+
+      scrollToTop();
     },
     handleScroll: function handleScroll() {
       if (this.products.length > 0 || this.articles.length > 0) {
         var scroll = Math.ceil($(window).scrollTop() + $(window).height());
         var windowHeight = Math.round($(document).height());
 
-        if (scroll == windowHeight) {
+        if (scroll >= windowHeight) {
           //if(this.pagination.nextPage <= this.pagination.lastPage) {
           document.getElementById("loader").style.display = "block";
           this.endSlice += 12; //}
@@ -4001,8 +4070,10 @@ __webpack_require__.r(__webpack_exports__);
 
         if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
           document.getElementById("BtnToTop").style.display = "block";
+          document.getElementById("BtnToTop1").style.display = "block";
         } else {
           document.getElementById("BtnToTop").style.display = "none";
+          document.getElementById("BtnToTop1").style.display = "none";
         }
       }
     },
@@ -4017,12 +4088,20 @@ __webpack_require__.r(__webpack_exports__);
         _this2.products = _.orderBy(res, 'price', 'desc'); // $('#preloader-wrapper').css("display", "none");
 
         $('body').addClass('loaded');
+        window.scrollTo(0, 0);
+        $('#overlay').fadeOut();
       });
     },
     fetchArticles: function fetchArticles(shop) {
       var _this3 = this;
 
+      if (shop == null) {
+        shop = 'maxi';
+      }
+
       this.shop = shop;
+      this.selected = null;
+      $('#overlay').fadeIn();
       axios.get('api/action_drink_fetch_separate', {
         params: {
           shop: shop,
@@ -4032,7 +4111,33 @@ __webpack_require__.r(__webpack_exports__);
         _this3.endSlice = 12;
         _this3.products = '';
         _this3.articles = res.data;
+        window.scrollTo(0, 0);
+        $('#overlay').fadeOut();
       });
+    },
+    compareDynamically: function compareDynamically(selected) {
+      var _this4 = this;
+
+      var vm = this; // vm.createOverlay();
+
+      $('#overlay').fadeIn();
+
+      if (selected == 'DrinksAll') {
+        vm.fetchProducts();
+      } else {
+        fetch('api/drinks_fetch_compare_dynamically').then(function (res) {
+          return res.json();
+        }).then(function (res) {
+          _this4.endSlice = 12;
+          _this4.articles = '';
+          _this4.products = _.orderBy(res, 'price', 'desc');
+          $('#preloader-wrapper').css("display", "none");
+          $('body').addClass('loaded'); // $(".overlay").remove();
+
+          window.scrollTo(0, 0);
+          $('#overlay').fadeOut();
+        });
+      }
     }
     /*,
     modalClick(modalId, title, body, imageurl, supplementaryPriceIdea, supplementaryPriceMaxi, ideaCena, maxiCena, disCena, univerexportCena) {
@@ -4288,6 +4393,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4310,7 +4450,8 @@ __webpack_require__.r(__webpack_exports__);
       infoModal: {
         id: 'info-modal'
       },
-      search: ''
+      search: '',
+      selected: 'FreezeAll'
     };
   },
   computed: {
@@ -4388,15 +4529,25 @@ __webpack_require__.r(__webpack_exports__);
       this.$root.$emit('bv::show::modal', this.infoModal.id, button);
     },
     toTopFunction: function toTopFunction() {
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
+      /*document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;*/
+      var scrollToTop = function scrollToTop() {
+        var c = document.documentElement.scrollTop || document.body.scrollTop;
+
+        if (c > 0) {
+          window.requestAnimationFrame(scrollToTop);
+          window.scrollTo(0, c - c / 8);
+        }
+      };
+
+      scrollToTop();
     },
     handleScroll: function handleScroll() {
       if (this.products.length > 0 || this.articles.length > 0) {
         var scroll = Math.ceil($(window).scrollTop() + $(window).height());
         var windowHeight = Math.round($(document).height());
 
-        if (scroll == windowHeight) {
+        if (scroll >= windowHeight) {
           //if(this.pagination.nextPage <= this.pagination.lastPage) {
           document.getElementById("loader").style.display = "block";
           this.endSlice += 12; //}
@@ -4411,8 +4562,10 @@ __webpack_require__.r(__webpack_exports__);
 
         if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
           document.getElementById("BtnToTop").style.display = "block";
+          document.getElementById("BtnToTop").style.display = "block";
         } else {
-          document.getElementById("BtnToTop").style.display = "none";
+          document.getElementById("BtnToTop1").style.display = "none";
+          document.getElementById("BtnToTop1").style.display = "none";
         }
       }
     },
@@ -4427,12 +4580,16 @@ __webpack_require__.r(__webpack_exports__);
         _this2.products = _.orderBy(res, 'price', 'desc'); // $('#preloader-wrapper').css("display", "none");
 
         $('body').addClass('loaded');
+        window.scrollTo(0, 0);
+        $('#overlay').fadeOut();
       });
     },
     fetchArticles: function fetchArticles(shop) {
       var _this3 = this;
 
       this.shop = shop;
+      this.selected = null;
+      $('#overlay').fadeIn();
       axios.get('api/action_freeze_fetch_separate', {
         params: {
           shop: shop,
@@ -4442,25 +4599,51 @@ __webpack_require__.r(__webpack_exports__);
         _this3.endSlice = 12;
         _this3.products = '';
         _this3.articles = res.data;
+        window.scrollTo(0, 0);
+        $('#overlay').fadeOut();
       });
     },
-    modalClick: function modalClick(modalId, title, body, imageurl, supplementaryPriceIdea, supplementaryPriceMaxi, ideaCena, maxiCena, disCena) {
-      this.modalId = modalId;
-      this.title = title;
-      this.body = body;
-      this.imageUrl = imageurl;
-      this.supplementaryPriceIdea = supplementaryPriceIdea;
+    compareDynamically: function compareDynamically(selected) {
+      var _this4 = this;
 
-      if (supplementaryPriceMaxi) {
-        this.supplementaryPriceMaxi = supplementaryPriceMaxi.replace('rsd/Kg', 'Din/Kg');
+      var vm = this; // vm.createOverlay();
+
+      $('#overlay').fadeIn();
+
+      if (selected == 'FreezeAll') {
+        vm.fetchProducts();
       } else {
-        this.supplementaryPriceMaxi = '';
-      }
+        fetch('api/freeze_fetch_compare_dynamically').then(function (res) {
+          return res.json();
+        }).then(function (res) {
+          _this4.endSlice = 12;
+          _this4.articles = '';
+          _this4.products = _.orderBy(res, 'price', 'desc');
+          $('#preloader-wrapper').css("display", "none");
+          $('body').addClass('loaded'); // $(".overlay").remove();
 
-      this.ideaCena = ideaCena.substring(0, ideaCena.length - 3) + 'Din';
-      this.maxiCena = maxiCena.substring(0, maxiCena.length - 3) + 'Din';
-      this.disCena = disCena.substring(0, disCena.length - 3) + 'Din';
+          window.scrollTo(0, 0);
+          $('#overlay').fadeOut();
+        });
+      }
     }
+    /*,
+    modalClick(modalId, title, body, imageurl, supplementaryPriceIdea, supplementaryPriceMaxi, ideaCena, maxiCena, disCena) {
+        this.modalId = modalId;
+        this.title = title;
+        this.body = body;
+        this.imageUrl = imageurl;
+        this.supplementaryPriceIdea = supplementaryPriceIdea;
+        if (supplementaryPriceMaxi) {
+            this.supplementaryPriceMaxi = supplementaryPriceMaxi.replace('rsd/Kg', 'Din/Kg');
+        } else {
+            this.supplementaryPriceMaxi = '';
+        }
+         this.ideaCena = ideaCena.substring(0, ideaCena.length - 3) + 'Din';
+        this.maxiCena = maxiCena.substring(0, maxiCena.length - 3) + 'Din';
+        this.disCena = disCena.substring(0, disCena.length - 3) + 'Din';
+    }*/
+
   }
 });
 
@@ -4881,6 +5064,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4902,7 +5124,8 @@ __webpack_require__.r(__webpack_exports__);
       infoModal: {
         id: 'info-modal'
       },
-      search: ''
+      search: '',
+      selected: 'MeatsAll'
     };
   },
   computed: {
@@ -4950,6 +5173,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     info: function info(article, button) {
+      console.log(article.supplementaryPriceIdea);
       this.title = article.title;
       this.body = article.body;
       this.imageUrl = article.imageUrl;
@@ -4980,15 +5204,25 @@ __webpack_require__.r(__webpack_exports__);
       this.$root.$emit('bv::show::modal', this.infoModal.id, button);
     },
     toTopFunction: function toTopFunction() {
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
+      /*document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;*/
+      var scrollToTop = function scrollToTop() {
+        var c = document.documentElement.scrollTop || document.body.scrollTop;
+
+        if (c > 0) {
+          window.requestAnimationFrame(scrollToTop);
+          window.scrollTo(0, c - c / 8);
+        }
+      };
+
+      scrollToTop();
     },
     handleScroll: function handleScroll() {
       if (this.products.length > 0 || this.articles.length > 0) {
         var scroll = Math.ceil($(window).scrollTop() + $(window).height());
         var windowHeight = Math.round($(document).height());
 
-        if (scroll == windowHeight) {
+        if (scroll >= windowHeight) {
           //if(this.pagination.nextPage <= this.pagination.lastPage) {
           document.getElementById("loader").style.display = "block";
           this.endSlice += 12; //}
@@ -5003,8 +5237,10 @@ __webpack_require__.r(__webpack_exports__);
 
         if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
           document.getElementById("BtnToTop").style.display = "block";
+          document.getElementById("BtnToTop1").style.display = "block";
         } else {
           document.getElementById("BtnToTop").style.display = "none";
+          document.getElementById("BtnToTop1").style.display = "none";
         }
       }
     },
@@ -5020,12 +5256,20 @@ __webpack_require__.r(__webpack_exports__);
         _this2.products = _.orderBy(res, 'price', 'desc'); // $('#preloader-wrapper').css("display", "none");
 
         $('body').addClass('loaded');
+        window.scrollTo(0, 0);
+        $('#overlay').fadeOut();
       });
     },
     fetchArticles: function fetchArticles(shop) {
       var _this3 = this;
 
+      if (shop == null) {
+        shop = 'maxi';
+      }
+
       this.shop = shop;
+      this.selected = null;
+      $('#overlay').fadeIn();
       axios.get('api/action_meat_fetch_separate', {
         params: {
           shop: shop,
@@ -5036,7 +5280,33 @@ __webpack_require__.r(__webpack_exports__);
         _this3.endSlice = 12;
         _this3.products = '';
         _this3.articles = res.data;
+        window.scrollTo(0, 0);
+        $('#overlay').fadeOut();
       });
+    },
+    compareDynamically: function compareDynamically(selected) {
+      var _this4 = this;
+
+      var vm = this; // vm.createOverlay();
+
+      $('#overlay').fadeIn();
+
+      if (selected == 'MeatsAll') {
+        vm.fetchProducts();
+      } else {
+        fetch('api/meats_fetch_compare_dynamically').then(function (res) {
+          return res.json();
+        }).then(function (res) {
+          _this4.endSlice = 12;
+          _this4.articles = '';
+          _this4.products = _.orderBy(res, 'price', 'desc');
+          $('#preloader-wrapper').css("display", "none");
+          $('body').addClass('loaded'); // $(".overlay").remove();
+
+          window.scrollTo(0, 0);
+          $('#overlay').fadeOut();
+        });
+      }
     }
   }
 });
@@ -5052,6 +5322,37 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5271,7 +5572,8 @@ __webpack_require__.r(__webpack_exports__);
       ideaCena: '--',
       maxiCena: '--',
       disCena: '--',
-      univerexportCena: '--'
+      univerexportCena: '--',
+      selected: 'SweetsAll'
     };
   },
   computed: {
@@ -5349,15 +5651,25 @@ __webpack_require__.r(__webpack_exports__);
       this.$root.$emit('bv::show::modal', this.infoModal.id, button);
     },
     toTopFunction: function toTopFunction() {
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
+      /*document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;*/
+      var scrollToTop = function scrollToTop() {
+        var c = document.documentElement.scrollTop || document.body.scrollTop;
+
+        if (c > 0) {
+          window.requestAnimationFrame(scrollToTop);
+          window.scrollTo(0, c - c / 8);
+        }
+      };
+
+      scrollToTop();
     },
     handleScroll: function handleScroll() {
       if (this.products.length > 0 || this.articles.length > 0) {
         var scroll = Math.ceil($(window).scrollTop() + $(window).height());
         var windowHeight = Math.round($(document).height());
 
-        if (scroll == windowHeight) {
+        if (scroll >= windowHeight) {
           //if(this.pagination.nextPage <= this.pagination.lastPage) {
           document.getElementById("loader").style.display = "block";
           this.endSlice += 12; //}
@@ -5370,10 +5682,12 @@ __webpack_require__.r(__webpack_exports__);
           return;
         }
 
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        if (document.documentElement.scrollTop > 20) {
           document.getElementById("BtnToTop").style.display = "block";
+          document.getElementById("BtnToTop1").style.display = "block";
         } else {
           document.getElementById("BtnToTop").style.display = "none";
+          document.getElementById("BtnToTop1").style.display = "none";
         }
       }
     },
@@ -5387,6 +5701,8 @@ __webpack_require__.r(__webpack_exports__);
         _this2.endSlice = 12;
         _this2.articles = '';
         _this2.products = _.orderBy(res, 'price', 'desc');
+        window.scrollTo(0, 0);
+        $('#overlay').fadeOut();
         $('#preloader-wrapper').css("display", "none");
         $('body').addClass('loaded');
       });
@@ -5398,6 +5714,8 @@ __webpack_require__.r(__webpack_exports__);
         shop = 'maxi';
       }
 
+      this.selected = null;
+      $('#overlay').fadeIn();
       this.shop = shop;
       axios.get('api/action_sweet_fetch_separate', {
         params: {
@@ -5408,18 +5726,34 @@ __webpack_require__.r(__webpack_exports__);
         _this3.endSlice = 12;
         _this3.products = '';
         _this3.articles = res.data;
+        window.scrollTo(0, 0);
+        $('#overlay').fadeOut();
       });
-    }
-    /*fetchProducts() {
-        fetch('api/action_sweet_fetch')
-            .then(res => res.json())
-            .then(res => {
-                this.products = res;
-                $('body').addClass('loaded');
-                // $('#preloader-wrapper').css("display", "none");
-            })
-    },*/
+    },
+    compareDynamically: function compareDynamically(selected) {
+      var _this4 = this;
 
+      var vm = this; // vm.createOverlay();
+
+      $('#overlay').fadeIn();
+
+      if (selected == 'SweetsAll') {
+        vm.fetchProducts();
+      } else {
+        fetch('api/sweets_fetch_compare_dynamically').then(function (res) {
+          return res.json();
+        }).then(function (res) {
+          _this4.endSlice = 12;
+          _this4.articles = '';
+          _this4.products = _.orderBy(res, 'price', 'desc');
+          $('#preloader-wrapper').css("display", "none");
+          $('body').addClass('loaded'); // $(".overlay").remove();
+
+          window.scrollTo(0, 0);
+          $('#overlay').fadeOut();
+        });
+      }
+    }
   }
 });
 
@@ -72879,47 +73213,48 @@ var render = function() {
     "div",
     { attrs: { align: "center" } },
     [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.fetchArticles("maxi")
+      _c("div", { staticClass: "row mb-3" }, [
+        _c("div", { staticClass: "col-sm-3" }),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "buttonCustom1 col-lg-2",
+            on: {
+              click: function($event) {
+                return _vm.fetchArticles("maxi")
+              }
             }
-          }
-        },
-        [_vm._v("Maxi Akcija")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.fetchArticles("idea")
+          },
+          [_vm._v("Maxi Akcija")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "buttonCustom1 col-lg-2",
+            on: {
+              click: function($event) {
+                return _vm.fetchArticles("idea")
+              }
             }
-          }
-        },
-        [_vm._v("Idea Akcija")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.fetchArticles("dis")
+          },
+          [_vm._v("Idea Akcija")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "buttonCustom1 col-lg-2",
+            on: {
+              click: function($event) {
+                return _vm.fetchArticles("dis")
+              }
             }
-          }
-        },
-        [_vm._v("Dis Akcija")]
-      ),
-      _vm._v(" "),
-      _c("br"),
-      _c("br"),
+          },
+          [_vm._v("Dis Akcija")]
+        )
+      ]),
       _vm._v(" "),
       _c(
         "div",
@@ -72947,11 +73282,11 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("option", { attrs: { value: "MvI" } }, [
+              _c("option", { attrs: { value: "ActionMvI" } }, [
                 _vm._v("Uporedi Maxi/Idea")
               ]),
               _vm._v(" "),
-              _c("option", { attrs: { value: "A" } }, [
+              _c("option", { attrs: { value: "ActionAll" } }, [
                 _vm._v("Uporedi sve markete")
               ])
             ],
@@ -72979,9 +73314,9 @@ var render = function() {
       _c("br"),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-sm-3" }),
+        _c("div", { staticClass: "col-sm-2" }),
         _vm._v(" "),
-        _c("div", { staticClass: "form-group has-search col-sm-3" }, [
+        _c("div", { staticClass: "form-group has-search col-sm-4" }, [
           _c("span", { staticClass: "fa fa-search form-control-feedback" }),
           _vm._v(" "),
           _c("input", {
@@ -72994,7 +73329,10 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "text", placeholder: "Search" },
+            attrs: {
+              type: "text",
+              placeholder: "Unesite proizvod ili marku (pivo,coca-cola,..)"
+            },
             domProps: { value: _vm.search },
             on: {
               input: function($event) {
@@ -73447,17 +73785,25 @@ var render = function() {
       _vm._v(" "),
       _vm._m(0),
       _vm._v(" "),
+      _c("div", { staticClass: "bg", attrs: { id: "BtnToTop1" } }),
+      _vm._v(" "),
       _c(
         "button",
         {
-          attrs: { id: "BtnToTop", title: "Go to top" },
+          staticClass: "buttonToTop",
+          attrs: { id: "BtnToTop", target: "_blank" },
           on: {
             click: function($event) {
               return _vm.toTopFunction()
             }
           }
         },
-        [_vm._v("↑")]
+        [
+          _c("i", {
+            staticClass: "fa fa-chevron-up",
+            attrs: { "aria-hidden": "true" }
+          })
+        ]
       ),
       _vm._v(" "),
       _c("div", { attrs: { id: "loader" } }),
@@ -75329,72 +75675,100 @@ var render = function() {
     "div",
     { attrs: { align: "center" } },
     [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.fetchArticles("maxi")
+      _c("div", { staticClass: "row mb-3" }, [
+        _c("div", { staticClass: "col-sm-1" }),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "buttonCustom1 col-lg-2",
+            on: {
+              click: function($event) {
+                return _vm.fetchArticles("maxi")
+              }
             }
-          }
-        },
-        [_vm._v("Maxi Pice")]
-      ),
+          },
+          [_vm._v("Maxi Pice")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "buttonCustom1 col-lg-2",
+            on: {
+              click: function($event) {
+                return _vm.fetchArticles("idea")
+              }
+            }
+          },
+          [_vm._v("Idea Pice")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "buttonCustom1 col-lg-2",
+            on: {
+              click: function($event) {
+                return _vm.fetchArticles("dis")
+              }
+            }
+          },
+          [_vm._v("Dis Pice")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "buttonCustom1 col-lg-2",
+            on: {
+              click: function($event) {
+                return _vm.fetchArticles("univerexport")
+              }
+            }
+          },
+          [_vm._v("univerexport Pice")]
+        )
+      ]),
       _vm._v(" "),
       _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.fetchArticles("idea")
-            }
-          }
-        },
-        [_vm._v("Idea Pice")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.fetchArticles("dis")
-            }
-          }
-        },
-        [_vm._v("Dis Pice")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.fetchArticles("univerexport")
-            }
-          }
-        },
-        [_vm._v("Univerexport Pice")]
-      ),
-      _vm._v(" "),
-      _c("br"),
-      _c("br"),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.fetchProducts()
-            }
-          }
-        },
-        [_vm._v("Uporedi artikle")]
+        "div",
+        { staticClass: "col-md-3" },
+        [
+          _c(
+            "b-form-select",
+            {
+              staticClass: "mb-3",
+              on: { change: _vm.compareDynamically },
+              model: {
+                value: _vm.selected,
+                callback: function($$v) {
+                  _vm.selected = $$v
+                },
+                expression: "selected"
+              }
+            },
+            [
+              _c("template", { slot: "first" }, [
+                _c(
+                  "option",
+                  { attrs: { disabled: "" }, domProps: { value: null } },
+                  [_vm._v("Uporedi markete")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "DrinksMvI" } }, [
+                _vm._v("Uporedi Maxi/Idea")
+              ]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "DrinksAll" } }, [
+                _vm._v("Uporedi sve markete")
+              ])
+            ],
+            2
+          )
+        ],
+        1
       ),
       _vm._v(" "),
       _vm.products.length > 0
@@ -75414,89 +75788,92 @@ var render = function() {
           ]),
       _c("br"),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group has-search col-sm-3" }, [
-        _c("span", { staticClass: "fa fa-search form-control-feedback" }),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-sm-2" }),
         _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.search,
-              expression: "search"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "text", placeholder: "Search" },
-          domProps: { value: _vm.search },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.search = $event.target.value
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-8" }),
-      _vm._v(" "),
-      _vm.articles.length > 0
-        ? _c("div", { staticClass: "form-group col-sm-4" }, [
-            _c("label", { attrs: { for: "sel1" } }, [_vm._v("Sortiranje")]),
-            _vm._v(" "),
-            _c(
-              "select",
+        _c("div", { staticClass: "form-group has-search col-sm-4" }, [
+          _c("span", { staticClass: "fa fa-search form-control-feedback" }),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
               {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.key,
-                    expression: "key"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { id: "sel1" },
-                on: {
-                  change: [
-                    function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.key = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    },
-                    function($event) {
-                      return _vm.fetchArticles(_vm.shop)
-                    }
-                  ]
+                name: "model",
+                rawName: "v-model",
+                value: _vm.search,
+                expression: "search"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              placeholder: "Unesite proizvod ili marku (pivo,coca-cola,..)"
+            },
+            domProps: { value: _vm.search },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
                 }
-              },
-              [
-                _c(
-                  "option",
-                  {
-                    attrs: { value: "opadajuce" },
-                    domProps: { selected: _vm.key == "opadajuce" }
-                  },
-                  [_vm._v("Sortiranje po opadajucim cenama")]
-                ),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "rastuce" } }, [
-                  _vm._v("Sortiranje po rastucim Cenama")
-                ])
-              ]
-            )
-          ])
-        : _vm._e(),
+                _vm.search = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _vm.articles.length > 0
+          ? _c("div", { staticClass: "form-group col-sm-4" }, [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.key,
+                      expression: "key"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { id: "sel1" },
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.key = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                      function($event) {
+                        return _vm.fetchArticles(_vm.shop)
+                      }
+                    ]
+                  }
+                },
+                [
+                  _c(
+                    "option",
+                    {
+                      attrs: { value: "opadajuce" },
+                      domProps: { selected: _vm.key == "opadajuce" }
+                    },
+                    [_vm._v("Sortiranje po opadajucim cenama")]
+                  ),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "rastuce" } }, [
+                    _vm._v("Sortiranje po rastucim Cenama")
+                  ])
+                ]
+              )
+            ])
+          : _vm._e()
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c(
@@ -75714,7 +76091,7 @@ var render = function() {
                               }
                             })
                           : _c("img", {
-                              staticStyle: { height: "200px", width: "180px" },
+                              staticStyle: { height: "180px", width: "180px" },
                               attrs: { center: "", src: articlea.imageDefault }
                             })
                       ]),
@@ -75885,17 +76262,27 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "bg", attrs: { id: "BtnToTop1" } }),
+      _vm._v(" "),
       _c(
         "button",
         {
-          attrs: { id: "BtnToTop", title: "Go to top" },
+          staticClass: "buttonToTop",
+          attrs: { id: "BtnToTop", target: "_blank" },
           on: {
             click: function($event) {
               return _vm.toTopFunction()
             }
           }
         },
-        [_vm._v("↑")]
+        [
+          _c("i", {
+            staticClass: "fa fa-chevron-up",
+            attrs: { "aria-hidden": "true" }
+          })
+        ]
       ),
       _vm._v(" "),
       _c("div", { attrs: { id: "loader" } }),
@@ -75906,7 +76293,24 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticStyle: { display: "none" }, attrs: { id: "overlay" } },
+      [
+        _c("div", { staticClass: "spinnerr" }),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("h5", [_vm._v("Loading...")])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -75932,59 +76336,87 @@ var render = function() {
     "div",
     { attrs: { align: "center" } },
     [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.fetchArticles("maxi")
+      _c("div", { staticClass: "row mb-3" }, [
+        _c("div", { staticClass: "col-sm-3" }),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "buttonCustom1 col-lg-2",
+            on: {
+              click: function($event) {
+                return _vm.fetchArticles("maxi")
+              }
             }
-          }
-        },
-        [_vm._v("Maxi Smrznuto")]
-      ),
+          },
+          [_vm._v("Maxi Smrznuto")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "buttonCustom1 col-lg-2",
+            on: {
+              click: function($event) {
+                return _vm.fetchArticles("idea")
+              }
+            }
+          },
+          [_vm._v("Idea Smrznuto")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "buttonCustom1 col-lg-2",
+            on: {
+              click: function($event) {
+                return _vm.fetchArticles("dis")
+              }
+            }
+          },
+          [_vm._v("Dis Smrznuto")]
+        )
+      ]),
       _vm._v(" "),
       _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.fetchArticles("idea")
-            }
-          }
-        },
-        [_vm._v("Idea Smrznuto")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.fetchArticles("dis")
-            }
-          }
-        },
-        [_vm._v("Dis Smrznuto")]
-      ),
-      _vm._v(" "),
-      _c("br"),
-      _c("br"),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.fetchProducts()
-            }
-          }
-        },
-        [_vm._v("Uporedi artikle")]
+        "div",
+        { staticClass: "col-md-3" },
+        [
+          _c(
+            "b-form-select",
+            {
+              staticClass: "mb-3",
+              on: { change: _vm.compareDynamically },
+              model: {
+                value: _vm.selected,
+                callback: function($$v) {
+                  _vm.selected = $$v
+                },
+                expression: "selected"
+              }
+            },
+            [
+              _c("template", { slot: "first" }, [
+                _c(
+                  "option",
+                  { attrs: { disabled: "" }, domProps: { value: null } },
+                  [_vm._v("Uporedi markete")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "FreezeMvI" } }, [
+                _vm._v("Uporedi Maxi/Idea")
+              ]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "FreezeAll" } }, [
+                _vm._v("Uporedi sve markete")
+              ])
+            ],
+            2
+          )
+        ],
+        1
       ),
       _vm._v(" "),
       _vm.products.length > 0
@@ -76004,89 +76436,92 @@ var render = function() {
           ]),
       _c("br"),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group has-search col-sm-3" }, [
-        _c("span", { staticClass: "fa fa-search form-control-feedback" }),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-sm-2" }),
         _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.search,
-              expression: "search"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "text", placeholder: "Search" },
-          domProps: { value: _vm.search },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.search = $event.target.value
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-8" }),
-      _vm._v(" "),
-      _vm.articles.length > 0
-        ? _c("div", { staticClass: "form-group col-sm-4" }, [
-            _c("label", { attrs: { for: "sel1" } }, [_vm._v("Sortiranje")]),
-            _vm._v(" "),
-            _c(
-              "select",
+        _c("div", { staticClass: "form-group has-search col-sm-4" }, [
+          _c("span", { staticClass: "fa fa-search form-control-feedback" }),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
               {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.key,
-                    expression: "key"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { id: "sel1" },
-                on: {
-                  change: [
-                    function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.key = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    },
-                    function($event) {
-                      return _vm.fetchArticles(_vm.shop)
-                    }
-                  ]
+                name: "model",
+                rawName: "v-model",
+                value: _vm.search,
+                expression: "search"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              placeholder: "Unesite proizvod ili marku (pivo,coca-cola)"
+            },
+            domProps: { value: _vm.search },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
                 }
-              },
-              [
-                _c(
-                  "option",
-                  {
-                    attrs: { value: "opadajuce" },
-                    domProps: { selected: _vm.key == "opadajuce" }
-                  },
-                  [_vm._v("Sortiranje po opadajucim cenama")]
-                ),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "rastuce" } }, [
-                  _vm._v("Sortiranje po rastucim Cenama")
-                ])
-              ]
-            )
-          ])
-        : _vm._e(),
+                _vm.search = $event.target.value
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _vm.articles.length > 0
+          ? _c("div", { staticClass: "form-group col-sm-4" }, [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.key,
+                      expression: "key"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { id: "sel1" },
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.key = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                      function($event) {
+                        return _vm.fetchArticles(_vm.shop)
+                      }
+                    ]
+                  }
+                },
+                [
+                  _c(
+                    "option",
+                    {
+                      attrs: { value: "opadajuce" },
+                      domProps: { selected: _vm.key == "opadajuce" }
+                    },
+                    [_vm._v("Sortiranje po opadajucim cenama")]
+                  ),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "rastuce" } }, [
+                    _vm._v("Sortiranje po rastucim Cenama")
+                  ])
+                ]
+              )
+            ])
+          : _vm._e()
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c(
@@ -76304,7 +76739,7 @@ var render = function() {
                               }
                             })
                           : _c("img", {
-                              staticStyle: { height: "200px", width: "180px" },
+                              staticStyle: { height: "180px", width: "180px" },
                               attrs: { center: "", src: articlea.imageDefault }
                             })
                       ]),
@@ -76475,17 +76910,27 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "bg", attrs: { id: "BtnToTop1" } }),
+      _vm._v(" "),
       _c(
         "button",
         {
-          attrs: { id: "BtnToTop", title: "Go to top" },
+          staticClass: "buttonToTop",
+          attrs: { id: "BtnToTop", target: "_blank" },
           on: {
             click: function($event) {
               return _vm.toTopFunction()
             }
           }
         },
-        [_vm._v("↑")]
+        [
+          _c("i", {
+            staticClass: "fa fa-chevron-up",
+            attrs: { "aria-hidden": "true" }
+          })
+        ]
       ),
       _vm._v(" "),
       _c("div", { attrs: { id: "loader" } }),
@@ -76496,7 +76941,24 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticStyle: { display: "none" }, attrs: { id: "overlay" } },
+      [
+        _c("div", { staticClass: "spinnerr" }),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("h5", [_vm._v("Loading...")])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -76614,19 +77076,6 @@ var render = function() {
       1
     ),
     _vm._v(" "),
-    _c(
-      "button",
-      {
-        attrs: { id: "BtnToTop", title: "Go to top" },
-        on: {
-          click: function($event) {
-            return _vm.toTopFunction()
-          }
-        }
-      },
-      [_vm._v("↑")]
-    ),
-    _vm._v(" "),
     _c("div", { attrs: { id: "loader" } }),
     _vm._v(" "),
     _c("br"),
@@ -76666,58 +77115,87 @@ var render = function() {
     "div",
     { attrs: { align: "center" } },
     [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.fetchArticles("maxi")
+      _c("div", { staticClass: "row mb-3" }, [
+        _c("div", { staticClass: "col-sm-3" }),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "buttonCustom1 col-lg-2",
+            on: {
+              click: function($event) {
+                return _vm.fetchArticles("maxi")
+              }
             }
-          }
-        },
-        [_vm._v("Maxi Meso")]
-      ),
+          },
+          [_vm._v("Maxi Meso")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "buttonCustom1 col-lg-2",
+            on: {
+              click: function($event) {
+                return _vm.fetchArticles("idea")
+              }
+            }
+          },
+          [_vm._v("Idea Meso")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "buttonCustom1 col-lg-2",
+            on: {
+              click: function($event) {
+                return _vm.fetchArticles("dis")
+              }
+            }
+          },
+          [_vm._v("Dis Meso")]
+        )
+      ]),
       _vm._v(" "),
       _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.fetchArticles("idea")
-            }
-          }
-        },
-        [_vm._v("Idea Meso")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.fetchArticles("dis")
-            }
-          }
-        },
-        [_vm._v("Dis Meso")]
-      ),
-      _c("br"),
-      _c("br"),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.fetchProducts()
-            }
-          }
-        },
-        [_vm._v("Uporedi artikle")]
+        "div",
+        { staticClass: "col-md-3" },
+        [
+          _c(
+            "b-form-select",
+            {
+              staticClass: "mb-3",
+              on: { change: _vm.compareDynamically },
+              model: {
+                value: _vm.selected,
+                callback: function($$v) {
+                  _vm.selected = $$v
+                },
+                expression: "selected"
+              }
+            },
+            [
+              _c("template", { slot: "first" }, [
+                _c(
+                  "option",
+                  { attrs: { disabled: "" }, domProps: { value: null } },
+                  [_vm._v("Uporedi markete")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "MeatsMvI" } }, [
+                _vm._v("Uporedi Maxi/Idea")
+              ]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "MeatsAll" } }, [
+                _vm._v("Uporedi sve markete")
+              ])
+            ],
+            2
+          )
+        ],
+        1
       ),
       _vm._v(" "),
       _vm.products.length > 0
@@ -76737,89 +77215,94 @@ var render = function() {
           ]),
       _c("br"),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group has-search col-sm-3" }, [
-        _c("span", { staticClass: "fa fa-search form-control-feedback" }),
+      _c("div", { staticClass: "row mb-2" }, [
+        _c("div", { staticClass: "col-sm-2" }),
         _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.search,
-              expression: "search"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "text", placeholder: "Search" },
-          domProps: { value: _vm.search },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.search = $event.target.value
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-8" }),
-      _vm._v(" "),
-      _vm.articles.length > 0
-        ? _c("div", { staticClass: "form-group col-sm-4" }, [
-            _c("label", { attrs: { for: "sel1" } }, [_vm._v("Sortiranje")]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
+        _c("div", { staticClass: "form-group has-search col-sm-4" }, [
+          _c("div", { staticClass: "search" }, [
+            _c("div", [
+              _c("input", {
                 directives: [
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.key,
-                    expression: "key"
+                    value: _vm.search,
+                    expression: "search"
                   }
                 ],
-                staticClass: "form-control",
-                attrs: { id: "sel1" },
+                attrs: {
+                  type: "text",
+                  placeholder: "       Search . . .",
+                  required: ""
+                },
+                domProps: { value: _vm.search },
                 on: {
-                  change: [
-                    function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.key = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    },
-                    function($event) {
-                      return _vm.fetchArticles(_vm.shop)
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
                     }
-                  ]
+                    _vm.search = $event.target.value
+                  }
                 }
-              },
-              [
-                _c(
-                  "option",
-                  {
-                    attrs: { value: "opadajuce" },
-                    domProps: { selected: _vm.key == "opadajuce" }
-                  },
-                  [_vm._v("Sortiranje po opadajucim cenama")]
-                ),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "rastuce" } }, [
-                  _vm._v("Sortiranje po rastucim Cenama")
-                ])
-              ]
-            )
+              })
+            ])
           ])
-        : _vm._e(),
+        ]),
+        _vm._v(" "),
+        _vm.articles.length > 0
+          ? _c("div", { staticClass: "form-group col-sm-4" }, [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.key,
+                      expression: "key"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { id: "sel1" },
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.key = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                      function($event) {
+                        return _vm.fetchArticles(_vm.shop)
+                      }
+                    ]
+                  }
+                },
+                [
+                  _c(
+                    "option",
+                    {
+                      attrs: { value: "opadajuce" },
+                      domProps: { selected: _vm.key == "opadajuce" }
+                    },
+                    [_vm._v("Sortiranje po opadajucim cenama")]
+                  ),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "rastuce" } }, [
+                    _vm._v("Sortiranje po rastucim Cenama")
+                  ])
+                ]
+              )
+            ])
+          : _vm._e()
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c(
@@ -77037,7 +77520,7 @@ var render = function() {
                               }
                             })
                           : _c("img", {
-                              staticStyle: { height: "200px", width: "180px" },
+                              staticStyle: { height: "180px", width: "180px" },
                               attrs: { center: "", src: articlea.imageDefault }
                             })
                       ]),
@@ -77208,17 +77691,27 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "bg", attrs: { id: "BtnToTop1" } }),
+      _vm._v(" "),
       _c(
         "button",
         {
-          attrs: { id: "BtnToTop", title: "Go to top" },
+          staticClass: "buttonToTop",
+          attrs: { id: "BtnToTop", target: "_blank" },
           on: {
             click: function($event) {
               return _vm.toTopFunction()
             }
           }
         },
-        [_vm._v("↑")]
+        [
+          _c("i", {
+            staticClass: "fa fa-chevron-up",
+            attrs: { "aria-hidden": "true" }
+          })
+        ]
       ),
       _vm._v(" "),
       _c("div", { attrs: { id: "loader" } }),
@@ -77229,7 +77722,24 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticStyle: { display: "none" }, attrs: { id: "overlay" } },
+      [
+        _c("div", { staticClass: "spinnerr" }),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("h5", [_vm._v("Loading...")])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -77255,60 +77765,175 @@ var render = function() {
     "div",
     { attrs: { align: "center" } },
     [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.fetchArticles("maxi")
+      _c("div", { staticClass: "row mb-3" }, [
+        _c("div", { staticClass: "col-sm-3" }),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "buttonCustom1 col-lg-2",
+            on: {
+              click: function($event) {
+                return _vm.fetchArticles("maxi")
+              }
             }
-          }
-        },
-        [_vm._v("Maxi Slatkisi")]
-      ),
+          },
+          [_vm._v("Maxi Slatkisi")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "buttonCustom1 col-lg-2",
+            on: {
+              click: function($event) {
+                return _vm.fetchArticles("idea")
+              }
+            }
+          },
+          [_vm._v("Idea Slatkisi")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "buttonCustom1 col-lg-2",
+            on: {
+              click: function($event) {
+                return _vm.fetchArticles("dis")
+              }
+            }
+          },
+          [_vm._v("Dis Slatkisi")]
+        )
+      ]),
       _vm._v(" "),
       _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.fetchArticles("idea")
-            }
-          }
-        },
-        [_vm._v("Idea Slatkisi")]
+        "div",
+        { staticClass: "col-md-3" },
+        [
+          _c(
+            "b-form-select",
+            {
+              staticClass: "mb-3",
+              on: { change: _vm.compareDynamically },
+              model: {
+                value: _vm.selected,
+                callback: function($$v) {
+                  _vm.selected = $$v
+                },
+                expression: "selected"
+              }
+            },
+            [
+              _c("template", { slot: "first" }, [
+                _c(
+                  "option",
+                  { attrs: { disabled: "" }, domProps: { value: null } },
+                  [_vm._v("Uporedi markete")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "SweetsMvI" } }, [
+                _vm._v("Uporedi Maxi/Idea")
+              ]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "SweetsAll" } }, [
+                _vm._v("Uporedi sve markete")
+              ])
+            ],
+            2
+          )
+        ],
+        1
       ),
       _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.fetchArticles("dis")
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-sm-2" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group has-search col-sm-4" }, [
+          _c("span", { staticClass: "fa fa-search form-control-feedback" }),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.search,
+                expression: "search"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              placeholder: "Unesite proizvod ili marku (čokolada,nestle,..)"
+            },
+            domProps: { value: _vm.search },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.search = $event.target.value
+              }
             }
-          }
-        },
-        [_vm._v("Dis Slatkisi")]
-      ),
-      _vm._v(" "),
-      _c("br"),
-      _c("br"),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.fetchProducts()
-            }
-          }
-        },
-        [_vm._v("Uporedi artikle")]
-      ),
+          })
+        ]),
+        _vm._v(" "),
+        _vm.articles.length > 0
+          ? _c("div", { staticClass: "form-group col-sm-4" }, [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.key,
+                      expression: "key"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { id: "sel1" },
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.key = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                      function($event) {
+                        return _vm.fetchArticles(_vm.shop)
+                      }
+                    ]
+                  }
+                },
+                [
+                  _c(
+                    "option",
+                    {
+                      attrs: { value: "opadajuce" },
+                      domProps: { selected: _vm.key == "opadajuce" }
+                    },
+                    [_vm._v("Sortiranje po opadajucim cenama")]
+                  ),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "rastuce" } }, [
+                    _vm._v("Sortiranje po rastucim Cenama")
+                  ])
+                ]
+              )
+            ])
+          : _vm._e()
+      ]),
       _vm._v(" "),
       _vm.products.length > 0
         ? _c("h4", { attrs: { align: "left" } }, [
@@ -77326,90 +77951,6 @@ var render = function() {
             )
           ]),
       _c("br"),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group has-search col-sm-3" }, [
-        _c("span", { staticClass: "fa fa-search form-control-feedback" }),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.search,
-              expression: "search"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "text", placeholder: "Search" },
-          domProps: { value: _vm.search },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.search = $event.target.value
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-8" }),
-      _vm._v(" "),
-      _vm.articles.length > 0
-        ? _c("div", { staticClass: "form-group col-sm-4" }, [
-            _c("label", { attrs: { for: "sel1" } }, [_vm._v("Sortiranje")]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.key,
-                    expression: "key"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { id: "sel1" },
-                on: {
-                  change: [
-                    function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.key = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    },
-                    function($event) {
-                      return _vm.fetchArticles(_vm.shop)
-                    }
-                  ]
-                }
-              },
-              [
-                _c(
-                  "option",
-                  {
-                    attrs: { value: "opadajuce" },
-                    domProps: { selected: _vm.key == "opadajuce" }
-                  },
-                  [_vm._v("Sortiranje po opadajucim cenama")]
-                ),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "rastuce" } }, [
-                  _vm._v("Sortiranje po rastucim Cenama")
-                ])
-              ]
-            )
-          ])
-        : _vm._e(),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c(
@@ -77627,7 +78168,7 @@ var render = function() {
                               }
                             })
                           : _c("img", {
-                              staticStyle: { height: "200px", width: "180px" },
+                              staticStyle: { height: "180px", width: "180px" },
                               attrs: { center: "", src: articlea.imageDefault }
                             })
                       ]),
@@ -77798,17 +78339,27 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "bg", attrs: { id: "BtnToTop1" } }),
+      _vm._v(" "),
       _c(
         "button",
         {
-          attrs: { id: "BtnToTop", title: "Go to top" },
+          staticClass: "buttonToTop",
+          attrs: { id: "BtnToTop", target: "_blank" },
           on: {
             click: function($event) {
               return _vm.toTopFunction()
             }
           }
         },
-        [_vm._v("↑")]
+        [
+          _c("i", {
+            staticClass: "fa fa-chevron-up",
+            attrs: { "aria-hidden": "true" }
+          })
+        ]
       ),
       _vm._v(" "),
       _c("div", { attrs: { id: "loader" } }),
@@ -77819,7 +78370,24 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticStyle: { display: "none" }, attrs: { id: "overlay" } },
+      [
+        _c("div", { staticClass: "spinnerr" }),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("h5", [_vm._v("Loading...")])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 

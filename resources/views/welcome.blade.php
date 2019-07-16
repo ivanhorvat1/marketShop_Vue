@@ -61,8 +61,6 @@
 
         </div>
     </div>--}}
-    <br>
-    <br>
     <div class="container">
         @if($showStore)
             @include('frontend.articlesHomePage')

@@ -131,7 +131,7 @@
                 </div>
             </div>
         </div>-->
-        <button @click="toTopFunction()" id="BtnToTop" title="Go to top">&uarr;</button>
+        <!--<button @click="toTopFunction()" id="BtnToTop" title="Go to top">&uarr;</button>-->
         <div id="loader"></div>
         <br><br>
     </div>

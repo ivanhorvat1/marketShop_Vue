@@ -123,6 +123,40 @@ class SweetsController extends Controller
         return $cache;
     }
 
+    public function compareDynamically(Request $request)
+    {
+
+        $cached = Cache::remember('SweetsDvIs', 10, function () {
+
+            $maxi = Sweets::where('shop', 'maxi')->where('category', 'slatkisi')->whereNotNull('barcodes')->get();
+            $idea = Sweets::where('shop', 'idea')->where('category', 'slatkisi')->whereNotNull('barcodes')->get();
+
+            $maxiIdea = [];
+
+            foreach ($maxi as $max) {
+                foreach ($idea as $ide) {
+                    $barcodesIdea = explode(',', $ide['barcodes']);
+                    $barcodesMaxi = explode(',', $max['barcodes']);
+                    foreach ($barcodesIdea as $barIde) {
+                        foreach ($barcodesMaxi as $barMax) {
+                            if ($barIde == $barMax) {
+                                $ide['maxiCena'] = $max['formattedPrice'];
+                                $ide['ideaCena'] = $ide['formattedPrice'];
+                                $ide['imageUrl'] = $max['imageUrl'];
+                                array_push($maxiIdea, $ide);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return array_map("unserialize", array_unique(array_map("serialize", $maxiIdea)));
+
+        });
+
+        return $cached;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
