@@ -1974,6 +1974,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2160,14 +2167,14 @@ __webpack_require__.r(__webpack_exports__);
         $('#overlay').fadeOut();
       });
     },
-    compareDynamically: function compareDynamically(selected) {
+    compareDynamically: function compareDynamically() {
       var _this4 = this;
 
       var vm = this; // vm.createOverlay();
 
       $('#overlay').fadeIn();
 
-      if (selected == 'ActionAll') {
+      if (this.selected == 'ActionAll') {
         vm.fetchProducts();
       } else {
         fetch('api/action_action_fetch_compare_dynamically').then(function (res) {
@@ -3941,6 +3948,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4115,14 +4126,14 @@ __webpack_require__.r(__webpack_exports__);
         $('#overlay').fadeOut();
       });
     },
-    compareDynamically: function compareDynamically(selected) {
+    compareDynamically: function compareDynamically() {
       var _this4 = this;
 
       var vm = this; // vm.createOverlay();
 
       $('#overlay').fadeIn();
 
-      if (selected == 'DrinksAll') {
+      if (this.selected == 'DrinksAll') {
         vm.fetchProducts();
       } else {
         fetch('api/drinks_fetch_compare_dynamically').then(function (res) {
@@ -4171,6 +4182,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -4603,14 +4615,14 @@ __webpack_require__.r(__webpack_exports__);
         $('#overlay').fadeOut();
       });
     },
-    compareDynamically: function compareDynamically(selected) {
+    compareDynamically: function compareDynamically() {
       var _this4 = this;
 
       var vm = this; // vm.createOverlay();
 
       $('#overlay').fadeIn();
 
-      if (selected == 'FreezeAll') {
+      if (this.selected == 'FreezeAll') {
         vm.fetchProducts();
       } else {
         fetch('api/freeze_fetch_compare_dynamically').then(function (res) {
@@ -5103,6 +5115,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -5284,14 +5306,14 @@ __webpack_require__.r(__webpack_exports__);
         $('#overlay').fadeOut();
       });
     },
-    compareDynamically: function compareDynamically(selected) {
+    compareDynamically: function compareDynamically() {
       var _this4 = this;
 
       var vm = this; // vm.createOverlay();
 
       $('#overlay').fadeIn();
 
-      if (selected == 'MeatsAll') {
+      if (this.selected == 'MeatsAll') {
         vm.fetchProducts();
       } else {
         fetch('api/meats_fetch_compare_dynamically').then(function (res) {
@@ -5322,6 +5344,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
 //
 //
 //
@@ -5730,14 +5756,14 @@ __webpack_require__.r(__webpack_exports__);
         $('#overlay').fadeOut();
       });
     },
-    compareDynamically: function compareDynamically(selected) {
+    compareDynamically: function compareDynamically() {
       var _this4 = this;
 
       var vm = this; // vm.createOverlay();
 
       $('#overlay').fadeIn();
 
-      if (selected == 'SweetsAll') {
+      if (this.selected == 'SweetsAll') {
         vm.fetchProducts();
       } else {
         fetch('api/sweets_fetch_compare_dynamically').then(function (res) {
@@ -73256,31 +73282,44 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-md-3" },
-        [
+      _c("div", { staticClass: "col-md-3 mb-3" }, [
+        _c("div", { staticClass: "select" }, [
           _c(
-            "b-form-select",
+            "select",
             {
-              staticClass: "mb-3",
-              on: { change: _vm.compareDynamically },
-              model: {
-                value: _vm.selected,
-                callback: function($$v) {
-                  _vm.selected = $$v
-                },
-                expression: "selected"
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.selected,
+                  expression: "selected"
+                }
+              ],
+              on: {
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.selected = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  },
+                  _vm.compareDynamically
+                ]
               }
             },
             [
-              _c("template", { slot: "first" }, [
-                _c(
-                  "option",
-                  { attrs: { disabled: "" }, domProps: { value: null } },
-                  [_vm._v("Uporedi markete")]
-                )
-              ]),
+              _c(
+                "option",
+                { attrs: { disabled: "" }, domProps: { value: null } },
+                [_vm._v("Uporedi markete")]
+              ),
               _vm._v(" "),
               _c("option", { attrs: { value: "ActionMvI" } }, [
                 _vm._v("Uporedi Maxi/Idea")
@@ -73289,12 +73328,100 @@ var render = function() {
               _c("option", { attrs: { value: "ActionAll" } }, [
                 _vm._v("Uporedi sve markete")
               ])
-            ],
-            2
+            ]
           )
-        ],
-        1
-      ),
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row mb-2" }, [
+        _c("div", { staticClass: "col-sm-2" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group has-search col-sm-4" }, [
+          _c("div", { staticClass: "search" }, [
+            _c("div", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.search,
+                    expression: "search"
+                  }
+                ],
+                attrs: {
+                  type: "text",
+                  placeholder: "Unesite proizvod ili marku (pivo,coca-cola,..)",
+                  required: ""
+                },
+                domProps: { value: _vm.search },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.search = $event.target.value
+                  }
+                }
+              })
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _vm.articles.length > 0
+          ? _c("div", { staticClass: "form-group col-sm-4" }, [
+              _c("div", { staticClass: "select" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.key,
+                        expression: "key"
+                      }
+                    ],
+                    attrs: { id: "sel1" },
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.key = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        },
+                        function($event) {
+                          return _vm.fetchArticles(_vm.shop)
+                        }
+                      ]
+                    }
+                  },
+                  [
+                    _c(
+                      "option",
+                      {
+                        attrs: { value: "opadajuce" },
+                        domProps: { selected: _vm.key == "opadajuce" }
+                      },
+                      [_vm._v("Sortiranje po opadajucim cenama")]
+                    ),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "rastuce" } }, [
+                      _vm._v("Sortiranje po rastucim Cenama")
+                    ])
+                  ]
+                )
+              ])
+            ])
+          : _vm._e()
+      ]),
       _vm._v(" "),
       _vm.products.length > 0
         ? _c("h4", { attrs: { align: "left" } }, [
@@ -73312,93 +73439,6 @@ var render = function() {
             )
           ]),
       _c("br"),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-sm-2" }),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group has-search col-sm-4" }, [
-          _c("span", { staticClass: "fa fa-search form-control-feedback" }),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.search,
-                expression: "search"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: {
-              type: "text",
-              placeholder: "Unesite proizvod ili marku (pivo,coca-cola,..)"
-            },
-            domProps: { value: _vm.search },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.search = $event.target.value
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _vm.articles.length > 0
-          ? _c("div", { staticClass: "form-group col-sm-4" }, [
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.key,
-                      expression: "key"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { id: "sel1" },
-                  on: {
-                    change: [
-                      function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.key = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      },
-                      function($event) {
-                        return _vm.fetchArticles(_vm.shop)
-                      }
-                    ]
-                  }
-                },
-                [
-                  _c(
-                    "option",
-                    {
-                      attrs: { value: "opadajuce" },
-                      domProps: { selected: _vm.key == "opadajuce" }
-                    },
-                    [_vm._v("Sortiranje po opadajucim cenama")]
-                  ),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "rastuce" } }, [
-                    _vm._v("Sortiranje po rastucim Cenama")
-                  ])
-                ]
-              )
-            ])
-          : _vm._e()
-      ]),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c(
@@ -75731,31 +75771,44 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-md-3" },
-        [
+      _c("div", { staticClass: "col-md-3 mb-3" }, [
+        _c("div", { staticClass: "select" }, [
           _c(
-            "b-form-select",
+            "select",
             {
-              staticClass: "mb-3",
-              on: { change: _vm.compareDynamically },
-              model: {
-                value: _vm.selected,
-                callback: function($$v) {
-                  _vm.selected = $$v
-                },
-                expression: "selected"
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.selected,
+                  expression: "selected"
+                }
+              ],
+              on: {
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.selected = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  },
+                  _vm.compareDynamically
+                ]
               }
             },
             [
-              _c("template", { slot: "first" }, [
-                _c(
-                  "option",
-                  { attrs: { disabled: "" }, domProps: { value: null } },
-                  [_vm._v("Uporedi markete")]
-                )
-              ]),
+              _c(
+                "option",
+                { attrs: { disabled: "" }, domProps: { value: null } },
+                [_vm._v("Uporedi markete")]
+              ),
               _vm._v(" "),
               _c("option", { attrs: { value: "DrinksMvI" } }, [
                 _vm._v("Uporedi Maxi/Idea")
@@ -75764,12 +75817,100 @@ var render = function() {
               _c("option", { attrs: { value: "DrinksAll" } }, [
                 _vm._v("Uporedi sve markete")
               ])
-            ],
-            2
+            ]
           )
-        ],
-        1
-      ),
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row mb-2" }, [
+        _c("div", { staticClass: "col-sm-2" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group has-search col-sm-4" }, [
+          _c("div", { staticClass: "search" }, [
+            _c("div", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.search,
+                    expression: "search"
+                  }
+                ],
+                attrs: {
+                  type: "text",
+                  placeholder: "Unesite proizvod ili marku (pivo,coca-cola,..)",
+                  required: ""
+                },
+                domProps: { value: _vm.search },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.search = $event.target.value
+                  }
+                }
+              })
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _vm.articles.length > 0
+          ? _c("div", { staticClass: "form-group col-sm-4" }, [
+              _c("div", { staticClass: "select" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.key,
+                        expression: "key"
+                      }
+                    ],
+                    attrs: { id: "sel1" },
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.key = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        },
+                        function($event) {
+                          return _vm.fetchArticles(_vm.shop)
+                        }
+                      ]
+                    }
+                  },
+                  [
+                    _c(
+                      "option",
+                      {
+                        attrs: { value: "opadajuce" },
+                        domProps: { selected: _vm.key == "opadajuce" }
+                      },
+                      [_vm._v("Sortiranje po opadajucim cenama")]
+                    ),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "rastuce" } }, [
+                      _vm._v("Sortiranje po rastucim Cenama")
+                    ])
+                  ]
+                )
+              ])
+            ])
+          : _vm._e()
+      ]),
       _vm._v(" "),
       _vm.products.length > 0
         ? _c("h4", { attrs: { align: "left" } }, [
@@ -75787,93 +75928,6 @@ var render = function() {
             )
           ]),
       _c("br"),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-sm-2" }),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group has-search col-sm-4" }, [
-          _c("span", { staticClass: "fa fa-search form-control-feedback" }),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.search,
-                expression: "search"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: {
-              type: "text",
-              placeholder: "Unesite proizvod ili marku (pivo,coca-cola,..)"
-            },
-            domProps: { value: _vm.search },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.search = $event.target.value
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _vm.articles.length > 0
-          ? _c("div", { staticClass: "form-group col-sm-4" }, [
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.key,
-                      expression: "key"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { id: "sel1" },
-                  on: {
-                    change: [
-                      function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.key = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      },
-                      function($event) {
-                        return _vm.fetchArticles(_vm.shop)
-                      }
-                    ]
-                  }
-                },
-                [
-                  _c(
-                    "option",
-                    {
-                      attrs: { value: "opadajuce" },
-                      domProps: { selected: _vm.key == "opadajuce" }
-                    },
-                    [_vm._v("Sortiranje po opadajucim cenama")]
-                  ),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "rastuce" } }, [
-                    _vm._v("Sortiranje po rastucim Cenama")
-                  ])
-                ]
-              )
-            ])
-          : _vm._e()
-      ]),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c(
@@ -76379,31 +76433,44 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-md-3" },
-        [
+      _c("div", { staticClass: "col-md-3 mb-3" }, [
+        _c("div", { staticClass: "select" }, [
           _c(
-            "b-form-select",
+            "select",
             {
-              staticClass: "mb-3",
-              on: { change: _vm.compareDynamically },
-              model: {
-                value: _vm.selected,
-                callback: function($$v) {
-                  _vm.selected = $$v
-                },
-                expression: "selected"
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.selected,
+                  expression: "selected"
+                }
+              ],
+              on: {
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.selected = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  },
+                  _vm.compareDynamically
+                ]
               }
             },
             [
-              _c("template", { slot: "first" }, [
-                _c(
-                  "option",
-                  { attrs: { disabled: "" }, domProps: { value: null } },
-                  [_vm._v("Uporedi markete")]
-                )
-              ]),
+              _c(
+                "option",
+                { attrs: { disabled: "" }, domProps: { value: null } },
+                [_vm._v("Uporedi markete")]
+              ),
               _vm._v(" "),
               _c("option", { attrs: { value: "FreezeMvI" } }, [
                 _vm._v("Uporedi Maxi/Idea")
@@ -76412,12 +76479,100 @@ var render = function() {
               _c("option", { attrs: { value: "FreezeAll" } }, [
                 _vm._v("Uporedi sve markete")
               ])
-            ],
-            2
+            ]
           )
-        ],
-        1
-      ),
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row mb-2" }, [
+        _c("div", { staticClass: "col-sm-2" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group has-search col-sm-4" }, [
+          _c("div", { staticClass: "search" }, [
+            _c("div", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.search,
+                    expression: "search"
+                  }
+                ],
+                attrs: {
+                  type: "text",
+                  placeholder: "Unesite proizvod ili marku (pivo,coca-cola,..)",
+                  required: ""
+                },
+                domProps: { value: _vm.search },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.search = $event.target.value
+                  }
+                }
+              })
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _vm.articles.length > 0
+          ? _c("div", { staticClass: "form-group col-sm-4" }, [
+              _c("div", { staticClass: "select" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.key,
+                        expression: "key"
+                      }
+                    ],
+                    attrs: { id: "sel1" },
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.key = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        },
+                        function($event) {
+                          return _vm.fetchArticles(_vm.shop)
+                        }
+                      ]
+                    }
+                  },
+                  [
+                    _c(
+                      "option",
+                      {
+                        attrs: { value: "opadajuce" },
+                        domProps: { selected: _vm.key == "opadajuce" }
+                      },
+                      [_vm._v("Sortiranje po opadajucim cenama")]
+                    ),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "rastuce" } }, [
+                      _vm._v("Sortiranje po rastucim Cenama")
+                    ])
+                  ]
+                )
+              ])
+            ])
+          : _vm._e()
+      ]),
       _vm._v(" "),
       _vm.products.length > 0
         ? _c("h4", { attrs: { align: "left" } }, [
@@ -76435,93 +76590,6 @@ var render = function() {
             )
           ]),
       _c("br"),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-sm-2" }),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group has-search col-sm-4" }, [
-          _c("span", { staticClass: "fa fa-search form-control-feedback" }),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.search,
-                expression: "search"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: {
-              type: "text",
-              placeholder: "Unesite proizvod ili marku (pivo,coca-cola)"
-            },
-            domProps: { value: _vm.search },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.search = $event.target.value
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _vm.articles.length > 0
-          ? _c("div", { staticClass: "form-group col-sm-4" }, [
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.key,
-                      expression: "key"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { id: "sel1" },
-                  on: {
-                    change: [
-                      function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.key = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      },
-                      function($event) {
-                        return _vm.fetchArticles(_vm.shop)
-                      }
-                    ]
-                  }
-                },
-                [
-                  _c(
-                    "option",
-                    {
-                      attrs: { value: "opadajuce" },
-                      domProps: { selected: _vm.key == "opadajuce" }
-                    },
-                    [_vm._v("Sortiranje po opadajucim cenama")]
-                  ),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "rastuce" } }, [
-                    _vm._v("Sortiranje po rastucim Cenama")
-                  ])
-                ]
-              )
-            ])
-          : _vm._e()
-      ]),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c(
@@ -77158,31 +77226,44 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-md-3" },
-        [
+      _c("div", { staticClass: "col-md-3 mb-3" }, [
+        _c("div", { staticClass: "select" }, [
           _c(
-            "b-form-select",
+            "select",
             {
-              staticClass: "mb-3",
-              on: { change: _vm.compareDynamically },
-              model: {
-                value: _vm.selected,
-                callback: function($$v) {
-                  _vm.selected = $$v
-                },
-                expression: "selected"
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.selected,
+                  expression: "selected"
+                }
+              ],
+              on: {
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.selected = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  },
+                  _vm.compareDynamically
+                ]
               }
             },
             [
-              _c("template", { slot: "first" }, [
-                _c(
-                  "option",
-                  { attrs: { disabled: "" }, domProps: { value: null } },
-                  [_vm._v("Uporedi markete")]
-                )
-              ]),
+              _c(
+                "option",
+                { attrs: { disabled: "" }, domProps: { value: null } },
+                [_vm._v("Uporedi markete")]
+              ),
               _vm._v(" "),
               _c("option", { attrs: { value: "MeatsMvI" } }, [
                 _vm._v("Uporedi Maxi/Idea")
@@ -77191,29 +77272,10 @@ var render = function() {
               _c("option", { attrs: { value: "MeatsAll" } }, [
                 _vm._v("Uporedi sve markete")
               ])
-            ],
-            2
+            ]
           )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _vm.products.length > 0
-        ? _c("h4", { attrs: { align: "left" } }, [
-            _vm._v(
-              "Ukupan broj uporedjenih artikala: " +
-                _vm._s(_vm.filteredProducts.length)
-            )
-          ])
-        : _c("h4", { attrs: { align: "left" } }, [
-            _vm._v(
-              "Ukupan broj artikala " +
-                _vm._s(_vm.shop) +
-                ": " +
-                _vm._s(_vm.filteredProducts.length)
-            )
-          ]),
-      _c("br"),
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "row mb-2" }, [
         _c("div", { staticClass: "col-sm-2" }),
@@ -77232,7 +77294,8 @@ var render = function() {
                 ],
                 attrs: {
                   type: "text",
-                  placeholder: "       Search . . .",
+                  placeholder:
+                    "Unesite proizvod ili marku (kobasica,zlatiborac,..)",
                   required: ""
                 },
                 domProps: { value: _vm.search },
@@ -77251,58 +77314,76 @@ var render = function() {
         _vm._v(" "),
         _vm.articles.length > 0
           ? _c("div", { staticClass: "form-group col-sm-4" }, [
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.key,
-                      expression: "key"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { id: "sel1" },
-                  on: {
-                    change: [
-                      function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.key = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      },
-                      function($event) {
-                        return _vm.fetchArticles(_vm.shop)
+              _c("div", { staticClass: "select" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.key,
+                        expression: "key"
                       }
-                    ]
-                  }
-                },
-                [
-                  _c(
-                    "option",
-                    {
-                      attrs: { value: "opadajuce" },
-                      domProps: { selected: _vm.key == "opadajuce" }
-                    },
-                    [_vm._v("Sortiranje po opadajucim cenama")]
-                  ),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "rastuce" } }, [
-                    _vm._v("Sortiranje po rastucim Cenama")
-                  ])
-                ]
-              )
+                    ],
+                    attrs: { id: "sel1" },
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.key = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        },
+                        function($event) {
+                          return _vm.fetchArticles(_vm.shop)
+                        }
+                      ]
+                    }
+                  },
+                  [
+                    _c(
+                      "option",
+                      {
+                        attrs: { value: "opadajuce" },
+                        domProps: { selected: _vm.key == "opadajuce" }
+                      },
+                      [_vm._v("Sortiranje po opadajucim cenama")]
+                    ),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "rastuce" } }, [
+                      _vm._v("Sortiranje po rastucim Cenama")
+                    ])
+                  ]
+                )
+              ])
             ])
           : _vm._e()
       ]),
+      _vm._v(" "),
+      _vm.products.length > 0
+        ? _c("h4", { attrs: { align: "left" } }, [
+            _vm._v(
+              "Ukupan broj uporedjenih artikala: " +
+                _vm._s(_vm.filteredProducts.length)
+            )
+          ])
+        : _c("h4", { attrs: { align: "left" } }, [
+            _vm._v(
+              "Ukupan broj artikala " +
+                _vm._s(_vm.shop) +
+                ": " +
+                _vm._s(_vm.filteredProducts.length)
+            )
+          ]),
+      _c("br"),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c(
@@ -77808,31 +77889,44 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-md-3" },
-        [
+      _c("div", { staticClass: "col-md-3 mb-3" }, [
+        _c("div", { staticClass: "select" }, [
           _c(
-            "b-form-select",
+            "select",
             {
-              staticClass: "mb-3",
-              on: { change: _vm.compareDynamically },
-              model: {
-                value: _vm.selected,
-                callback: function($$v) {
-                  _vm.selected = $$v
-                },
-                expression: "selected"
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.selected,
+                  expression: "selected"
+                }
+              ],
+              on: {
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.selected = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  },
+                  _vm.compareDynamically
+                ]
               }
             },
             [
-              _c("template", { slot: "first" }, [
-                _c(
-                  "option",
-                  { attrs: { disabled: "" }, domProps: { value: null } },
-                  [_vm._v("Uporedi markete")]
-                )
-              ]),
+              _c(
+                "option",
+                { attrs: { disabled: "" }, domProps: { value: null } },
+                [_vm._v("Uporedi markete")]
+              ),
               _vm._v(" "),
               _c("option", { attrs: { value: "SweetsMvI" } }, [
                 _vm._v("Uporedi Maxi/Idea")
@@ -77841,96 +77935,98 @@ var render = function() {
               _c("option", { attrs: { value: "SweetsAll" } }, [
                 _vm._v("Uporedi sve markete")
               ])
-            ],
-            2
+            ]
           )
-        ],
-        1
-      ),
+        ])
+      ]),
       _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "row mb-2" }, [
         _c("div", { staticClass: "col-sm-2" }),
         _vm._v(" "),
         _c("div", { staticClass: "form-group has-search col-sm-4" }, [
-          _c("span", { staticClass: "fa fa-search form-control-feedback" }),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.search,
-                expression: "search"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: {
-              type: "text",
-              placeholder: "Unesite proizvod ili marku (čokolada,nestle,..)"
-            },
-            domProps: { value: _vm.search },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+          _c("div", { staticClass: "search" }, [
+            _c("div", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.search,
+                    expression: "search"
+                  }
+                ],
+                attrs: {
+                  type: "text",
+                  placeholder:
+                    "Unesite proizvod ili marku (čokolada,nestle,..)",
+                  required: ""
+                },
+                domProps: { value: _vm.search },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.search = $event.target.value
+                  }
                 }
-                _vm.search = $event.target.value
-              }
-            }
-          })
+              })
+            ])
+          ])
         ]),
         _vm._v(" "),
         _vm.articles.length > 0
           ? _c("div", { staticClass: "form-group col-sm-4" }, [
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.key,
-                      expression: "key"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { id: "sel1" },
-                  on: {
-                    change: [
-                      function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.key = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      },
-                      function($event) {
-                        return _vm.fetchArticles(_vm.shop)
+              _c("div", { staticClass: "select" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.key,
+                        expression: "key"
                       }
-                    ]
-                  }
-                },
-                [
-                  _c(
-                    "option",
-                    {
-                      attrs: { value: "opadajuce" },
-                      domProps: { selected: _vm.key == "opadajuce" }
-                    },
-                    [_vm._v("Sortiranje po opadajucim cenama")]
-                  ),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "rastuce" } }, [
-                    _vm._v("Sortiranje po rastucim Cenama")
-                  ])
-                ]
-              )
+                    ],
+                    attrs: { id: "sel1" },
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.key = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        },
+                        function($event) {
+                          return _vm.fetchArticles(_vm.shop)
+                        }
+                      ]
+                    }
+                  },
+                  [
+                    _c(
+                      "option",
+                      {
+                        attrs: { value: "opadajuce" },
+                        domProps: { selected: _vm.key == "opadajuce" }
+                      },
+                      [_vm._v("Sortiranje po opadajucim cenama")]
+                    ),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "rastuce" } }, [
+                      _vm._v("Sortiranje po rastucim Cenama")
+                    ])
+                  ]
+                )
+              ])
             ])
           : _vm._e()
       ]),
@@ -91553,14 +91649,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!**************************************************!*\
   !*** ./resources/assets/js/components/Meats.vue ***!
   \**************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Meats_vue_vue_type_template_id_3c09aa61___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Meats.vue?vue&type=template&id=3c09aa61& */ "./resources/assets/js/components/Meats.vue?vue&type=template&id=3c09aa61&");
 /* harmony import */ var _Meats_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Meats.vue?vue&type=script&lang=js& */ "./resources/assets/js/components/Meats.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Meats_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Meats_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -91590,7 +91687,7 @@ component.options.__file = "resources/assets/js/components/Meats.vue"
 /*!***************************************************************************!*\
   !*** ./resources/assets/js/components/Meats.vue?vue&type=script&lang=js& ***!
   \***************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

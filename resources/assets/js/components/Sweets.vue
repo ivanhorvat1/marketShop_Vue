@@ -13,32 +13,36 @@
             <div @click="fetchArticles('dis')" class="buttonCustom1 col-lg-2">Dis Slatkisi</div>
         </div>
 
-        <div class="col-md-3">
-            <b-form-select v-model="selected" @change="compareDynamically" class="mb-3">
-                <!-- This slot appears above the options from 'options' prop -->
-                <template slot="first">
+        <div class="col-md-3 mb-3">
+            <div class="select">
+                <select v-model="selected" @change="compareDynamically">
                     <option :value="null" disabled>Uporedi markete</option>
-                </template>
-
-                <!-- These options will appear after the ones from 'options' prop -->
-                <option value="SweetsMvI">Uporedi Maxi/Idea</option>
-                <option value="SweetsAll">Uporedi sve markete</option>
-            </b-form-select>
+                    <option value="SweetsMvI">Uporedi Maxi/Idea</option>
+                    <option value="SweetsAll">Uporedi sve markete</option>
+                </select>
+            </div>
         </div>
 
-        <div class="row">
+        <div class="row mb-2">
             <div class="col-sm-2"></div>
             <div class="form-group has-search col-sm-4">
-                <span class="fa fa-search form-control-feedback"></span>
-                <input type="text" v-model="search" class="form-control" placeholder="Unesite proizvod ili marku (čokolada,nestle,..)">
+                <!--<span class="fa fa-search form-control-feedback"></span>-->
+                <!--<input type="text" v-model="search" class="form-control" placeholder="Unesite proizvod ili marku (čokolada,nestle,..)">-->
+                <div class="search">
+                    <div>
+                        <input v-model="search" type="text" placeholder="Unesite proizvod ili marku (čokolada,nestle,..)" required>
+                    </div>
+                </div>
             </div>
 
             <div v-if="articles.length > 0" class="form-group col-sm-4">
                 <!--<label for="sel1">Sortiranje</label>-->
-                <select class="form-control" id="sel1" @change="fetchArticles(shop)" v-model="key">
-                    <option :selected="key == 'opadajuce'" value="opadajuce">Sortiranje po opadajucim cenama</option>
-                    <option value="rastuce">Sortiranje po rastucim Cenama</option>
-                </select>
+                <div class="select">
+                    <select id="sel1" @change="fetchArticles(shop)" v-model="key">
+                        <option :selected="key == 'opadajuce'" value="opadajuce">Sortiranje po opadajucim cenama</option>
+                        <option value="rastuce">Sortiranje po rastucim Cenama</option>
+                    </select>
+                </div>
             </div>
         </div>
 
@@ -395,12 +399,12 @@
                     window.scrollTo(0, 0);
                     $('#overlay').fadeOut();
                 })
-            }, compareDynamically(selected) {
+            }, compareDynamically() {
                 let vm = this;
                 // vm.createOverlay();
                 $('#overlay').fadeIn();
 
-                if (selected == 'SweetsAll') {
+                if (this.selected == 'SweetsAll') {
                     vm.fetchProducts();
                 } else {
                     fetch('api/sweets_fetch_compare_dynamically')

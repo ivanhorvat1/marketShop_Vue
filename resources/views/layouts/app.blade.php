@@ -82,26 +82,34 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/"><i class="fas fa-home fa-3x"></i><span class="menuspan">Home</span></a>
+                        <a class="nav-link" href="/"><i class="fas fa-home fa-3x"></i>
+                            <span class="menuspan">Home</span>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/action"><i class="fas fa-percentage fa-3x"></i><span
-                                    class="menuspan">Akcija</span></a>
+                        <a class="nav-link" href="/action"><i class="fas fa-percentage fa-3x"></i>
+                            <span class="menuspan">Akcija</span>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/freeze"><i class="fas fa-snowflake fa-3x"></i><span class="menuspan">Smrznuto</span></a>
+                        <a class="nav-link" href="/freeze"><i class="fas fa-snowflake fa-3x"></i>
+                            <span class="menuspan">Smrznuto</span>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/drinks"><i class="fas fa-glass-cheers fa-3x"></i><span
-                                    class="menuspan">Pice</span></a>
+                        <a class="nav-link" href="/drinks"><i class="fas fa-glass-cheers fa-3x"></i>
+                            <span class="menuspan">Pice</span>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/sweets"><i class="fas fa-candy-cane fa-3x"></i><span
-                                    class="menuspan">Slatkisi</span></a>
+                        <a class="nav-link" href="/sweets"><i class="fas fa-candy-cane fa-3x"></i>
+                            <span class="menuspan">Slatkisi</span>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/meats"><i class="fas fa-drumstick-bite fa-3x"></i><span
-                                    class="menuspan">Meso</span></a>
+                        <a class="nav-link" href="/meats"><i class="fas fa-drumstick-bite fa-3x"></i>
+                            <span class="menuspan">Meso</span>
+                        </a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto nav-flex-icons">

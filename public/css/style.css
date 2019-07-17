@@ -294,8 +294,13 @@
 }
 
 nav {
-    background-color: #ffffff !important;
+    /*background-color: #ffffff !important;*/
 }
+
+/*.fas:hover + nav{
+    background-image: url("https://images.blogthings.com/thesingleflowertest/flower-3.png");
+    !*background-repeat:no-repeat;*!
+}*/
 
 /* SUBSTRING TITLE */
 
@@ -580,6 +585,8 @@ input::-webkit-input-placeholder {
 
 /* END CUSTOMISED BUTTONS FOR FETCH SEPARATE MARKET */
 
+/* SEARCH INPUT */
+
 .search > div {
     display: inline-block;
     position: relative;
@@ -587,34 +594,34 @@ input::-webkit-input-placeholder {
 
 .search > div:after {
     content: "";
-    background: black;
+    background: #591259;
     width: 4px;
     height: 15px;
     position: absolute;
-    top: 20px;
-    right: -6px;
+    top: 40px;
+    right: -2px;
     transform: rotate(135deg);
-    box-shadow: 2px 0 #0091c2;
+    box-shadow: 1px 0 #153607;
 }
 
 .search > div > input {
     color: black;
-    font-size: 20px;
+    font-size: 18px;
     background: transparent;
-    width: 25px;
-    height: 25px;
+    width: 45px;
+    height: 45px;
     padding: 5px;
-    border: solid 3px black;
+    border: solid 3px #591259;
     outline: none;
-    border-radius: 35px;
-    box-shadow: 0 2px #0091c2;
+    border-radius: 25px;
+    box-shadow: 0 1px #153607;
     transition: width 0.5s;
 }
 
 .search > div > input::placeholder {
     color: black;
-    opacity: 1;
-    font-size: 15px;
+    /*opacity: 1;*/
+    font-size: 16px;
 }
 
 .search > div > input::-ms-input-placeholder {
@@ -623,7 +630,66 @@ input::-webkit-input-placeholder {
 
 .search > div > input:focus,
 .search > div > input:valid {
-    width: 250px;
+    width: 300px;
 }
+
+/* END SEARCH INPUT */
+
+/* SELECT DROPDOWN */
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    outline: 0;
+    box-shadow: none;
+    border: 0 !important;
+    background: #153607;
+    background-image: none;
+}
+/* Remove IE arrow */
+select::-ms-expand {
+    display: none;
+}
+/* Custom Select */
+.select {
+    position: relative;
+    display: flex;
+    width: 250px;
+    height: 45px;
+    line-height: 3;
+    background: #153607;
+    overflow: hidden;
+    border-radius: .25em;
+}
+select {
+    flex: 1;
+    padding: 0 .5em;
+    color: #fff;
+    cursor: pointer;
+}
+/* Arrow */
+.select::after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 1em;
+    background: #153607;
+    cursor: pointer;
+    pointer-events: none;
+    -webkit-transition: .25s all ease;
+    -o-transition: .25s all ease;
+    transition: .25s all ease;
+}
+/* Transition */
+.select:hover::after {
+    color: #591259;
+}
+
+/* END SELECT DROPDOWN */
+
+
 
 

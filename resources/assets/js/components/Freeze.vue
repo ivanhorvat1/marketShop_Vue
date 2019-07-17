@@ -13,42 +13,43 @@
             <div @click="fetchArticles('dis')" class="buttonCustom1 col-lg-2">Dis Smrznuto</div>
         </div>
 
-        <div class="col-md-3">
-            <b-form-select v-model="selected" @change="compareDynamically" class="mb-3">
-                <!-- This slot appears above the options from 'options' prop -->
-                <template slot="first">
+        <div class="col-md-3 mb-3">
+            <div class="select">
+                <select v-model="selected" @change="compareDynamically">
                     <option :value="null" disabled>Uporedi markete</option>
-                </template>
+                    <option value="FreezeMvI">Uporedi Maxi/Idea</option>
+                    <option value="FreezeAll">Uporedi sve markete</option>
+                </select>
+            </div>
+        </div>
 
-                <!-- These options will appear after the ones from 'options' prop -->
-                <option value="FreezeMvI">Uporedi Maxi/Idea</option>
-                <option value="FreezeAll">Uporedi sve markete</option>
-            </b-form-select>
+        <div class="row mb-2">
 
-            <!--<div class="mt-3">Selected: <strong>{{ selected }}</strong></div>-->
+            <div class="col-sm-2"></div>
+            <div class="form-group has-search col-sm-4">
+                <!--<span class="fa fa-search form-control-feedback"></span>-->
+                <!--<input type="text" v-model="search" class="form-control" placeholder="Unesite proizvod ili marku (pivo,coca-cola)">-->
+                <div class="search">
+                    <div>
+                        <input v-model="search" type="text" placeholder="Unesite proizvod ili marku (pivo,coca-cola,..)" required>
+                    </div>
+                </div>
+            </div>
+
+            <div v-if="articles.length > 0" class="form-group col-sm-4">
+                <!--<label for="sel1">Sortiranje</label>-->
+                <div class="select">
+                    <select id="sel1" @change="fetchArticles(shop)" v-model="key">
+                        <option :selected="key == 'opadajuce'" value="opadajuce">Sortiranje po opadajucim cenama</option>
+                        <option value="rastuce">Sortiranje po rastucim Cenama</option>
+                    </select>
+                </div>
+            </div>
         </div>
 
         <h4 v-if="products.length > 0" align="left">Ukupan broj uporedjenih artikala: {{filteredProducts.length}}</h4>
         <h4 v-else align="left">Ukupan broj artikala {{shop}}: {{filteredProducts.length}}</h4><br>
         <!--<input type="text" v-model="search" placeholder="Search title.."/>-->
-
-        <div class="row">
-
-            <div class="col-sm-2"></div>
-            <div class="form-group has-search col-sm-4">
-                <span class="fa fa-search form-control-feedback"></span>
-                <input type="text" v-model="search" class="form-control"
-                       placeholder="Unesite proizvod ili marku (pivo,coca-cola)">
-            </div>
-
-            <div v-if="articles.length > 0" class="form-group col-sm-4">
-                <!--<label for="sel1">Sortiranje</label>-->
-                <select class="form-control" id="sel1" @change="fetchArticles(shop)" v-model="key">
-                    <option :selected="key == 'opadajuce'" value="opadajuce">Sortiranje po opadajucim cenama</option>
-                    <option value="rastuce">Sortiranje po rastucim Cenama</option>
-                </select>
-            </div>
-        </div>
         <div class="row">
             <div class="wrap">
                 <div class="box one" v-if="products.length > 0"
@@ -422,12 +423,12 @@
                         window.scrollTo(0, 0);
                         $('#overlay').fadeOut();
                     })
-            }, compareDynamically(selected) {
+            }, compareDynamically() {
                 let vm = this;
                 // vm.createOverlay();
                 $('#overlay').fadeIn();
 
-                if (selected == 'FreezeAll') {
+                if (this.selected == 'FreezeAll') {
                     vm.fetchProducts();
                 } else {
                     fetch('api/freeze_fetch_compare_dynamically')

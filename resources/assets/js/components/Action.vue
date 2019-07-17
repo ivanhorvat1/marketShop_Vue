@@ -13,39 +13,44 @@
             <div @click="fetchArticles('dis')" class="buttonCustom1 col-lg-2">Dis Akcija</div>
         </div>
 
-        <div class="col-md-3">
-            <b-form-select v-model="selected" @change="compareDynamically" class="mb-3">
-                <!-- This slot appears above the options from 'options' prop -->
-                <template slot="first">
+        <div class="col-md-3 mb-3">
+            <div class="select">
+                <select v-model="selected" @change="compareDynamically">
                     <option :value="null" disabled>Uporedi markete</option>
-                </template>
-
-                <!-- These options will appear after the ones from 'options' prop -->
-                <option value="ActionMvI">Uporedi Maxi/Idea</option>
-                <option value="ActionAll">Uporedi sve markete</option>
-            </b-form-select>
+                    <option value="ActionMvI">Uporedi Maxi/Idea</option>
+                    <option value="ActionAll">Uporedi sve markete</option>
+                </select>
+            </div>
 
             <!--<div class="mt-3">Selected: <strong>{{ selected }}</strong></div>-->
         </div>
-
-        <h4 v-if="products.length > 0" align="left">Ukupan broj uporedjenih artikala: {{filteredProducts.length}}</h4>
-        <h4 v-else align="left">Ukupan broj artikala {{shop}}: {{filteredProducts.length}}</h4><br>
-        <div class="row">
+        <div class="row mb-2">
 
             <div class="col-sm-2"></div>
             <div class="form-group has-search col-sm-4">
-                <span class="fa fa-search form-control-feedback"></span>
-                <input type="text" v-model="search" class="form-control" placeholder="Unesite proizvod ili marku (pivo,coca-cola,..)">
+                <!--<span class="fa fa-search form-control-feedback"></span>-->
+                <!--<input type="text" v-model="search" class="form-control" placeholder="Unesite proizvod ili marku (pivo,coca-cola,..)">-->
+                <div class="search">
+                    <div>
+                        <input v-model="search" type="text" placeholder="Unesite proizvod ili marku (pivo,coca-cola,..)"
+                               required>
+                    </div>
+                </div>
             </div>
 
             <div v-if="articles.length > 0" class="form-group col-sm-4">
                 <!--<label for="sel1">Sortiranje</label>-->
-                <select class="form-control" id="sel1" @change="fetchArticles(shop)" v-model="key">
-                    <option :selected="key == 'opadajuce'" value="opadajuce">Sortiranje po opadajucim cenama</option>
-                    <option value="rastuce">Sortiranje po rastucim Cenama</option>
-                </select>
+                <div class="select">
+                    <select id="sel1" @change="fetchArticles(shop)" v-model="key">
+                        <option :selected="key == 'opadajuce'" value="opadajuce">Sortiranje po opadajucim cenama</option>
+                        <option value="rastuce">Sortiranje po rastucim Cenama</option>
+                    </select>
+                </div>
             </div>
         </div>
+
+        <h4 v-if="products.length > 0" align="left">Ukupan broj uporedjenih artikala: {{filteredProducts.length}}</h4>
+        <h4 v-else align="left">Ukupan broj artikala {{shop}}: {{filteredProducts.length}}</h4><br>
         <div class="row">
             <div class="wrap">
                 <div class="box one" v-if="products.length > 0"
@@ -206,7 +211,9 @@
         </div>
         <!--<button @click="toTopFunction()" id="BtnToTop" title="Go to top">&uarr;</button>-->
         <div id="BtnToTop1" class="bg"></div>
-        <button @click="toTopFunction()" id="BtnToTop" class="buttonToTop" target="_blank"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+        <button @click="toTopFunction()" id="BtnToTop" class="buttonToTop" target="_blank"><i class="fa fa-chevron-up"
+                                                                                              aria-hidden="true"></i>
+        </button>
         <div id="loader"></div>
         <br><br>
     </div>
@@ -384,12 +391,12 @@
                     window.scrollTo(0, 0);
                     $('#overlay').fadeOut();
                 })
-            }, compareDynamically(selected) {
+            }, compareDynamically() {
                 let vm = this;
                 // vm.createOverlay();
                 $('#overlay').fadeIn();
 
-                if (selected == 'ActionAll') {
+                if (this.selected == 'ActionAll') {
                     vm.fetchProducts();
                 } else {
                     fetch('api/action_action_fetch_compare_dynamically')

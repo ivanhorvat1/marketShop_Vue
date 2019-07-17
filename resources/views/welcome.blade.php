@@ -74,13 +74,13 @@
 <script type="text/javascript">
     $(window).on('load', function () {
         var current = location.pathname;
-        $('nav li a').each(function () {
+        /*$('nav li a').each(function () {
             var $this = $(this);
             // if the current path is like this link, make it active
             if ($this.attr('href') === current) {
                 $this.children().addClass("activeMenu");
             }
-        });
+        });*/
 
         $('.nav-item a').each(function () {
             var $this = $(this);
@@ -91,10 +91,20 @@
         });
     });
 
+    $('nav li a').each(function () {
+        var $this = $(this);
+        $this.hover(function () {
+            if ($this.attr('href') === '/drinks') {
+                $('nav').css("background-image", 'url("images/menu_images/drink_menu.png")').css("background-repeat", 'no-repeat');
+            }else{
+                $('nav').css("background-image", "");
+            }
+        })
+    });
+
     window.onbeforeunload = function () {
         window.scrollTo(0, 0);
-    }
-
+    };
 </script>
 
 </body>

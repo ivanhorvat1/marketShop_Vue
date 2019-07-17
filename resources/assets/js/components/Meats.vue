@@ -11,21 +11,25 @@
         </div>
         <!--<button @click="fetchProducts()" class="btn btn-primary">Uporedi artikle</button>-->
 
-        <div class="col-md-3">
-            <b-form-select v-model="selected" @change="compareDynamically" class="mb-3">
-                <!-- This slot appears above the options from 'options' prop -->
+        <div class="col-md-3 mb-3">
+            <!--<b-form-select v-model="selected" @change="compareDynamically" class="mb-3">
+                &lt;!&ndash; This slot appears above the options from 'options' prop &ndash;&gt;
                 <template slot="first">
                     <option :value="null" disabled>Uporedi markete</option>
                 </template>
 
-                <!-- These options will appear after the ones from 'options' prop -->
+                &lt;!&ndash; These options will appear after the ones from 'options' prop &ndash;&gt;
                 <option value="MeatsMvI">Uporedi Maxi/Idea</option>
                 <option value="MeatsAll">Uporedi sve markete</option>
-            </b-form-select>
+            </b-form-select>-->
+            <div class="select">
+                <select v-model="selected" @change="compareDynamically">
+                    <option :value="null" disabled>Uporedi markete</option>
+                    <option value="MeatsMvI">Uporedi Maxi/Idea</option>
+                    <option value="MeatsAll">Uporedi sve markete</option>
+                </select>
+            </div>
         </div>
-
-        <h4 v-if="products.length > 0" align="left">Ukupan broj uporedjenih artikala: {{filteredProducts.length}}</h4>
-        <h4 v-else align="left">Ukupan broj artikala {{shop}}: {{filteredProducts.length}}</h4><br>
 
         <div class="row mb-2">
 
@@ -36,19 +40,25 @@
                        placeholder="Unesite proizvod ili marku (pivo,coca-cola,..)">-->
                 <div class="search">
                     <div>
-                        <input v-model="search" type="text" placeholder="       Search . . ." required>
+                        <input v-model="search" type="text"
+                               placeholder="Unesite proizvod ili marku (kobasica,zlatiborac,..)" required>
                     </div>
                 </div>
             </div>
 
             <div v-if="articles.length > 0" class="form-group col-sm-4">
                 <!--<label for="sel1">Sortiranje</label>-->
-                <select class="form-control" id="sel1" @change="fetchArticles(shop)" v-model="key">
-                    <option :selected="key == 'opadajuce'" value="opadajuce">Sortiranje po opadajucim cenama</option>
-                    <option value="rastuce">Sortiranje po rastucim Cenama</option>
-                </select>
+                <div class="select">
+                    <select id="sel1" @change="fetchArticles(shop)" v-model="key">
+                        <option :selected="key == 'opadajuce'" value="opadajuce">Sortiranje po opadajucim cenama</option>
+                        <option value="rastuce">Sortiranje po rastucim Cenama</option>
+                    </select>
+                </div>
             </div>
         </div>
+
+        <h4 v-if="products.length > 0" align="left">Ukupan broj uporedjenih artikala: {{filteredProducts.length}}</h4>
+        <h4 v-else align="left">Ukupan broj artikala {{shop}}: {{filteredProducts.length}}</h4><br>
         <div class="row">
             <div class="wrap">
                 <div class="box one" v-if="products.length > 0"
@@ -392,12 +402,12 @@
                         window.scrollTo(0, 0);
                         $('#overlay').fadeOut();
                     })
-            }, compareDynamically(selected) {
+            }, compareDynamically() {
                 let vm = this;
                 // vm.createOverlay();
                 $('#overlay').fadeIn();
 
-                if (selected == 'MeatsAll') {
+                if (this.selected == 'MeatsAll') {
                     vm.fetchProducts();
                 } else {
                     fetch('api/meats_fetch_compare_dynamically')
