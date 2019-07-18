@@ -50,7 +50,8 @@
                 <!--<label for="sel1">Sortiranje</label>-->
                 <div class="select">
                     <select id="sel1" @change="fetchArticles(shop)" v-model="key">
-                        <option :selected="key == 'opadajuce'" value="opadajuce">Sortiranje po opadajucim cenama</option>
+                        <option :selected="key == 'opadajuce'" value="opadajuce">Sortiranje po opadajucim cenama
+                        </option>
                         <option value="rastuce">Sortiranje po rastucim Cenama</option>
                     </select>
                 </div>
@@ -65,23 +66,23 @@
                      v-for="article in filteredProducts.slice(startSlice,endSlice)" v-bind:key="article.code"
                      v-bind:style="[{ 'background-image': 'url(https://d3el976p2k4mvu.cloudfront.net' + article.imageUrl + ')' },styles]"
                      @click="info(article,$event.target)"
-                     style="cursor: pointer; height: 550px;" v-b-tooltip.hover :title="article.body">
+                     style="cursor: pointer; height: 550px;" v-b-tooltip.hover.html="'<h6>'+article.body+'</h6>'">
                     <p class="textOverflow" align="center">{{ article.body }}</p>
                     <div class="poster p1">
                         <h4 v-if="article.maxiCena">
-                            <img style="height: 50px; width: 80px" src="images/delhaize-maxi-logo-vector.png"/>
+                            <img style="height: 50px; width: 80px" src="images/market_logo/delhaize-maxi-logo-vector.png"/>
                             <span><b>{{ article.maxiCena.substring(0, article.maxiCena.length - 3) }}</b></span>
                         </h4>
                         <h4 v-if="article.ideaCena">
-                            <img style="height: 50px; width: 80px" src="images/Idea_Logo_resized.png"/>
+                            <img style="height: 50px; width: 80px" src="images/market_logo/Idea_Logo_resized.png"/>
                             <span><b>{{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></span>
                         </h4>
                         <h4 v-if="article.disCena">
-                            <img style="height: 50px; width: 80px" src="images/dis_krnjevo_resized.gif"/>
+                            <img style="height: 50px; width: 80px" src="images/market_logo/dis_krnjevo_resized.gif"/>
                             <span><b>{{ article.disCena.substring(0, article.disCena.length - 3) }}</b></span>
                         </h4>
                         <h4 v-if="article.univerexportCena">
-                            <img style="height: 50px; width: 80px" src="images/univer_resized.png"/>
+                            <img style="height: 50px; width: 80px" src="images/market_logo/univer_resized.png"/>
                             <span><b>{{ article.univerexportCena.substring(0, article.univerexportCena.length - 3) }}</b></span>
                         </h4>
                     </div>
@@ -119,7 +120,7 @@
             <div class="wrap">
                 <div style="height: 450px;" class="box one" v-if="articles.length > 0"
                      v-for="articlea in filteredProducts.slice(startSlice,endSlice)" v-bind:key="articlea.code"
-                     v-b-tooltip.hover :title="articlea.body">
+                     v-b-tooltip.hover.html="'<h6>'+articlea.body+'</h6>'">
                     <p class="textOverflowSeparated" align="center">{{ articlea.body }}</p>
                     <div style="margin-top: 50px">
                         <img center v-if="articlea.imageUrl !== null && articlea.shop == 'maxi'" class="center"
@@ -132,19 +133,19 @@
                     </div>
                     <div class="poster p1" style="margin-top: 50px">
                         <h5 v-if="articlea.shop == 'maxi'">
-                            <img style="height: 50px; width: 80px" src="images/delhaize-maxi-logo-vector.png"/>
+                            <img style="height: 50px; width: 80px" src="images/market_logo/delhaize-maxi-logo-vector.png"/>
                             <b>{{articlea.formattedPrice }}</b>
                         </h5>
                         <h5 v-if="articlea.shop == 'idea'">
-                            <img style="height: 50px; width: 80px" src="images/Idea_Logo_resized.png"/>
+                            <img style="height: 50px; width: 80px" src="images/market_logo/Idea_Logo_resized.png"/>
                             <b>{{articlea.formattedPrice }}</b>
                         </h5>
                         <h5 v-if="articlea.shop == 'dis'">
-                            <img style="height: 50px; width: 80px" src="images/dis_krnjevo_resized.gif"/>
+                            <img style="height: 50px; width: 80px" src="images/market_logo/dis_krnjevo_resized.gif"/>
                             <b>{{articlea.formattedPrice }}</b>
                         </h5>
                         <h5 v-if="articlea.shop == 'univerexport'">
-                            <img style="height: 50px; width: 80px" src="images/univer_resized.png"/>
+                            <img style="height: 50px; width: 80px" src="images/market_logo/univer_resized.png"/>
                             <b>{{articlea.formattedPrice }}</b>
                         </h5>
                     </div>
@@ -193,25 +194,25 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <img style="height: 55px; width: 80px"
-                                 src="images/delhaize-maxi-logo-vector.png"/>
-                            <h6><b>{{maxiCena}}</b></h6>
-                            <h6><b>{{supplementaryPriceMaxi}}</b></h6><br>
+                                 src="images/market_logo/delhaize-maxi-logo-vector.png"/>
+                            <h5><b>{{maxiCena}}</b></h5>
+                            <h5><b>{{supplementaryPriceMaxi}}</b></h5><br>
                         </div>
                         <div class="col-sm-6">
                             <img style="height: 50px; width: 80px"
-                                 src="images/Idea_Logo_resized.png"/>
-                            <h6><b>{{ideaCena}}</b></h6>
-                            <h6><b>{{supplementaryPriceIdea}}</b></h6>
+                                 src="images/market_logo/Idea_Logo_resized.png"/>
+                            <h5><b>{{ideaCena}}</b></h5>
+                            <h5><b>{{supplementaryPriceIdea}}</b></h5>
                         </div>
                         <div class="col-sm-6">
                             <img style="height: 50px; width: 80px"
-                                 src="images/dis_krnjevo_resized.gif"/>
-                            <h6><b>{{disCena}}</b></h6>
+                                 src="images/market_logo/dis_krnjevo_resized.gif"/>
+                            <h5><b>{{disCena}}</b></h5>
                         </div>
                         <div class="col-sm-6">
                             <img style="height: 50px; width: 80px"
-                                 src="images/univer_resized.png"/>
-                            <h6><b>{{univerexportCena}}</b></h6>
+                                 src="images/market_logo/univer_resized.png"/>
+                            <h5><b>{{univerexportCena}}</b></h5>
                         </div>
                     </div>
                 </div>
@@ -223,8 +224,8 @@
             <h5>Loading...</h5>
         </div>
         <div id="BtnToTop1" class="bg"></div>
-        <button @click="toTopFunction()" id="BtnToTop" class="buttonToTop" target="_blank"><i class="fa fa-chevron-up"
-                                                                                              aria-hidden="true"></i>
+        <button @click="toTopFunction()" id="BtnToTop" class="buttonToTop" target="_blank">
+            <i class="fa fa-chevron-up" aria-hidden="true"></i>
         </button>
         <!--<button @click="toTopFunction()" id="BtnToTop" title="Go to top">&uarr;</button>-->
         <div id="loader"></div>
@@ -300,7 +301,6 @@
         },
         methods: {
             info(article, button) {
-                console.log(article.supplementaryPriceIdea);
                 this.title = article.title;
                 this.body = article.body;
                 this.imageUrl = article.imageUrl;
@@ -393,9 +393,7 @@
                         shop: shop,
                         sort: this.key
                     }
-                })
-                //.then(res => res.json())
-                    .then(res => {
+                }).then(res => {
                         this.endSlice = 12;
                         this.products = '';
                         this.articles = res.data;

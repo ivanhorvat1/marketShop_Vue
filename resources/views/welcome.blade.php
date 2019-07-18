@@ -88,18 +88,52 @@
             if ($this.attr('href') === current) {
                 $this.children().addClass("activeMenu");
             }
-        });
-    });
 
-    $('nav li a').each(function () {
-        var $this = $(this);
-        $this.hover(function () {
-            if ($this.attr('href') === '/drinks') {
-                $('nav').css("background-image", 'url("images/menu_images/drink_menu.png")').css("background-repeat", 'no-repeat');
-            }else{
-                $('nav').css("background-image", "");
+            $this.hover(function () {
+                var href = $this.attr('href');
+                if (href === '/drinks') {
+                    $('nav').css("background-image", 'url("images/menu_images/drink_menu_right.jpg")').css("background-repeat", 'no-repeat');
+                }else if(href === '/meats'){
+                    $('nav').css("background-image", 'url("images/menu_images/meats_menu_right1.jpg")').css("background-repeat", 'no-repeat');
+                }else if(href === '/sweets'){
+                    $('nav').css("background-image", 'url("images/menu_images/sweets_menu_right1.jpg")').css("background-repeat", 'no-repeat');
+                }else if(href === '/freeze'){
+                    $('nav').css("background-image", 'url("images/menu_images/freeze_menu_right.jpg")').css("background-repeat", 'no-repeat');
+                }else{
+                    $('nav').css("background-image", "");
+                }
+            });
+
+        });
+
+        /*$(window).resize(function() {
+            var width = $(window).width();
+            if (width < 1200){
+                $('.nav-item a').each(function () {
+                    var $this = $(this);
+                    // if the current path is like this link, make it active
+                    if ($this.attr('href') === current) {
+                        $this.children().addClass("activeMenu");
+                    }
+
+                    $this.hover(function () {
+                        var href = $this.attr('href');
+                        if (href === '/drinks') {
+                            $('nav').css("background-image", 'url("images/menu_images/drink_menu_right_mobile.jpg")').css("background-repeat", 'no-repeat');
+                        }else if(href === '/meats'){
+                            $('nav').css("background-image", 'url("images/menu_images/meats_menu_right.jpg")').css("background-repeat", 'no-repeat');
+                        }else if(href === '/sweets'){
+                            $('nav').css("background-image", 'url("images/menu_images/sweets_menu_right.jpg")').css("background-repeat", 'no-repeat');
+                        }else if(href === '/freeze'){
+                            $('nav').css("background-image", 'url("images/menu_images/freeze_menu_right.jpg")').css("background-repeat", 'no-repeat');
+                        }else{
+                            $('nav').css("background-image", "");
+                        }
+                    });
+
+                });
             }
-        })
+        });*/
     });
 
     window.onbeforeunload = function () {

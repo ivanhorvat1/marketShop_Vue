@@ -83,32 +83,32 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
                         <a class="nav-link" href="/"><i class="fas fa-home fa-3x"></i>
-                            <span class="menuspan">Home</span>
+                            {{--<span class="menuspan">Home</span>--}}
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/action"><i class="fas fa-percentage fa-3x"></i>
-                            <span class="menuspan">Akcija</span>
+                            {{--<span class="menuspan">Akcija</span>--}}
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/freeze"><i class="fas fa-snowflake fa-3x"></i>
-                            <span class="menuspan">Smrznuto</span>
+                            {{--<span class="menuspan">Smrznuto</span>--}}
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/drinks"><i class="fas fa-glass-cheers fa-3x"></i>
-                            <span class="menuspan">Pice</span>
+                            {{--<span class="menuspan">Pice</span>--}}
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/sweets"><i class="fas fa-candy-cane fa-3x"></i>
-                            <span class="menuspan">Slatkisi</span>
+                            {{--<span class="menuspan">Slatkisi</span>--}}
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/meats"><i class="fas fa-drumstick-bite fa-3x"></i>
-                            <span class="menuspan">Meso</span>
+                            {{--<span class="menuspan">Meso</span>--}}
                         </a>
                     </li>
                 </ul>
@@ -166,5 +166,74 @@
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
+<script type="text/javascript">
+    $(window).on('load', function () {
+        var current = location.pathname;
+        /*$('nav li a').each(function () {
+            var $this = $(this);
+            // if the current path is like this link, make it active
+            if ($this.attr('href') === current) {
+                $this.children().addClass("activeMenu");
+            }
+        });*/
+
+        $('.nav-item a').each(function () {
+            var $this = $(this);
+            // if the current path is like this link, make it active
+            if ($this.attr('href') === current) {
+                $this.children().addClass("activeMenu");
+            }
+
+            $this.hover(function () {
+                var href = $this.attr('href');
+                if (href === '/drinks') {
+                    $('nav').css("background-image", 'url("images/menu_images/drink_menu_right.jpg")').css("background-repeat", 'no-repeat');
+                }else if(href === '/meats'){
+                    $('nav').css("background-image", 'url("images/menu_images/meats_menu_right1.jpg")').css("background-repeat", 'no-repeat');
+                }else if(href === '/sweets'){
+                    $('nav').css("background-image", 'url("images/menu_images/sweets_menu_right1.jpg")').css("background-repeat", 'no-repeat');
+                }else if(href === '/freeze'){
+                    $('nav').css("background-image", 'url("images/menu_images/freeze_menu_right.jpg")').css("background-repeat", 'no-repeat');
+                }else{
+                    $('nav').css("background-image", "");
+                }
+            });
+
+        });
+
+        /*$(window).resize(function() {
+            var width = $(window).width();
+            if (width < 1200){
+                $('.nav-item a').each(function () {
+                    var $this = $(this);
+                    // if the current path is like this link, make it active
+                    if ($this.attr('href') === current) {
+                        $this.children().addClass("activeMenu");
+                    }
+
+                    $this.hover(function () {
+                        var href = $this.attr('href');
+                        if (href === '/drinks') {
+                            $('nav').css("background-image", 'url("images/menu_images/drink_menu_right_mobile.jpg")').css("background-repeat", 'no-repeat');
+                        }else if(href === '/meats'){
+                            $('nav').css("background-image", 'url("images/menu_images/meats_menu_right.jpg")').css("background-repeat", 'no-repeat');
+                        }else if(href === '/sweets'){
+                            $('nav').css("background-image", 'url("images/menu_images/sweets_menu_right.jpg")').css("background-repeat", 'no-repeat');
+                        }else if(href === '/freeze'){
+                            $('nav').css("background-image", 'url("images/menu_images/freeze_menu_right.jpg")').css("background-repeat", 'no-repeat');
+                        }else{
+                            $('nav').css("background-image", "");
+                        }
+                    });
+
+                });
+            }
+        });*/
+    });
+
+    window.onbeforeunload = function () {
+        window.scrollTo(0, 0);
+    };
+</script>
 </body>
 </html>
