@@ -37,20 +37,20 @@ class FreezeController extends Controller
                         foreach ($barcodesMaxi as $barMax) {
                             if ($barIde == $barMax) {
                                 $max['price'] = str_replace('.', '', $max['price']);
-                                if ($max['price'] >= $ide['price']) {
+//                                if ($max['price'] >= $ide['price']) {
                                     $ide['maxiCena'] = $max['formattedPrice'];
                                     $ide['ideaCena'] = $ide['formattedPrice'];
                                     $ide['imageUrl'] = $max['imageUrl'];
                                     $ide['supplementaryPriceMaxi'] = $max['supplementaryPriceLabel1'];
                                     $ide['supplementaryPriceIdea'] = $ide['supplementaryPriceLabel1'];
                                     array_push($maxiIdea, $ide);
-                                } else {
+                               /* } else {
                                     $max['ideaCena'] = $ide['formattedPrice'];
                                     $max['maxiCena'] = $max['formattedPrice'];
                                     $max['supplementaryPriceIdea'] = $ide['supplementaryPriceLabel1'];
                                     $max['supplementaryPriceMaxi'] = $max['supplementaryPriceLabel1'];
                                     array_push($maxiIdea, $max);
-                                }
+                                }*/
                             }
                         }
                     }
@@ -67,7 +67,7 @@ class FreezeController extends Controller
                     foreach ($barcodesDis as $barDis) {
                         foreach ($barcodesMaxiIde as $barMaxIde) {
                             if ($barDis == $barMaxIde) {
-                                if ($di['price'] >= $maxide['price']) {
+//                                if ($di['price'] >= $maxide['price']) {
 
                                     if (!$maxide['ideaCena']) {
                                         $maxide['ideaCena'] = $maxide['formattedPrice'];
@@ -81,7 +81,7 @@ class FreezeController extends Controller
                                     if (!in_array($maxide['barcodes'], array_column($maxiIdeaDis, 'barcodes'))) {
                                         array_push($maxiIdeaDis, $maxide);
                                     }
-                                } else {
+                                /*} else {
                                     if ($maxide['ideaCena']) {
                                         $ideaCena = $maxide['ideaCena'];
                                     } else {
@@ -99,7 +99,7 @@ class FreezeController extends Controller
                                     if (!in_array($di['barcodes'], array_column($maxiIdeaDis, 'barcodes'))) {
                                         array_push($maxiIdeaDis, $di);
                                     }
-                                }
+                                }*/
                             }
                         }
                     }

@@ -38,20 +38,20 @@ class MeatController extends Controller
                         foreach ($barcodesMaxi as $barMax) {
                             if ($barIde == $barMax) {
                                 $max['price'] = str_replace('.', '', $max['price']);
-                                if ($max['price'] >= $ide['price']) {
+//                                if ($max['price'] >= $ide['price']) {
                                     $ide['supplementaryPriceMaxi'] = $max['supplementaryPriceLabel1'];
                                     $ide['supplementaryPriceIdea'] = $ide['supplementaryPriceLabel1'];
                                     $ide['maxiCena'] = $max['formattedPrice'];
                                     $ide['ideaCena'] = $ide['formattedPrice'];
                                     $ide['imageUrl'] = $max['imageUrl'];
                                     array_push($maxiIdea, $ide);
-                                } else {
+                                /*} else {
                                     $max['supplementaryPriceMaxi'] = $max['supplementaryPriceLabel1'];
                                     $max['supplementaryPriceIdea'] = $ide['supplementaryPriceLabel1'];
                                     $max['ideaCena'] = $ide['formattedPrice'];
                                     $max['maxiCena'] = $max['formattedPrice'];
                                     array_push($maxiIdea, $max);
-                                }
+                                }*/
                             }
                         }
                     }
@@ -68,7 +68,7 @@ class MeatController extends Controller
                     foreach ($barcodesDis as $barDis) {
                         foreach ($barcodesMaxiIde as $barMaxIde) {
                             if ($barDis == $barMaxIde) {
-                                if ($di['price'] >= $maxide['price']) {
+//                                if ($di['price'] >= $maxide['price']) {
 
                                     if (!$maxide['ideaCena']) {
                                         $maxide['ideaCena'] = $maxide['formattedPrice'];
@@ -82,7 +82,7 @@ class MeatController extends Controller
                                     if (!in_array($maxide['barcodes'], array_column($maxiIdeaDis, 'barcodes'))) {
                                         array_push($maxiIdeaDis, $maxide);
                                     }
-                                } else {
+                                /*} else {
                                     if ($maxide['ideaCena']) {
                                         $ideaCena = $maxide['ideaCena'];
                                     } else {
@@ -100,7 +100,7 @@ class MeatController extends Controller
                                     if (!in_array($di['barcodes'], array_column($maxiIdeaDis, 'barcodes'))) {
                                         array_push($maxiIdeaDis, $di);
                                     }
-                                }
+                                }*/
                             }
                         }
                     }

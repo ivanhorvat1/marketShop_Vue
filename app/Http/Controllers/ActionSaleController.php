@@ -87,7 +87,7 @@ class ActionSaleController extends Controller
                         foreach ($barcodesMaxiIde as $barMaxIde) {
                             if ($barDis == $barMaxIde) {
                                 //if (explode(',', $di['barcodes']) == explode(',', $maxide['barcodes'])) {
-                                if ($di['price'] >= $maxide['price']) {
+//                                if ($di['price'] >= $maxide['price']) {
 
                                     if (!$maxide['ideaCena']) {
                                         $maxide['ideaCena'] = $maxide['formattedPrice'];
@@ -104,7 +104,7 @@ class ActionSaleController extends Controller
                                     if (!in_array($maxide['barcodes'], array_column($maxiIdeaDis, 'barcodes'))) {
                                         array_push($maxiIdeaDis, $maxide);
                                     }
-                                } else {
+                                /*} else {
                                     if ($maxide['ideaCena']) {
                                         $ideaCena = $maxide['ideaCena'];
                                     } else {
@@ -127,7 +127,7 @@ class ActionSaleController extends Controller
                                     if (!in_array($di['barcodes'], array_column($maxiIdeaDis, 'barcodes'))) {
                                         array_push($maxiIdeaDis, $di);
                                     }
-                                }
+                                }*/
                             }
                         }
                     }

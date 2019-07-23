@@ -37,7 +37,7 @@ class DrinkController extends Controller
                         foreach ($barcodesMaxi as $barMax) {
                             if ($barIde == $barMax) {
                                 $max['price'] = str_replace('.', '', $max['price']);
-                                if ($max['price'] >= $ide['price']) {
+//                                if ($max['price'] >= $ide['price']) {
                                     $ide['maxiCena'] = $max['formattedPrice'];
                                     $ide['ideaCena'] = $ide['formattedPrice'];
                                     $ide['maxiPriceCompare'] = $max['price'];
@@ -46,7 +46,7 @@ class DrinkController extends Controller
                                     $ide['supplementaryPriceMaxi'] = $max['supplementaryPriceLabel1'];
                                     $ide['supplementaryPriceIdea'] = $ide['supplementaryPriceLabel1'];
                                     array_push($maxiIdea, $ide);
-                                } else {
+                                /*} else {
                                     $max['ideaCena'] = $ide['formattedPrice'];
                                     $max['maxiCena'] = $max['formattedPrice'];
                                     $max['ideaPriceCompare'] = $ide['price'];
@@ -54,7 +54,7 @@ class DrinkController extends Controller
                                     $max['supplementaryPriceIdea'] = $ide['supplementaryPriceLabel1'];
                                     $max['supplementaryPriceMaxi'] = $max['supplementaryPriceLabel1'];
                                     array_push($maxiIdea, $max);
-                                }
+                                }*/
                             }
                         }
                     }
@@ -72,8 +72,7 @@ class DrinkController extends Controller
                     foreach ($barcodesDis as $barDis) {
                         foreach ($barcodesMaxiIde as $barMaxIde) {
                             if ($barDis == $barMaxIde) {
-//                    if (explode(',', $di['barcodes']) == explode(',', $maxide['barcodes'])) {
-                                if ($di['price'] >= $maxide['price']) {
+                                //if ($di['price'] >= $maxide['price']) {
 
                                     if (!$maxide['ideaCena']) {
                                         $maxide['ideaCena'] = $maxide['formattedPrice'];
@@ -90,7 +89,7 @@ class DrinkController extends Controller
                                     if (!in_array($maxide['barcodes'], array_column($maxiIdeaDis, 'barcodes'))) {
                                         array_push($maxiIdeaDis, $maxide);
                                     }
-                                } else {
+                                /*} else {
                                     if ($maxide['ideaCena']) {
                                         $ideaCena = $maxide['ideaCena'];
                                     } else {
@@ -113,12 +112,14 @@ class DrinkController extends Controller
                                     if (!in_array($di['barcodes'], array_column($maxiIdeaDis, 'barcodes'))) {
                                         array_push($maxiIdeaDis, $di);
                                     }
-                                }
+                                }*/
                             }
                         }
                     }
                 }
             }
+
+
 
             $maxiIdeaDisUni = [];
             $barcodesMaxiIdeDis = [];
@@ -131,20 +132,19 @@ class DrinkController extends Controller
                         foreach ($barcodesUni as $barUni) {
                             foreach ($barcodesMaxiIdeDis as $barMaxIdeDis) {
                                 if ($barUni == $barMaxIdeDis) {
-//                        if (explode(',', $uni['barcodes']) == explode(',', $maxidedis['barcodes'])) {
-                                    if ($uni['price'] >= $maxidedis['price']) {
+                                    //if ($uni['price'] >= $maxidedis['price']) {
 
                                         $maxidedis[$uni['shop'] . 'Cena'] = str_replace('.', ',', $uni['formattedPrice']);
-                                        if (!in_array($maxidedis['barcodes'], array_column($maxiIdeaDisUni, 'barcodes'))) {
+                                        //if (!in_array($maxidedis['barcodes'], array_column($maxiIdeaDisUni, 'barcodes'))) {
                                             array_push($maxiIdeaDisUni, $maxidedis);
-                                        }
-                                    } else {
+                                        //}
+                                    /*} else {
                                         $uni['univerCena'] = str_replace('.', ',', $uni['formattedPrice']);
 
                                         if (!in_array($uni['barcodes'], array_column($maxiIdeaDisUni, 'barcodes'))) {
                                             array_push($maxiIdeaDisUni, $uni);
                                         }
-                                    }
+                                    }*/
                                 }
                             }
                         }

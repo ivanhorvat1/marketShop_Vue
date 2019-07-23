@@ -2496,6 +2496,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AdminHome",
   data: function data() {
@@ -2989,6 +2990,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateDisSweet: function updateDisSweet() {
       fetch('api/dis_update_sweet').then(function (res) {
+        return res.json();
+      }).then(function (res) {//M.toast({html: res.success, classes: 'rounded'}, 3000);
+      });
+    },
+    updateUniverexportDrinks: function updateUniverexportDrinks() {
+      fetch('api/univer_update_drinks').then(function (res) {
         return res.json();
       }).then(function (res) {//M.toast({html: res.success, classes: 'rounded'}, 3000);
       });
@@ -3662,6 +3669,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -74274,6 +74283,19 @@ var render = function() {
             _vm._v(" "),
             _vm._m(6),
             _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning",
+                on: {
+                  click: function($event) {
+                    return _vm.updateUniverexportDrinks()
+                  }
+                }
+              },
+              [_vm._v("Univer update Drinks")]
+            ),
+            _vm._v(" "),
             _c("br"),
             _c("br")
           ]
@@ -76173,6 +76195,17 @@ var render = function() {
                                   "https://www.idea.rs/online/" +
                                   articlea.imageUrl,
                                 width: "180px",
+                                height: "180px"
+                              }
+                            })
+                          : articlea.imageUrl !== null &&
+                            articlea.shop == "univerexport"
+                          ? _c("img", {
+                              staticClass: "center",
+                              attrs: {
+                                center: "",
+                                src: articlea.imageUrl,
+                                width: "80px",
                                 height: "180px"
                               }
                             })

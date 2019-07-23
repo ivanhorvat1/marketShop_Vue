@@ -46,7 +46,7 @@ Route::get('/meats', [
 ]);
 
 Route::get('/test', [
-    'uses' => 'ActionSaleController@index',
+    'uses' => 'UniverexportMarketController@updateExistingUniverDrinks',
     'as' => 'test'
 ]);
 
