@@ -38,6 +38,7 @@ Vue.component('comparedismarketfreeze', require('./components/CompareDisMarketFr
 Vue.component('comparedismarketsweet', require('./components/CompareDisMarketSweet.vue').default);
 Vue.component('compareuniverexportmarketdrink', require('./components/CompareUniverexportMarketDrink.vue').default);
 Vue.component('compareuniverexportmarketfreeze', require('./components/CompareUniverexportMarketFreeze.vue').default);
+Vue.component('compareuniverexportmarketsweets', require('./components/CompareUniverexportMarketSweets.vue').default);
 // Vue.prototype.$userId = document.querySelector("meta[name='user-id']").getAttribute('content');
 
 

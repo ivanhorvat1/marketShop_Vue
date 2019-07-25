@@ -52,6 +52,7 @@ Route::get('dis_update_sweet', 'DisMarketController@updateExistingSweet');
 //univerexport
 Route::get('compare_univerexport_market_drink', 'UniverexportMarketController@getUniverexportMarketDrink');
 Route::get('compare_univerexport_market_freeze', 'UniverexportMarketController@getUniverexportMarketFreeze');
+Route::get('compare_univerexport_market_sweets', 'UniverexportMarketController@getUniverexportMarketSweets');
 Route::get('univer_update_drinks', 'UniverexportMarketController@updateExistingUniverDrinks');
 
 // List single article

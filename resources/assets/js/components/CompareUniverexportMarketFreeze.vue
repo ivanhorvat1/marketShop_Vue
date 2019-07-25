@@ -2,7 +2,7 @@
     <div align="center" class="container">
         <h4 align="left">Total products: {{products.length}}</h4><br>
         <div class="row">
-            <div class="col-sm-6" v-for="(article, index) in products" v-bind:key="article.univerexport.id">
+            <div class="col-sm-6" v-for="(article, index) in products" v-bind:key="index">
                 <div class="card">
                     <div class="card-body">
                         <p>{{ article.univerexport.name}}</p>

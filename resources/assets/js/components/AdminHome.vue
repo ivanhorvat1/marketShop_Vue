@@ -69,6 +69,7 @@
                     <br><br>
                     <button class="btn btn-primary"><a href="/univerexportDrinks" style="color: white">Univerexport Market Pice</a></button>
                     <button class="btn btn-primary"><a href="/univerexportFreeze" style="color: white">Univerexport Market Smrznuto</a></button>
+                    <button class="btn btn-primary"><a href="/univerexportSweets" style="color: white">Univerexport Market Slatkisi</a></button>
                     <button @click="updateUniverexportDrinks()" class="btn btn-warning">Univer update Drinks</button>
                     <br><br>
                 </div>

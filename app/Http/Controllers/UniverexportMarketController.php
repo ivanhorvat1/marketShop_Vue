@@ -5,16 +5,25 @@ namespace App\Http\Controllers;
 use App\drink;
 use App\dis_drink;
 use App\Freeze;
+use App\Sweets;
 use App\univerexport;
 use App\univerexport_action_sale;
 use App\univerexport_drink;
 use App\univerexport_freeze;
+use App\univerexport_sweets;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 
 class UniverexportMarketController extends Controller
 {
+    function multiexplode ($delimiters,$string) {
+
+        $ready = str_replace($delimiters, $delimiters[0], $string);
+        $launch = explode($delimiters[0], $ready);
+        return  $launch;
+    }
+
     public function getUniverexportMarketDrink()
     {
         //skip(1200)->
@@ -39,13 +48,6 @@ class UniverexportMarketController extends Controller
         }
 
         return $database;
-    }
-
-    function multiexplode ($delimiters,$string) {
-
-        $ready = str_replace($delimiters, $delimiters[0], $string);
-        $launch = explode($delimiters[0], $ready);
-        return  $launch;
     }
 
     public function getUniverexportMarketFreeze()
@@ -74,6 +76,39 @@ class UniverexportMarketController extends Controller
             //}
             //var_dump($databasee['drink']->isEmpty()); continue;
             if ($databasee['freeze']->isNotEmpty()) {
+                $database[] = $databasee;
+            }
+        }
+
+        return $database;
+    }
+
+    public function getUniverexportMarketSweets()
+    {
+        //skip(1200)->
+        $univerexportFreeze = univerexport::where('category', 'Slatko i slano')->take(3000)->get();
+
+        $database = [];
+        foreach ($univerexportFreeze as $univerexport) {
+            //$explo = explode(' ', $univerexport['name']);
+            $explo = $this->multiexplode(array(" ","."),$univerexport['name']);
+            $duzina = count($explo);
+
+            //foreach ($explo as $ex){
+            // if($duzina > 3){
+            //->where('body', 'like', '%'.$explo[3].'%')
+            //var_dump($explo); continue;
+
+            $user = univerexport_sweets::where('code', $univerexport['id'])->first();
+            if(array_key_exists(3,$explo)) {
+                if ($user == null) {
+                    $databasee = ['univerexport' => $univerexport, 'sweets' => Sweets::select('body', 'barcodes', 'supplementaryPriceLabel2', 'imageUrl')->whereNotNull('barcodes')->where('body', 'like', '%' . $explo[0] . '%')->where('body', 'like', '%' . $explo[1] . '%')->where('body', 'like', '%' . $explo[2] . '%')->where('body', 'like', '%' . $explo[3] . '%')->get()];
+                }
+            }
+            // }
+            //}
+            //var_dump($databasee['drink']->isEmpty()); continue;
+            if ($databasee['sweets']->isNotEmpty()) {
                 $database[] = $databasee;
             }
         }
@@ -117,6 +152,11 @@ class UniverexportMarketController extends Controller
         return view('frontend.compareUniverexportMarketFreeze')->with('showStore', false);
     }
 
+    public function getViewSweets()
+    {
+        return view('frontend.compareUniverexportMarketSweets')->with('showStore', false);
+    }
+
     public function store(Request $request)
     {
         /*var_dump($request->code);
@@ -136,10 +176,10 @@ class UniverexportMarketController extends Controller
             $article = univerexport_drink::firstOrNew(array('code' => $request->code));
         }elseif ($request->category == 'smrznuti') {
             $article = univerexport_freeze::firstOrNew(array('code' => $request->code));
+        }elseif ($request->category == 'slatkisi') {
+            $article = univerexport_sweets::firstOrNew(array('code' => $request->code));
         }/* elseif ($request->category == 'meso') {
             $article = dis_meat::firstOrNew(array('code' => $request->code));
-        }  elseif ($request->category == 'slatkisi') {
-            $article = dis_sweet::firstOrNew(array('code' => $request->code));
         }*/
 
         $article->code = $request->code;
@@ -353,7 +393,7 @@ class UniverexportMarketController extends Controller
 
     function curlAllUniverexport()
     {
-        $cache = Cache::remember('curlUniverexport1', 5, function () {
+        $cache = Cache::remember('curlUniverexport1', 25, function () {
             ini_set('max_execution_time', 30000); //300 seconds = 5 minutes
             ini_set('memory_limit', '-1');
 
@@ -567,7 +607,7 @@ class UniverexportMarketController extends Controller
                 $image_url = $value['imgUrl'][$i];
                 $cat = $key;
                 $url = $value['url'][$i];
-                $lastupdate = date("Y-m-d H:i:s");
+
 
                 $data = [
                     'id' => $id,
@@ -581,9 +621,8 @@ class UniverexportMarketController extends Controller
                     'image_url' => $image_url,
                     'category' => $cat,
                     'url' => $url,
-                    'lastupdate' => $lastupdate,
                 ];
-
+//                var_dump($data); die;
                 $saved = univerexport::create($data);
 
 

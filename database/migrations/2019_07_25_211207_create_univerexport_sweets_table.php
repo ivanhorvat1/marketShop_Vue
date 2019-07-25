@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUniverexportFreeze extends Migration
+class CreateUniverexportSweetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateUniverexportFreeze extends Migration
      */
     public function up()
     {
-        Schema::create('univerexport_freezes', function (Blueprint $table) {
+        Schema::create('univerexport_sweets', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('code');
             $table->string('title')->nullable();
@@ -40,6 +40,6 @@ class CreateUniverexportFreeze extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('univerexport_freezes');
+        Schema::dropIfExists('univerexport_sweets');
     }
 }

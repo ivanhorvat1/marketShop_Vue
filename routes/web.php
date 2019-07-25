@@ -98,6 +98,11 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         'as' => 'univerexportFreeze'
     ]);
 
+    Route::get('/univerexportSweets', [
+        'uses' => 'UniverexportMarketController@getViewSweets',
+        'as' => 'univerexportSweets'
+    ]);
+
 //Route::get('/home', function (){
 //    if(Auth::user()->admin == 0){
 //        return view('home')->with('showStore', false);

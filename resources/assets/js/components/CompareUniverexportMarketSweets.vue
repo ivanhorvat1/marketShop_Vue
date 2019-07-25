@@ -12,7 +12,7 @@
                         article.univerexport.price_new,article.univerexport.price_old, article.univerexport.image_url,article.univerexport.manufacturer,
                         article.univerexport.price_measure,article.univerexport.price_reference)"
                               method="post">
-                            <div v-for="baza in article.drink">
+                            <div v-for="baza in article.sweets">
                                 <input type="radio" v-model="articles.barcodes" :value="baza.barcodes"> {{baza.body}}
                                 <!--<input type="text" v-model="articles.supplementary"/>-->
                                 <br>
@@ -76,7 +76,7 @@
                 }
             },
             fetchProducts() {
-                fetch('api/compare_univerexport_market_drink')
+                fetch('api/compare_univerexport_market_sweets')
                     .then(res => res.json())
                     .then(res => {
                         this.products = res;
@@ -89,7 +89,7 @@
                 this.articles.body = body;
                 this.articles.newPrice = newPrice;
                 this.articles.oldPrice = oldPrice;
-                this.articles.category = 'pice';
+                this.articles.category = 'slatkisi';
                 this.articles.shop = 'univerexport';
                 this.articles.imageUrl = imageUrl;
                 this.articles.supplementaryPriceLabel1 = price_reference + ' ' + price_measure;
