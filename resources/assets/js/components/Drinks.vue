@@ -144,7 +144,7 @@
                         <img center v-else-if="articlea.imageUrl !== null && articlea.shop == 'dis'" class="center"
                              :src="'https://www.idea.rs/online/'+articlea.imageUrl" width="180px" height="180px">
                         <img center v-else-if="articlea.imageUrl !== null && articlea.shop == 'univerexport'" class="center"
-                             :src="articlea.imageUrl" width="80px" height="180px">
+                             :src="articlea.imageUrl" width="90px" height="180px">
                         <img v-else center style="height: 180px; width: 180px;" :src=articlea.imageDefault>
                     </div>
                     <div class="poster p1" style="margin-top: 50px">

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\drink;
 use App\dis_drink;
+use App\Freeze;
 use App\univerexport;
 use App\univerexport_action_sale;
 use App\univerexport_drink;
+use App\univerexport_freeze;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
@@ -39,9 +41,80 @@ class UniverexportMarketController extends Controller
         return $database;
     }
 
+    function multiexplode ($delimiters,$string) {
+
+        $ready = str_replace($delimiters, $delimiters[0], $string);
+        $launch = explode($delimiters[0], $ready);
+        return  $launch;
+    }
+
+    public function getUniverexportMarketFreeze()
+    {
+        //skip(1200)->
+        $univerexportFreeze = univerexport::where('category', 'Smrznuto')->take(3000)->get();
+
+        $database = [];
+        foreach ($univerexportFreeze as $univerexport) {
+            //$explo = explode(' ', $univerexport['name']);
+            $explo = $this->multiexplode(array(" ","."),$univerexport['name']);
+            $duzina = count($explo);
+
+            //foreach ($explo as $ex){
+            // if($duzina > 3){
+            //->where('body', 'like', '%'.$explo[3].'%')
+            //var_dump($explo); continue;
+
+            $user = univerexport_freeze::where('code', $univerexport['id'])->first();
+            if(array_key_exists(3,$explo)) {
+                if ($user == null) {
+                    $databasee = ['univerexport' => $univerexport, 'freeze' => Freeze::select('body', 'barcodes', 'supplementaryPriceLabel2', 'imageUrl')->whereNotNull('barcodes')->where('body', 'like', '%' . $explo[0] . '%')->where('body', 'like', '%' . $explo[1] . '%')->where('body', 'like', '%' . $explo[2] . '%')->where('body', 'like', '%' . $explo[3] . '%')->get()];
+                }
+            }
+            // }
+            //}
+            //var_dump($databasee['drink']->isEmpty()); continue;
+            if ($databasee['freeze']->isNotEmpty()) {
+                $database[] = $databasee;
+            }
+        }
+
+        return $database;
+    }
+
+    /*public function getUniverexportMarketFreezed()
+    {
+        //skip(1200)->
+        $univerexportfreeze = univerexport::where('category', 'Smrznuto')->take(1200)->get();
+
+        $database = [];
+        foreach ($univerexportfreeze as $univerexport) {
+            $explo = explode(' ', $univerexport['name']);
+
+            $duzina = count($explo);
+
+            //foreach ($explo as $ex){
+            // if($duzina > 3){
+            //->where('body', 'like', '%'.$explo[3].'%')
+            $databasee = ['univerexport' => $univerexport, 'drink' => Freeze::select('body', 'barcodes', 'supplementaryPriceLabel2', 'imageUrl')->whereNotNull('barcodes')->where('body', 'like', '%' . $explo[0] . '%')->where('body', 'like', '%' . $explo[1] . '%')->get()];
+            // }
+            //}
+            //var_dump($databasee['drink']->isEmpty()); continue;
+            if ($databasee['drink']->isNotEmpty()) {
+                $database[] = $databasee;
+            }
+        }
+
+        return $database;
+    }*/
+
     public function getViewDrink()
     {
         return view('frontend.compareUniverexportMarketDrink')->with('showStore', false);
+    }
+
+    public function getViewFreeze()
+    {
+        return view('frontend.compareUniverexportMarketFreeze')->with('showStore', false);
     }
 
     public function store(Request $request)
@@ -61,11 +134,11 @@ class UniverexportMarketController extends Controller
 
         if ($request->category == 'pice') {
             $article = univerexport_drink::firstOrNew(array('code' => $request->code));
+        }elseif ($request->category == 'smrznuti') {
+            $article = univerexport_freeze::firstOrNew(array('code' => $request->code));
         }/* elseif ($request->category == 'meso') {
             $article = dis_meat::firstOrNew(array('code' => $request->code));
-        } elseif ($request->category == 'smrznuti') {
-            $article = dis_freeze::firstOrNew(array('code' => $request->code));
-        } elseif ($request->category == 'slatkisi') {
+        }  elseif ($request->category == 'slatkisi') {
             $article = dis_sweet::firstOrNew(array('code' => $request->code));
         }*/
 
@@ -116,9 +189,9 @@ class UniverexportMarketController extends Controller
             for ($i = 0; $i < count($value['id']); $i++) {
 
                 if (strpos($value['salePrice'][$i], ".") == false) {
-                    $price = $value['salePrice'][$i].'00';
+                    $price = $value['salePrice'][$i] . '00';
                     $formattedPrice = $value['salePrice'][$i] . ".00 RSD";
-                }else{
+                } else {
                     $price = str_replace('.', '', $value['salePrice'][$i]);
                     $formattedPrice = $value['salePrice'][$i] . " RSD";
                 }
@@ -129,16 +202,16 @@ class UniverexportMarketController extends Controller
                 }
 
                 if ($key = 'Pica i napici') {
+
                     $article = univerexport_drink::where('code', (int)$value['id'][$i])->first();
-                }else{
+                    if (!$article) continue;
+                } else {
                     continue;
                 }
 
-                var_dump(count($article->id)); continue;
-
                 if ($article) {
                     $code = $value['id'][$i];
-                    //$barcodes = $article->barcodes;
+                    $barcodes = $article->barcodes;
                     $title = $value['manufacturer'][$i];
                     $body = $value['name'][$i];
                     $category = $article->category;
@@ -151,9 +224,9 @@ class UniverexportMarketController extends Controller
                     if ($value['oldPrice'][$i] != 0) {
 
                         if (strpos($value['salePrice'][$i], ".") == false) {
-                            $price = $value['salePrice'][$i].'00';
+                            $price = $value['salePrice'][$i] . '00';
                             $formattedPrice = $value['salePrice'][$i] . ".00 RSD";
-                        }else{
+                        } else {
                             $price = str_replace('.', '', $value['salePrice'][$i]);
                             $formattedPrice = $value['salePrice'][$i] . " RSD";
                         }
@@ -163,7 +236,7 @@ class UniverexportMarketController extends Controller
                             'code' => $code,
                             'title' => $title,
                             'body' => $body,
-                            //'barcodes' => $barcodes,
+                            'barcodes' => $barcodes,
                             'category' => $category,
                             'shop' => $shop,
                             'imageDefault' => $imageDefault,
@@ -202,7 +275,7 @@ class UniverexportMarketController extends Controller
 
             // Check if initialization had gone wrong*
             if ($ch === false) {
-                throw new Exception('failed to initialize');
+                throw new \Exception('failed to initialize');
             }
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
             curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
@@ -215,7 +288,7 @@ class UniverexportMarketController extends Controller
 
             // Check the return value of curl_exec(), too
             if ($content === false) {
-                throw new Exception(curl_error($ch), curl_errno($ch));
+                throw new \Exception(curl_error($ch), curl_errno($ch));
             }
 
             /* Process $content here */
@@ -225,7 +298,7 @@ class UniverexportMarketController extends Controller
             // Close curl handle
             curl_close($ch);
             unset($ch);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
 
             trigger_error(sprintf(
                 'Curl failed with error #%d: %s',
@@ -280,7 +353,7 @@ class UniverexportMarketController extends Controller
 
     function curlAllUniverexport()
     {
-        $cache = Cache::remember('curlUniverexport', 20, function () {
+        $cache = Cache::remember('curlUniverexport1', 5, function () {
             ini_set('max_execution_time', 30000); //300 seconds = 5 minutes
             ini_set('memory_limit', '-1');
 
@@ -457,6 +530,78 @@ class UniverexportMarketController extends Controller
 
         return $cache;
 
+    }
+
+    function insertAllUniverProductsInUniverTable()
+    {
+        $categories = $this->curlAllUniverexport();
+
+        $saved = false;
+        $success = false;
+
+        foreach ($categories as $key => $value) {
+            for ($i = 0; $i < count($value['id']); $i++) {
+
+                if (strpos($value['salePrice'][$i], ".") == false) {
+                    $price = $value['salePrice'][$i] . '00';
+                    $formattedPrice = $value['salePrice'][$i] . ".00 RSD";
+                } else {
+                    $price = str_replace('.', '', $value['salePrice'][$i]);
+                    $formattedPrice = $value['salePrice'][$i] . " RSD";
+                }
+
+
+                if (!$price) {
+                    $price = null;
+                }
+
+
+                $id = $value['id'][$i];
+                $name = $value['name'][$i];
+                $price_old = $value['oldPrice'][$i];
+                $price_new = $price;
+                $price_measure = $value['saleMeasure'][$i];
+                $price_reference = $value['referencePrice'][$i];
+                $reference_measure = $value['referenceMeasure'][$i];
+                $manufacturer = $value['manufacturer'][$i];
+                $image_url = $value['imgUrl'][$i];
+                $cat = $key;
+                $url = $value['url'][$i];
+                $lastupdate = date("Y-m-d H:i:s");
+
+                $data = [
+                    'id' => $id,
+                    'name' => $name,
+                    'price_old' => $price_old,
+                    'price_new' => $price_new,
+                    'price_measure' => $price_measure,
+                    'price_reference' => $price_reference,
+                    'reference_measure' => $reference_measure,
+                    'manufacturer' => $manufacturer,
+                    'image_url' => $image_url,
+                    'category' => $cat,
+                    'url' => $url,
+                    'lastupdate' => $lastupdate,
+                ];
+
+                $saved = univerexport::create($data);
+
+
+                if ($saved) {
+                    $success = true;
+                } else {
+                    return response()->json([
+                        "success" => false
+                    ]);
+                }
+            }
+        }
+
+        $data = [
+            "success" => $success
+        ];
+
+        return response()->json($data);
     }
 
 

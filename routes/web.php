@@ -46,7 +46,7 @@ Route::get('/meats', [
 ]);
 
 Route::get('/test', [
-    'uses' => 'UniverexportMarketController@updateExistingUniverDrinks',
+    'uses' => 'UniverexportMarketController@insertAllUniverProductsInUniverTable',
     'as' => 'test'
 ]);
 
@@ -91,6 +91,11 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/univerexportDrinks', [
         'uses' => 'UniverexportMarketController@getViewDrink',
         'as' => 'univerexportDrinks'
+    ]);
+
+    Route::get('/univerexportFreeze', [
+        'uses' => 'UniverexportMarketController@getViewFreeze',
+        'as' => 'univerexportFreeze'
     ]);
 
 //Route::get('/home', function (){

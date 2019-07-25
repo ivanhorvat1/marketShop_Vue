@@ -68,6 +68,7 @@
                     <button @click="updateDisSweet()" class="btn btn-warning">Dis update Sweet</button>
                     <br><br>
                     <button class="btn btn-primary"><a href="/univerexportDrinks" style="color: white">Univerexport Market Pice</a></button>
+                    <button class="btn btn-primary"><a href="/univerexportFreeze" style="color: white">Univerexport Market Smrznuto</a></button>
                     <button @click="updateUniverexportDrinks()" class="btn btn-warning">Univer update Drinks</button>
                     <br><br>
                 </div>

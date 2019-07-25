@@ -679,6 +679,8 @@ class DisMarketController extends Controller
             }
 
             $article = dis_drink::where('code', $disArtikli['code'])->first();
+            if(!$article) continue;
+
             if ($article) {
                 $code = $article->code;
                 $barcodes = $article->barcodes;
