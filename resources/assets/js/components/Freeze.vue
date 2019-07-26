@@ -54,7 +54,7 @@
             <div class="wrap">
                 <div class="box one" v-if="products.length > 0"
                      v-for="article in filteredProducts.slice(startSlice,endSlice)" v-bind:key="article.code"
-                     v-bind:style="[{ 'background-image': 'url(https://d3el976p2k4mvu.cloudfront.net' + article.imageUrl + ')' },styles]"
+                     v-bind:style="[{ 'background-image': 'url(' + article.imageUrl + ')' },styles]"
                      @click="info(article,$event.target)"
                      style="cursor: pointer; height: 550px;" v-b-tooltip.hover.html="'<h6>'+article.body+'</h6>'">
                     <p class="textOverflow" align="center">{{ article.body }}</p>

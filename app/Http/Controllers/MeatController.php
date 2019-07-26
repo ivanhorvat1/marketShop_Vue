@@ -43,7 +43,11 @@ class MeatController extends Controller
                                     $ide['supplementaryPriceIdea'] = $ide['supplementaryPriceLabel1'];
                                     $ide['maxiCena'] = $max['formattedPrice'];
                                     $ide['ideaCena'] = $ide['formattedPrice'];
-                                    $ide['imageUrl'] = $max['imageUrl'];
+                                    if($max['imageUrl'] != null) {
+                                        $ide['imageUrl'] = 'https://d3el976p2k4mvu.cloudfront.net'.$max['imageUrl'];
+                                    }else{
+                                        $ide['imageUrl'] = $ide['imageDefault'];
+                                    }
                                     array_push($maxiIdea, $ide);
                                 /*} else {
                                     $max['supplementaryPriceMaxi'] = $max['supplementaryPriceLabel1'];
@@ -166,7 +170,11 @@ class MeatController extends Controller
                                 $ide['supplementaryPriceIdea'] = $ide['supplementaryPriceLabel1'];
                                 $ide['maxiCena'] = $max['formattedPrice'];
                                 $ide['ideaCena'] = $ide['formattedPrice'];
-                                $ide['imageUrl'] = $max['imageUrl'];
+                                if($max['imageUrl'] != null) {
+                                    $ide['imageUrl'] = 'https://d3el976p2k4mvu.cloudfront.net'.$max['imageUrl'];
+                                }else{
+                                    $ide['imageUrl'] = $ide['imageDefault'];
+                                }
                                 array_push($maxiIdea, $ide);
                             }
                         }

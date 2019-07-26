@@ -70,7 +70,8 @@
                     <button class="btn btn-primary"><a href="/univerexportDrinks" style="color: white">Univerexport Market Pice</a></button>
                     <button class="btn btn-primary"><a href="/univerexportFreeze" style="color: white">Univerexport Market Smrznuto</a></button>
                     <button class="btn btn-primary"><a href="/univerexportSweets" style="color: white">Univerexport Market Slatkisi</a></button>
-                    <button @click="updateUniverexportDrinks()" class="btn btn-warning">Univer update Drinks</button>
+                    <button class="btn btn-primary"><a href="/univerexportMeats" style="color: white">Univerexport Market Meso</a></button>
+                    <button @click="updateUniverexportArticles()" class="btn btn-warning">Univer update Articles</button>
                     <br><br>
                 </div>
                 <!-- SECOND TAB configure users -->
@@ -744,8 +745,8 @@
                         //M.toast({html: res.success, classes: 'rounded'}, 3000);
                     })
             },
-            updateUniverexportDrinks() {
-                fetch('api/univer_update_drinks')
+            updateUniverexportArticles() {
+                fetch('api/univer_update_articles')
                     .then(res => res.json())
                     .then(res => {
                         //M.toast({html: res.success, classes: 'rounded'}, 3000);

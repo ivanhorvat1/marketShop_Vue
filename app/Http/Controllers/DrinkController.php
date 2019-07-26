@@ -42,7 +42,11 @@ class DrinkController extends Controller
                                     $ide['ideaCena'] = $ide['formattedPrice'];
                                     $ide['maxiPriceCompare'] = $max['price'];
                                     $ide['ideaPriceCompare'] = $ide['price'];
-                                    $ide['imageUrl'] = $max['imageUrl'];
+                                    if($max['imageUrl'] != null) {
+                                        $ide['imageUrl'] = 'https://d3el976p2k4mvu.cloudfront.net'.$max['imageUrl'];
+                                    }else{
+                                        $ide['imageUrl'] = $ide['imageDefault'];
+                                    }
                                     $ide['supplementaryPriceMaxi'] = $max['supplementaryPriceLabel1'];
                                     $ide['supplementaryPriceIdea'] = $ide['supplementaryPriceLabel1'];
                                     array_push($maxiIdea, $ide);
@@ -214,7 +218,11 @@ class DrinkController extends Controller
                             if ($barIde == $barMax) {
                                 $ide['maxiCena'] = $max['formattedPrice'];
                                 $ide['ideaCena'] = $ide['formattedPrice'];
-                                $ide['imageUrl'] = $max['imageUrl'];
+                                if($max['imageUrl'] != null) {
+                                    $ide['imageUrl'] = 'https://d3el976p2k4mvu.cloudfront.net'.$max['imageUrl'];
+                                }else{
+                                    $ide['imageUrl'] = $ide['imageDefault'];
+                                }
                                 array_push($maxiIdea, $ide);
                             }
                         }

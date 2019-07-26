@@ -103,6 +103,11 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         'as' => 'univerexportSweets'
     ]);
 
+    Route::get('/univerexportMeats', [
+        'uses' => 'UniverexportMarketController@getViewMeats',
+        'as' => 'univerexportMeats'
+    ]);
+
 //Route::get('/home', function (){
 //    if(Auth::user()->admin == 0){
 //        return view('home')->with('showStore', false);

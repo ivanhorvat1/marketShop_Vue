@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\drink;
 use App\dis_drink;
 use App\Freeze;
+use App\Meat;
 use App\Sweets;
 use App\univerexport;
 use App\univerexport_action_sale;
 use App\univerexport_drink;
 use App\univerexport_freeze;
+use App\univerexport_meats;
 use App\univerexport_sweets;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -27,18 +29,23 @@ class UniverexportMarketController extends Controller
     public function getUniverexportMarketDrink()
     {
         //skip(1200)->
-        $univerexportDrinks = univerexport::where('category', 'pice')->take(1200)->get();
+        $univerexportDrinks = univerexport::where('category', 'Pica i napici')->take(3000)->get();
 
         $database = [];
         foreach ($univerexportDrinks as $univerexport) {
-            $explo = explode(' ', $univerexport['name']);
-
+            $explo = $this->multiexplode(array(" ","."),$univerexport['name']);
+//            $explo = explode(' ', $univerexport['name']);
             $duzina = count($explo);
 
             //foreach ($explo as $ex){
             // if($duzina > 3){
             //->where('body', 'like', '%'.$explo[3].'%')
-            $databasee = ['univerexport' => $univerexport, 'drink' => drink::select('body', 'barcodes', 'supplementaryPriceLabel2', 'imageUrl')->whereNotNull('barcodes')->where('body', 'like', '%' . $explo[0] . '%')->where('body', 'like', '%' . $explo[1] . '%')->get()];
+            $check = univerexport_drink::where('code', $univerexport['id'])->first();
+            if(array_key_exists(3,$explo)) {
+                if ($check == null) {
+                    $databasee = ['univerexport' => $univerexport, 'drink' => drink::select('body', 'barcodes', 'supplementaryPriceLabel2', 'imageUrl')->whereNotNull('barcodes')->where('body', 'like', '%' . $explo[1] . '%')->where('body', 'like', '%' . $explo[2] . '%')->where('body', 'like', '%' . $explo[3] . '%')->get()];
+                }
+            }
             // }
             //}
             //var_dump($databasee['drink']->isEmpty()); continue;
@@ -66,9 +73,9 @@ class UniverexportMarketController extends Controller
             //->where('body', 'like', '%'.$explo[3].'%')
             //var_dump($explo); continue;
 
-            $user = univerexport_freeze::where('code', $univerexport['id'])->first();
+            $check = univerexport_freeze::where('code', $univerexport['id'])->first();
             if(array_key_exists(3,$explo)) {
-                if ($user == null) {
+                if ($check == null) {
                     $databasee = ['univerexport' => $univerexport, 'freeze' => Freeze::select('body', 'barcodes', 'supplementaryPriceLabel2', 'imageUrl')->whereNotNull('barcodes')->where('body', 'like', '%' . $explo[0] . '%')->where('body', 'like', '%' . $explo[1] . '%')->where('body', 'like', '%' . $explo[2] . '%')->where('body', 'like', '%' . $explo[3] . '%')->get()];
                 }
             }
@@ -109,6 +116,41 @@ class UniverexportMarketController extends Controller
             //}
             //var_dump($databasee['drink']->isEmpty()); continue;
             if ($databasee['sweets']->isNotEmpty()) {
+                $database[] = $databasee;
+            }
+        }
+
+        return $database;
+    }
+
+    public function getUniverexportMarketMeats()
+    {
+        //skip(1200)->
+        $univerexportMeats = univerexport::where('category', 'Pekara i mesara')->take(3000)->get();
+
+        $database = [];
+        foreach ($univerexportMeats as $univerexport) {
+            //$explo = explode(' ', $univerexport['name']);
+            $explo = $this->multiexplode(array(" ","."),$univerexport['name']);
+            $duzina = count($explo);
+
+            //foreach ($explo as $ex){
+            // if($duzina > 3){
+            //->where('body', 'like', '%'.$explo[3].'%')
+            //var_dump($explo); continue;
+
+            $user = univerexport_meats::where('code', $univerexport['id'])->first();
+            if(array_key_exists(2,$explo)) {
+                if ($user == null) {
+
+                $databasee = ['univerexport' => $univerexport, 'meats' => Meat::select('body', 'barcodes', 'supplementaryPriceLabel2', 'imageUrl')->whereNotNull('barcodes')->where('body', 'like', '%' . $explo[0] . '%')->where('body', 'like', '%' . $explo[1] . '%')->get()];
+
+                }
+            }
+            // }
+            //}
+            //var_dump($databasee['drink']->isEmpty()); continue;
+            if ($databasee['meats']->isNotEmpty()) {
                 $database[] = $databasee;
             }
         }
@@ -157,6 +199,11 @@ class UniverexportMarketController extends Controller
         return view('frontend.compareUniverexportMarketSweets')->with('showStore', false);
     }
 
+    public function getViewMeats()
+    {
+        return view('frontend.compareUniverexportMarketMeats')->with('showStore', false);
+    }
+
     public function store(Request $request)
     {
         /*var_dump($request->code);
@@ -165,12 +212,28 @@ class UniverexportMarketController extends Controller
         $imageDefault = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
 
         if ($request->oldPrice != 0) {
-            $formattedPrice = $request->newPrice . " RSD";
-            $price = str_replace('.', '', $request->newPrice);
+            /*$formattedPrice = $request->newPrice . " RSD";
+            $price = str_replace('.', '', $request->newPrice);*/
+            if (strpos($request->newPrice, ".") == false) {
+                $price = $request->newPrice . '00';
+                $formattedPrice = $request->newPrice . ".00 RSD";
+            } else {
+                $price = str_replace('.', '', $request->newPrice);
+                $formattedPrice = $request->newPrice . " RSD";
+            }
         } else {
-            $formattedPrice = $request->newPrice . " RSD";
-            $price = str_replace('.', '', $request->newPrice);
+            /*$formattedPrice = $request->newPrice . " RSD";
+            $price = str_replace('.', '', $request->newPrice);*/
+            if (strpos($request->newPrice, ".") == false) {
+                $price = $request->newPrice . '00';
+                $formattedPrice = $request->newPrice . ".00 RSD";
+            } else {
+                $price = str_replace('.', '', $request->newPrice);
+                $formattedPrice = $request->newPrice . " RSD";
+            }
         }
+
+
 
         if ($request->category == 'pice') {
             $article = univerexport_drink::firstOrNew(array('code' => $request->code));
@@ -178,9 +241,9 @@ class UniverexportMarketController extends Controller
             $article = univerexport_freeze::firstOrNew(array('code' => $request->code));
         }elseif ($request->category == 'slatkisi') {
             $article = univerexport_sweets::firstOrNew(array('code' => $request->code));
-        }/* elseif ($request->category == 'meso') {
-            $article = dis_meat::firstOrNew(array('code' => $request->code));
-        }*/
+        } elseif ($request->category == 'meso') {
+            $article = univerexport_meats::firstOrNew(array('code' => $request->code));
+        }
 
         $article->code = $request->code;
         $article->title = $request->title;
@@ -218,16 +281,33 @@ class UniverexportMarketController extends Controller
         }
     }
 
-    public function updateExistingUniverDrinks()
+    public function updateExistingUniverArticles()
     {
         $categories = $this->curlAllUniverexport();
-        univerexport_action_sale::where('category', 'pice')->delete();
+
+        $p = 0;
+        $s = 0;
+        $f = 0;
         $saved = false;
         $success = false;
 
         foreach ($categories as $key => $value) {
-            for ($i = 0; $i < count($value['id']); $i++) {
 
+            if ($key == 'Pica i napici' && $p == 0) {
+                univerexport_action_sale::where('category', 'pice')->delete();
+                $p++;
+            }elseif ($key == 'Slatko i slano' && $s == 0){
+                univerexport_action_sale::where('category', 'slatkisi')->delete();
+                $s++;
+            }elseif ($key == 'Smrznuto' && $f == 0){
+                univerexport_action_sale::where('category', 'smrznuti')->delete();
+                $f++;
+            }elseif ($key == 'Pekara i mesara' && $f == 0){
+                univerexport_action_sale::where('category', 'meso')->delete();
+                $f++;
+            }
+
+            for ($i = 0; $i < count($value['id']); $i++) {
                 if (strpos($value['salePrice'][$i], ".") == false) {
                     $price = $value['salePrice'][$i] . '00';
                     $formattedPrice = $value['salePrice'][$i] . ".00 RSD";
@@ -236,18 +316,27 @@ class UniverexportMarketController extends Controller
                     $formattedPrice = $value['salePrice'][$i] . " RSD";
                 }
 
-
                 if (!$price) {
                     $price = null;
                 }
 
-                if ($key = 'Pica i napici') {
-
+                if ($key == 'Pica i napici') {
                     $article = univerexport_drink::where('code', (int)$value['id'][$i])->first();
+                    if (!$article) continue;
+                }elseif ($key == 'Slatko i slano'){
+                    $article = univerexport_sweets::where('code', (int)$value['id'][$i])->first();
+                    if (!$article) continue;
+                }elseif ($key == 'Smrznuto'){
+                    $article = univerexport_freeze::where('code', (int)$value['id'][$i])->first();
+                    if (!$article) continue;
+                }elseif ($key == 'Pekara i mesara'){
+                    $article = univerexport_meats::where('code', (int)$value['id'][$i])->first();
                     if (!$article) continue;
                 } else {
                     continue;
                 }
+
+
 
                 if ($article) {
                     $code = $value['id'][$i];

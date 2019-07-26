@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\univerexport_action_sale;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -25,14 +26,13 @@ class ActionSaleController extends Controller
             $maxi = action_sale::where('shop', 'maxi')->where('category', 'akcija')->get();
             $idea = action_sale::where('shop', 'idea')->where('category', 'akcija')->get();
             $dis = dis_action_sale::orderBy('price', 'DESC')->get();
+            $univer = univerexport_action_sale::orderBy('price', 'DESC')->get();
 
 
 //            $maxi= [['barcodes' =>'2501011010845,8600995140020','price'=>200,'shop'=>'maxi'],['barcodes' =>'2501011010846,8600995140021','price'=>200,'shop'=>'maxi']];
 //            $idea= [['barcodes' =>'2501011010845,2501011010844,2501011010843,8600995140020','price'=>400,'shop'=>'idea'],['barcodes' =>'2501011010855,2501011010844,2501011010843,8600995140020','price'=>400,'shop'=>'idea']];
 
             $maxiIdea = [];
-            $barcodesIdea = [];
-            $barcodesMaxi = [];
 
             foreach ($maxi as $max) {
                 foreach ($idea as $ide) {
@@ -44,7 +44,11 @@ class ActionSaleController extends Controller
                                 //if ($max['price'] >= $ide['price']) {
                                 $ide['maxiCena'] = $max['formattedPrice'];
                                 $ide['ideaCena'] = $ide['formattedPrice'];
-                                $ide['imageUrl'] = $max['imageUrl'];
+                                if($max['imageUrl'] != null) {
+                                    $ide['imageUrl'] = 'https://d3el976p2k4mvu.cloudfront.net'.$max['imageUrl'];
+                                }else{
+                                    $ide['imageUrl'] = $ide['imageDefault'];
+                                }
                                 array_push($maxiIdea, $ide);
                                 /*} else {
                                     $max['ideaCena'] = $ide['formattedPrice'];
@@ -75,9 +79,6 @@ class ActionSaleController extends Controller
             }
 
             $maxiIdeaDis = [];
-
-            $barcodesMaxiIde = [];
-            $barcodesDis = [];
 
             foreach ($dis as $di) {
                 foreach ($maxiIdea as $maxide) {
@@ -134,9 +135,40 @@ class ActionSaleController extends Controller
                 }
             }
 
-            if (empty($maxiIdeaDis)) return array_map("unserialize", array_unique(array_map("serialize", $maxiIdea)));
+            $maxiIdeaDisUni = [];
+            if (!empty($maxiIdeaDis)) {
+                foreach ($univer as $uni) {
+                    foreach ($maxiIdeaDis as $maxidedis) {
+                        $barcodesUni = explode(',', $uni['barcodes']);
+                        $barcodesMaxiIdeDis = explode(',', $maxidedis['barcodes']);
+                        foreach ($barcodesUni as $barUni) {
+                            foreach ($barcodesMaxiIdeDis as $barMaxIdeDis) {
+                                if ($barUni == $barMaxIdeDis) {
+                                    //if ($uni['price'] >= $maxidedis['price']) {
 
-            return array_map("unserialize", array_unique(array_map("serialize", $maxiIdeaDis)));
+                                    $maxidedis[$uni['shop'] . 'Cena'] = str_replace('.', ',', $uni['formattedPrice']);
+                                    //if (!in_array($maxidedis['barcodes'], array_column($maxiIdeaDisUni, 'barcodes'))) {
+                                    array_push($maxiIdeaDisUni, $maxidedis);
+                                    //}
+                                    /*} else {
+                                        $uni['univerCena'] = str_replace('.', ',', $uni['formattedPrice']);
+
+                                        if (!in_array($uni['barcodes'], array_column($maxiIdeaDisUni, 'barcodes'))) {
+                                            array_push($maxiIdeaDisUni, $uni);
+                                        }
+                                    }*/
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (!empty($maxiIdeaDisUni)) return array_map("unserialize", array_unique(array_map("serialize", $maxiIdeaDisUni)));
+
+            if (!empty($maxiIdeaDis)) return array_map("unserialize", array_unique(array_map("serialize", $maxiIdeaDis)));
+
+            return array_map("unserialize", array_unique(array_map("serialize", $maxiIdea)));
 
         });
 
@@ -399,7 +431,11 @@ class ActionSaleController extends Controller
                             if ($barIde == $barMax) {
                                 $ide['maxiCena'] = $max['formattedPrice'];
                                 $ide['ideaCena'] = $ide['formattedPrice'];
-                                $ide['imageUrl'] = $max['imageUrl'];
+                                if($max['imageUrl'] == null) {
+                                    $ide['imageUrl'] = 'https://d3el976p2k4mvu.cloudfront.net'.$max['imageUrl'];
+                                }else{
+                                    $ide['imageUrl'] = $ide['imageDefault'];
+                                }
                                 array_push($maxiIdea, $ide);
                             }
                         }

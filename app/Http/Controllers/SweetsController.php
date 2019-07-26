@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\dis_sweet;
 use App\Sweets;
+use App\univerexport_sweets;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -26,6 +27,7 @@ class SweetsController extends Controller
             $maxi = Sweets::where('shop', 'maxi')->where('category', 'slatkisi')->whereNotNull('barcodes')->get();
             $idea = Sweets::where('shop', 'idea')->where('category', 'slatkisi')->whereNotNull('barcodes')->get();
             $dis = dis_sweet::orderBy('price', 'DESC')->get();
+            $univer = univerexport_sweets::orderBy('price', 'DESC')->get();
 
             foreach ($maxi as $max) {
                 foreach ($idea as $ide) {
@@ -34,7 +36,11 @@ class SweetsController extends Controller
 //                        if ($max['price'] >= $ide['price']) {
                             $ide['maxiCena'] = $max['formattedPrice'];
                             $ide['ideaCena'] = $ide['formattedPrice'];
-                            $ide['imageUrl'] = $max['imageUrl'];
+                            if($max['imageUrl'] != null) {
+                                $ide['imageUrl'] = 'https://d3el976p2k4mvu.cloudfront.net'.$max['imageUrl'];
+                            }else{
+                                $ide['imageUrl'] = $ide['imageDefault'];
+                            }
                             array_push($maxiIdea, $ide);
                         /*} else {
                             $max['ideaCena'] = $ide['formattedPrice'];
@@ -87,9 +93,42 @@ class SweetsController extends Controller
                 }
             }
 
-            if (empty($maxiIdeaDis)) return $maxiIdea;
+            $maxiIdeaDisUni = [];
+            $barcodesMaxiIdeDis = [];
+            $barcodesUni = [];
+            if (!empty($maxiIdeaDis)) {
+                foreach ($univer as $uni) {
+                    foreach ($maxiIdeaDis as $maxidedis) {
+                        $barcodesUni = explode(',', $uni['barcodes']);
+                        $barcodesMaxiIdeDis = explode(',', $maxidedis['barcodes']);
+                        foreach ($barcodesUni as $barUni) {
+                            foreach ($barcodesMaxiIdeDis as $barMaxIdeDis) {
+                                if ($barUni == $barMaxIdeDis) {
+                                    //if ($uni['price'] >= $maxidedis['price']) {
 
-            return $maxiIdeaDis;
+                                    $maxidedis[$uni['shop'] . 'Cena'] = str_replace('.', ',', $uni['formattedPrice']);
+                                    //if (!in_array($maxidedis['barcodes'], array_column($maxiIdeaDisUni, 'barcodes'))) {
+                                    array_push($maxiIdeaDisUni, $maxidedis);
+                                    //}
+                                    /*} else {
+                                        $uni['univerCena'] = str_replace('.', ',', $uni['formattedPrice']);
+
+                                        if (!in_array($uni['barcodes'], array_column($maxiIdeaDisUni, 'barcodes'))) {
+                                            array_push($maxiIdeaDisUni, $uni);
+                                        }
+                                    }*/
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (!empty($maxiIdeaDisUni)) return array_map("unserialize", array_unique(array_map("serialize", $maxiIdeaDisUni)));
+
+            if (!empty($maxiIdeaDis)) return array_map("unserialize", array_unique(array_map("serialize", $maxiIdeaDis)));
+
+            return array_map("unserialize", array_unique(array_map("serialize", $maxiIdea)));
         });
 
         return $cache;
@@ -142,7 +181,11 @@ class SweetsController extends Controller
                             if ($barIde == $barMax) {
                                 $ide['maxiCena'] = $max['formattedPrice'];
                                 $ide['ideaCena'] = $ide['formattedPrice'];
-                                $ide['imageUrl'] = $max['imageUrl'];
+                                if($max['imageUrl'] != null) {
+                                    $ide['imageUrl'] = 'https://d3el976p2k4mvu.cloudfront.net'.$max['imageUrl'];
+                                }else{
+                                    $ide['imageUrl'] = $ide['imageDefault'];
+                                }
                                 array_push($maxiIdea, $ide);
                             }
                         }

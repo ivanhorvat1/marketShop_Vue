@@ -2499,6 +2499,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AdminHome",
   data: function data() {
@@ -2996,8 +2997,8 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {//M.toast({html: res.success, classes: 'rounded'}, 3000);
       });
     },
-    updateUniverexportDrinks: function updateUniverexportDrinks() {
-      fetch('api/univer_update_drinks').then(function (res) {
+    updateUniverexportArticles: function updateUniverexportArticles() {
+      fetch('api/univer_update_articles').then(function (res) {
         return res.json();
       }).then(function (res) {//M.toast({html: res.success, classes: 'rounded'}, 3000);
       });
@@ -3765,6 +3766,135 @@ __webpack_require__.r(__webpack_exports__);
       this.articles.newPrice = newPrice;
       this.articles.oldPrice = oldPrice;
       this.articles.category = 'smrznuti';
+      this.articles.shop = 'univerexport';
+      this.articles.imageUrl = imageUrl;
+      this.articles.supplementaryPriceLabel1 = price_reference + ' ' + price_measure; // console.log(this.articles); throw '';
+
+      if (this.articles.barcodes == '') {
+        return alert('Please select one of radio buttons');
+      }
+
+      fetch('api/storeUniverexportArticles', {
+        method: 'post',
+        body: JSON.stringify(this.articles),
+        headers: {
+          'content-type': 'application/json'
+        }
+      }).then(function (data) {
+        _this2.articles.barcodes = ''; // this.hidden = 'display: none;';
+
+        _this2.products.splice(index, 1); //alert('Article Added');
+
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/CompareUniverexportMarketMeats.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/CompareUniverexportMarketMeats.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      products: [],
+      // hidden: '',
+      articles: {
+        barcodes: '' // supplementary: ''
+
+      }
+    };
+  },
+  created: function created() {
+    this.fetchProducts();
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  methods: {
+    toTopFunction: function toTopFunction() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    },
+    handleScroll: function handleScroll() {
+      if (this.products.length > 0) {
+        var scroll = Math.ceil($(window).scrollTop() + $(window).height());
+        var windowHeight = Math.round($(document).height());
+
+        if (scroll == windowHeight) {
+          //if(this.pagination.nextPage <= this.pagination.lastPage) {
+          document.getElementById("loader").style.display = "block"; //}
+        } else {
+          document.getElementById("loader").style.display = "none";
+        }
+
+        if (this.products.length < this.endSlice) {
+          document.getElementById("loader").style.display = "none";
+          return;
+        }
+
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+          document.getElementById("BtnToTop").style.display = "block";
+        } else {
+          document.getElementById("BtnToTop").style.display = "none";
+        }
+      }
+    },
+    fetchProducts: function fetchProducts() {
+      var _this = this;
+
+      fetch('api/compare_univerexport_market_meats').then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this.products = res;
+        $('body').addClass('loaded');
+      });
+    },
+    addUniverexportArticle: function addUniverexportArticle(index, code, body, newPrice, oldPrice, imageUrl, title, price_measure, price_reference) {
+      var _this2 = this;
+
+      this.articles.code = code;
+      this.articles.title = title;
+      this.articles.body = body;
+      this.articles.newPrice = newPrice;
+      this.articles.oldPrice = oldPrice;
+      this.articles.category = 'meso';
       this.articles.shop = 'univerexport';
       this.articles.imageUrl = imageUrl;
       this.articles.supplementaryPriceLabel1 = price_reference + ' ' + price_measure; // console.log(this.articles); throw '';
@@ -73733,12 +73863,7 @@ var render = function() {
                       key: article.code,
                       staticClass: "box one",
                       style: [
-                        {
-                          "background-image":
-                            "url(https://d3el976p2k4mvu.cloudfront.net" +
-                            article.imageUrl +
-                            ")"
-                        },
+                        { "background-image": "url(" + article.imageUrl + ")" },
                         _vm.styles
                       ],
                       on: {
@@ -74547,17 +74672,19 @@ var render = function() {
             _vm._v(" "),
             _vm._m(8),
             _vm._v(" "),
+            _vm._m(9),
+            _vm._v(" "),
             _c(
               "button",
               {
                 staticClass: "btn btn-warning",
                 on: {
                   click: function($event) {
-                    return _vm.updateUniverexportDrinks()
+                    return _vm.updateUniverexportArticles()
                   }
                 }
               },
-              [_vm._v("Univer update Drinks")]
+              [_vm._v("Univer update Articles")]
             ),
             _vm._v(" "),
             _c("br"),
@@ -75326,6 +75453,21 @@ var staticRenderFns = [
           attrs: { href: "/univerexportSweets" }
         },
         [_vm._v("Univerexport Market Slatkisi")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn btn-primary" }, [
+      _c(
+        "a",
+        {
+          staticStyle: { color: "white" },
+          attrs: { href: "/univerexportMeats" }
+        },
+        [_vm._v("Univerexport Market Meso")]
       )
     ])
   }
@@ -76164,6 +76306,144 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/CompareUniverexportMarketMeats.vue?vue&type=template&id=12977852&":
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/CompareUniverexportMarketMeats.vue?vue&type=template&id=12977852& ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container", attrs: { align: "center" } }, [
+    _c("h4", { attrs: { align: "left" } }, [
+      _vm._v("Total products: " + _vm._s(_vm.products.length))
+    ]),
+    _c("br"),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row" },
+      _vm._l(_vm.products, function(article, index) {
+        return _c("div", { key: index, staticClass: "col-sm-6" }, [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _c("p", [_vm._v(_vm._s(article.univerexport.name))]),
+              _vm._v(" "),
+              _c("p", [_vm._v(_vm._s(article.univerexport.id))]),
+              _vm._v(" "),
+              _c("hr"),
+              _vm._v(" "),
+              _c(
+                "form",
+                {
+                  attrs: { method: "post" },
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.addUniverexportArticle(
+                        index,
+                        article.univerexport.id,
+                        article.univerexport.name,
+                        article.univerexport.price_new,
+                        article.univerexport.price_old,
+                        article.univerexport.image_url,
+                        article.univerexport.manufacturer,
+                        article.univerexport.price_measure,
+                        article.univerexport.price_reference
+                      )
+                    }
+                  }
+                },
+                [
+                  _vm._l(article.meats, function(baza) {
+                    return _c("div", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.articles.barcodes,
+                            expression: "articles.barcodes"
+                          }
+                        ],
+                        attrs: { type: "radio" },
+                        domProps: {
+                          value: baza.barcodes,
+                          checked: _vm._q(_vm.articles.barcodes, baza.barcodes)
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(
+                              _vm.articles,
+                              "barcodes",
+                              baza.barcodes
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(
+                        " " +
+                          _vm._s(baza.body) +
+                          "\n                            "
+                      ),
+                      _vm._v(" "),
+                      _c("br")
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-info btn-block",
+                      attrs: { type: "submit" }
+                    },
+                    [_vm._v("Submit")]
+                  )
+                ],
+                2
+              )
+            ])
+          ])
+        ])
+      }),
+      0
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        attrs: { id: "BtnToTop", title: "Go to top" },
+        on: {
+          click: function($event) {
+            return _vm.toTopFunction()
+          }
+        }
+      },
+      [_vm._v("↑")]
+    ),
+    _vm._v(" "),
+    _c("div", { attrs: { id: "loader" } }),
+    _vm._v(" "),
+    _c("br"),
+    _c("br")
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/CompareUniverexportMarketSweets.vue?vue&type=template&id=dc773f78&":
 /*!*****************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/assets/js/components/CompareUniverexportMarketSweets.vue?vue&type=template&id=dc773f78& ***!
@@ -76559,12 +76839,7 @@ var render = function() {
                       staticClass: "box one",
                       staticStyle: { cursor: "pointer", height: "550px" },
                       style: [
-                        {
-                          "background-image":
-                            "url(https://d3el976p2k4mvu.cloudfront.net" +
-                            article.imageUrl +
-                            ")"
-                        },
+                        { "background-image": "url(" + article.imageUrl + ")" },
                         _vm.styles
                       ],
                       on: {
@@ -77252,12 +77527,7 @@ var render = function() {
                       staticClass: "box one",
                       staticStyle: { cursor: "pointer", height: "550px" },
                       style: [
-                        {
-                          "background-image":
-                            "url(https://d3el976p2k4mvu.cloudfront.net" +
-                            article.imageUrl +
-                            ")"
-                        },
+                        { "background-image": "url(" + article.imageUrl + ")" },
                         _vm.styles
                       ],
                       on: {
@@ -78070,12 +78340,7 @@ var render = function() {
                       staticClass: "box one",
                       staticStyle: { cursor: "pointer", height: "550px" },
                       style: [
-                        {
-                          "background-image":
-                            "url(https://d3el976p2k4mvu.cloudfront.net" +
-                            article.imageUrl +
-                            ")"
-                        },
+                        { "background-image": "url(" + article.imageUrl + ")" },
                         _vm.styles
                       ],
                       on: {
@@ -78753,12 +79018,7 @@ var render = function() {
                       staticClass: "box one",
                       staticStyle: { cursor: "pointer", height: "550px" },
                       style: [
-                        {
-                          "background-image":
-                            "url(https://d3el976p2k4mvu.cloudfront.net" +
-                            article.imageUrl +
-                            ")"
-                        },
+                        { "background-image": "url(" + article.imageUrl + ")" },
                         _vm.styles
                       ],
                       on: {
@@ -91595,7 +91855,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('comparedismarketfreeze', _
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('comparedismarketsweet', __webpack_require__(/*! ./components/CompareDisMarketSweet.vue */ "./resources/assets/js/components/CompareDisMarketSweet.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('compareuniverexportmarketdrink', __webpack_require__(/*! ./components/CompareUniverexportMarketDrink.vue */ "./resources/assets/js/components/CompareUniverexportMarketDrink.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('compareuniverexportmarketfreeze', __webpack_require__(/*! ./components/CompareUniverexportMarketFreeze.vue */ "./resources/assets/js/components/CompareUniverexportMarketFreeze.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('compareuniverexportmarketsweets', __webpack_require__(/*! ./components/CompareUniverexportMarketSweets.vue */ "./resources/assets/js/components/CompareUniverexportMarketSweets.vue")["default"]); // Vue.prototype.$userId = document.querySelector("meta[name='user-id']").getAttribute('content');
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('compareuniverexportmarketsweets', __webpack_require__(/*! ./components/CompareUniverexportMarketSweets.vue */ "./resources/assets/js/components/CompareUniverexportMarketSweets.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('compareuniverexportmarketmeats', __webpack_require__(/*! ./components/CompareUniverexportMarketMeats.vue */ "./resources/assets/js/components/CompareUniverexportMarketMeats.vue")["default"]); // Vue.prototype.$userId = document.querySelector("meta[name='user-id']").getAttribute('content');
 
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app'
@@ -92210,6 +92471,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/assets/js/components/CompareUniverexportMarketMeats.vue":
+/*!***************************************************************************!*\
+  !*** ./resources/assets/js/components/CompareUniverexportMarketMeats.vue ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CompareUniverexportMarketMeats_vue_vue_type_template_id_12977852___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CompareUniverexportMarketMeats.vue?vue&type=template&id=12977852& */ "./resources/assets/js/components/CompareUniverexportMarketMeats.vue?vue&type=template&id=12977852&");
+/* harmony import */ var _CompareUniverexportMarketMeats_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CompareUniverexportMarketMeats.vue?vue&type=script&lang=js& */ "./resources/assets/js/components/CompareUniverexportMarketMeats.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CompareUniverexportMarketMeats_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CompareUniverexportMarketMeats_vue_vue_type_template_id_12977852___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CompareUniverexportMarketMeats_vue_vue_type_template_id_12977852___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/assets/js/components/CompareUniverexportMarketMeats.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/CompareUniverexportMarketMeats.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/assets/js/components/CompareUniverexportMarketMeats.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CompareUniverexportMarketMeats_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./CompareUniverexportMarketMeats.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/CompareUniverexportMarketMeats.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CompareUniverexportMarketMeats_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/assets/js/components/CompareUniverexportMarketMeats.vue?vue&type=template&id=12977852&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/assets/js/components/CompareUniverexportMarketMeats.vue?vue&type=template&id=12977852& ***!
+  \**********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CompareUniverexportMarketMeats_vue_vue_type_template_id_12977852___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./CompareUniverexportMarketMeats.vue?vue&type=template&id=12977852& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/assets/js/components/CompareUniverexportMarketMeats.vue?vue&type=template&id=12977852&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CompareUniverexportMarketMeats_vue_vue_type_template_id_12977852___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CompareUniverexportMarketMeats_vue_vue_type_template_id_12977852___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/components/CompareUniverexportMarketSweets.vue":
 /*!****************************************************************************!*\
   !*** ./resources/assets/js/components/CompareUniverexportMarketSweets.vue ***!
@@ -92729,8 +93059,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\xampp\htdocs\marketShop_Vue\resources\assets\js\app.js */"./resources/assets/js/app.js");
-module.exports = __webpack_require__(/*! D:\xampp\htdocs\marketShop_Vue\resources\assets\sass\app.scss */"./resources/assets/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\marketShop_Vue\resources\assets\js\app.js */"./resources/assets/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\marketShop_Vue\resources\assets\sass\app.scss */"./resources/assets/sass/app.scss");
 
 
 /***/ })
