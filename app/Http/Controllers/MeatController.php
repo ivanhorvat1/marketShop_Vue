@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\dis_meat;
 use App\Meat;
+use App\univerexport_meats;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -28,6 +29,7 @@ class MeatController extends Controller
             $maxi = Meat::where('shop', 'maxi')->where('category', 'meso')->whereNotNull('barcodes')->get();
             $idea = Meat::where('shop', 'idea')->where('category', 'meso')->whereNotNull('barcodes')->get();
             $dis = dis_meat::all();
+            $univer = univerexport_meats::orderBy('price', 'DESC')->get();
 
             foreach ($maxi as $max) {
                 foreach ($idea as $ide) {
@@ -111,9 +113,43 @@ class MeatController extends Controller
                 }
             }
 
-            if (empty($maxiIdeaDis)) return $maxiIdea;
+            $maxiIdeaDisUni = [];
+            $barcodesMaxiIdeDis = [];
+            $barcodesUni = [];
+            if (!empty($maxiIdeaDis)) {
+                foreach ($univer as $uni) {
+                    foreach ($maxiIdeaDis as $maxidedis) {
+                        $barcodesUni = explode(',', $uni['barcodes']);
+                        $barcodesMaxiIdeDis = explode(',', $maxidedis['barcodes']);
+                        foreach ($barcodesUni as $barUni) {
+                            foreach ($barcodesMaxiIdeDis as $barMaxIdeDis) {
+                                if ($barUni == $barMaxIdeDis) {
+                                    //if ($uni['price'] >= $maxidedis['price']) {
 
-            return $maxiIdeaDis;
+                                    $maxidedis[$uni['shop'] . 'Cena'] = str_replace('.', ',', $uni['formattedPrice']);
+                                    $maxidedis['supplementaryPriceUniver'] = $uni['supplementaryPriceLabel1'];
+                                    //if (!in_array($maxidedis['barcodes'], array_column($maxiIdeaDisUni, 'barcodes'))) {
+                                    array_push($maxiIdeaDisUni, $maxidedis);
+                                    //}
+                                    /*} else {
+                                        $uni['univerCena'] = str_replace('.', ',', $uni['formattedPrice']);
+
+                                        if (!in_array($uni['barcodes'], array_column($maxiIdeaDisUni, 'barcodes'))) {
+                                            array_push($maxiIdeaDisUni, $uni);
+                                        }
+                                    }*/
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (!empty($maxiIdeaDisUni)) return array_map("unserialize", array_unique(array_map("serialize", $maxiIdeaDisUni)));
+
+            if (!empty($maxiIdeaDis)) return array_map("unserialize", array_unique(array_map("serialize", $maxiIdeaDis)));
+
+            return array_map("unserialize", array_unique(array_map("serialize", $maxiIdea)));
         });
 
         return $cache;
@@ -143,6 +179,8 @@ class MeatController extends Controller
                 return Meat::where('shop', 'idea')->orderBy('price', $this->sort)->get();
             } elseif ($this->shop == 'dis') {
                 return dis_meat::orderBy('price', $this->sort)->get();
+            }elseif ($this->shop == 'univerexport') {
+                return univerexport_meats::orderBy('price', $this->sort)->get();
             }
         });
 

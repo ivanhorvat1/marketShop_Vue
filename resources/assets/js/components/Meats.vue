@@ -4,10 +4,11 @@
         <button @click="fetchArticles('idea')" class="btn btn-primary">Idea Meso</button>
         <button @click="fetchArticles('dis')" class="btn btn-primary">Dis Meso</button>-->
         <div class="row mb-3">
-            <div class="col-sm-3"></div>
+            <div class="col-sm-1"></div>
             <div @click="fetchArticles('maxi')" class="buttonCustom1 col-lg-2">Maxi Meso</div>
             <div @click="fetchArticles('idea')" class="buttonCustom1 col-lg-2">Idea Meso</div>
             <div @click="fetchArticles('dis')" class="buttonCustom1 col-lg-2">Dis Meso</div>
+            <div @click="fetchArticles('univerexport')" class="buttonCustom1 col-lg-2">Univerexport Meso</div>
         </div>
         <!--<button @click="fetchProducts()" class="btn btn-primary">Uporedi artikle</button>-->
 
@@ -134,7 +135,7 @@
                     <div class="poster p1" style="margin-top: 50px">
                         <h5 v-if="articlea.shop == 'maxi'">
                             <img style="height: 50px; width: 80px" src="images/market_logo/delhaize-maxi-logo-vector.png"/>
-                            <b>{{articlea.formattedPrice }}</b>
+                            <b>{{articlea.supplementaryPriceLabel1 }}</b>
                         </h5>
                         <h5 v-if="articlea.shop == 'idea'">
                             <img style="height: 50px; width: 80px" src="images/market_logo/Idea_Logo_resized.png"/>
@@ -187,7 +188,7 @@
                 </div>
                 <div class="modal-content col-sm-6">
                     <img class="mx-auto d-block" style="height: 330px; width: 300px"
-                         :src="'https://d3el976p2k4mvu.cloudfront.net'+imageUrl"/>
+                         :src="imageUrl"/>
                 </div>
                 <div class="modal-content col-sm-6">
                     <!--<h6>{{body}}</h6>-->
@@ -213,6 +214,7 @@
                             <img style="height: 50px; width: 80px"
                                  src="images/market_logo/univer_resized.png"/>
                             <h5><b>{{univerexportCena}}</b></h5>
+                            <h5><b>{{supplementaryPriceUniver}}</b></h5>
                         </div>
                     </div>
                 </div>
@@ -247,6 +249,7 @@
                 imageUrl: '',
                 supplementaryPriceIdea: '',
                 supplementaryPriceMaxi: '',
+                supplementaryPriceUniver: '',
                 ideaCena: '--',
                 maxiCena: '--',
                 disCena: '--',
@@ -305,6 +308,13 @@
                 this.body = article.body;
                 this.imageUrl = article.imageUrl;
                 this.supplementaryPriceIdea = article.supplementaryPriceIdea;
+
+                if(article.supplementaryPriceIdea){
+                    this.supplementaryPriceUniver = article.supplementaryPriceUniver;
+                }else{
+                    this.supplementaryPriceUniver = '';
+                }
+
                 if (article.supplementaryPriceMaxi) {
                     this.supplementaryPriceMaxi = article.supplementaryPriceMaxi.replace('rsd/Kg', 'Din/Kg');
                 } else {

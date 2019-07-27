@@ -5527,6 +5527,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -5541,6 +5543,7 @@ __webpack_require__.r(__webpack_exports__);
       imageUrl: '',
       supplementaryPriceIdea: '',
       supplementaryPriceMaxi: '',
+      supplementaryPriceUniver: '',
       ideaCena: '--',
       maxiCena: '--',
       disCena: '--',
@@ -5601,6 +5604,12 @@ __webpack_require__.r(__webpack_exports__);
       this.body = article.body;
       this.imageUrl = article.imageUrl;
       this.supplementaryPriceIdea = article.supplementaryPriceIdea;
+
+      if (article.supplementaryPriceIdea) {
+        this.supplementaryPriceUniver = article.supplementaryPriceUniver;
+      } else {
+        this.supplementaryPriceUniver = '';
+      }
 
       if (article.supplementaryPriceMaxi) {
         this.supplementaryPriceMaxi = article.supplementaryPriceMaxi.replace('rsd/Kg', 'Din/Kg');
@@ -76653,7 +76662,7 @@ var render = function() {
               }
             }
           },
-          [_vm._v("univerexport Pice")]
+          [_vm._v("Univerexport Pice")]
         )
       ]),
       _vm._v(" "),
@@ -77168,9 +77177,7 @@ var render = function() {
               _c("img", {
                 staticClass: "mx-auto d-block",
                 staticStyle: { height: "330px", width: "300px" },
-                attrs: {
-                  src: "https://d3el976p2k4mvu.cloudfront.net" + _vm.imageUrl
-                }
+                attrs: { src: _vm.imageUrl }
               })
             ]),
             _vm._v(" "),
@@ -77845,9 +77852,7 @@ var render = function() {
               _c("img", {
                 staticClass: "mx-auto d-block",
                 staticStyle: { height: "330px", width: "300px" },
-                attrs: {
-                  src: "https://d3el976p2k4mvu.cloudfront.net" + _vm.imageUrl
-                }
+                attrs: { src: _vm.imageUrl }
               })
             ]),
             _vm._v(" "),
@@ -78111,7 +78116,7 @@ var render = function() {
     { attrs: { align: "center" } },
     [
       _c("div", { staticClass: "row mb-3" }, [
-        _c("div", { staticClass: "col-sm-3" }),
+        _c("div", { staticClass: "col-sm-1" }),
         _vm._v(" "),
         _c(
           "div",
@@ -78150,6 +78155,19 @@ var render = function() {
             }
           },
           [_vm._v("Dis Meso")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "buttonCustom1 col-lg-2",
+            on: {
+              click: function($event) {
+                return _vm.fetchArticles("univerexport")
+              }
+            }
+          },
+          [_vm._v("Univerexport Meso")]
         )
       ]),
       _vm._v(" "),
@@ -78564,7 +78582,9 @@ var render = function() {
                                 }),
                                 _vm._v(" "),
                                 _c("b", [
-                                  _vm._v(_vm._s(articlea.formattedPrice))
+                                  _vm._v(
+                                    _vm._s(articlea.supplementaryPriceLabel1)
+                                  )
                                 ])
                               ])
                             : _vm._e(),
@@ -78658,9 +78678,7 @@ var render = function() {
               _c("img", {
                 staticClass: "mx-auto d-block",
                 staticStyle: { height: "330px", width: "300px" },
-                attrs: {
-                  src: "https://d3el976p2k4mvu.cloudfront.net" + _vm.imageUrl
-                }
+                attrs: { src: _vm.imageUrl }
               })
             ]),
             _vm._v(" "),
@@ -78710,7 +78728,11 @@ var render = function() {
                     attrs: { src: "images/market_logo/univer_resized.png" }
                   }),
                   _vm._v(" "),
-                  _c("h5", [_c("b", [_vm._v(_vm._s(_vm.univerexportCena))])])
+                  _c("h5", [_c("b", [_vm._v(_vm._s(_vm.univerexportCena))])]),
+                  _vm._v(" "),
+                  _c("h5", [
+                    _c("b", [_vm._v(_vm._s(_vm.supplementaryPriceUniver))])
+                  ])
                 ])
               ])
             ])
@@ -79336,9 +79358,7 @@ var render = function() {
               _c("img", {
                 staticClass: "mx-auto d-block",
                 staticStyle: { height: "330px", width: "300px" },
-                attrs: {
-                  src: "https://d3el976p2k4mvu.cloudfront.net" + _vm.imageUrl
-                }
+                attrs: { src: _vm.imageUrl }
               })
             ]),
             _vm._v(" "),

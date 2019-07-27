@@ -180,7 +180,7 @@
                 </div>
                 <div class="modal-content col-sm-6">
                     <img class="mx-auto d-block" style="height: 330px; width: 300px"
-                         :src="'https://d3el976p2k4mvu.cloudfront.net'+imageUrl"/>
+                         :src="imageUrl"/>
                 </div>
                 <div class="modal-content col-sm-6">
                     <!--<h6>{{body}}</h6>-->

@@ -12,7 +12,7 @@
             <div @click="fetchArticles('maxi')" class="buttonCustom1 col-lg-2">Maxi Pice</div>
             <div @click="fetchArticles('idea')" class="buttonCustom1 col-lg-2">Idea Pice</div>
             <div @click="fetchArticles('dis')" class="buttonCustom1 col-lg-2">Dis Pice</div>
-            <div @click="fetchArticles('univerexport')" class="buttonCustom1 col-lg-2">univerexport Pice</div>
+            <div @click="fetchArticles('univerexport')" class="buttonCustom1 col-lg-2">Univerexport Pice</div>
         </div>
 
         <div class="col-md-3 mb-3">
@@ -209,7 +209,7 @@
                 </div>
                 <div class="modal-content col-sm-6">
                     <img class="mx-auto d-block" style="height: 330px; width: 300px"
-                         :src="'https://d3el976p2k4mvu.cloudfront.net'+imageUrl"/>
+                         :src="imageUrl"/>
                 </div>
                 <div class="modal-content col-sm-6">
                     <!--<h6>{{body}}</h6>-->
