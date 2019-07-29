@@ -406,6 +406,8 @@ class ActionSaleController extends Controller
                 return action_sale::where('shop', 'idea')->orderBy('price', $this->sort)->get();
             } elseif ($this->shop == 'dis') {
                 return dis_action_sale::orderBy('price', $this->sort)->get();
+            } elseif ($this->shop == 'univerexport') {
+                return univerexport_action_sale::orderBy('price', $this->sort)->get();
             }
         });
 

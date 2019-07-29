@@ -7,10 +7,11 @@
         <!--<button @click="fetchProducts()" class="btn btn-primary">Uporedi artikle</button>-->
 
         <div class="row mb-3">
-            <div class="col-sm-3"></div>
+            <div class="col-sm-1"></div>
             <div @click="fetchArticles('maxi')" class="buttonCustom1 col-lg-2">Maxi Smrznuto</div>
             <div @click="fetchArticles('idea')" class="buttonCustom1 col-lg-2">Idea Smrznuto</div>
             <div @click="fetchArticles('dis')" class="buttonCustom1 col-lg-2">Dis Smrznuto</div>
+            <div @click="fetchArticles('univerexport')" class="buttonCustom1 col-lg-3">Univerexport Smrznuto</div>
         </div>
 
         <div class="col-md-3 mb-3">
@@ -72,7 +73,7 @@
                             <span><b>{{ article.disCena.substring(0, article.disCena.length - 3) }}</b></span>
                         </h4>
                         <h4 v-if="article.univerexportCena">
-                            <img style="height: 50px; width: 80px" src="images/market_logo/univer_resized.png"/>
+                            <img style="height: 50px; width: 80px" src="images/market_logo/univer12.png"/>
                             <span><b>{{ article.univerexportCena.substring(0, article.univerexportCena.length - 3) }}</b></span>
                         </h4>
                     </div>
@@ -122,6 +123,8 @@
                              :src="'https://www.idea.rs/online/'+articlea.imageUrl" width="180px" height="180px">
                         <img center v-else-if="articlea.imageUrl !== null && articlea.shop == 'dis'" class="center"
                              :src="'https://www.idea.rs/online/'+articlea.imageUrl" width="180px" height="180px">
+                        <img center v-else-if="articlea.imageUrl !== null && articlea.shop == 'univerexport'" class="center"
+                             :src="articlea.imageUrl" width="90px" height="180px">
                         <img v-else center style="height: 180px; width: 180px;" :src=articlea.imageDefault>
                     </div>
                     <div class="poster p1" style="margin-top: 50px">
@@ -138,7 +141,7 @@
                             <b>{{articlea.formattedPrice }}</b>
                         </h5>
                         <h5 v-if="articlea.shop == 'univerexport'">
-                            <img style="height: 50px; width: 80px" src="images/market_logo/univer_resized.png"/>
+                            <img style="height: 50px; width: 80px" src="images/market_logo/univer12.png"/>
                             <b>{{articlea.formattedPrice }}</b>
                         </h5>
                     </div>
@@ -204,7 +207,7 @@
                         </div>
                         <div class="col-sm-6">
                             <img style="height: 50px; width: 80px"
-                                 src="images/market_logo/univer_resized.png"/>
+                                 src="images/market_logo/univer12.png"/>
                             <h5><b>{{univerexportCena}}</b></h5>
                         </div>
                     </div>

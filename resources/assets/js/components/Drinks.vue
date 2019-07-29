@@ -74,7 +74,7 @@
                             <span><b>{{ article.disCena.substring(0, article.disCena.length - 3) }}</b></span>
                         </h4>
                         <h4 v-if="article.univerexportCena">
-                            <img style="height: 50px; width: 80px" src="images/market_logo/univer_resized.png"/>
+                            <img style="height: 50px; width: 80px" src="images/market_logo/univer12.png"/>
                             <span><b>{{ article.univerexportCena.substring(0, article.univerexportCena.length - 3) }}</b></span>
                         </h4>
                         <!--<h4>
@@ -161,7 +161,7 @@
                             <b>{{articlea.formattedPrice }}</b>
                         </h5>
                         <h5 v-if="articlea.shop == 'univerexport'">
-                            <img style="height: 50px; width: 80px" src="images/market_logo/univer_resized.png"/>
+                            <img style="height: 50px; width: 80px" src="images/market_logo/univer12.png"/>
                             <b>{{articlea.formattedPrice }}</b>
                         </h5>
                     </div>
@@ -233,7 +233,7 @@
                         </div>
                         <div class="col-sm-6">
                             <img style="height: 50px; width: 80px"
-                                 src="images/market_logo/univer_resized.png"/>
+                                 src="images/market_logo/univer12.png"/>
                             <h5><b>{{univerexportCena}}</b></h5>
                         </div>
                     </div>

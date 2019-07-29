@@ -7,10 +7,11 @@
         <!--<button @click="fetchProducts()" class="btn btn-primary">Uporedi artikle</button>-->
 
         <div class="row mb-3">
-            <div class="col-sm-3"></div>
+            <div class="col-sm-1"></div>
             <div @click="fetchArticles('maxi')" class="buttonCustom1 col-lg-2">Maxi Akcija</div>
             <div @click="fetchArticles('idea')" class="buttonCustom1 col-lg-2">Idea Akcija</div>
             <div @click="fetchArticles('dis')" class="buttonCustom1 col-lg-2">Dis Akcija</div>
+            <div @click="fetchArticles('univerexport')" class="buttonCustom1 col-lg-2">Univerexport Akcija</div>
         </div>
 
         <div class="col-md-3 mb-3">
@@ -115,6 +116,8 @@
                              :src="'https://www.idea.rs/online/'+articlea.imageUrl" width="180px" height="180px">
                         <img center v-else-if="articlea.imageUrl !== null && articlea.shop == 'dis'" class="center"
                              :src="'https://www.idea.rs/online/'+articlea.imageUrl" width="180px" height="180px">
+                        <img center v-else-if="articlea.imageUrl !== null && articlea.shop == 'univerexport'" class="center"
+                             :src="articlea.imageUrl" width="90px" height="180px">
                         <img v-else center style="height: 180px; width: 180px;" :src=articlea.imageDefault>
                     </div>
                     <div class="poster p1" style="margin-top: 50px">

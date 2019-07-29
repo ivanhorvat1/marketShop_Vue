@@ -177,6 +177,8 @@ class FreezeController extends Controller
                 return Freeze::where('shop', 'idea')->orderBy('price', $this->sort)->get();
             } elseif ($this->shop == 'dis') {
                 return dis_freeze::orderBy('price', $this->sort)->get();
+            }elseif ($this->shop == 'univerexport') {
+                return univerexport_freeze::orderBy('price', $this->sort)->get();
             }
         });
 

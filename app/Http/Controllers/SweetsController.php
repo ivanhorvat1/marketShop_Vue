@@ -156,6 +156,8 @@ class SweetsController extends Controller
                 return Sweets::where('shop', 'idea')->orderBy('price', $this->sort)->get();
             }elseif ($this->shop == 'dis'){
                 return dis_sweet::orderBy('price', $this->sort)->get();
+            }elseif ($this->shop == 'univerexport') {
+                return univerexport_sweets::orderBy('price', $this->sort)->get();
             }
         });
 

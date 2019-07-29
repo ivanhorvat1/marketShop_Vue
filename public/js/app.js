@@ -1981,6 +1981,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4841,6 +4844,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -5529,6 +5535,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -5753,6 +5761,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -73649,7 +73660,7 @@ var render = function() {
     { attrs: { align: "center" } },
     [
       _c("div", { staticClass: "row mb-3" }, [
-        _c("div", { staticClass: "col-sm-3" }),
+        _c("div", { staticClass: "col-sm-1" }),
         _vm._v(" "),
         _c(
           "div",
@@ -73688,6 +73699,19 @@ var render = function() {
             }
           },
           [_vm._v("Dis Akcija")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "buttonCustom1 col-lg-2",
+            on: {
+              click: function($event) {
+                return _vm.fetchArticles("univerexport")
+              }
+            }
+          },
+          [_vm._v("Univerexport Akcija")]
         )
       ]),
       _vm._v(" "),
@@ -74066,6 +74090,17 @@ var render = function() {
                                   "https://www.idea.rs/online/" +
                                   articlea.imageUrl,
                                 width: "180px",
+                                height: "180px"
+                              }
+                            })
+                          : articlea.imageUrl !== null &&
+                            articlea.shop == "univerexport"
+                          ? _c("img", {
+                              staticClass: "center",
+                              attrs: {
+                                center: "",
+                                src: articlea.imageUrl,
+                                width: "90px",
                                 height: "180px"
                               }
                             })
@@ -76948,7 +76983,7 @@ var render = function() {
                               _c("img", {
                                 staticStyle: { height: "50px", width: "80px" },
                                 attrs: {
-                                  src: "images/market_logo/univer_resized.png"
+                                  src: "images/market_logo/univer12.png"
                                 }
                               }),
                               _vm._v(" "),
@@ -77134,7 +77169,7 @@ var render = function() {
                                     width: "80px"
                                   },
                                   attrs: {
-                                    src: "images/market_logo/univer_resized.png"
+                                    src: "images/market_logo/univer12.png"
                                   }
                                 }),
                                 _vm._v(" "),
@@ -77224,7 +77259,7 @@ var render = function() {
                 _c("div", { staticClass: "col-sm-6" }, [
                   _c("img", {
                     staticStyle: { height: "50px", width: "80px" },
-                    attrs: { src: "images/market_logo/univer_resized.png" }
+                    attrs: { src: "images/market_logo/univer12.png" }
                   }),
                   _vm._v(" "),
                   _c("h5", [_c("b", [_vm._v(_vm._s(_vm.univerexportCena))])])
@@ -77310,7 +77345,7 @@ var render = function() {
     { attrs: { align: "center" } },
     [
       _c("div", { staticClass: "row mb-3" }, [
-        _c("div", { staticClass: "col-sm-3" }),
+        _c("div", { staticClass: "col-sm-1" }),
         _vm._v(" "),
         _c(
           "div",
@@ -77349,6 +77384,19 @@ var render = function() {
             }
           },
           [_vm._v("Dis Smrznuto")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "buttonCustom1 col-lg-3",
+            on: {
+              click: function($event) {
+                return _vm.fetchArticles("univerexport")
+              }
+            }
+          },
+          [_vm._v("Univerexport Smrznuto")]
         )
       ]),
       _vm._v(" "),
@@ -77634,7 +77682,7 @@ var render = function() {
                               _c("img", {
                                 staticStyle: { height: "50px", width: "80px" },
                                 attrs: {
-                                  src: "images/market_logo/univer_resized.png"
+                                  src: "images/market_logo/univer12.png"
                                 }
                               }),
                               _vm._v(" "),
@@ -77731,6 +77779,17 @@ var render = function() {
                                 height: "180px"
                               }
                             })
+                          : articlea.imageUrl !== null &&
+                            articlea.shop == "univerexport"
+                          ? _c("img", {
+                              staticClass: "center",
+                              attrs: {
+                                center: "",
+                                src: articlea.imageUrl,
+                                width: "90px",
+                                height: "180px"
+                              }
+                            })
                           : _c("img", {
                               staticStyle: { height: "180px", width: "180px" },
                               attrs: { center: "", src: articlea.imageDefault }
@@ -77809,7 +77868,7 @@ var render = function() {
                                     width: "80px"
                                   },
                                   attrs: {
-                                    src: "images/market_logo/univer_resized.png"
+                                    src: "images/market_logo/univer12.png"
                                   }
                                 }),
                                 _vm._v(" "),
@@ -77899,7 +77958,7 @@ var render = function() {
                 _c("div", { staticClass: "col-sm-6" }, [
                   _c("img", {
                     staticStyle: { height: "50px", width: "80px" },
-                    attrs: { src: "images/market_logo/univer_resized.png" }
+                    attrs: { src: "images/market_logo/univer12.png" }
                   }),
                   _vm._v(" "),
                   _c("h5", [_c("b", [_vm._v(_vm._s(_vm.univerexportCena))])])
@@ -78458,7 +78517,7 @@ var render = function() {
                               _c("img", {
                                 staticStyle: { height: "50px", width: "80px" },
                                 attrs: {
-                                  src: "images/market_logo/univer_resized.png"
+                                  src: "images/market_logo/univer12.png"
                                 }
                               }),
                               _vm._v(" "),
@@ -78555,6 +78614,17 @@ var render = function() {
                                 height: "180px"
                               }
                             })
+                          : articlea.imageUrl !== null &&
+                            articlea.shop == "univerexport"
+                          ? _c("img", {
+                              staticClass: "center",
+                              attrs: {
+                                center: "",
+                                src: articlea.imageUrl,
+                                width: "180px",
+                                height: "180px"
+                              }
+                            })
                           : _c("img", {
                               staticStyle: { height: "180px", width: "180px" },
                               attrs: { center: "", src: articlea.imageDefault }
@@ -78635,7 +78705,7 @@ var render = function() {
                                     width: "80px"
                                   },
                                   attrs: {
-                                    src: "images/market_logo/univer_resized.png"
+                                    src: "images/market_logo/univer12.png"
                                   }
                                 }),
                                 _vm._v(" "),
@@ -78815,7 +78885,7 @@ var render = function() {
     { attrs: { align: "center" } },
     [
       _c("div", { staticClass: "row mb-3" }, [
-        _c("div", { staticClass: "col-sm-3" }),
+        _c("div", { staticClass: "col-sm-1" }),
         _vm._v(" "),
         _c(
           "div",
@@ -78854,6 +78924,19 @@ var render = function() {
             }
           },
           [_vm._v("Dis Slatkisi")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "buttonCustom1 col-lg-3",
+            on: {
+              click: function($event) {
+                return _vm.fetchArticles("univerexport")
+              }
+            }
+          },
+          [_vm._v("Univerexport Slatkisi")]
         )
       ]),
       _vm._v(" "),
@@ -79140,7 +79223,7 @@ var render = function() {
                               _c("img", {
                                 staticStyle: { height: "50px", width: "80px" },
                                 attrs: {
-                                  src: "images/market_logo/univer_resized.png"
+                                  src: "images/market_logo/univer12.png"
                                 }
                               }),
                               _vm._v(" "),
@@ -79237,6 +79320,17 @@ var render = function() {
                                 height: "180px"
                               }
                             })
+                          : articlea.imageUrl !== null &&
+                            articlea.shop == "univerexport"
+                          ? _c("img", {
+                              staticClass: "center",
+                              attrs: {
+                                center: "",
+                                src: articlea.imageUrl,
+                                width: "90px",
+                                height: "180px"
+                              }
+                            })
                           : _c("img", {
                               staticStyle: { height: "180px", width: "180px" },
                               attrs: { center: "", src: articlea.imageDefault }
@@ -79315,7 +79409,7 @@ var render = function() {
                                     width: "80px"
                                   },
                                   attrs: {
-                                    src: "images/market_logo/univer_resized.png"
+                                    src: "images/market_logo/univer12.png"
                                   }
                                 }),
                                 _vm._v(" "),
@@ -79405,7 +79499,7 @@ var render = function() {
                 _c("div", { staticClass: "col-sm-6" }, [
                   _c("img", {
                     staticStyle: { height: "50px", width: "80px" },
-                    attrs: { src: "images/market_logo/univer_resized.png" }
+                    attrs: { src: "images/market_logo/univer12.png" }
                   }),
                   _vm._v(" "),
                   _c("h5", [_c("b", [_vm._v(_vm._s(_vm.univerexportCena))])])

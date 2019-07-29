@@ -106,9 +106,9 @@ class UniverexportMarketController extends Controller
             //->where('body', 'like', '%'.$explo[3].'%')
             //var_dump($explo); continue;
 
-            $user = univerexport_sweets::where('code', $univerexport['id'])->first();
+            $check = univerexport_sweets::where('code', $univerexport['id'])->first();
             if(array_key_exists(3,$explo)) {
-                if ($user == null) {
+                if ($check == null) {
                     $databasee = ['univerexport' => $univerexport, 'sweets' => Sweets::select('body', 'barcodes', 'supplementaryPriceLabel2', 'imageUrl')->whereNotNull('barcodes')->where('body', 'like', '%' . $explo[0] . '%')->where('body', 'like', '%' . $explo[1] . '%')->where('body', 'like', '%' . $explo[2] . '%')->where('body', 'like', '%' . $explo[3] . '%')->get()];
                 }
             }
@@ -139,11 +139,11 @@ class UniverexportMarketController extends Controller
             //->where('body', 'like', '%'.$explo[3].'%')
             //var_dump($explo); continue;
 
-            $user = univerexport_meats::where('code', $univerexport['id'])->first();
+            $check = univerexport_meats::where('code', $univerexport['id'])->first();
             if(array_key_exists(2,$explo)) {
-                if ($user == null) {
+                if ($check == null) {
 
-                $databasee = ['univerexport' => $univerexport, 'meats' => Meat::select('body', 'barcodes', 'supplementaryPriceLabel2', 'imageUrl')->whereNotNull('barcodes')->where('body', 'like', '%' . $explo[0] . '%')->where('body', 'like', '%' . $explo[1] . '%')->get()];
+                $databasee = ['univerexport' => $univerexport, 'meats' => Meat::select('body', 'barcodes', 'supplementaryPriceLabel2', 'imageUrl')->whereNotNull('barcodes')->where('body', 'like', '%' . $explo[1] . '%')->where('body', 'like', '%' . $explo[2] . '%')->get()];
 
                 }
             }
@@ -288,6 +288,7 @@ class UniverexportMarketController extends Controller
         $p = 0;
         $s = 0;
         $f = 0;
+        $pm = 0;
         $saved = false;
         $success = false;
 
@@ -302,9 +303,9 @@ class UniverexportMarketController extends Controller
             }elseif ($key == 'Smrznuto' && $f == 0){
                 univerexport_action_sale::where('category', 'smrznuti')->delete();
                 $f++;
-            }elseif ($key == 'Pekara i mesara' && $f == 0){
+            }elseif ($key == 'Pekara i mesara' && $pm == 0){
                 univerexport_action_sale::where('category', 'meso')->delete();
-                $f++;
+                $pm++;
             }
 
             for ($i = 0; $i < count($value['id']); $i++) {
@@ -345,6 +346,7 @@ class UniverexportMarketController extends Controller
                     $body = $value['name'][$i];
                     $category = $article->category;
                     $shop = $article->shop;
+                    $imageUrl = $article->imageUrl;
                     $imageDefault = 'https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694';
                     $article->formattedPrice = $formattedPrice;
                     $article->price = $price;
@@ -368,6 +370,7 @@ class UniverexportMarketController extends Controller
                             'barcodes' => $barcodes,
                             'category' => $category,
                             'shop' => $shop,
+                            'imageUrl' => $imageUrl,
                             'imageDefault' => $imageDefault,
                             'formattedPrice' => $formattedPrice,
                             'price' => $price
