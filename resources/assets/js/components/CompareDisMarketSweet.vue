@@ -77,7 +77,7 @@
                 fetch('api/compare_dis_market_sweet')
                     .then(res => res.json())
                     .then(res => {
-                        this.products = res.slice(307);
+                        this.products = res;
                         $('body').addClass('loaded');
                     })
             },

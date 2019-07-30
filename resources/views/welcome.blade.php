@@ -92,13 +92,13 @@
             $this.hover(function () {
                 var href = $this.attr('href');
                 if (href === '/drinks') {
-                    $('nav').css("background-image", 'url("images/menu_images/drink_menu_right.jpg")').css("background-repeat", 'no-repeat');
+                    $('nav').css("background-image", 'url("images/menu_images/drink_menu_right.jpg")').css("background-repeat", 'no-repeat').css('background-size','cover');
                 }else if(href === '/meats'){
-                    $('nav').css("background-image", 'url("images/menu_images/meats_menu_right1.jpg")').css("background-repeat", 'no-repeat');
+                    $('nav').css("background-image", 'url("images/menu_images/meats_menu_right1.jpg")').css("background-repeat", 'no-repeat').css('background-size','cover');
                 }else if(href === '/sweets'){
-                    $('nav').css("background-image", 'url("images/menu_images/sweets_menu_right1.jpg")').css("background-repeat", 'no-repeat');
+                    $('nav').css("background-image", 'url("images/menu_images/sweets_menu_right1.jpg")').css("background-repeat", 'no-repeat').css('background-size','cover');
                 }else if(href === '/freeze'){
-                    $('nav').css("background-image", 'url("images/menu_images/freeze_menu_right.jpg")').css("background-repeat", 'no-repeat');
+                    $('nav').css("background-image", 'url("images/menu_images/freeze_menu_right.jpg")').css("background-repeat", 'no-repeat').css('background-size','cover');
                 }else{
                     $('nav').css("background-image", "");
                 }

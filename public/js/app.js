@@ -3494,7 +3494,7 @@ __webpack_require__.r(__webpack_exports__);
       fetch('api/compare_dis_market_sweet').then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this.products = res.slice(307);
+        _this.products = res;
         $('body').addClass('loaded');
       });
     },

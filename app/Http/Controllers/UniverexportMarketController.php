@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Cache;
 
 class UniverexportMarketController extends Controller
 {
-    function multiexplode ($delimiters,$string) {
+    static function multiexplode ($delimiters,$string) {
 
         $ready = str_replace($delimiters, $delimiters[0], $string);
         $launch = explode($delimiters[0], $ready);
@@ -309,6 +309,10 @@ class UniverexportMarketController extends Controller
             }
 
             for ($i = 0; $i < count($value['id']); $i++) {
+
+                /*var_dump($value['salePrice'][$i]);
+                var_dump(strpos($value['salePrice'][$i], ".")); continue;*/
+
                 if (strpos($value['salePrice'][$i], ".") == false) {
                     $price = $value['salePrice'][$i] . '00';
                     $formattedPrice = $value['salePrice'][$i] . ".00 RSD";
@@ -485,7 +489,7 @@ class UniverexportMarketController extends Controller
 
     function curlAllUniverexport()
     {
-        $cache = Cache::remember('curlUniverexport1', 25, function () {
+        $cache = Cache::remember('curlUniverexport', 25, function () {
             ini_set('max_execution_time', 30000); //300 seconds = 5 minutes
             ini_set('memory_limit', '-1');
 
