@@ -25,7 +25,7 @@ class DrinkController extends Controller
             $maxi = drink::where('shop', 'maxi')->where('category', 'pice')->whereNotNull('barcodes')->orderBy('price', 'DESC')->get();
             $idea = drink::where('shop', 'idea')->where('category', 'pice')->whereNotNull('barcodes')->orderBy('price', 'DESC')->get();
             $dis = dis_drink::orderBy('price', 'DESC')->get();
-            $univer = univerexport_drink::orderBy('price', 'DESC')->get();
+            $univer = univerexport_drink::where('deleted',0)->orderBy('price', 'DESC')->get();
 
 
             foreach ($maxi as $max) {

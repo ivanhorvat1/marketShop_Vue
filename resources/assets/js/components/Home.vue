@@ -63,23 +63,27 @@
                     @sliding-start="onSlideStart"
                     @sliding-end="onSlideEnd"
             >
-                <!-- Text slides with image -->
+                <!-- Slides with custom text -->
+                <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54">
+                    <h1>Hello world!</h1>
+                </b-carousel-slide>
+                <!-- Slide with blank fluid image to maintain slide aspect ratio
+                 caption="Blank Image"-->
+                <!--<b-carousel-slide img-blank img-alt="Blank image">
+                    <h1 style="margin-bottom: 200px">Izdvajamo</h1>
+                </b-carousel-slide>
+                &lt;!&ndash; Text slides with image &ndash;&gt;
                 <b-carousel-slide
                         caption="First slide"
                         text="Nulla vitae elit libero, a pharetra augue mollis interdum."
                         img-src="https://picsum.photos/1024/480/?image=52"
                 ></b-carousel-slide>
 
-                <!-- Slides with custom text -->
-                <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54">
-                    <h1>Hello world!</h1>
-                </b-carousel-slide>
-
-                <!-- Slides with image only -->
+                &lt;!&ndash; Slides with image only &ndash;&gt;
                 <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
 
-                <!-- Slides with img slot -->
-                <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
+                &lt;!&ndash; Slides with img slot &ndash;&gt;
+                &lt;!&ndash; Note the classes .d-block and .img-fluid to prevent browser default image alignment &ndash;&gt;
                 <b-carousel-slide>
                     <img
                             slot="img"
@@ -89,16 +93,20 @@
                             src="https://picsum.photos/1024/480/?image=55"
                             alt="image slot"
                     >
-                </b-carousel-slide>
+                </b-carousel-slide>-->
 
-                <!-- Slide with blank fluid image to maintain slide aspect ratio -->
-                <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eros felis, tincidunt
-                        a tincidunt eget, convallis vel est. Ut pellentesque ut lacus vel interdum.
-                    </p>
-                </b-carousel-slide>
+
             </b-carousel>
+        </div>
+
+        <div>
+            <div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="1400">
+                <div class="carousel-inner">
+                    <div class="carousel-item" v-for="(banner,idx) in akcija" :class="{ active: idx==0 }">
+                        <img :src="banner" alt="" class="img-fluid">
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!--<h4 v-if="articles.length > 0">Total products: {{articles.length}}</h4><br>
@@ -163,8 +171,8 @@
             }
         },
         created() {
-            $('body').addClass('loaded');
-            //this.fetchSaleProducts();
+            //$('body').addClass('loaded');
+            this.fetchSaleProducts();
             /*this.fetchDrinkProducts();
             this.fetchFreezeProducts();
             this.fetchSweetProducts();
@@ -172,6 +180,14 @@
             //window.addEventListener('scroll', this.handleScroll);
         },
         methods: {
+            fetchSaleProducts() {
+                fetch('api/action_sale_fetch')
+                    .then(res => res.json())
+                    .then(res => {
+                        this.akcija = _.orderBy(res, 'price', 'desc');
+                        $('body').addClass('loaded');
+                    })
+            },
             onSlideStart(slide) {
                 this.sliding = true
             },
@@ -264,14 +280,6 @@
                 }*!/
 
                 return url;
-            },
-            fetchSaleProducts() {
-                fetch('api/action_sale_fetch')
-                    .then(res => res.json())
-                    .then(res => {
-                        this.akcija = _.orderBy(res, 'price', 'desc');
-                        $('body').addClass('loaded');
-                    })
             },
             fetchDrinkProducts() {
                 fetch('api/action_drink_fetch')

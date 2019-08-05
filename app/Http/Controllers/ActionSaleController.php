@@ -21,12 +21,12 @@ class ActionSaleController extends Controller
     {
         $expiresAt = Carbon::now()->endOfDay()->subHour()->addMinutes(30);
 
-        $cache = Cache::remember('maxiIdeaDisSale', 10, function () {
+        $cache = Cache::remember('maxiIdeaDisSale1', 10, function () {
 
             $maxi = action_sale::where('shop', 'maxi')->where('category', 'akcija')->get();
             $idea = action_sale::where('shop', 'idea')->where('category', 'akcija')->get();
             $dis = dis_action_sale::orderBy('price', 'DESC')->get();
-            $univer = univerexport_action_sale::orderBy('price', 'DESC')->get();
+            $univer = univerexport_action_sale::where('deleted',0)->orderBy('price', 'DESC')->get();
 
 
 //            $maxi= [['barcodes' =>'2501011010845,8600995140020','price'=>200,'shop'=>'maxi'],['barcodes' =>'2501011010846,8600995140021','price'=>200,'shop'=>'maxi']];

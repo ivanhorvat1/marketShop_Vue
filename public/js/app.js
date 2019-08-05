@@ -2503,6 +2503,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AdminHome",
   data: function data() {
@@ -2570,19 +2583,34 @@ __webpack_require__.r(__webpack_exports__);
         key: 'formattedPrice',
         label: 'formattedPrice'
       }, {
+        key: 'deleted',
+        label: 'Deleted'
+      }, {
         key: 'actions',
         label: 'Actions'
       }],
-      infoModal: {
-        id: 'info-modal',
+      infoModalUser: {
+        id: 'info-modal-user',
         name: '',
-        title: '',
-        content: ''
+        admin: ''
       },
-      editTable: {
+      infoModalArticle: {
+        id: 'info-modal-freeze',
+        title: '',
+        body: '',
+        formattedPrice: '',
+        deleted: ''
+      },
+      editUser: {
         id: '',
         name: '',
         admin: ''
+      },
+      editArticle: {
+        id: '',
+        title: '',
+        formattedPrice: '',
+        deleted: ''
       },
       nameState: null,
       submittedNames: []
@@ -2635,12 +2663,20 @@ __webpack_require__.r(__webpack_exports__);
       this.currentPage = 1;
     },
     info: function info(item, index, button) {
-      this.infoModal.title = "Row index: ".concat(index);
-      this.editTable.id = item.id;
-      this.editTable.name = item.name;
-      this.editTable.admin = item.admin; // this.infoModal.content = JSON.stringify(item, null, 2);
+      this.infoModalUser.title = "Row index: ".concat(index);
+      this.editUser.id = item.id;
+      this.editUser.name = item.name;
+      this.editUser.admin = item.admin; // this.infoModal.content = JSON.stringify(item, null, 2);
 
-      this.$root.$emit('bv::show::modal', this.infoModal.id, button);
+      this.$root.$emit('bv::show::modal', this.infoModalUser.id, button);
+    },
+    infoArticle: function infoArticle(item, index, button) {
+      this.infoModalArticle.title = "Row index: ".concat(index);
+      this.editArticle.id = item.id;
+      this.editArticle.title = item.title;
+      this.editArticle.formattedPrice = item.formattedPrice;
+      this.editArticle.deleted = item.deleted;
+      this.$root.$emit('bv::show::modal', this.infoModalArticle.id, button);
     },
     remove: function remove(item, index, button) {
       var _this3 = this;
@@ -2710,14 +2746,14 @@ __webpack_require__.r(__webpack_exports__);
       } // Push the name to submitted names
 
 
-      this.submittedNames.push(this.editTable.name);
+      this.submittedNames.push(this.editUser.name);
       axios({
         method: 'post',
         url: '/api/update_user',
         data: {
-          id: this.editTable.id,
-          name: this.editTable.name,
-          admin: this.editTable.admin
+          id: this.editUser.id,
+          name: this.editUser.name,
+          admin: this.editUser.admin
         }
       }).then(function (res) {
         _this4.response = res.data.success;
@@ -5215,6 +5251,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -5241,8 +5285,8 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    $('body').addClass('loaded'); //this.fetchSaleProducts();
-
+    //$('body').addClass('loaded');
+    this.fetchSaleProducts();
     /*this.fetchDrinkProducts();
     this.fetchFreezeProducts();
     this.fetchSweetProducts();
@@ -5250,6 +5294,16 @@ __webpack_require__.r(__webpack_exports__);
     //window.addEventListener('scroll', this.handleScroll);
   },
   methods: {
+    fetchSaleProducts: function fetchSaleProducts() {
+      var _this = this;
+
+      fetch('api/action_sale_fetch').then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        _this.akcija = _.orderBy(res, 'price', 'desc');
+        $('body').addClass('loaded');
+      });
+    },
     onSlideStart: function onSlideStart(slide) {
       this.sliding = true;
     },
@@ -74968,7 +75022,7 @@ var render = function() {
                   "b-modal",
                   {
                     ref: "modal",
-                    attrs: { id: _vm.infoModal.id, title: "Submit Your Name" },
+                    attrs: { id: "info-modal-user", title: "Submit user" },
                     on: {
                       show: _vm.resetModal,
                       hidden: _vm.resetModal,
@@ -75007,11 +75061,11 @@ var render = function() {
                                 required: ""
                               },
                               model: {
-                                value: _vm.editTable.name,
+                                value: _vm.editUser.name,
                                 callback: function($$v) {
-                                  _vm.$set(_vm.editTable, "name", $$v)
+                                  _vm.$set(_vm.editUser, "name", $$v)
                                 },
-                                expression: "editTable.name"
+                                expression: "editUser.name"
                               }
                             })
                           ],
@@ -75024,18 +75078,21 @@ var render = function() {
                             attrs: {
                               state: _vm.nameState,
                               label: "admin",
-                              "label-for": "name-input"
+                              "label-for": "admin-input"
                             }
                           },
                           [
                             _c("b-form-input", {
-                              attrs: { id: "name-input", state: _vm.nameState },
+                              attrs: {
+                                id: "admin-input",
+                                state: _vm.nameState
+                              },
                               model: {
-                                value: _vm.editTable.admin,
+                                value: _vm.editUser.admin,
                                 callback: function($$v) {
-                                  _vm.$set(_vm.editTable, "admin", $$v)
+                                  _vm.$set(_vm.editUser, "admin", $$v)
                                 },
-                                expression: "editTable.admin"
+                                expression: "editUser.admin"
                               }
                             })
                           ],
@@ -75193,7 +75250,7 @@ var render = function() {
                               attrs: { size: "sm", variant: "warning" },
                               on: {
                                 click: function($event) {
-                                  return _vm.info(
+                                  return _vm.infoArticle(
                                     row.item,
                                     row.index,
                                     $event.target
@@ -75284,8 +75341,8 @@ var render = function() {
                 _c(
                   "b-modal",
                   {
-                    ref: "modal",
-                    attrs: { id: _vm.infoModal.id, title: "Submit Your Name" },
+                    ref: "modal1",
+                    attrs: { id: "info-modal-freeze", title: "Submit market" },
                     on: {
                       show: _vm.resetModal,
                       hidden: _vm.resetModal,
@@ -75311,24 +75368,24 @@ var render = function() {
                           {
                             attrs: {
                               state: _vm.nameState,
-                              label: "Name",
-                              "label-for": "name-input",
+                              label: "title",
+                              "label-for": "title-input",
                               "invalid-feedback": "Name is required"
                             }
                           },
                           [
                             _c("b-form-input", {
                               attrs: {
-                                id: "name-input",
+                                id: "title-input",
                                 state: _vm.nameState,
                                 required: ""
                               },
                               model: {
-                                value: _vm.editTable.name,
+                                value: _vm.editArticle.title,
                                 callback: function($$v) {
-                                  _vm.$set(_vm.editTable, "name", $$v)
+                                  _vm.$set(_vm.editArticle, "title", $$v)
                                 },
-                                expression: "editTable.name"
+                                expression: "editArticle.title"
                               }
                             })
                           ],
@@ -75340,19 +75397,53 @@ var render = function() {
                           {
                             attrs: {
                               state: _vm.nameState,
-                              label: "admin",
-                              "label-for": "name-input"
+                              label: "forrmatedPrice",
+                              "label-for": "forrmatedPrice-input"
                             }
                           },
                           [
                             _c("b-form-input", {
-                              attrs: { id: "name-input", state: _vm.nameState },
+                              attrs: {
+                                id: "forrmatedPrice-input",
+                                state: _vm.nameState
+                              },
                               model: {
-                                value: _vm.editTable.admin,
+                                value: _vm.editArticle.formattedPrice,
                                 callback: function($$v) {
-                                  _vm.$set(_vm.editTable, "admin", $$v)
+                                  _vm.$set(
+                                    _vm.editArticle,
+                                    "formattedPrice",
+                                    $$v
+                                  )
                                 },
-                                expression: "editTable.admin"
+                                expression: "editArticle.formattedPrice"
+                              }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "b-form-group",
+                          {
+                            attrs: {
+                              state: _vm.nameState,
+                              label: "deleted",
+                              "label-for": "deleted-input"
+                            }
+                          },
+                          [
+                            _c("b-form-input", {
+                              attrs: {
+                                id: "deleted-input",
+                                state: _vm.nameState
+                              },
+                              model: {
+                                value: _vm.editArticle.deleted,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.editArticle, "deleted", $$v)
+                                },
+                                expression: "editArticle.deleted"
                               }
                             })
                           ],
@@ -78076,57 +78167,12 @@ var render = function() {
             }
           },
           [
-            _c("b-carousel-slide", {
-              attrs: {
-                caption: "First slide",
-                text:
-                  "Nulla vitae elit libero, a pharetra augue mollis interdum.",
-                "img-src": "https://picsum.photos/1024/480/?image=52"
-              }
-            }),
-            _vm._v(" "),
             _c(
               "b-carousel-slide",
               {
                 attrs: { "img-src": "https://picsum.photos/1024/480/?image=54" }
               },
               [_c("h1", [_vm._v("Hello world!")])]
-            ),
-            _vm._v(" "),
-            _c("b-carousel-slide", {
-              attrs: { "img-src": "https://picsum.photos/1024/480/?image=58" }
-            }),
-            _vm._v(" "),
-            _c("b-carousel-slide", [
-              _c("img", {
-                staticClass: "d-block img-fluid w-100",
-                attrs: {
-                  slot: "img",
-                  width: "1024",
-                  height: "480",
-                  src: "https://picsum.photos/1024/480/?image=55",
-                  alt: "image slot"
-                },
-                slot: "img"
-              })
-            ]),
-            _vm._v(" "),
-            _c(
-              "b-carousel-slide",
-              {
-                attrs: {
-                  caption: "Blank Image",
-                  "img-blank": "",
-                  "img-alt": "Blank image"
-                }
-              },
-              [
-                _c("p", [
-                  _vm._v(
-                    "\n                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eros felis, tincidunt\n                    a tincidunt eget, convallis vel est. Ut pellentesque ut lacus vel interdum.\n                "
-                  )
-                ])
-              ]
             )
           ],
           1
@@ -78134,6 +78180,39 @@ var render = function() {
       ],
       1
     ),
+    _vm._v(" "),
+    _c("div", [
+      _c(
+        "div",
+        {
+          staticClass: "carousel slide",
+          attrs: {
+            id: "carouselExample",
+            "data-ride": "carousel",
+            "data-interval": "1400"
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "carousel-inner" },
+            _vm._l(_vm.akcija, function(banner, idx) {
+              return _c(
+                "div",
+                { staticClass: "carousel-item", class: { active: idx == 0 } },
+                [
+                  _c("img", {
+                    staticClass: "img-fluid",
+                    attrs: { src: banner, alt: "" }
+                  })
+                ]
+              )
+            }),
+            0
+          )
+        ]
+      )
+    ]),
     _vm._v(" "),
     _c("div", { attrs: { id: "loader" } }),
     _vm._v(" "),

@@ -137,9 +137,9 @@
                             </b-col>
                         </b-row>
                         <!--<p class="mt-3">Current Page: {{ currentPage }}</p>-->
-                        <b-modal :id="infoModal.id"
+                        <b-modal id="info-modal-user"
                                  ref="modal"
-                                 title="Submit Your Name"
+                                 title="Submit user"
                                  @show="resetModal"
                                  @hidden="resetModal"
                                  @ok="handleOk">
@@ -151,7 +151,7 @@
                                         invalid-feedback="Name is required"
                                 >
                                     <b-form-input
-                                            v-model="editTable.name"
+                                            v-model="editUser.name"
                                             id="name-input"
                                             :state="nameState"
                                             required
@@ -162,11 +162,11 @@
                                 <b-form-group
                                         :state="nameState"
                                         label="admin"
-                                        label-for="name-input"
+                                        label-for="admin-input"
                                 >
                                     <b-form-input
-                                            v-model="editTable.admin"
-                                            id="name-input"
+                                            v-model="editUser.admin"
+                                            id="admin-input"
                                             :state="nameState"
                                     ></b-form-input>
                                     <!--
@@ -214,7 +214,7 @@
                                 <b-button size="sm" @click="row.toggleDetails">
                                     {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
                                 </b-button>
-                                <b-button size="sm" @click="info(row.item, row.index, $event.target)" class="mr-1" variant="warning">
+                                <b-button size="sm" @click="infoArticle(row.item, row.index, $event.target)" class="mr-1" variant="warning">
                                     Update
                                 </b-button>
                                 <b-button size="sm" @click="remove(row.item, row.index, $event.target)" class="mr-1" variant="danger">
@@ -240,22 +240,22 @@
                             </b-col>
                         </b-row>
                         <!--<p class="mt-3">Current Page: {{ currentPage }}</p>-->
-                        <b-modal :id="infoModal.id"
-                                 ref="modal"
-                                 title="Submit Your Name"
+                        <b-modal id="info-modal-freeze"
+                                 ref="modal1"
+                                 title="Submit market"
                                  @show="resetModal"
                                  @hidden="resetModal"
                                  @ok="handleOk">
                             <form ref="form" @submit.stop.prevent="handleSubmit">
                                 <b-form-group
                                         :state="nameState"
-                                        label="Name"
-                                        label-for="name-input"
+                                        label="title"
+                                        label-for="title-input"
                                         invalid-feedback="Name is required"
                                 >
                                     <b-form-input
-                                            v-model="editTable.name"
-                                            id="name-input"
+                                            v-model="editArticle.title"
+                                            id="title-input"
                                             :state="nameState"
                                             required
                                     ></b-form-input>
@@ -264,12 +264,25 @@
                                 </b-form-group>
                                 <b-form-group
                                         :state="nameState"
-                                        label="admin"
-                                        label-for="name-input"
+                                        label="forrmatedPrice"
+                                        label-for="forrmatedPrice-input"
                                 >
                                     <b-form-input
-                                            v-model="editTable.admin"
-                                            id="name-input"
+                                            v-model="editArticle.formattedPrice"
+                                            id="forrmatedPrice-input"
+                                            :state="nameState"
+                                    ></b-form-input>
+                                    <!--
+                                    :value="infoModal.name"-->
+                                </b-form-group>
+                                <b-form-group
+                                        :state="nameState"
+                                        label="deleted"
+                                        label-for="deleted-input"
+                                >
+                                    <b-form-input
+                                            v-model="editArticle.deleted"
+                                            id="deleted-input"
                                             :state="nameState"
                                     ></b-form-input>
                                     <!--
@@ -326,18 +339,30 @@
                     {key: 'body', label: 'body'},
                     {key: 'shop', label: 'shop'},
                     {key: 'formattedPrice', label: 'formattedPrice'},
+                    {key: 'deleted', label: 'Deleted'},
                     {key: 'actions', label: 'Actions'}
                 ],
-                infoModal: {
-                    id: 'info-modal',
+                infoModalUser: {
+                    id: 'info-modal-user',
                     name: '',
+                    admin: ''
+                },infoModalArticle: {
+                    id: 'info-modal-freeze',
                     title: '',
-                    content: ''
+                    body: '',
+                    formattedPrice: '',
+                    deleted: ''
                 },
-                editTable: {
+                editUser: {
                     id: '',
                     name: '',
                     admin: '',
+                },
+                editArticle: {
+                    id: '',
+                    title: '',
+                    formattedPrice: '',
+                    deleted: '',
                 },
                 nameState: null,
                 submittedNames: []
@@ -387,12 +412,20 @@
                 this.currentPage = 1
             },
             info(item, index, button) {
-                this.infoModal.title = `Row index: ${index}`;
-                this.editTable.id = item.id;
-                this.editTable.name = item.name;
-                this.editTable.admin = item.admin;
+                this.infoModalUser.title = `Row index: ${index}`;
+                this.editUser.id = item.id;
+                this.editUser.name = item.name;
+                this.editUser.admin = item.admin;
                 // this.infoModal.content = JSON.stringify(item, null, 2);
-                this.$root.$emit('bv::show::modal', this.infoModal.id, button)
+                this.$root.$emit('bv::show::modal', this.infoModalUser.id, button)
+            },
+            infoArticle(item, index, button){
+                this.infoModalArticle.title = `Row index: ${index}`;
+                this.editArticle.id = item.id;
+                this.editArticle.title = item.title;
+                this.editArticle.formattedPrice = item.formattedPrice;
+                this.editArticle.deleted = item.deleted;
+                this.$root.$emit('bv::show::modal', this.infoModalArticle.id, button)
             },
             remove(item, index, button) {
                 this.$bvModal.msgBoxConfirm('Please confirm that you want to delete '+item.name+' user', {
@@ -458,14 +491,14 @@
                     return
                 }
                 // Push the name to submitted names
-                this.submittedNames.push(this.editTable.name);
+                this.submittedNames.push(this.editUser.name);
                 axios({
                     method: 'post',
                     url: '/api/update_user',
                     data: {
-                        id: this.editTable.id,
-                        name: this.editTable.name,
-                        admin: this.editTable.admin
+                        id: this.editUser.id,
+                        name: this.editUser.name,
+                        admin: this.editUser.admin
                     }
                 }).then(res => {
                     this.response = res.data.success;

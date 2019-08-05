@@ -27,6 +27,7 @@ class CreateActionSalesTable extends Migration
             $table->string('shop')->nullable();
             $table->string('imageUrl')->nullable();
             $table->string('imageDefault')->nullable();
+            $table->boolean('deleted')->default(0);
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collate = 'utf8mb4_swedish_ci';
