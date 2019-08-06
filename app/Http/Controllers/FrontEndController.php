@@ -18,6 +18,54 @@ class FrontEndController extends Controller
         return json_encode(Auth::check());
     }
 
+    public function getImage()
+    {
+
+        /*$html = "
+        <div class='box'>
+          Generated from PHP ✅
+        </div>
+        ";
+
+                $css = "
+        .box { 
+          border: 4px solid #03B875; 
+          padding: 20px; 
+          font-family: 'Roboto'; 
+        }";
+
+        $google_fonts = "Roboto";
+
+        $data = array('html' => $html,
+            'css' => $css,
+            'google_fonts' => $google_fonts);
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, "https://hcti.io/v1/image");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+
+        curl_setopt($ch, CURLOPT_POST, 1);
+// Retrieve your user_id and api_key from https://htmlcsstoimage.com/dashboard
+        curl_setopt($ch, CURLOPT_USERPWD, "2307eeb5-c99d-4b84-ba7d-a2a325ee5466" . ":" . "c58ef55f-71fc-4b46-b485-164243fd5974");
+
+        $headers = array();
+        $headers[] = "Content-Type: application/x-www-form-urlencoded";
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $result = curl_exec($ch);
+        if (curl_errno($ch)) {
+            echo 'Error:' . curl_error($ch);
+        }
+        curl_close($ch);
+        $res = json_decode($result, true);
+        echo $res['url'];
+// https://hcti.io/v1/image/202dc04d-5efc-482e-8f92-bb51612c84cf*/
+
+    }
+
     /*public function login1(){
 
         include('simple_html_dom.php');

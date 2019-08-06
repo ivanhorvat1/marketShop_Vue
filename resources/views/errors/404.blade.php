@@ -23,13 +23,13 @@
         <a href="{{route('index')}}" class="btn-go-home">GO BACK HOME</a>
     </div>
     <div class="objects">
-        <img class="object_rocket" src="images/404_error/rocket.svg" width="40px">
+        <img class="object_rocket" src="images/404_error/drink.png" width="40px">
         <div class="earth-moon">
             <img class="object_earth" src="images/404_error/earth.svg" width="100px">
             <img class="object_moon" src="images/404_error/moon.svg" width="80px">
         </div>
         <div class="box_astronaut">
-            <img class="object_astronaut" src="images/404_error/astronaut.svg" width="140px">
+            <img class="object_astronaut" src="images/404_error/hamburger.png" width="140px">
         </div>
     </div>
     <div class="glowing_stars">

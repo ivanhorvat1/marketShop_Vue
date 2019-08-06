@@ -1,16 +1,16 @@
 <template>
-    <div>
+    <!--<div>
         <div>
             <h2>Products</h2>
-            <!--<form @submit.prevent="addArticle" class="mb-3">
+            &lt;!&ndash;<form @submit.prevent="addArticle" class="mb-3">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Name" v-model="article.title">
                     <textarea class="form-control" placeholder="Description" v-model="article.body"></textarea>
                     <button type="submit" class="btn btn-light btn-block">Save</button>
                 </div>
-            </form>-->
+            </form>&ndash;&gt;
 
-            <!--<b-button pill @click="fetchArticles(0,'maxi','akcija')" class="btn btn-primary waves-effect waves-light">Maxi Akcija</b-button>
+            &lt;!&ndash;<b-button pill @click="fetchArticles(0,'maxi','akcija')" class="btn btn-primary waves-effect waves-light">Maxi Akcija</b-button>
             <button @click="storeArticles('maxi','akcija')" class="btn btn-warning">Ubaci Akcija Maxi</button>
             <button @click="fetchArticles(0, 'maxi', 'pice')" class="btn btn-warning">Ubaci Maxi Pice</button>
             &lt;!&ndash;<button @click="storeArticles('maxi','pice')" class="btn btn-primary">Ubaci Pice Maxi</button>&ndash;&gt;
@@ -46,7 +46,7 @@
             <button @click="updateDisSweet()" class="btn btn-warning">Dis update Sweet</button>
             <br><br>
             <button class="btn btn-primary"><a href="/univerexportDrinks" style="color: white">Univerexport Market Pice</a></button>
-            <br><br>-->
+            <br><br>&ndash;&gt;
         </div>
         <h4>Total products on Action: {{akcija.length}}</h4><br>
         <div>
@@ -63,13 +63,13 @@
                     @sliding-start="onSlideStart"
                     @sliding-end="onSlideEnd"
             >
-                <!-- Slides with custom text -->
+                &lt;!&ndash; Slides with custom text &ndash;&gt;
                 <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54">
                     <h1>Hello world!</h1>
                 </b-carousel-slide>
-                <!-- Slide with blank fluid image to maintain slide aspect ratio
-                 caption="Blank Image"-->
-                <!--<b-carousel-slide img-blank img-alt="Blank image">
+                &lt;!&ndash; Slide with blank fluid image to maintain slide aspect ratio
+                 caption="Blank Image"&ndash;&gt;
+                &lt;!&ndash;<b-carousel-slide img-blank img-alt="Blank image">
                     <h1 style="margin-bottom: 200px">Izdvajamo</h1>
                 </b-carousel-slide>
                 &lt;!&ndash; Text slides with image &ndash;&gt;
@@ -93,7 +93,7 @@
                             src="https://picsum.photos/1024/480/?image=55"
                             alt="image slot"
                     >
-                </b-carousel-slide>-->
+                </b-carousel-slide>&ndash;&gt;
 
 
             </b-carousel>
@@ -109,7 +109,7 @@
             </div>
         </div>
 
-        <!--<h4 v-if="articles.length > 0">Total products: {{articles.length}}</h4><br>
+        &lt;!&ndash;<h4 v-if="articles.length > 0">Total products: {{articles.length}}</h4><br>
 
         <div class="row">
             <div class="col-sm-3" v-for="article in articles.slice(startSlice,endSlice)" v-bind:key="article.code">
@@ -138,13 +138,22 @@
                     </div>
                 </div>
             </div>
-        </div>-->
-        <!--<button @click="toTopFunction()" id="BtnToTop" title="Go to top">&uarr;</button>-->
+        </div>&ndash;&gt;
+        &lt;!&ndash;<button @click="toTopFunction()" id="BtnToTop" title="Go to top">&uarr;</button>&ndash;&gt;
         <div id="loader"></div>
         <br><br>
-    </div>
+    </div>-->
+<div>
+
+</div>
 </template>
+
 <script>
+
+    $(document).ready(function(){
+
+    });
+
     export default {
         data() {
             return {
@@ -171,8 +180,9 @@
             }
         },
         created() {
-            //$('body').addClass('loaded');
-            this.fetchSaleProducts();
+            $('body').addClass('loaded');
+            this.generateImage();
+            //this.fetchSaleProducts();
             /*this.fetchDrinkProducts();
             this.fetchFreezeProducts();
             this.fetchSweetProducts();
@@ -180,6 +190,9 @@
             //window.addEventListener('scroll', this.handleScroll);
         },
         methods: {
+            generateImage(){
+
+            },
             fetchSaleProducts() {
                 fetch('api/action_sale_fetch')
                     .then(res => res.json())

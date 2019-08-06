@@ -46,7 +46,7 @@ Route::get('/meats', [
 ]);
 
 Route::get('/test', [
-    'uses' => 'UniverexportMarketController@insertAllUniverProductsInUniverTable',
+    'uses' => 'FrontEndController@getImage',
     'as' => 'test'
 ]);
 
