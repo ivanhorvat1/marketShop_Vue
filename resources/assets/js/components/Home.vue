@@ -143,15 +143,58 @@
         <div id="loader"></div>
         <br><br>
     </div>-->
-<div>
+<!--<div class="container">
+        <div class="container_home">
+        <div class="wrapper">
+            <div class="card"><i class="fal fa-arrow-right"></i></div>
+        </div>
+        <div class="wrapper">
+            <div class="card"><i class="fal fa-arrow-right"></i></div>
+        </div>
+        <div class="wrapper">
+            <div class="card"><i class="fal fa-arrow-right"></i></div>
+        </div>
+        <div class="wrapper">
+            <div class="card"><i class="fal fa-arrow-right"></i></div>
+        </div>
+        <div class="wrapper">
+            <div class="card"><i class="fal fa-arrow-right"></i></div>
+        </div>
+        <div class="wrapper">
+            <div class="card"><i class="fal fa-arrow-right"></i></div>
+        </div>
+    </div>
+</div>-->
+    <div>
+        <div id="one" class="angle one">
+            <div class="bb">
+                <div class="escape" style="margin-right: -54px">MI resavamo dileme cena</div>
+                <div class="escape">
+                    <span class="escape1"> umesto VAS</span>
+                </div>
+            </div>
+        </div>
+        <div id="two" class="angle two">
+            <div class="second_paragraph">Uporedjivanje cena domacih marketa</div>
+        </div>
+        <div id="three" class="angle three"></div>
+        <div id="four" class="angle four"></div>
+        <div id="five" class="angle five"></div>
+        <div id="six" class="angle six"></div>
+    </div>
 
-</div>
 </template>
 
 <script>
 
     $(document).ready(function(){
 
+        $('.angle').click(function(e){
+            $('.angle').toggleClass('arrow');
+        });
+
+        $('.angle').first().addClass('first');
+        $('.angle').last().addClass('last');
     });
 
     export default {
@@ -179,9 +222,18 @@
                 sliding: null
             }
         },
+        mounted() {
+            window.addEventListener('load', () => {
+                this.randombg();
+                var image = new Image();
+                image.onload = function () {
+                    console.info("Image loaded !");
+                    //do something...
+                }
+            })
+        },
         created() {
             $('body').addClass('loaded');
-            this.generateImage();
             //this.fetchSaleProducts();
             /*this.fetchDrinkProducts();
             this.fetchFreezeProducts();
@@ -190,8 +242,20 @@
             //window.addEventListener('scroll', this.handleScroll);
         },
         methods: {
-            generateImage(){
-
+            randombg(){
+                var random= Math.floor(Math.random() * 6) + 0;
+                var bigSize = ["url('https://source.unsplash.com/1600x900/?food,steak,bbq')",
+                    "url('https://source.unsplash.com/1600x901/?juice,beverage,food')",
+                    "url('https://source.unsplash.com/1600x902/?food,dessert,fruit')",
+                    "url('https://source.unsplash.com/1600x903/?vegetables,market-stall,food')",
+                    "url('https://source.unsplash.com/1600x904/?food,dessert,sweet')",
+                    "url('https://source.unsplash.com/1600x700/?beverage,drink,smoothie')"];
+                document.getElementById("one").style.backgroundImage=bigSize[0];
+                document.getElementById("two").style.backgroundImage=bigSize[1];
+                document.getElementById("three").style.backgroundImage=bigSize[2];
+                document.getElementById("four").style.backgroundImage=bigSize[3];
+                document.getElementById("five").style.backgroundImage=bigSize[4];
+                document.getElementById("six").style.backgroundImage=bigSize[5];
             },
             fetchSaleProducts() {
                 fetch('api/action_sale_fetch')

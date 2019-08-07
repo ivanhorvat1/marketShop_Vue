@@ -21,7 +21,7 @@ class ActionSaleController extends Controller
     {
         $expiresAt = Carbon::now()->endOfDay()->subHour()->addMinutes(30);
 
-        $cache = Cache::remember('maxiIdeaDisSale1', 10, function () {
+        $cache = Cache::remember('maxiIdeaDisSale', 10, function () {
 
             $maxi = action_sale::where('shop', 'maxi')->where('category', 'akcija')->get();
             $idea = action_sale::where('shop', 'idea')->where('category', 'akcija')->get();
@@ -433,7 +433,7 @@ class ActionSaleController extends Controller
                             if ($barIde == $barMax) {
                                 $ide['maxiCena'] = $max['formattedPrice'];
                                 $ide['ideaCena'] = $ide['formattedPrice'];
-                                if($max['imageUrl'] == null) {
+                                if($max['imageUrl'] != null) {
                                     $ide['imageUrl'] = 'https://d3el976p2k4mvu.cloudfront.net'.$max['imageUrl'];
                                 }else{
                                     $ide['imageUrl'] = $ide['imageDefault'];

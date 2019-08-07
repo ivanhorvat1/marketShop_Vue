@@ -7,17 +7,29 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script>window.Laravel = {csrfToken: '{{ csrf_token() }}'}</script>
     {{--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">--}}
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">--}}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    {{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">--}}
+
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/anime.min.js"></script>
+    {{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>--}}
+
+    {{--no need--}}
+    {{--<script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/TweenMax.min.js'></script>--}}
+    {{--<script src='https://cdnjs.cloudflare.com/ajax/libs/pixi.js/3.0.11/pixi.min.js'></script>--}}
+    {{--<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>--}}
+    {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">--}}
 
     {{--<meta name="user-id" content="{{ Auth::user() }}">--}}
 
@@ -62,13 +74,15 @@
 
         </div>
     </div>--}}
-    <div class="container">
+
         @if($showStore)
             @include('frontend.articlesHomePage')
         @else
+        <div class="container">
             @yield('content')
+        </div>
         @endif
-    </div>
+
 </div>
 <script src="{{ asset('js/app.js') }}"></script>
 {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>--}}
@@ -88,6 +102,17 @@
             // if the current path is like this link, make it active
             if ($this.attr('href') === current) {
                 $this.children().addClass("activeMenu");
+                if ($this.attr('href') === '/drinks') {
+                    $('nav').css("background-image", 'url("images/menu_images/drink_menu_right.jpg")').css("background-repeat", 'no-repeat').css('background-size','cover');
+                }else if($this.attr('href') === '/meats'){
+                    $('nav').css("background-image", 'url("images/menu_images/meats_menu_right1.jpg")').css("background-repeat", 'no-repeat').css('background-size','cover');
+                }else if($this.attr('href') === '/sweets'){
+                    $('nav').css("background-image", 'url("images/menu_images/sweets_menu_right1.jpg")').css("background-repeat", 'no-repeat').css('background-size','cover');
+                }else if($this.attr('href') === '/freeze'){
+                    $('nav').css("background-image", 'url("images/menu_images/freeze_menu_right.jpg")').css("background-repeat", 'no-repeat').css('background-size','cover');
+                }else{
+                    $('nav').css("background-image", "");
+                }
             }
 
             $this.hover(function () {

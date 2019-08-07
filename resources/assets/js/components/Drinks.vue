@@ -161,7 +161,7 @@
                             <b>{{articlea.formattedPrice }}</b>
                         </h5>
                         <h5 v-if="articlea.shop == 'univerexport'">
-                            <img style="height: 50px; width: 80px" src="images/market_logo/univer12.png"/>
+                            <img style="height: 50px; width: 80px" src="images/market_logo/univer_resized.png"/>
                             <b>{{articlea.formattedPrice }}</b>
                         </h5>
                     </div>

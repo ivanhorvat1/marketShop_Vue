@@ -5830,7 +5830,50 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-$(document).ready(function () {});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+$(document).ready(function () {
+  $('.angle').click(function (e) {
+    $('.angle').toggleClass('arrow');
+  });
+  $('.angle').first().addClass('first');
+  $('.angle').last().addClass('last');
+});
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -5856,9 +5899,21 @@ $(document).ready(function () {});
       sliding: null
     };
   },
+  mounted: function mounted() {
+    var _this = this;
+
+    window.addEventListener('load', function () {
+      _this.randombg();
+
+      var image = new Image();
+
+      image.onload = function () {
+        console.info("Image loaded !"); //do something...
+      };
+    });
+  },
   created: function created() {
-    $('body').addClass('loaded');
-    this.generateImage(); //this.fetchSaleProducts();
+    $('body').addClass('loaded'); //this.fetchSaleProducts();
 
     /*this.fetchDrinkProducts();
     this.fetchFreezeProducts();
@@ -5867,14 +5922,23 @@ $(document).ready(function () {});
     //window.addEventListener('scroll', this.handleScroll);
   },
   methods: {
-    generateImage: function generateImage() {},
+    randombg: function randombg() {
+      var random = Math.floor(Math.random() * 6) + 0;
+      var bigSize = ["url('https://source.unsplash.com/1600x900/?food,steak,bbq')", "url('https://source.unsplash.com/1600x901/?juice,beverage,food')", "url('https://source.unsplash.com/1600x902/?food,dessert,fruit')", "url('https://source.unsplash.com/1600x903/?vegetables,market-stall,food')", "url('https://source.unsplash.com/1600x904/?food,dessert,sweet')", "url('https://source.unsplash.com/1600x700/?beverage,drink,smoothie')"];
+      document.getElementById("one").style.backgroundImage = bigSize[0];
+      document.getElementById("two").style.backgroundImage = bigSize[1];
+      document.getElementById("three").style.backgroundImage = bigSize[2];
+      document.getElementById("four").style.backgroundImage = bigSize[3];
+      document.getElementById("five").style.backgroundImage = bigSize[4];
+      document.getElementById("six").style.backgroundImage = bigSize[5];
+    },
     fetchSaleProducts: function fetchSaleProducts() {
-      var _this = this;
+      var _this2 = this;
 
       fetch('api/action_sale_fetch').then(function (res) {
         return res.json();
       }).then(function (res) {
-        _this.akcija = _.orderBy(res, 'price', 'desc');
+        _this2.akcija = _.orderBy(res, 'price', 'desc');
         $('body').addClass('loaded');
       });
     },
@@ -75226,9 +75290,7 @@ var render = function() {
               _c("img", {
                 staticClass: "mx-auto d-block",
                 staticStyle: { height: "330px", width: "300px" },
-                attrs: {
-                  src: "https://d3el976p2k4mvu.cloudfront.net" + _vm.imageUrl
-                }
+                attrs: { src: _vm.imageUrl }
               })
             ]),
             _vm._v(" "),
@@ -79048,7 +79110,7 @@ var render = function() {
                                     width: "80px"
                                   },
                                   attrs: {
-                                    src: "images/market_logo/univer12.png"
+                                    src: "images/market_logo/univer_resized.png"
                                   }
                                 }),
                                 _vm._v(" "),
@@ -81590,9 +81652,44 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("div", { staticClass: "angle one", attrs: { id: "one" } }, [
+        _c("div", { staticClass: "bb" }, [
+          _c(
+            "div",
+            { staticClass: "escape", staticStyle: { "margin-right": "-54px" } },
+            [_vm._v("MI resavamo dileme cena")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "escape" }, [
+            _c("span", { staticClass: "escape1" }, [_vm._v(" umesto VAS")])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "angle two", attrs: { id: "two" } }, [
+        _c("div", { staticClass: "second_paragraph" }, [
+          _vm._v("Uporedjivanje cena domacih marketa")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "angle three", attrs: { id: "three" } }),
+      _vm._v(" "),
+      _c("div", { staticClass: "angle four", attrs: { id: "four" } }),
+      _vm._v(" "),
+      _c("div", { staticClass: "angle five", attrs: { id: "five" } }),
+      _vm._v(" "),
+      _c("div", { staticClass: "angle six", attrs: { id: "six" } })
+    ])
+  }
+]
 render._withStripped = true
 
 

@@ -750,3 +750,350 @@ select {
 }*/
 
 
+/*.container_home {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 3rem;
+    padding: 2rem 4rem 4rem;
+}
+.container_home .wrapper {
+    transform: skew(-10deg);
+    transition: 0.25s;
+}
+.container_home .wrapper:before {
+    content: '';
+    left: 0;
+    top: 0;
+    height: calc(100% - 10px);
+    width: calc(100% - 10px);
+    border-radius: 40px;
+    opacity: 0;
+    border: 2px solid #ece9e6;
+    position: absolute;
+    z-index: -1;
+    transition: 0.5s 0.05s;
+}
+.container_home .wrapper:hover:before {
+    opacity: 1;
+    transform: translateY(1.5rem) translateX(1.5rem);
+}
+.container_home .wrapper:nth-child(1) .card:after {
+    content: '';
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url("https://images.pexels.com/photos/953219/pexels-photo-953219.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+    background-size: cover;
+    background-color: #373f51;
+    background-blend-mode: screen;
+    transform: skew(10deg) scale(1.2);
+    transition: 0.25s;
+}
+.container_home .wrapper:nth-child(2) .card:after {
+    content: '';
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url("https://images.pexels.com/photos/316891/pexels-photo-316891.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+    background-size: cover;
+    background-color: #373f51;
+    background-blend-mode: screen;
+    transform: skew(10deg) scale(1.2);
+    transition: 0.25s;
+}
+.container_home .wrapper:nth-child(3) .card:after {
+    content: '';
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url("https://images.pexels.com/photos/3303/water-drink-fresh-lemons.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+    background-size: cover;
+    background-color: #373f51;
+    background-blend-mode: screen;
+    transform: skew(10deg) scale(1.2);
+    transition: 0.25s;
+}
+.container_home .wrapper:nth-child(4) .card:after {
+    content: '';
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url("https://images.pexels.com/photos/635537/pexels-photo-635537.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+    background-size: cover;
+    background-color: #373f51;
+    background-blend-mode: screen;
+    transform: skew(10deg) scale(1.2);
+    transition: 0.25s;
+}
+.container_home .wrapper:nth-child(5) .card:after {
+    content: '';
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url("https://images.pexels.com/photos/6478/tree-lemon-fruit.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+    background-size: cover;
+    background-color: #373f51;
+    background-blend-mode: screen;
+    transform: skew(10deg) scale(1.2);
+    transition: 0.25s;
+}
+.container_home .wrapper:nth-child(6) .card:after {
+    content: '';
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url("https://images.pexels.com/photos/709816/pexels-photo-709816.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+    background-size: cover;
+    background-color: #373f51;
+    background-blend-mode: screen;
+    transform: skew(10deg) scale(1.2);
+    transition: 0.25s;
+}
+.container_home .wrapper:hover {
+    transform: translateX(-1rem) translateY(-1rem) skew(-10deg);
+}
+.container_home .wrapper:hover .card {
+    box-shadow: 0.5rem 0.5rem 1rem rgba(0,0,0,0.1);
+}
+.container_home .wrapper:hover .card:after {
+    background-blend-mode: normal;
+}
+.container_home .wrapper:hover .card .fal {
+    bottom: 4rem;
+    background-color: rgba(255,255,255,0.8);
+}
+.container_home .card {
+    background-color: #fff;
+    border-radius: 40px;
+    height: 15rem;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+.container_home .card:after {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.container_home .card .fal {
+    position: absolute;
+    bottom: -1rem;
+    right: 3rem;
+    border-radius: 100%;
+    padding: 1rem;
+    font-size: 1.5rem;
+    color: #373f51;
+    z-index: 1;
+    transform: skew(10deg) translateY(50%);
+    text-align: center;
+    transition: 0.25s;
+}*/
+
+/*
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: #201515;
+    position: relative;
+}
+*/
+
+/*body:after {
+    content: "";
+    background: url(http://www.transparenttextures.com/patterns/dust.png) repeat center center;
+    opacity: 0.07;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    z-index: 100;
+    pointer-events: none;
+}*/
+/* HOMEPAGE PARAGRAPHS IMAGES */
+.angle {
+    cursor: pointer;
+    width: 100%;
+    height: 1000px;
+    margin-bottom: -400px;
+    padding: 0;
+    background-color: #201515;
+    background-size: cover, auto;
+    background-attachment: fixed;
+    background-position: center center;
+    clip-path: polygon(50% 25%, 100% 0%, 100% 50%, 50% 75%, 0% 100%, 0% 50%);
+    transition: all .7s ease-in-out;
+    background-blend-mode: lighten;
+}
+
+.angle.first {
+    clip-path: polygon(50% 0%, 100% 0%, 100% 50%, 50% 75%, 0% 100%, 0% 0%);
+}
+
+.angle.last {
+    clip-path: polygon(50% 25%, 100% 0%, 100% 100%, 50% 100%, 0% 100%, 0% 50%);
+}
+
+.arrow {
+    clip-path: polygon(50% 25%, 100% 50%, 100% 100%, 50% 75%, 0% 100%, 0% 50%);
+}
+
+.arrow.first {
+    clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 75%, 0% 100%, 0% 0%);
+}
+
+.arrow.last {
+    clip-path: polygon(50% 25%, 100% 50%, 100% 100%, 50% 100%, 0% 100%, 0% 50%);
+}
+
+/*.one {
+    background-image: url(https://source.unsplash.com/1600x900/?meat);
+}
+
+.two {
+    background-image: url(https://source.unsplash.com/1600x901/?coctail);
+}
+
+.three {
+    background-image: url(https://source.unsplash.com/1600x902/?sweet);
+}
+
+.four {
+    background-image: url(https://source.unsplash.com/1600x903/?meat);
+}
+
+.five {
+    background-image: url(https://source.unsplash.com/1600x904/?coctail);
+}
+
+.six {
+    background-image: url(https://source.unsplash.com/1600x905/?sweet);
+}*/
+
+/* END HOMEPAGE PARAGRAPHS IMAGES */
+
+/*.center {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}*/
+
+/*p {
+    !*width: 70%;
+    font-size: 30px;
+    display: block;
+    text-align: center;*!
+    font-family: Garamond;
+    padding-top: 30%;
+    padding-left: 10%;
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}*/
+
+/* HOMEPAGE ANIMATION TEXT */
+@media screen and (max-width: 1000px) {
+    .bb{
+        text-align: center;
+        font-family: 'Garamond';
+        font-size: 25px;
+        padding-top: 35vh;
+        padding-right: 10vh;
+        overflow: hidden;
+        -webkit-backface-visibility: hidden;
+        -webkit-perspective: 1000;
+        -webkit-transform: translate3d(0, 0, 0);
+    }
+
+    .second_paragraph{
+        text-align: center;
+        font-family: Garamond;
+        padding-top: 480px;
+        padding-left: 20px;
+        color:white;
+        font-size: 25px;
+        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    }
+}
+
+@media screen and (min-width: 601px) {
+    .bb {
+        text-align: center;
+        font-family: 'Garamond';
+        font-size: 50px;
+        padding-top: 65vh;
+        padding-right: 50vh;
+        overflow: hidden;
+        -webkit-backface-visibility: hidden;
+        -webkit-perspective: 1000;
+        -webkit-transform: translate3d(0, 0, 0);
+    }
+
+    .second_paragraph{
+        font-family: Garamond;
+        padding-top: 40%;
+        padding-left: 10%;
+        color:white;
+        font-size: 40px;
+        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    }
+}
+
+.escape {
+    display:inline-block;
+    white-space:nowrap;
+    overflow:hidden;
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.escape:first-of-type {
+    animation: showup 7s infinite;
+}
+
+.escape:last-of-type {
+    width:0px;
+    animation: reveal 7s infinite;
+}
+
+.escape:last-of-type .escape1 {
+    margin-left:-400px;
+    animation: slidein 7s infinite;
+}
+
+@keyframes showup {
+    0% {opacity:0;}
+    20% {opacity:1;}
+    80% {opacity:1;}
+    100% {opacity:0;}
+}
+
+@keyframes slidein {
+    0% { margin-left:-800px; }
+    20% { margin-left:-800px; }
+    35% { margin-left:0px; }
+    100% { margin-left:0px; }
+}
+
+@keyframes reveal {
+    0% {opacity:0;width:0px;}
+    20% {opacity:1;width:0px;}
+    30% {width:355px;}
+    80% {opacity:1;}
+    100% {opacity:0;width:355px;}
+}
+
+/* END HOMEPAGE ANIMATION TEXT */
