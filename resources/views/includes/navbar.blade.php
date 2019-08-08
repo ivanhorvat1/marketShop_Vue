@@ -53,7 +53,7 @@
         </li>
     </ul>-->
     <nav class="mb-1 navbar navbar-expand-lg navbar-dark navbar-custom">
-        <a class="navbar-brand" href="/"><img center src="images/Logo6.png" style="height: 150px; width: 150px"></a>
+        <a class="navbar-brand" href="/"><img center src="images/Logo6_resized.png" style="height: 80px; width: 100px"></a>
         <button style="background-color: #591259" class="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbarSupportedContent-333"
                 aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">

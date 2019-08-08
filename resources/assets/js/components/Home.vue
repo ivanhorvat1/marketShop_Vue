@@ -188,7 +188,6 @@
 <script>
 
     $(document).ready(function(){
-
         $('.angle').click(function(e){
             $('.angle').toggleClass('arrow');
         });
@@ -248,7 +247,7 @@
                     "url('https://source.unsplash.com/1600x901/?juice,beverage,food')",
                     "url('https://source.unsplash.com/1600x902/?food,dessert,fruit')",
                     "url('https://source.unsplash.com/1600x903/?vegetables,market-stall,food')",
-                    "url('https://source.unsplash.com/1600x904/?food,dessert,sweet')",
+                    "url('https://source.unsplash.com/1600x904/?money,coin,nickel')",
                     "url('https://source.unsplash.com/1600x700/?beverage,drink,smoothie')"];
                 document.getElementById("one").style.backgroundImage=bigSize[0];
                 document.getElementById("two").style.backgroundImage=bigSize[1];

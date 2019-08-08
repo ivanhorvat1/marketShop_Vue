@@ -7,7 +7,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script>window.Laravel = {csrfToken: '{{ csrf_token() }}'}</script>
     {{--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">--}}
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     {{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">--}}
@@ -75,13 +76,11 @@
         </div>
     </div>--}}
 
-        @if($showStore)
-            @include('frontend.articlesHomePage')
-        @else
-        <div class="container">
-            @yield('content')
-        </div>
-        @endif
+    @if($showStore)
+        @include('frontend.articlesHomePage')
+    @else
+        @yield('content')
+    @endif
 
 </div>
 <script src="{{ asset('js/app.js') }}"></script>
@@ -89,13 +88,6 @@
 <script type="text/javascript">
     $(window).on('load', function () {
         var current = location.pathname;
-        /*$('nav li a').each(function () {
-            var $this = $(this);
-            // if the current path is like this link, make it active
-            if ($this.attr('href') === current) {
-                $this.children().addClass("activeMenu");
-            }
-        });*/
 
         $('.nav-item a').each(function () {
             var $this = $(this);
@@ -103,14 +95,16 @@
             if ($this.attr('href') === current) {
                 $this.children().addClass("activeMenu");
                 if ($this.attr('href') === '/drinks') {
-                    $('nav').css("background-image", 'url("images/menu_images/drink_menu_right.jpg")').css("background-repeat", 'no-repeat').css('background-size','cover');
-                }else if($this.attr('href') === '/meats'){
-                    $('nav').css("background-image", 'url("images/menu_images/meats_menu_right1.jpg")').css("background-repeat", 'no-repeat').css('background-size','cover');
-                }else if($this.attr('href') === '/sweets'){
-                    $('nav').css("background-image", 'url("images/menu_images/sweets_menu_right1.jpg")').css("background-repeat", 'no-repeat').css('background-size','cover');
-                }else if($this.attr('href') === '/freeze'){
-                    $('nav').css("background-image", 'url("images/menu_images/freeze_menu_right.jpg")').css("background-repeat", 'no-repeat').css('background-size','cover');
-                }else{
+                    $('nav').css("background-image", 'url("images/menu_images/drink_menu_right.jpg")').css("background-repeat", 'no-repeat').css('background-size', 'cover');
+                } else if ($this.attr('href') === '/meats') {
+                    $('nav').css("background-image", 'url("images/menu_images/meats_menu_right1.jpg")').css("background-repeat", 'no-repeat').css('background-size', 'cover');
+                } else if ($this.attr('href') === '/sweets') {
+                    $('nav').css("background-image", 'url("images/menu_images/sweets_menu_right1.jpg")').css("background-repeat", 'no-repeat').css('background-size', 'cover');
+                } else if ($this.attr('href') === '/freeze') {
+                    $('nav').css("background-image", 'url("images/menu_images/freeze_menu_right.jpg")').css("background-repeat", 'no-repeat').css('background-size', 'cover');
+                } else if ($this.attr('href') === '/action') {
+                    $('nav').css("background-image", 'url("images/menu_images/action_menu_right.jpg")').css("background-repeat", 'no-repeat').css('background-size', 'cover');
+                } else {
                     $('nav').css("background-image", "");
                 }
             }
@@ -118,14 +112,16 @@
             $this.hover(function () {
                 var href = $this.attr('href');
                 if (href === '/drinks') {
-                    $('nav').css("background-image", 'url("images/menu_images/drink_menu_right.jpg")').css("background-repeat", 'no-repeat').css('background-size','cover');
-                }else if(href === '/meats'){
-                    $('nav').css("background-image", 'url("images/menu_images/meats_menu_right1.jpg")').css("background-repeat", 'no-repeat').css('background-size','cover');
-                }else if(href === '/sweets'){
-                    $('nav').css("background-image", 'url("images/menu_images/sweets_menu_right1.jpg")').css("background-repeat", 'no-repeat').css('background-size','cover');
-                }else if(href === '/freeze'){
-                    $('nav').css("background-image", 'url("images/menu_images/freeze_menu_right.jpg")').css("background-repeat", 'no-repeat').css('background-size','cover');
-                }else{
+                    $('nav').css("background-image", 'url("images/menu_images/drink_menu_right.jpg")').css("background-repeat", 'no-repeat').css('background-size', 'cover');
+                } else if (href === '/meats') {
+                    $('nav').css("background-image", 'url("images/menu_images/meats_menu_right1.jpg")').css("background-repeat", 'no-repeat').css('background-size', 'cover');
+                } else if (href === '/sweets') {
+                    $('nav').css("background-image", 'url("images/menu_images/sweets_menu_right1.jpg")').css("background-repeat", 'no-repeat').css('background-size', 'cover');
+                } else if (href === '/freeze') {
+                    $('nav').css("background-image", 'url("images/menu_images/freeze_menu_right.jpg")').css("background-repeat", 'no-repeat').css('background-size', 'cover');
+                } else if (href === '/action') {
+                    $('nav').css("background-image", 'url("images/menu_images/action_menu_right.jpg")').css("background-repeat", 'no-repeat').css('background-size', 'cover');
+                } else {
                     $('nav').css("background-image", "");
                 }
             });
