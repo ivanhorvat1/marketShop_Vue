@@ -2365,7 +2365,7 @@ __webpack_require__.r(__webpack_exports__);
       fetch('api/action_sale_fetch').then(function (res) {
         return res.json();
       }).then(function (res) {
-        // this.endSlice = 12;
+        _this2.endSlice = _this2.onScrollSlice;
         _this2.articles = '';
         _this2.products = _.orderBy(res, 'price', 'desc'); // $('#preloader-wrapper').css("display", "none");
 
@@ -2391,8 +2391,8 @@ __webpack_require__.r(__webpack_exports__);
           sort: this.key
         }
       }).then(function (res) {
-        _this3.selected = null; // this.endSlice = 12;
-
+        _this3.selected = null;
+        _this3.endSlice = _this3.onScrollSlice;
         _this3.products = '';
         _this3.articles = res.data;
         window.scrollTo(0, 0);
@@ -2412,7 +2412,7 @@ __webpack_require__.r(__webpack_exports__);
         fetch('api/action_action_fetch_compare_dynamically').then(function (res) {
           return res.json();
         }).then(function (res) {
-          // this.endSlice = 12;
+          _this4.endSlice = _this4.onScrollSlice;
           _this4.articles = '';
           _this4.products = _.orderBy(res, 'price', 'desc');
           $('#preloader-wrapper').css("display", "none");
@@ -5010,7 +5010,7 @@ console.log(document.documentElement.scrollTop);
       fetch('api/action_drink_fetch').then(function (res) {
         return res.json();
       }).then(function (res) {
-        // this.endSlice = 12;
+        _this2.endSlice = _this2.onScrollSlice;
         _this2.articles = '';
         _this2.products = _.orderBy(res, 'price', 'desc'); // $('#preloader-wrapper').css("display", "none");
 
@@ -5035,7 +5035,7 @@ console.log(document.documentElement.scrollTop);
           sort: this.key
         }
       }).then(function (res) {
-        // this.endSlice = 12;
+        _this3.endSlice = _this3.onScrollSlice;
         _this3.products = '';
         _this3.articles = res.data;
         window.scrollTo(0, 0);
@@ -5055,7 +5055,7 @@ console.log(document.documentElement.scrollTop);
         fetch('api/drinks_fetch_compare_dynamically').then(function (res) {
           return res.json();
         }).then(function (res) {
-          // this.endSlice = 12;
+          _this4.endSlice = _this4.onScrollSlice;
           _this4.articles = '';
           _this4.products = _.orderBy(res, 'price', 'desc');
           $('#preloader-wrapper').css("display", "none");
@@ -5741,7 +5741,7 @@ __webpack_require__.r(__webpack_exports__);
       fetch('api/action_freeze_fetch').then(function (res) {
         return res.json();
       }).then(function (res) {
-        // this.endSlice = 12;
+        _this2.endSlice = _this2.onScrollSlice;
         _this2.articles = '';
         _this2.products = _.orderBy(res, 'price', 'desc'); // $('#preloader-wrapper').css("display", "none");
 
@@ -5762,7 +5762,7 @@ __webpack_require__.r(__webpack_exports__);
           sort: this.key
         }
       }).then(function (res) {
-        // this.endSlice = 12;
+        _this3.endSlice = _this3.onScrollSlice;
         _this3.products = '';
         _this3.articles = res.data;
         window.scrollTo(0, 0);
@@ -5782,7 +5782,7 @@ __webpack_require__.r(__webpack_exports__);
         fetch('api/freeze_fetch_compare_dynamically').then(function (res) {
           return res.json();
         }).then(function (res) {
-          // this.endSlice = 12;
+          _this4.endSlice = _this4.onScrollSlice;
           _this4.articles = '';
           _this4.products = _.orderBy(res, 'price', 'desc');
           $('#preloader-wrapper').css("display", "none");
@@ -6748,7 +6748,7 @@ __webpack_require__.r(__webpack_exports__);
       fetch('api/action_meat_fetch').then(function (res) {
         return res.json();
       }).then(function (res) {
-        // this.endSlice = 12;
+        _this2.endSlice = _this2.onScrollSlice;
         _this2.articles = '';
         _this2.products = _.orderBy(res, 'price', 'desc'); // $('#preloader-wrapper').css("display", "none");
 
@@ -6773,7 +6773,7 @@ __webpack_require__.r(__webpack_exports__);
           sort: this.key
         }
       }).then(function (res) {
-        // this.endSlice = 12;
+        _this3.endSlice = _this3.onScrollSlice;
         _this3.products = '';
         _this3.articles = res.data;
         window.scrollTo(0, 0);
@@ -6793,7 +6793,7 @@ __webpack_require__.r(__webpack_exports__);
         fetch('api/meats_fetch_compare_dynamically').then(function (res) {
           return res.json();
         }).then(function (res) {
-          // this.endSlice = 12;
+          _this4.endSlice = _this4.onScrollSlice;
           _this4.articles = '';
           _this4.products = _.orderBy(res, 'price', 'desc');
           $('#preloader-wrapper').css("display", "none");
@@ -7436,7 +7436,7 @@ __webpack_require__.r(__webpack_exports__);
       fetch('api/action_sweet_fetch').then(function (res) {
         return res.json();
       }).then(function (res) {
-        // this.endSlice = 12;
+        _this2.endSlice = _this2.onScrollSlice;
         _this2.articles = '';
         _this2.products = _.orderBy(res, 'price', 'desc');
         window.scrollTo(0, 0);
@@ -7461,7 +7461,7 @@ __webpack_require__.r(__webpack_exports__);
           sort: this.key
         }
       }).then(function (res) {
-        // this.endSlice = 12;
+        _this3.endSlice = _this3.onScrollSlice;
         _this3.products = '';
         _this3.articles = res.data;
         window.scrollTo(0, 0);
@@ -7481,7 +7481,7 @@ __webpack_require__.r(__webpack_exports__);
         fetch('api/sweets_fetch_compare_dynamically').then(function (res) {
           return res.json();
         }).then(function (res) {
-          // this.endSlice = 12;
+          _this4.endSlice = _this4.onScrollSlice;
           _this4.articles = '';
           _this4.products = _.orderBy(res, 'price', 'desc');
           $('#preloader-wrapper').css("display", "none");

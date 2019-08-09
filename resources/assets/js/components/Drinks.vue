@@ -674,7 +674,7 @@ console.log(document.documentElement.scrollTop);
                 fetch('api/action_drink_fetch')
                     .then(res => res.json())
                     .then(res => {
-                        // this.endSlice = 12;
+                        this.endSlice = this.onScrollSlice;
                         this.articles = '';
                         this.products = _.orderBy(res, 'price', 'desc');
                         // $('#preloader-wrapper').css("display", "none");
@@ -695,7 +695,7 @@ console.log(document.documentElement.scrollTop);
                         sort: this.key
                     }
                 }).then(res => {
-                    // this.endSlice = 12;
+                    this.endSlice = this.onScrollSlice;
                     this.products = '';
                     this.articles = res.data;
                     window.scrollTo(0, 0);
@@ -712,7 +712,7 @@ console.log(document.documentElement.scrollTop);
                     fetch('api/drinks_fetch_compare_dynamically')
                         .then(res => res.json())
                         .then(res => {
-                            // this.endSlice = 12;
+                            this.endSlice = this.onScrollSlice;
                             this.articles = '';
                             this.products = _.orderBy(res, 'price', 'desc');
                             $('#preloader-wrapper').css("display", "none");

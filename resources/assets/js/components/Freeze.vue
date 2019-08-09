@@ -634,7 +634,7 @@
                 fetch('api/action_freeze_fetch')
                     .then(res => res.json())
                     .then(res => {
-                        // this.endSlice = 12;
+                        this.endSlice = this.onScrollSlice;
                         this.articles = '';
                         this.products = _.orderBy(res, 'price', 'desc');
                         // $('#preloader-wrapper').css("display", "none");
@@ -653,7 +653,7 @@
                     }
                 })
                     .then(res => {
-                        // this.endSlice = 12;
+                        this.endSlice = this.onScrollSlice;
                         this.products = '';
                         this.articles = res.data;
                         window.scrollTo(0, 0);
@@ -670,7 +670,7 @@
                     fetch('api/freeze_fetch_compare_dynamically')
                         .then(res => res.json())
                         .then(res => {
-                            // this.endSlice = 12;
+                            this.endSlice = this.onScrollSlice;
                             this.articles = '';
                             this.products = _.orderBy(res, 'price', 'desc');
                             $('#preloader-wrapper').css("display", "none");
