@@ -1,11 +1,30 @@
 <template>
-    <div class="container">
+    <section>
+        <!--<div class="mb-3 text-center">
+            <img style="background-size:cover" src="images/banner1.png" class="img-fluid">
+        </div>-->
+        <div id="left_side" class="d-none d-xl-block">
+            <div class="col-md-1 mb-2">
+                <img style="background-size:cover; display: flex;" src="images/vertical_baner.png">
+            </div>
+            <!--<div class="col-md-1">
+                <img style="background-size:cover; display: flex;" src="images/vertical_baner.png">
+            </div>-->
+        </div>
+    <div id="right_side">
         <div align="center">
-            <!--<button @click="fetchArticles('maxi')" class="btn btn-primary">Maxi Akcija</button>
-            <button @click="fetchArticles('idea')" class="btn btn-primary">Idea Akcija</button>
-            <button @click="fetchArticles('dis')" class="btn btn-primary">Dis Akcija</button>
-            <br><br>-->
-            <!--<button @click="fetchProducts()" class="btn btn-primary">Uporedi artikle</button>-->
+            <div class="row">
+                <div class="col-sm-8"></div>
+                <div class="form-group has-search col-sm-4">
+                    <div class="search">
+                        <div>
+                            <input v-model="search" type="text"
+                                   placeholder="Unesite proizvod ili marku (pivo,coca-cola,..)"
+                                   required>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="row mb-3">
                 <div class="col-sm-1"></div>
@@ -15,29 +34,15 @@
                 <div @click="fetchArticles('univerexport')" class="buttonCustom1 col-lg-2">Univerexport Akcija</div>
             </div>
 
-            <div class="col-md-3 mb-3">
-                <div class="select">
-                    <select v-model="selected" @change="compareDynamically">
-                        <option :value="null" disabled>Uporedi markete</option>
-                        <option value="ActionMvI">Uporedi Maxi/Idea</option>
-                        <option value="ActionAll">Uporedi sve markete</option>
-                    </select>
-                </div>
-
-                <!--<div class="mt-3">Selected: <strong>{{ selected }}</strong></div>-->
-            </div>
-            <div class="row mb-2">
-
-                <div class="col-sm-2"></div>
-                <div class="form-group has-search col-sm-4">
-                    <!--<span class="fa fa-search form-control-feedback"></span>-->
-                    <!--<input type="text" v-model="search" class="form-control" placeholder="Unesite proizvod ili marku (pivo,coca-cola,..)">-->
-                    <div class="search">
-                        <div>
-                            <input v-model="search" type="text"
-                                   placeholder="Unesite proizvod ili marku (pivo,coca-cola,..)"
-                                   required>
-                        </div>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-3 mb-3">
+                    <div class="select">
+                        <select v-model="selected" @change="compareDynamically">
+                            <option :value="null" disabled>Uporedi markete</option>
+                            <option value="ActionMvI">Uporedi Maxi/Idea</option>
+                            <option value="ActionAll">Uporedi sve markete</option>
+                        </select>
                     </div>
                 </div>
 
@@ -421,13 +426,15 @@
             <br><br>
         </div>
     </div>
+</section>
 </template>
 <script>
     export default {
         data() {
             return {
                 startSlice: 0,
-                endSlice: 12,
+                endSlice: '',
+                onScrollSlice: '',
                 products: [],
                 articles: [],
                 key: 'opadajuce',
@@ -495,6 +502,14 @@
             document.head.appendChild(recaptchaScript)
         },
         created() {
+            var width = $(window).width();
+            if(width > 1900){
+                this.endSlice = 15;
+                this.onScrollSlice = 15;
+            }else{
+                this.endSlice = 12;
+                this.onScrollSlice = 12;
+            }
             this.fetchProducts();
             //$('body').addClass('loaded');
             window.addEventListener('scroll', this.handleScroll);
@@ -545,10 +560,16 @@
                     let scroll = Math.ceil($(window).scrollTop() + $(window).height());
                     let windowHeight = Math.round($(document).height());
 
+                    if (document.documentElement.scrollTop> 100) {
+                        $('#left_side').addClass("fix-one");
+                    } else {
+                        $('#left_side').removeClass("fix-one");
+                    }
+
                     if (scroll >= windowHeight) {
                         //if(this.pagination.nextPage <= this.pagination.lastPage) {
                         document.getElementById("loader").style.display = "block";
-                        this.endSlice += 12;
+                        this.endSlice += this.onScrollSlice;
                         //}
                     } else {
                         document.getElementById("loader").style.display = "none";
@@ -572,7 +593,7 @@
                 fetch('api/action_sale_fetch')
                     .then(res => res.json())
                     .then(res => {
-                        this.endSlice = 12;
+                        // this.endSlice = 12;
                         this.articles = '';
                         this.products = _.orderBy(res, 'price', 'desc');
                         // $('#preloader-wrapper').css("display", "none");
@@ -594,7 +615,7 @@
                     }
                 }).then(res => {
                     this.selected = null;
-                    this.endSlice = 12;
+                    // this.endSlice = 12;
                     this.products = '';
                     this.articles = res.data;
                     window.scrollTo(0, 0);
@@ -611,7 +632,7 @@
                     fetch('api/action_action_fetch_compare_dynamically')
                         .then(res => res.json())
                         .then(res => {
-                            this.endSlice = 12;
+                            // this.endSlice = 12;
                             this.articles = '';
                             this.products = _.orderBy(res, 'price', 'desc');
                             $('#preloader-wrapper').css("display", "none");
