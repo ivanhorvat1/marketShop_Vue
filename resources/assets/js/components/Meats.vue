@@ -601,12 +601,15 @@
             },
             fetchProducts() {
                 let vm = this;
-                fetch('api/action_meat_fetch')
-                    .then(res => res.json())
+                /*fetch('api/action_meat_fetch')
+                    .then(res => res.json())*/
+                axios.get('api/action_meat_fetch', {
+                    timeout: 60 * 4 * 1000
+                })
                     .then(res => {
                         this.endSlice = this.onScrollSlice;
                         this.articles = '';
-                        this.products = _.orderBy(res, 'price', 'desc');
+                        this.products = _.orderBy(res.data, 'price', 'desc');
                         // $('#preloader-wrapper').css("display", "none");
                         $('body').addClass('loaded');
                         window.scrollTo(0, 0);
@@ -620,6 +623,7 @@
                 this.selected = null;
                 $('#overlay').fadeIn();
                 axios.get('api/action_meat_fetch_separate', {
+                    timeout: 60 * 4 * 1000,
                     params: {
                         shop: shop,
                         sort: this.key
@@ -639,12 +643,15 @@
                 if (this.selected == 'MeatsAll') {
                     vm.fetchProducts();
                 } else {
-                    fetch('api/meats_fetch_compare_dynamically')
-                        .then(res => res.json())
+                    /*fetch('api/meats_fetch_compare_dynamically')
+                        .then(res => res.json())*/
+                    axios.get('api/meats_fetch_compare_dynamically', {
+                        timeout: 60 * 4 * 1000
+                    })
                         .then(res => {
                             this.endSlice = this.onScrollSlice;
                             this.articles = '';
-                            this.products = _.orderBy(res, 'price', 'desc');
+                            this.products = _.orderBy(res.data, 'price', 'desc');
                             $('#preloader-wrapper').css("display", "none");
                             $('body').addClass('loaded');
                             // $(".overlay").remove();

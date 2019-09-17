@@ -19,6 +19,7 @@ class ActionSaleController extends Controller
 {
     public function index()
     {
+        ini_set('max_execution_time', 600);
         $expiresAt = Carbon::now()->endOfDay()->subHour()->addMinutes(30);
 
         $cache = Cache::remember('maxiIdeaDisSale', 10, function () {
@@ -221,8 +222,10 @@ class ActionSaleController extends Controller
                     }
                 }
 
+                //var_dump(implode(',', (array)$request->products[0][$i]['eanCodes'])); continue;
+
                 array_push($storeRecords, ['code'=>$request->products[0][$i]['code'], 'title' => $request->products[0][$i]['manufacturerName'],
-                    'body' => $request->products[0][$i]['name'], 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => implode(',', $request->products[0][$i]['eanCodes']),
+                    'body' => $request->products[0][$i]['name'], 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => implode(',', (array)$request->products[0][$i]['eanCodes']),
                     'formattedPrice' => $formattedPrice, 'price' => $price,
                     'supplementaryPriceLabel1' => $request->products[0][$i]['price']['supplementaryPriceLabel1'],
                     'supplementaryPriceLabel2' => $request->products[0][$i]['price']['supplementaryPriceLabel2'], 'shop' => $request->shop, 'category' => $request->category]);
@@ -416,7 +419,7 @@ class ActionSaleController extends Controller
 
     public function compareDynamically(Request $request)
     {
-
+        ini_set('max_execution_time', 600);
         $cached = Cache::remember('ActionDvI', 10, function () {
 
             $maxi = action_sale::where('shop', 'maxi')->where('category', 'akcija')->get();

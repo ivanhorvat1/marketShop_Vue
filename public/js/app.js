@@ -2362,12 +2362,15 @@ __webpack_require__.r(__webpack_exports__);
     fetchProducts: function fetchProducts() {
       var _this2 = this;
 
-      fetch('api/action_sale_fetch').then(function (res) {
-        return res.json();
-      }).then(function (res) {
+      // fetch('api/action_sale_fetch')
+      axios.get('api/action_sale_fetch', {
+        timeout: 60 * 4 * 1000
+      }) // .then(res => res.json())
+      .then(function (res) {
+        // console.log(res);
         _this2.endSlice = _this2.onScrollSlice;
         _this2.articles = '';
-        _this2.products = _.orderBy(res, 'price', 'desc'); // $('#preloader-wrapper').css("display", "none");
+        _this2.products = _.orderBy(res.data, 'price', 'desc'); // $('#preloader-wrapper').css("display", "none");
 
         $('body').addClass('loaded');
         window.scrollTo(0, 0);
@@ -2386,6 +2389,7 @@ __webpack_require__.r(__webpack_exports__);
       $('#overlay').fadeIn();
       this.shop = shop;
       axios.get('api/action_action_fetch_separate', {
+        timeout: 60 * 4 * 1000,
         params: {
           shop: shop,
           sort: this.key
@@ -2409,12 +2413,14 @@ __webpack_require__.r(__webpack_exports__);
       if (this.selected == 'ActionAll') {
         vm.fetchProducts();
       } else {
-        fetch('api/action_action_fetch_compare_dynamically').then(function (res) {
-          return res.json();
+        // fetch('api/action_action_fetch_compare_dynamically')
+        //     .then(res => res.json())
+        axios.get('api/action_action_fetch_compare_dynamically', {
+          timeout: 60 * 4 * 1000
         }).then(function (res) {
           _this4.endSlice = _this4.onScrollSlice;
           _this4.articles = '';
-          _this4.products = _.orderBy(res, 'price', 'desc');
+          _this4.products = _.orderBy(res.data, 'price', 'desc');
           $('#preloader-wrapper').css("display", "none");
           $('body').addClass('loaded'); // $(".overlay").remove();
 
@@ -3093,7 +3099,8 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         if (category == 'akcija') {
           var _loop = function _loop(i) {
-            $.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent("https://www.maxi.rs/search/promotions/getSearchPageData?pageSize=20&pageNumber=" + i + "&sort=promotion") + '&callback=?', function (data) {
+            // $.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent("https://www.maxi.rs/search/promotions/getSearchPageData?pageSize=20&pageNumber=" + i + "&sort=promotion") + '&callback=?', function (data) {
+            $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent("https://www.maxi.rs/search/promotions/getSearchPageData?pageSize=20&pageNumber=" + i + "&sort=promotion") + '&callback=?', function (data) {
               var res = JSON.parse(data.contents);
               vm.storeMaxi(res, i);
             });
@@ -3104,11 +3111,11 @@ __webpack_require__.r(__webpack_exports__);
 
           //https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber="+i+"&sort=promotion
           //http://api.allorigins.ml
-          for (var i = 0; i <= 60; i++) {
+          for (var i = 0; i <= 100; i++) {
             _loop(i);
           }
         } else {
-          $.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent(url) + '&callback=?', function (data) {
+          $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function (data) {
             var res = JSON.parse(data.contents);
             vm.storeMaxi(res);
             vm.storeArticles(shop, category); //M.toast({html: 'Succesfully added', classes: 'rounded'});
@@ -3176,6 +3183,10 @@ __webpack_require__.r(__webpack_exports__);
     storeArticles: function storeArticles(shop, category) {
       var vm = this;
       var picaIdea = [];
+
+      if (this.maxi.length == 0 || this.idea.length == 0) {
+        alert('prazno');
+      }
 
       if (shop == 'maxi') {
         vm.storeVisit(this.maxi, shop, category);
@@ -5007,12 +5018,14 @@ console.log(document.documentElement.scrollTop);
     fetchProducts: function fetchProducts() {
       var _this2 = this;
 
-      fetch('api/action_drink_fetch').then(function (res) {
-        return res.json();
+      /*fetch('api/action_drink_fetch')
+          .then(res => res.json())*/
+      axios.get('api/action_drink_fetch', {
+        timeout: 60 * 4 * 1000
       }).then(function (res) {
         _this2.endSlice = _this2.onScrollSlice;
         _this2.articles = '';
-        _this2.products = _.orderBy(res, 'price', 'desc'); // $('#preloader-wrapper').css("display", "none");
+        _this2.products = _.orderBy(res.data, 'price', 'desc'); // $('#preloader-wrapper').css("display", "none");
 
         $('body').addClass('loaded');
         window.scrollTo(0, 0);
@@ -5030,6 +5043,7 @@ console.log(document.documentElement.scrollTop);
       this.selected = null;
       $('#overlay').fadeIn();
       axios.get('api/action_drink_fetch_separate', {
+        timeout: 60 * 4 * 1000,
         params: {
           shop: shop,
           sort: this.key
@@ -5052,12 +5066,14 @@ console.log(document.documentElement.scrollTop);
       if (this.selected == 'DrinksAll') {
         vm.fetchProducts();
       } else {
-        fetch('api/drinks_fetch_compare_dynamically').then(function (res) {
-          return res.json();
+        /*fetch('api/drinks_fetch_compare_dynamically')
+            .then(res => res.json())*/
+        axios.get('api/drinks_fetch_compare_dynamically', {
+          timeout: 60 * 4 * 1000
         }).then(function (res) {
           _this4.endSlice = _this4.onScrollSlice;
           _this4.articles = '';
-          _this4.products = _.orderBy(res, 'price', 'desc');
+          _this4.products = _.orderBy(res.data, 'price', 'desc');
           $('#preloader-wrapper').css("display", "none");
           $('body').addClass('loaded'); // $(".overlay").remove();
 
@@ -5738,12 +5754,14 @@ __webpack_require__.r(__webpack_exports__);
     fetchProducts: function fetchProducts() {
       var _this2 = this;
 
-      fetch('api/action_freeze_fetch').then(function (res) {
-        return res.json();
+      /*fetch('api/action_freeze_fetch')
+          .then(res => res.json())*/
+      axios.get('api/action_freeze_fetch', {
+        timeout: 60 * 4 * 1000
       }).then(function (res) {
         _this2.endSlice = _this2.onScrollSlice;
         _this2.articles = '';
-        _this2.products = _.orderBy(res, 'price', 'desc'); // $('#preloader-wrapper').css("display", "none");
+        _this2.products = _.orderBy(res.data, 'price', 'desc'); // $('#preloader-wrapper').css("display", "none");
 
         $('body').addClass('loaded');
         window.scrollTo(0, 0);
@@ -5757,6 +5775,7 @@ __webpack_require__.r(__webpack_exports__);
       this.selected = null;
       $('#overlay').fadeIn();
       axios.get('api/action_freeze_fetch_separate', {
+        timeout: 60 * 4 * 1000,
         params: {
           shop: shop,
           sort: this.key
@@ -5779,12 +5798,14 @@ __webpack_require__.r(__webpack_exports__);
       if (this.selected == 'FreezeAll') {
         vm.fetchProducts();
       } else {
-        fetch('api/freeze_fetch_compare_dynamically').then(function (res) {
-          return res.json();
+        /*fetch('api/freeze_fetch_compare_dynamically')
+            .then(res => res.json())*/
+        axios.get('api/freeze_fetch_compare_dynamically', {
+          timeout: 60 * 4 * 1000
         }).then(function (res) {
           _this4.endSlice = _this4.onScrollSlice;
           _this4.articles = '';
-          _this4.products = _.orderBy(res, 'price', 'desc');
+          _this4.products = _.orderBy(res.data, 'price', 'desc');
           $('#preloader-wrapper').css("display", "none");
           $('body').addClass('loaded'); // $(".overlay").remove();
 
@@ -6745,12 +6766,15 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       var vm = this;
-      fetch('api/action_meat_fetch').then(function (res) {
-        return res.json();
+      /*fetch('api/action_meat_fetch')
+          .then(res => res.json())*/
+
+      axios.get('api/action_meat_fetch', {
+        timeout: 60 * 4 * 1000
       }).then(function (res) {
         _this2.endSlice = _this2.onScrollSlice;
         _this2.articles = '';
-        _this2.products = _.orderBy(res, 'price', 'desc'); // $('#preloader-wrapper').css("display", "none");
+        _this2.products = _.orderBy(res.data, 'price', 'desc'); // $('#preloader-wrapper').css("display", "none");
 
         $('body').addClass('loaded');
         window.scrollTo(0, 0);
@@ -6768,6 +6792,7 @@ __webpack_require__.r(__webpack_exports__);
       this.selected = null;
       $('#overlay').fadeIn();
       axios.get('api/action_meat_fetch_separate', {
+        timeout: 60 * 4 * 1000,
         params: {
           shop: shop,
           sort: this.key
@@ -6790,12 +6815,14 @@ __webpack_require__.r(__webpack_exports__);
       if (this.selected == 'MeatsAll') {
         vm.fetchProducts();
       } else {
-        fetch('api/meats_fetch_compare_dynamically').then(function (res) {
-          return res.json();
+        /*fetch('api/meats_fetch_compare_dynamically')
+            .then(res => res.json())*/
+        axios.get('api/meats_fetch_compare_dynamically', {
+          timeout: 60 * 4 * 1000
         }).then(function (res) {
           _this4.endSlice = _this4.onScrollSlice;
           _this4.articles = '';
-          _this4.products = _.orderBy(res, 'price', 'desc');
+          _this4.products = _.orderBy(res.data, 'price', 'desc');
           $('#preloader-wrapper').css("display", "none");
           $('body').addClass('loaded'); // $(".overlay").remove();
 
@@ -7433,12 +7460,15 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       var vm = this;
-      fetch('api/action_sweet_fetch').then(function (res) {
-        return res.json();
+      /*fetch('api/action_sweet_fetch')
+          .then(res => res.json())*/
+
+      axios.get('api/action_sweet_fetch', {
+        timeout: 60 * 4 * 1000
       }).then(function (res) {
         _this2.endSlice = _this2.onScrollSlice;
         _this2.articles = '';
-        _this2.products = _.orderBy(res, 'price', 'desc');
+        _this2.products = _.orderBy(res.data, 'price', 'desc');
         window.scrollTo(0, 0);
         $('#overlay').fadeOut();
         $('#preloader-wrapper').css("display", "none");
@@ -7456,6 +7486,7 @@ __webpack_require__.r(__webpack_exports__);
       $('#overlay').fadeIn();
       this.shop = shop;
       axios.get('api/action_sweet_fetch_separate', {
+        timeout: 60 * 4 * 1000,
         params: {
           shop: shop,
           sort: this.key
@@ -7478,12 +7509,14 @@ __webpack_require__.r(__webpack_exports__);
       if (this.selected == 'SweetsAll') {
         vm.fetchProducts();
       } else {
-        fetch('api/sweets_fetch_compare_dynamically').then(function (res) {
-          return res.json();
+        /*fetch('api/sweets_fetch_compare_dynamically')
+            .then(res => res.json())*/
+        axios.get('api/sweets_fetch_compare_dynamically', {
+          timeout: 60 * 4 * 1000
         }).then(function (res) {
           _this4.endSlice = _this4.onScrollSlice;
           _this4.articles = '';
-          _this4.products = _.orderBy(res, 'price', 'desc');
+          _this4.products = _.orderBy(res.data, 'price', 'desc');
           $('#preloader-wrapper').css("display", "none");
           $('body').addClass('loaded'); // $(".overlay").remove();
 

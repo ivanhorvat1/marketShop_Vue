@@ -14,7 +14,7 @@ class DrinkController extends Controller
 {
     public function index()
     {
-
+        ini_set('max_execution_time', 600);
         $expiresAt = Carbon::now()->endOfDay()->subHour()->addMinutes(30);
 
         $cache = Cache::remember('maxiIdeaDisDrinks', 10, function () {
@@ -174,7 +174,7 @@ class DrinkController extends Controller
 
     public function getSeparatedMarket(Request $request)
     {
-
+        ini_set('max_execution_time', 600);
         $this->shop = $request->shop;
 
         if ($request->sort == 'rastuce') {

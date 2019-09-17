@@ -607,10 +607,12 @@
                         .catch(err => console.log(err));
                 } else {
                     if (category == 'akcija') {
+
                         //https://www.maxi.rs/view/QlProductListComponentController/getSearchPageData?componentId=PromotionListingProductListingComponent&pageNumber="+i+"&sort=promotion
                         //http://api.allorigins.ml
-                        for (let i = 0; i <= 60; i++) {
-                            $.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent("https://www.maxi.rs/search/promotions/getSearchPageData?pageSize=20&pageNumber=" + i + "&sort=promotion") + '&callback=?', function (data) {
+                        for (let i = 0; i <= 100; i++) {
+                            // $.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent("https://www.maxi.rs/search/promotions/getSearchPageData?pageSize=20&pageNumber=" + i + "&sort=promotion") + '&callback=?', function (data) {
+                            $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent("https://www.maxi.rs/search/promotions/getSearchPageData?pageSize=20&pageNumber=" + i + "&sort=promotion") + '&callback=?', function (data) {
                                 let res = JSON.parse(data.contents);
                                 vm.storeMaxi(res, i);
                             });
@@ -620,7 +622,7 @@
                             }*/
                         }
                     } else {
-                        $.getJSON('https://api.allorigins.win/get?url=' + encodeURIComponent(url) + '&callback=?', function (data) {
+                        $.getJSON('http://www.whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function (data) {
                             let res = JSON.parse(data.contents);
                             vm.storeMaxi(res);
                             vm.storeArticles(shop, category);
@@ -685,6 +687,9 @@
             storeArticles(shop, category) {
                 let vm = this;
                 let picaIdea = [];
+                if (this.maxi.length == 0 || this.idea.length == 0){
+                    alert('prazno');
+                }
                 if (shop == 'maxi') {
                     vm.storeVisit(this.maxi, shop, category);
                 } else if (shop == 'idea' && category == 'pice' || category == 'meso' || category == 'slatkisi' || category == 'smrznuti') {

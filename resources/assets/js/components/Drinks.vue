@@ -671,12 +671,15 @@ console.log(document.documentElement.scrollTop);
                 }
             },
             fetchProducts() {
-                fetch('api/action_drink_fetch')
-                    .then(res => res.json())
+                /*fetch('api/action_drink_fetch')
+                    .then(res => res.json())*/
+                axios.get('api/action_drink_fetch', {
+                    timeout: 60 * 4 * 1000
+                })
                     .then(res => {
                         this.endSlice = this.onScrollSlice;
                         this.articles = '';
-                        this.products = _.orderBy(res, 'price', 'desc');
+                        this.products = _.orderBy(res.data, 'price', 'desc');
                         // $('#preloader-wrapper').css("display", "none");
                         $('body').addClass('loaded');
                         window.scrollTo(0, 0);
@@ -690,6 +693,7 @@ console.log(document.documentElement.scrollTop);
                 this.selected = null;
                 $('#overlay').fadeIn();
                 axios.get('api/action_drink_fetch_separate', {
+                    timeout: 60 * 4 * 1000,
                     params: {
                         shop: shop,
                         sort: this.key
@@ -709,12 +713,15 @@ console.log(document.documentElement.scrollTop);
                 if (this.selected == 'DrinksAll') {
                     vm.fetchProducts();
                 } else {
-                    fetch('api/drinks_fetch_compare_dynamically')
-                        .then(res => res.json())
+                    /*fetch('api/drinks_fetch_compare_dynamically')
+                        .then(res => res.json())*/
+                    axios.get('api/drinks_fetch_compare_dynamically', {
+                        timeout: 60 * 4 * 1000
+                    })
                         .then(res => {
                             this.endSlice = this.onScrollSlice;
                             this.articles = '';
-                            this.products = _.orderBy(res, 'price', 'desc');
+                            this.products = _.orderBy(res.data, 'price', 'desc');
                             $('#preloader-wrapper').css("display", "none");
                             $('body').addClass('loaded');
                             // $(".overlay").remove();

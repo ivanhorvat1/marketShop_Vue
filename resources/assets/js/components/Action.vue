@@ -590,12 +590,16 @@
                 }
             },
             fetchProducts() {
-                fetch('api/action_sale_fetch')
-                    .then(res => res.json())
+                // fetch('api/action_sale_fetch')
+                axios.get('api/action_sale_fetch', {
+                    timeout: 60 * 4 * 1000
+                })
+                    // .then(res => res.json())
                     .then(res => {
+                        // console.log(res);
                         this.endSlice = this.onScrollSlice;
                         this.articles = '';
-                        this.products = _.orderBy(res, 'price', 'desc');
+                        this.products = _.orderBy(res.data, 'price', 'desc');
                         // $('#preloader-wrapper').css("display", "none");
                         $('body').addClass('loaded');
                         window.scrollTo(0, 0);
@@ -609,6 +613,7 @@
                 $('#overlay').fadeIn();
                 this.shop = shop;
                 axios.get('api/action_action_fetch_separate', {
+                    timeout: 60 * 4 * 1000,
                     params: {
                         shop: shop,
                         sort: this.key
@@ -629,12 +634,15 @@
                 if (this.selected == 'ActionAll') {
                     vm.fetchProducts();
                 } else {
-                    fetch('api/action_action_fetch_compare_dynamically')
-                        .then(res => res.json())
+                    // fetch('api/action_action_fetch_compare_dynamically')
+                    //     .then(res => res.json())
+                    axios.get('api/action_action_fetch_compare_dynamically', {
+                        timeout: 60 * 4 * 1000
+                    })
                         .then(res => {
                             this.endSlice = this.onScrollSlice;
                             this.articles = '';
-                            this.products = _.orderBy(res, 'price', 'desc');
+                            this.products = _.orderBy(res.data, 'price', 'desc');
                             $('#preloader-wrapper').css("display", "none");
                             $('body').addClass('loaded');
                             // $(".overlay").remove();
