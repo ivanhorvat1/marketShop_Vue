@@ -154,8 +154,8 @@
     /*
         height of loader
     */
-    /*margin: -75px 0 0 -75px;*/
-    margin-top: -100px;
+    margin: -75px 0 0 -55px;
+    /*margin-top: -100px;*/
     border-radius: 50%;
     border: 5px solid transparent;
     border-top-color: #3498db;
@@ -1170,3 +1170,24 @@ div#right_side {
     position: fixed;
     top: 10px;
 }
+
+button.load_more {
+    height: 40px;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    vertical-align: middle;
+    transition: all 0.5s cubic-bezier(0.65, -0.25, 0.25, 1.95);
+    font-weight: 900;
+    color: #ffffff;
+    /*padding: 1.25rem 2rem;*/
+    background: #153607;
+    text-transform: uppercase;
+}
+
+button.load_more:hover, button.load_more:focus, button.load_more:active {
+    letter-spacing: 0.125rem;
+}
+

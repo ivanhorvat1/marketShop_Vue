@@ -460,6 +460,7 @@
                     </svg>
                     <h4 class="loading">LOADING</h4>
                 </div>
+                <button class="load_more" @click="loadMore()" id="loadMoreButton">Load More</button>
                 <!--<button @click="toTopFunction()" id="BtnToTop" title="Go to top">&uarr;</button>-->
                 <div id="BtnToTop1" class="bg"></div>
                 <button @click="toTopFunction()" id="BtnToTop" class="buttonToTop" target="_blank"><i
@@ -596,10 +597,23 @@
                 };
                 scrollToTop();
             },
+            loadMore(){
+                if (this.products.length > 0 || this.articles.length > 0) {
+                    if (this.products.length < this.endSlice && this.articles.length < this.endSlice) {
+                        document.getElementById("loadMoreButton").style.display = "none";
+                        return;
+                    }
+                    this.endSlice += this.onScrollSlice;
+                }
+            },
             handleScroll() {
                 if (this.products.length > 0 || this.articles.length > 0) {
                     let scroll = Math.ceil($(window).scrollTop() + $(window).height());
                     let windowHeight = Math.round($(document).height());
+                    let width = $(window).width();
+                    if(width > 1500) {
+                        document.getElementById("loadMoreButton").style.display = "none";
+                    }
 
                     if (document.documentElement.scrollTop> 100) {
                         $('#left_side').addClass("fix-one");
@@ -643,6 +657,11 @@
                         // $('#preloader-wrapper').css("display", "none");
                         $('body').addClass('loaded');
                         window.scrollTo(0, 0);
+
+                        if($(window).width() < 1500) {
+                            document.getElementById("loadMoreButton").style.display = "block";
+                        }
+
                         $('#overlay').fadeOut();
                     })
             }, fetchArticles(shop) {
@@ -661,6 +680,11 @@
                         this.products = '';
                         this.articles = res.data;
                         window.scrollTo(0, 0);
+
+                        if($(window).width() < 1500) {
+                            document.getElementById("loadMoreButton").style.display = "block";
+                        }
+
                         $('#overlay').fadeOut();
                     })
             }, compareDynamically() {
@@ -684,6 +708,11 @@
                             $('body').addClass('loaded');
                             // $(".overlay").remove();
                             window.scrollTo(0, 0);
+
+                            if($(window).width() < 1500) {
+                                document.getElementById("loadMoreButton").style.display = "block";
+                            }
+
                             $('#overlay').fadeOut();
                         });
                 }

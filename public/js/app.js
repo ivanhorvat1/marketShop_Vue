@@ -2191,6 +2191,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2326,10 +2327,25 @@ __webpack_require__.r(__webpack_exports__);
 
       scrollToTop();
     },
+    loadMore: function loadMore() {
+      if (this.products.length > 0 || this.articles.length > 0) {
+        if (this.products.length < this.endSlice && this.articles.length < this.endSlice) {
+          document.getElementById("loadMoreButton").style.display = "none";
+          return;
+        }
+
+        this.endSlice += this.onScrollSlice;
+      }
+    },
     handleScroll: function handleScroll() {
       if (this.products.length > 0 || this.articles.length > 0) {
         var scroll = Math.ceil($(window).scrollTop() + $(window).height());
         var windowHeight = Math.round($(document).height());
+        var width = $(window).width();
+
+        if (width > 1500) {
+          document.getElementById("loadMoreButton").style.display = "none";
+        }
 
         if (document.documentElement.scrollTop > 100) {
           $('#left_side').addClass("fix-one");
@@ -2374,6 +2390,11 @@ __webpack_require__.r(__webpack_exports__);
 
         $('body').addClass('loaded');
         window.scrollTo(0, 0);
+
+        if ($(window).width() < 1500) {
+          document.getElementById("loadMoreButton").style.display = "block";
+        }
+
         $('#overlay').fadeOut();
       });
     },
@@ -2400,6 +2421,11 @@ __webpack_require__.r(__webpack_exports__);
         _this3.products = '';
         _this3.articles = res.data;
         window.scrollTo(0, 0);
+
+        if ($(window).width() < 1500) {
+          document.getElementById("loadMoreButton").style.display = "block";
+        }
+
         $('#overlay').fadeOut();
       });
     },
@@ -2425,6 +2451,11 @@ __webpack_require__.r(__webpack_exports__);
           $('body').addClass('loaded'); // $(".overlay").remove();
 
           window.scrollTo(0, 0);
+
+          if ($(window).width() < 1500) {
+            document.getElementById("loadMoreButton").style.display = "block";
+          }
+
           $('#overlay').fadeOut();
         });
       }
@@ -4836,6 +4867,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /*$(document).ready(function () {
     var wrap = $("#one");
@@ -4982,10 +5014,25 @@ console.log(document.documentElement.scrollTop);
 
       scrollToTop();
     },
+    loadMore: function loadMore() {
+      if (this.products.length > 0 || this.articles.length > 0) {
+        if (this.products.length < this.endSlice && this.articles.length < this.endSlice) {
+          document.getElementById("loadMoreButton").style.display = "none";
+          return;
+        }
+
+        this.endSlice += this.onScrollSlice;
+      }
+    },
     handleScroll: function handleScroll() {
       if (this.products.length > 0 || this.articles.length > 0) {
         var scroll = Math.ceil($(window).scrollTop() + $(window).height());
         var windowHeight = Math.round($(document).height());
+        var width = $(window).width();
+
+        if (width > 1500) {
+          document.getElementById("loadMoreButton").style.display = "none";
+        }
 
         if (document.documentElement.scrollTop > 100) {
           $('#left_side').addClass("fix-one");
@@ -5029,6 +5076,11 @@ console.log(document.documentElement.scrollTop);
 
         $('body').addClass('loaded');
         window.scrollTo(0, 0);
+
+        if ($(window).width() < 1500) {
+          document.getElementById("loadMoreButton").style.display = "block";
+        }
+
         $('#overlay').fadeOut();
       });
     },
@@ -5053,6 +5105,11 @@ console.log(document.documentElement.scrollTop);
         _this3.products = '';
         _this3.articles = res.data;
         window.scrollTo(0, 0);
+
+        if ($(window).width() < 1500) {
+          document.getElementById("loadMoreButton").style.display = "block";
+        }
+
         $('#overlay').fadeOut();
       });
     },
@@ -5078,6 +5135,11 @@ console.log(document.documentElement.scrollTop);
           $('body').addClass('loaded'); // $(".overlay").remove();
 
           window.scrollTo(0, 0);
+
+          if ($(window).width() < 1500) {
+            document.getElementById("loadMoreButton").style.display = "block";
+          }
+
           $('#overlay').fadeOut();
         });
       }
@@ -5114,6 +5176,7 @@ console.log(document.documentElement.scrollTop);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -5718,10 +5781,25 @@ __webpack_require__.r(__webpack_exports__);
 
       scrollToTop();
     },
+    loadMore: function loadMore() {
+      if (this.products.length > 0 || this.articles.length > 0) {
+        if (this.products.length < this.endSlice && this.articles.length < this.endSlice) {
+          document.getElementById("loadMoreButton").style.display = "none";
+          return;
+        }
+
+        this.endSlice += this.onScrollSlice;
+      }
+    },
     handleScroll: function handleScroll() {
       if (this.products.length > 0 || this.articles.length > 0) {
         var scroll = Math.ceil($(window).scrollTop() + $(window).height());
         var windowHeight = Math.round($(document).height());
+        var width = $(window).width();
+
+        if (width > 1500) {
+          document.getElementById("loadMoreButton").style.display = "none";
+        }
 
         if (document.documentElement.scrollTop > 100) {
           $('#left_side').addClass("fix-one");
@@ -5765,6 +5843,11 @@ __webpack_require__.r(__webpack_exports__);
 
         $('body').addClass('loaded');
         window.scrollTo(0, 0);
+
+        if ($(window).width() < 1500) {
+          document.getElementById("loadMoreButton").style.display = "block";
+        }
+
         $('#overlay').fadeOut();
       });
     },
@@ -5785,6 +5868,11 @@ __webpack_require__.r(__webpack_exports__);
         _this3.products = '';
         _this3.articles = res.data;
         window.scrollTo(0, 0);
+
+        if ($(window).width() < 1500) {
+          document.getElementById("loadMoreButton").style.display = "block";
+        }
+
         $('#overlay').fadeOut();
       });
     },
@@ -5810,6 +5898,11 @@ __webpack_require__.r(__webpack_exports__);
           $('body').addClass('loaded'); // $(".overlay").remove();
 
           window.scrollTo(0, 0);
+
+          if ($(window).width() < 1500) {
+            document.getElementById("loadMoreButton").style.display = "block";
+          }
+
           $('#overlay').fadeOut();
         });
       }
@@ -6593,6 +6686,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -6729,10 +6823,25 @@ __webpack_require__.r(__webpack_exports__);
 
       scrollToTop();
     },
+    loadMore: function loadMore() {
+      if (this.products.length > 0 || this.articles.length > 0) {
+        if (this.products.length < this.endSlice && this.articles.length < this.endSlice) {
+          document.getElementById("loadMoreButton").style.display = "none";
+          return;
+        }
+
+        this.endSlice += this.onScrollSlice;
+      }
+    },
     handleScroll: function handleScroll() {
       if (this.products.length > 0 || this.articles.length > 0) {
         var scroll = Math.ceil($(window).scrollTop() + $(window).height());
         var windowHeight = Math.round($(document).height());
+        var width = $(window).width();
+
+        if (width > 1500) {
+          document.getElementById("loadMoreButton").style.display = "none";
+        }
 
         if (document.documentElement.scrollTop > 100) {
           $('#left_side').addClass("fix-one");
@@ -6778,6 +6887,11 @@ __webpack_require__.r(__webpack_exports__);
 
         $('body').addClass('loaded');
         window.scrollTo(0, 0);
+
+        if ($(window).width() < 1500) {
+          document.getElementById("loadMoreButton").style.display = "block";
+        }
+
         $('#overlay').fadeOut();
       });
     },
@@ -6802,6 +6916,11 @@ __webpack_require__.r(__webpack_exports__);
         _this3.products = '';
         _this3.articles = res.data;
         window.scrollTo(0, 0);
+
+        if ($(window).width() < 1500) {
+          document.getElementById("loadMoreButton").style.display = "block";
+        }
+
         $('#overlay').fadeOut();
       });
     },
@@ -6823,6 +6942,11 @@ __webpack_require__.r(__webpack_exports__);
           _this4.endSlice = _this4.onScrollSlice;
           _this4.articles = '';
           _this4.products = _.orderBy(res.data, 'price', 'desc');
+
+          if ($(window).width() < 1500) {
+            document.getElementById("loadMoreButton").style.display = "block";
+          }
+
           $('#preloader-wrapper').css("display", "none");
           $('body').addClass('loaded'); // $(".overlay").remove();
 
@@ -6845,6 +6969,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -7423,10 +7548,25 @@ __webpack_require__.r(__webpack_exports__);
 
       scrollToTop();
     },
+    loadMore: function loadMore() {
+      if (this.products.length > 0 || this.articles.length > 0) {
+        if (this.products.length < this.endSlice && this.articles.length < this.endSlice) {
+          document.getElementById("loadMoreButton").style.display = "none";
+          return;
+        }
+
+        this.endSlice += this.onScrollSlice;
+      }
+    },
     handleScroll: function handleScroll() {
       if (this.products.length > 0 || this.articles.length > 0) {
         var scroll = Math.ceil($(window).scrollTop() + $(window).height());
         var windowHeight = Math.round($(document).height());
+        var width = $(window).width();
+
+        if (width > 1500) {
+          document.getElementById("loadMoreButton").style.display = "none";
+        }
 
         if (document.documentElement.scrollTop > 100) {
           $('#left_side').addClass("fix-one");
@@ -7472,6 +7612,11 @@ __webpack_require__.r(__webpack_exports__);
         window.scrollTo(0, 0);
         $('#overlay').fadeOut();
         $('#preloader-wrapper').css("display", "none");
+
+        if ($(window).width() < 1500) {
+          document.getElementById("loadMoreButton").style.display = "block";
+        }
+
         $('body').addClass('loaded');
       });
     },
@@ -7496,6 +7641,11 @@ __webpack_require__.r(__webpack_exports__);
         _this3.products = '';
         _this3.articles = res.data;
         window.scrollTo(0, 0);
+
+        if ($(window).width() < 1500) {
+          document.getElementById("loadMoreButton").style.display = "block";
+        }
+
         $('#overlay').fadeOut();
       });
     },
@@ -7521,6 +7671,11 @@ __webpack_require__.r(__webpack_exports__);
           $('body').addClass('loaded'); // $(".overlay").remove();
 
           window.scrollTo(0, 0);
+
+          if ($(window).width() < 1500) {
+            document.getElementById("loadMoreButton").style.display = "block";
+          }
+
           $('#overlay').fadeOut();
         });
       }
@@ -76510,6 +76665,20 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "load_more",
+              attrs: { id: "loadMoreButton" },
+              on: {
+                click: function($event) {
+                  return _vm.loadMore()
+                }
+              }
+            },
+            [_vm._v("Load More")]
+          ),
+          _vm._v(" "),
           _c("div", { staticClass: "bg", attrs: { id: "BtnToTop1" } }),
           _vm._v(" "),
           _c(
@@ -80440,6 +80609,20 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "load_more",
+              attrs: { id: "loadMoreButton" },
+              on: {
+                click: function($event) {
+                  return _vm.loadMore()
+                }
+              }
+            },
+            [_vm._v("Load More")]
+          ),
+          _vm._v(" "),
           _c("div", { staticClass: "bg", attrs: { id: "BtnToTop1" } }),
           _vm._v(" "),
           _c(
@@ -82041,6 +82224,20 @@ var render = function() {
               _vm._v(" "),
               _c("h4", { staticClass: "loading" }, [_vm._v("LOADING")])
             ]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "load_more",
+              attrs: { id: "loadMoreButton" },
+              on: {
+                click: function($event) {
+                  return _vm.loadMore()
+                }
+              }
+            },
+            [_vm._v("Load More")]
           ),
           _vm._v(" "),
           _c("div", { staticClass: "bg", attrs: { id: "BtnToTop1" } }),
@@ -83713,6 +83910,20 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "load_more",
+              attrs: { id: "loadMoreButton" },
+              on: {
+                click: function($event) {
+                  return _vm.loadMore()
+                }
+              }
+            },
+            [_vm._v("Load More")]
+          ),
+          _vm._v(" "),
           _c("div", { staticClass: "bg", attrs: { id: "BtnToTop1" } }),
           _vm._v(" "),
           _c(
@@ -85314,6 +85525,20 @@ var render = function() {
               _vm._v(" "),
               _c("h4", { staticClass: "loading" }, [_vm._v("LOADING")])
             ]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "load_more",
+              attrs: { id: "loadMoreButton" },
+              on: {
+                click: function($event) {
+                  return _vm.loadMore()
+                }
+              }
+            },
+            [_vm._v("Load More")]
           ),
           _vm._v(" "),
           _c("div", { staticClass: "bg", attrs: { id: "BtnToTop1" } }),
