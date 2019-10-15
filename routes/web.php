@@ -15,6 +15,13 @@
 //    return view('welcome')->with('showStore',true);
 //});
 
+//Scheduler
+
+Route::get('/getMaxiDrinkScheduler', [
+    'uses' => 'ScheduleController@getMaxiAction',
+    'as' => 'getMaxiDrinkScheduler'
+]);
+
 Auth::routes();
 
 Route::get('/', [

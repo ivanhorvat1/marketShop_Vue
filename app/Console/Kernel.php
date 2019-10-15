@@ -26,6 +26,11 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->call('App\Http\Controllers\MaxiScheduleController@getMaxiAction')->dailyAt('03:00');;
+        $schedule->call('App\Http\Controllers\MaxiScheduleController@getMaxiDrink')->dailyAt('03:00');;
+        $schedule->call('App\Http\Controllers\MaxiScheduleController@getMaxiMeats')->dailyAt('03:00');;
+        $schedule->call('App\Http\Controllers\MaxiScheduleController@getMaxiSweets')->dailyAt('03:00');;
+        $schedule->call('App\Http\Controllers\MaxiScheduleController@getMaxiFreeze')->dailyAt('03:00');;
     }
 
     /**

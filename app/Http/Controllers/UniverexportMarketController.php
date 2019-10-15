@@ -405,7 +405,6 @@ class UniverexportMarketController extends Controller
 
     function grab_page($site)
     {
-
         try {
             $ch = curl_init();
 
@@ -414,8 +413,8 @@ class UniverexportMarketController extends Controller
                 throw new \Exception('failed to initialize');
             }
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-            curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 40);
+            curl_setopt($ch, CURLOPT_USERAGENT, isset($_SERVER['HTTP_USER_AGENT']))?:'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36';
+            curl_setopt($ch, CURLOPT_TIMEOUT, 60);
             curl_setopt($ch, CURLOPT_COOKIEFILE, "cookie.txt");
             curl_setopt($ch, CURLOPT_URL, $site);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);

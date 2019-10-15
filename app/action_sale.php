@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class action_sale extends Model
 {
-    protected $fillable = ['code', 'title', 'body', 'imageUrl', 'imageDefault', 'barcodes', 'formattedPrice', 'price', 'supplementaryPriceLabel1', 'supplementaryPriceLabel2', 'shop', 'category','deleted'];
+    protected $fillable = ['code', 'title', 'body', 'imageUrl', 'imageDefault', 'barcodes', 'formattedPrice', 'price', 'oldPrice', 'supplementaryPriceLabel1', 'supplementaryPriceLabel2', 'shop', 'category','deleted'];
 }
