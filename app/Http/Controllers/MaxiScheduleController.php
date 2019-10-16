@@ -39,70 +39,71 @@ class MaxiScheduleController extends Controller
         $imageUrl = null;
         $imageDefault = null;
         $storeRecords = [];
-
-        for ($i = 0; $i <= $arrayLengt; $i++) {
-            $imageUrl = null;
-            if (array_key_exists('images', $results[$i]) && !empty($results[$i]->images) && array_key_exists('2', $results[$i]->images)) {
-                $imageUrl = $results[$i]->images[2]->url;
-            } else {
-                $imageDefault = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
-            }
-
-            preg_match_all('!\d+!', $results[$i]->potentialPromotions[0]->description, $matches);
-
-            foreach($matches as $match){
-                $count = sizeof($match);
-
-                if($count == 2){
-                    $formattedPrice = $match[1].',00 RSD';
-                    $string = $match[1].'00';
-                    $price = (int)$string;
-                }elseif($count == 3){
-                    $formattedPrice = $match[1].','.$match[2].' RSD';
-                    $string = $match[1].$match[2];
-                    $price = (int)$string;
+        if($arrayLengt > 0) {
+            for ($i = 0; $i <= $arrayLengt; $i++) {
+                $imageUrl = null;
+                if (array_key_exists('images', $results[$i]) && !empty($results[$i]->images) && array_key_exists('2', $results[$i]->images)) {
+                    $imageUrl = $results[$i]->images[2]->url;
+                } else {
+                    $imageDefault = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
                 }
+
+                preg_match_all('!\d+!', $results[$i]->potentialPromotions[0]->description, $matches);
+
+                foreach ($matches as $match) {
+                    $count = sizeof($match);
+
+                    if ($count == 2) {
+                        $formattedPrice = $match[1] . ',00 RSD';
+                        $string = $match[1] . '00';
+                        $price = (int)$string;
+                    } elseif ($count == 3) {
+                        $formattedPrice = $match[1] . ',' . $match[2] . ' RSD';
+                        $string = $match[1] . $match[2];
+                        $price = (int)$string;
+                    }
+                }
+
+                if (array_key_exists('eanCodes', $results[$i]) && !empty($results[$i]->eanCodes)) {
+                    $barcode = implode(',', $results[$i]->eanCodes);
+                } else {
+                    $barcode = null;
+                }
+
+                $oldPrice = $results[$i]->price->intValue . ',' . $results[$i]->price->fractionValue . ' ' . $results[$i]->price->currencySymbol;
+
+                /*$pricesub = substr($request->products[0][$i]['price']['formattedValue'], 0, -4);
+
+                $subs = substr($pricesub, -3);*/
+
+                array_push($storeRecords, ['code' => $results[$i]->code, 'title' => $results[$i]->manufacturerName,
+                    'body' => $results[$i]->name, 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => $barcode,
+                    'formattedPrice' => $formattedPrice, 'price' => $price, 'oldPrice' => $oldPrice,
+                    'supplementaryPriceLabel1' => $results[$i]->price->supplementaryPriceLabel1,
+                    'supplementaryPriceLabel2' => $results[$i]->price->supplementaryPriceLabel2, 'shop' => 'maxi', 'category' => 'akcija']);
             }
 
-            if (array_key_exists('eanCodes', $results[$i]) && !empty($results[$i]->eanCodes)) {
-                $barcode = implode(',', $results[$i]->eanCodes);
-            } else {
-                $barcode = null;
+            action_sale::where('shop', 'maxi')->delete();
+
+            foreach ($storeRecords as $record) {
+                $article = action_sale::firstOrNew(array('code' => $record['code']));
+                $article->code = $record['code'];
+                $article->title = $record['title'];
+                $article->body = $record['body'];
+                $article->category = $record['category'];
+                $article->imageUrl = $record['imageUrl'];
+                $article->imageDefault = $record['imageDefault'];
+                $article->barcodes = $record['barcodes'];
+                $article->formattedPrice = $record['formattedPrice'];
+                $article->price = $record['price'];
+                $article->oldPrice = $record['oldPrice'];
+                $article->supplementaryPriceLabel1 = $record['supplementaryPriceLabel1'];
+                $article->supplementaryPriceLabel2 = $record['supplementaryPriceLabel2'];
+                $article->shop = $record['shop'];
+                $article->save();
             }
-
-            $oldPrice = $results[$i]->price->intValue . ',' . $results[$i]->price->fractionValue . ' ' . $results[$i]->price->currencySymbol;
-
-            /*$pricesub = substr($request->products[0][$i]['price']['formattedValue'], 0, -4);
-
-            $subs = substr($pricesub, -3);*/
-
-            array_push($storeRecords, ['code' => $results[$i]->code, 'title' => $results[$i]->manufacturerName,
-                'body' => $results[$i]->name, 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => $barcode,
-                'formattedPrice' => $formattedPrice, 'price' => $price, 'oldPrice' => $oldPrice,
-                'supplementaryPriceLabel1' => $results[$i]->price->supplementaryPriceLabel1,
-                'supplementaryPriceLabel2' => $results[$i]->price->supplementaryPriceLabel2, 'shop' => 'maxi', 'category' => 'akcija']);
+            echo 'successfully saved';
         }
-
-        action_sale::where('shop', 'maxi')->delete();
-
-        foreach ($storeRecords as $record) {
-            $article = action_sale::firstOrNew(array('code' => $record['code']));
-            $article->code = $record['code'];
-            $article->title = $record['title'];
-            $article->body = $record['body'];
-            $article->category = $record['category'];
-            $article->imageUrl = $record['imageUrl'];
-            $article->imageDefault = $record['imageDefault'];
-            $article->barcodes = $record['barcodes'];
-            $article->formattedPrice = $record['formattedPrice'];
-            $article->price = $record['price'];
-            $article->oldPrice = $record['oldPrice'];
-            $article->supplementaryPriceLabel1 = $record['supplementaryPriceLabel1'];
-            $article->supplementaryPriceLabel2 = $record['supplementaryPriceLabel2'];
-            $article->shop = $record['shop'];
-            $article->save();
-        }
-        echo 'successfully saved';
     }
 
         public function getMaxiDrink()
@@ -113,57 +114,58 @@ class MaxiScheduleController extends Controller
         $imageUrl = null;
         $imageDefault = null;
         $storeRecords = [];
+        if($arrayLengt > 0) {
+            for ($i = 0; $i <= $arrayLengt; $i++) {
+                $imageUrl = null;
+                if (array_key_exists('images', $results[$i]) && !empty($results[$i]->images) && array_key_exists('2', $results[$i]->images)) {
+                    $imageUrl = $results[$i]->images[2]->url;
+                } else {
+                    $imageDefault = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
+                }
 
-        for ($i = 0; $i <= $arrayLengt; $i++) {
-            $imageUrl = null;
-            if (array_key_exists('images', $results[$i]) && !empty($results[$i]->images) && array_key_exists('2', $results[$i]->images)) {
-                $imageUrl = $results[$i]->images[2]->url;
-            } else {
-                $imageDefault = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
+                if (array_key_exists('eanCodes', $results[$i]) && !empty($results[$i]->eanCodes)) {
+                    $barcode = implode(',', $results[$i]->eanCodes);
+                } else {
+                    $barcode = null;
+                }
+
+                /*$pricesub = substr($request->products[0][$i]['price']['formattedValue'], 0, -4);
+
+                $subs = substr($pricesub, -3);*/
+
+                if ($results[$i]->price->fractionValue == '00') {
+                    $price = $results[$i]->price->value . $results[$i]->price->fractionValue;
+                } else {
+                    $price = str_replace('.', '', $results[$i]->price->value);
+                }
+
+                array_push($storeRecords, ['code' => $results[$i]->code, 'title' => $results[$i]->manufacturerName,
+                    'body' => $results[$i]->name, 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => $barcode,
+                    'formattedPrice' => $results[$i]->price->formattedValue, 'price' => $price,
+                    'supplementaryPriceLabel1' => $results[$i]->price->supplementaryPriceLabel1,
+                    'supplementaryPriceLabel2' => $results[$i]->price->supplementaryPriceLabel2, 'shop' => 'maxi', 'category' => 'pice']);
             }
 
-            if (array_key_exists('eanCodes', $results[$i]) && !empty($results[$i]->eanCodes)) {
-                $barcode = implode(',', $results[$i]->eanCodes);
-            } else {
-                $barcode = null;
+            drink::where('shop', 'maxi')->delete();
+
+            foreach ($storeRecords as $record) {
+                $article = drink::firstOrNew(array('code' => $record['code']));
+                $article->code = $record['code'];
+                $article->title = $record['title'];
+                $article->body = $record['body'];
+                $article->category = $record['category'];
+                $article->imageUrl = $record['imageUrl'];
+                $article->imageDefault = $record['imageDefault'];
+                $article->barcodes = $record['barcodes'];
+                $article->formattedPrice = $record['formattedPrice'];
+                $article->price = $record['price'];
+                $article->supplementaryPriceLabel1 = $record['supplementaryPriceLabel1'];
+                $article->supplementaryPriceLabel2 = $record['supplementaryPriceLabel2'];
+                $article->shop = $record['shop'];
+                $article->save();
             }
-
-            /*$pricesub = substr($request->products[0][$i]['price']['formattedValue'], 0, -4);
-
-            $subs = substr($pricesub, -3);*/
-
-            if ($results[$i]->price->fractionValue == '00') {
-                $price = $results[$i]->price->value . $results[$i]->price->fractionValue;
-            } else {
-                $price = str_replace('.', '', $results[$i]->price->value);
-            }
-
-            array_push($storeRecords, ['code' => $results[$i]->code, 'title' => $results[$i]->manufacturerName,
-                'body' => $results[$i]->name, 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => $barcode,
-                'formattedPrice' => $results[$i]->price->formattedValue, 'price' => $price,
-                'supplementaryPriceLabel1' => $results[$i]->price->supplementaryPriceLabel1,
-                'supplementaryPriceLabel2' => $results[$i]->price->supplementaryPriceLabel2, 'shop' => 'maxi', 'category' => 'pice']);
+            echo 'successfully saved';
         }
-
-        drink::where('shop', 'maxi')->delete();
-
-        foreach ($storeRecords as $record) {
-            $article = drink::firstOrNew(array('code' => $record['code']));
-            $article->code = $record['code'];
-            $article->title = $record['title'];
-            $article->body = $record['body'];
-            $article->category = $record['category'];
-            $article->imageUrl = $record['imageUrl'];
-            $article->imageDefault = $record['imageDefault'];
-            $article->barcodes = $record['barcodes'];
-            $article->formattedPrice = $record['formattedPrice'];
-            $article->price = $record['price'];
-            $article->supplementaryPriceLabel1 = $record['supplementaryPriceLabel1'];
-            $article->supplementaryPriceLabel2 = $record['supplementaryPriceLabel2'];
-            $article->shop = $record['shop'];
-            $article->save();
-        }
-        echo 'successfully saved';
     }
 
     public function getMaxiMeats()
@@ -174,57 +176,58 @@ class MaxiScheduleController extends Controller
         $imageUrl = null;
         $imageDefault = null;
         $storeRecords = [];
+        if($arrayLengt > 0) {
+            for ($i = 0; $i <= $arrayLengt; $i++) {
+                $imageUrl = null;
+                if (array_key_exists('images', $results[$i]) && !empty($results[$i]->images) && array_key_exists('2', $results[$i]->images)) {
+                    $imageUrl = $results[$i]->images[2]->url;
+                } else {
+                    $imageDefault = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
+                }
 
-        for ($i = 0; $i <= $arrayLengt; $i++) {
-            $imageUrl = null;
-            if (array_key_exists('images', $results[$i]) && !empty($results[$i]->images) && array_key_exists('2', $results[$i]->images)) {
-                $imageUrl = $results[$i]->images[2]->url;
-            } else {
-                $imageDefault = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
+                if (array_key_exists('eanCodes', $results[$i]) && !empty($results[$i]->eanCodes)) {
+                    $barcode = implode(',', $results[$i]->eanCodes);
+                } else {
+                    $barcode = null;
+                }
+
+                /*$pricesub = substr($request->products[0][$i]['price']['formattedValue'], 0, -4);
+
+                $subs = substr($pricesub, -3);*/
+
+                if ($results[$i]->price->fractionValue == '00') {
+                    $price = $results[$i]->price->value . $results[$i]->price->fractionValue;
+                } else {
+                    $price = str_replace('.', '', $results[$i]->price->value);
+                }
+
+                array_push($storeRecords, ['code' => $results[$i]->code, 'title' => $results[$i]->manufacturerName,
+                    'body' => $results[$i]->name, 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => $barcode,
+                    'formattedPrice' => $results[$i]->price->formattedValue, 'price' => $price,
+                    'supplementaryPriceLabel1' => $results[$i]->price->supplementaryPriceLabel1,
+                    'supplementaryPriceLabel2' => $results[$i]->price->supplementaryPriceLabel2, 'shop' => 'maxi', 'category' => 'meso']);
             }
 
-            if (array_key_exists('eanCodes', $results[$i]) && !empty($results[$i]->eanCodes)) {
-                $barcode = implode(',', $results[$i]->eanCodes);
-            } else {
-                $barcode = null;
+            Meat::where('shop', 'maxi')->delete();
+
+            foreach ($storeRecords as $record) {
+                $article = Meat::firstOrNew(array('code' => $record['code']));
+                $article->code = $record['code'];
+                $article->title = $record['title'];
+                $article->body = $record['body'];
+                $article->category = $record['category'];
+                $article->imageUrl = $record['imageUrl'];
+                $article->imageDefault = $record['imageDefault'];
+                $article->barcodes = $record['barcodes'];
+                $article->formattedPrice = $record['formattedPrice'];
+                $article->price = $record['price'];
+                $article->supplementaryPriceLabel1 = $record['supplementaryPriceLabel1'];
+                $article->supplementaryPriceLabel2 = $record['supplementaryPriceLabel2'];
+                $article->shop = $record['shop'];
+                $article->save();
             }
-
-            /*$pricesub = substr($request->products[0][$i]['price']['formattedValue'], 0, -4);
-
-            $subs = substr($pricesub, -3);*/
-
-            if ($results[$i]->price->fractionValue == '00') {
-                $price = $results[$i]->price->value . $results[$i]->price->fractionValue;
-            } else {
-                $price = str_replace('.', '', $results[$i]->price->value);
-            }
-
-            array_push($storeRecords, ['code' => $results[$i]->code, 'title' => $results[$i]->manufacturerName,
-                'body' => $results[$i]->name, 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => $barcode,
-                'formattedPrice' => $results[$i]->price->formattedValue, 'price' => $price,
-                'supplementaryPriceLabel1' => $results[$i]->price->supplementaryPriceLabel1,
-                'supplementaryPriceLabel2' => $results[$i]->price->supplementaryPriceLabel2, 'shop' => 'maxi', 'category' => 'meso']);
+            echo 'successfully saved';
         }
-
-        Meat::where('shop', 'maxi')->delete();
-
-        foreach ($storeRecords as $record) {
-            $article = Meat::firstOrNew(array('code' => $record['code']));
-            $article->code = $record['code'];
-            $article->title = $record['title'];
-            $article->body = $record['body'];
-            $article->category = $record['category'];
-            $article->imageUrl = $record['imageUrl'];
-            $article->imageDefault = $record['imageDefault'];
-            $article->barcodes = $record['barcodes'];
-            $article->formattedPrice = $record['formattedPrice'];
-            $article->price = $record['price'];
-            $article->supplementaryPriceLabel1 = $record['supplementaryPriceLabel1'];
-            $article->supplementaryPriceLabel2 = $record['supplementaryPriceLabel2'];
-            $article->shop = $record['shop'];
-            $article->save();
-        }
-        echo 'successfully saved';
     }
 
     public function getMaxiSweets()
@@ -235,117 +238,119 @@ class MaxiScheduleController extends Controller
         $imageUrl = null;
         $imageDefault = null;
         $storeRecords = [];
+        if($arrayLengt > 0) {
+            for ($i = 0; $i <= $arrayLengt; $i++) {
+                $imageUrl = null;
+                if (array_key_exists('images', $results[$i]) && !empty($results[$i]->images) && array_key_exists('2', $results[$i]->images)) {
+                    $imageUrl = $results[$i]->images[2]->url;
+                } else {
+                    $imageDefault = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
+                }
 
-        for ($i = 0; $i <= $arrayLengt; $i++) {
-            $imageUrl = null;
-            if (array_key_exists('images', $results[$i]) && !empty($results[$i]->images) && array_key_exists('2', $results[$i]->images)) {
-                $imageUrl = $results[$i]->images[2]->url;
-            } else {
-                $imageDefault = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
+                if (array_key_exists('eanCodes', $results[$i]) && !empty($results[$i]->eanCodes)) {
+                    $barcode = implode(',', $results[$i]->eanCodes);
+                } else {
+                    $barcode = null;
+                }
+
+                /*$pricesub = substr($request->products[0][$i]['price']['formattedValue'], 0, -4);
+
+                $subs = substr($pricesub, -3);*/
+
+                if ($results[$i]->price->fractionValue == '00') {
+                    $price = $results[$i]->price->value . $results[$i]->price->fractionValue;
+                } else {
+                    $price = str_replace('.', '', $results[$i]->price->value);
+                }
+
+                array_push($storeRecords, ['code' => $results[$i]->code, 'title' => $results[$i]->manufacturerName,
+                    'body' => $results[$i]->name, 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => $barcode,
+                    'formattedPrice' => $results[$i]->price->formattedValue, 'price' => $price,
+                    'supplementaryPriceLabel1' => $results[$i]->price->supplementaryPriceLabel1,
+                    'supplementaryPriceLabel2' => $results[$i]->price->supplementaryPriceLabel2, 'shop' => 'maxi', 'category' => 'slatkisi']);
             }
 
-            if (array_key_exists('eanCodes', $results[$i]) && !empty($results[$i]->eanCodes)) {
-                $barcode = implode(',', $results[$i]->eanCodes);
-            } else {
-                $barcode = null;
+            Sweets::where('shop', 'maxi')->delete();
+
+            foreach ($storeRecords as $record) {
+                $article = Sweets::firstOrNew(array('code' => $record['code']));
+                $article->code = $record['code'];
+                $article->title = $record['title'];
+                $article->body = $record['body'];
+                $article->category = $record['category'];
+                $article->imageUrl = $record['imageUrl'];
+                $article->imageDefault = $record['imageDefault'];
+                $article->barcodes = $record['barcodes'];
+                $article->formattedPrice = $record['formattedPrice'];
+                $article->price = $record['price'];
+                $article->supplementaryPriceLabel1 = $record['supplementaryPriceLabel1'];
+                $article->supplementaryPriceLabel2 = $record['supplementaryPriceLabel2'];
+                $article->shop = $record['shop'];
+                $article->save();
             }
-
-            /*$pricesub = substr($request->products[0][$i]['price']['formattedValue'], 0, -4);
-
-            $subs = substr($pricesub, -3);*/
-
-            if ($results[$i]->price->fractionValue == '00') {
-                $price = $results[$i]->price->value . $results[$i]->price->fractionValue;
-            } else {
-                $price = str_replace('.', '', $results[$i]->price->value);
-            }
-
-            array_push($storeRecords, ['code' => $results[$i]->code, 'title' => $results[$i]->manufacturerName,
-                'body' => $results[$i]->name, 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => $barcode,
-                'formattedPrice' => $results[$i]->price->formattedValue, 'price' => $price,
-                'supplementaryPriceLabel1' => $results[$i]->price->supplementaryPriceLabel1,
-                'supplementaryPriceLabel2' => $results[$i]->price->supplementaryPriceLabel2, 'shop' => 'maxi', 'category' => 'slatkisi']);
+            echo 'successfully saved';
         }
-
-        Sweets::where('shop', 'maxi')->delete();
-
-        foreach ($storeRecords as $record) {
-            $article = Sweets::firstOrNew(array('code' => $record['code']));
-            $article->code = $record['code'];
-            $article->title = $record['title'];
-            $article->body = $record['body'];
-            $article->category = $record['category'];
-            $article->imageUrl = $record['imageUrl'];
-            $article->imageDefault = $record['imageDefault'];
-            $article->barcodes = $record['barcodes'];
-            $article->formattedPrice = $record['formattedPrice'];
-            $article->price = $record['price'];
-            $article->supplementaryPriceLabel1 = $record['supplementaryPriceLabel1'];
-            $article->supplementaryPriceLabel2 = $record['supplementaryPriceLabel2'];
-            $article->shop = $record['shop'];
-            $article->save();
-        }
-        echo 'successfully saved';
     }
 
     public function getMaxiFreeze()
     {
-        $obj = $this->curlAction('https://www.maxi.rs/online/Cokolade%2C-keks%2C-slane-i-slatke-grickalice/c/09/getSearchPageData?q=%3Apopularity&sort=promotion&pageSize=5000&pageNumber=0');
+        $obj = $this->curlAction('https://www.maxi.rs/online/Smrznuti-proizvodi/c/10/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion');
         $results = $obj->results;
         $arrayLengt = sizeof($obj->results) - 1;
         $imageUrl = null;
         $imageDefault = null;
         $storeRecords = [];
+        if($arrayLengt > 0) {
+            for ($i = 0; $i <= $arrayLengt; $i++) {
+                $imageUrl = null;
+                if (array_key_exists('images', $results[$i]) && !empty($results[$i]->images) && array_key_exists('2', $results[$i]->images)) {
+                    $imageUrl = $results[$i]->images[2]->url;
+                } else {
+                    $imageDefault = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
+                }
 
-        for ($i = 0; $i <= $arrayLengt; $i++) {
-            $imageUrl = null;
-            if (array_key_exists('images', $results[$i]) && !empty($results[$i]->images) && array_key_exists('2', $results[$i]->images)) {
-                $imageUrl = $results[$i]->images[2]->url;
-            } else {
-                $imageDefault = "https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694";
+                if (array_key_exists('eanCodes', $results[$i]) && !empty($results[$i]->eanCodes)) {
+                    $barcode = implode(',', $results[$i]->eanCodes);
+                } else {
+                    $barcode = null;
+                }
+
+                /*$pricesub = substr($request->products[0][$i]['price']['formattedValue'], 0, -4);
+
+                $subs = substr($pricesub, -3);*/
+
+                if ($results[$i]->price->fractionValue == '00') {
+                    $price = $results[$i]->price->value . $results[$i]->price->fractionValue;
+                } else {
+                    $price = str_replace('.', '', $results[$i]->price->value);
+                }
+
+                array_push($storeRecords, ['code' => $results[$i]->code, 'title' => $results[$i]->manufacturerName,
+                    'body' => $results[$i]->name, 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => $barcode,
+                    'formattedPrice' => $results[$i]->price->formattedValue, 'price' => $price,
+                    'supplementaryPriceLabel1' => $results[$i]->price->supplementaryPriceLabel1,
+                    'supplementaryPriceLabel2' => $results[$i]->price->supplementaryPriceLabel2, 'shop' => 'maxi', 'category' => 'smrznuti']);
             }
 
-            if (array_key_exists('eanCodes', $results[$i]) && !empty($results[$i]->eanCodes)) {
-                $barcode = implode(',', $results[$i]->eanCodes);
-            } else {
-                $barcode = null;
+            Freeze::where('shop', 'maxi')->delete();
+
+            foreach ($storeRecords as $record) {
+                $article = Freeze::firstOrNew(array('code' => $record['code']));
+                $article->code = $record['code'];
+                $article->title = $record['title'];
+                $article->body = $record['body'];
+                $article->category = $record['category'];
+                $article->imageUrl = $record['imageUrl'];
+                $article->imageDefault = $record['imageDefault'];
+                $article->barcodes = $record['barcodes'];
+                $article->formattedPrice = $record['formattedPrice'];
+                $article->price = $record['price'];
+                $article->supplementaryPriceLabel1 = $record['supplementaryPriceLabel1'];
+                $article->supplementaryPriceLabel2 = $record['supplementaryPriceLabel2'];
+                $article->shop = $record['shop'];
+                $article->save();
             }
-
-            /*$pricesub = substr($request->products[0][$i]['price']['formattedValue'], 0, -4);
-
-            $subs = substr($pricesub, -3);*/
-
-            if ($results[$i]->price->fractionValue == '00') {
-                $price = $results[$i]->price->value . $results[$i]->price->fractionValue;
-            } else {
-                $price = str_replace('.', '', $results[$i]->price->value);
-            }
-
-            array_push($storeRecords, ['code' => $results[$i]->code, 'title' => $results[$i]->manufacturerName,
-                'body' => $results[$i]->name, 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => $barcode,
-                'formattedPrice' => $results[$i]->price->formattedValue, 'price' => $price,
-                'supplementaryPriceLabel1' => $results[$i]->price->supplementaryPriceLabel1,
-                'supplementaryPriceLabel2' => $results[$i]->price->supplementaryPriceLabel2, 'shop' => 'maxi', 'category' => 'smrznuti']);
+            echo 'successfully saved';
         }
-
-        Freeze::where('shop', 'maxi')->delete();
-
-        foreach ($storeRecords as $record) {
-            $article = Freeze::firstOrNew(array('code' => $record['code']));
-            $article->code = $record['code'];
-            $article->title = $record['title'];
-            $article->body = $record['body'];
-            $article->category = $record['category'];
-            $article->imageUrl = $record['imageUrl'];
-            $article->imageDefault = $record['imageDefault'];
-            $article->barcodes = $record['barcodes'];
-            $article->formattedPrice = $record['formattedPrice'];
-            $article->price = $record['price'];
-            $article->supplementaryPriceLabel1 = $record['supplementaryPriceLabel1'];
-            $article->supplementaryPriceLabel2 = $record['supplementaryPriceLabel2'];
-            $article->shop = $record['shop'];
-            $article->save();
-        }
-        echo 'successfully saved';
     }
 }

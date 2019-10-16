@@ -17,9 +17,19 @@
 
 //Scheduler
 
-Route::get('/getMaxiDrinkScheduler', [
-    'uses' => 'ScheduleController@getMaxiAction',
+Route::get('/getMaxiDrinkScheduler/{categoryNumber}/{data}', [
+    'uses' => 'IdeaScheduleController@getIdeaDrink',
     'as' => 'getMaxiDrinkScheduler'
+]);
+
+Route::get('/getIdeaFreezeScheduler/{categoryNumber}/{data}', [
+    'uses' => 'IdeaScheduleController@getIdeaFreeze',
+    'as' => 'getIdeaFreezeScheduler'
+]);
+
+Route::get('/univer', [
+    'uses' => 'UniverexportMarketController@curlAllUniverexport',
+    'as' => 'univer'
 ]);
 
 Auth::routes();

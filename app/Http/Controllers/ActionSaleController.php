@@ -44,7 +44,9 @@ class ActionSaleController extends Controller
                             if ($barIde == $barMax) {
                                 //if ($max['price'] >= $ide['price']) {
                                 $ide['maxiCena'] = $max['formattedPrice'];
+                                $ide['maxiOldPrice'] = $max['oldPrice'];
                                 $ide['ideaCena'] = $ide['formattedPrice'];
+                                $ide['ideaOldPrice'] = $ide['oldPrice'];
                                 if($max['imageUrl'] != null) {
                                     $ide['imageUrl'] = 'https://d3el976p2k4mvu.cloudfront.net'.$max['imageUrl'];
                                 }else{

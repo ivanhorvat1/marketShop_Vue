@@ -29,7 +29,7 @@ class DisMarketController extends Controller
         curl_setopt($login, CURLOPT_TIMEOUT, 40000);
         curl_setopt($login, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($login, CURLOPT_URL, $url);
-        curl_setopt($login, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+        curl_setopt($login, CURLOPT_USERAGENT, isset($_SERVER['HTTP_USER_AGENT'])?:'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36');
         curl_setopt($login, CURLOPT_FOLLOWLOCATION, TRUE);
         curl_setopt($login, CURLOPT_POST, TRUE);
         curl_setopt($login, CURLOPT_POSTFIELDS, $data);
@@ -44,7 +44,7 @@ class DisMarketController extends Controller
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+        curl_setopt($ch, CURLOPT_USERAGENT, isset($_SERVER['HTTP_USER_AGENT'])?:'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36');
         curl_setopt($ch, CURLOPT_TIMEOUT, 40);
         curl_setopt($ch, CURLOPT_COOKIEFILE, "cookie.txt");
         curl_setopt($ch, CURLOPT_URL, $site);
@@ -57,7 +57,7 @@ class DisMarketController extends Controller
 
     public function disMarketDrink()
     {
-        $cache = Cache::remember('dismarketdrink', 20, function () {
+//        $cache = Cache::remember('dismarketdrink', 20, function () {
         ini_set('max_execution_time', 30000); //300 seconds = 5 minutes
         $this->login("http://online.dis.rs/inc/inc.nalog.prijava.php", "email=nemixbg%40gmail.com&lozinka=n3m4nj41982&radi=da");
         //$html = $this->grab_page("http://online.dis.rs/proizvodi.php?");
@@ -174,9 +174,9 @@ class DisMarketController extends Controller
         return $this->artikli;
         // echo "Ima ukupno : " . count($this->artikli) . " artikala u DIS marketu!";
         //var_dump($this->artikli);
-        });
+        /*});
 
-        return $cache;
+        return $cache;*/
     }
 
     public function getDisDrinks()
@@ -218,7 +218,7 @@ class DisMarketController extends Controller
 
     public function disMarketMeat()
     {
-        $cache = Cache::remember('dismarketmeat', 20, function () {
+//        $cache = Cache::remember('dismarketmeat', 20, function () {
             ini_set('max_execution_time', 30000); //300 seconds = 5 minutes
             $this->login("http://online.dis.rs/inc/inc.nalog.prijava.php", "email=nemixbg%40gmail.com&lozinka=n3m4nj41982&radi=da");
 
@@ -311,9 +311,9 @@ class DisMarketController extends Controller
             }
 
             return $this->artikli;
-        });
+        /*});
 
-        return $cache;
+        return $cache;*/
         // echo "Ima ukupno : " . count($this->artikli) . " artikala u DIS marketu!";
         //var_dump($this->artikli);
     }
@@ -353,7 +353,7 @@ class DisMarketController extends Controller
 
     public function disMarketFreeze()
     {
-        $cache = Cache::remember('dismarketfreeze', 20, function () {
+//        $cache = Cache::remember('dismarketfreeze', 20, function () {
             ini_set('max_execution_time', 30000); //300 seconds = 5 minutes
             $this->login("http://online.dis.rs/inc/inc.nalog.prijava.php", "email=nemixbg%40gmail.com&lozinka=n3m4nj41982&radi=da");
 
@@ -446,9 +446,9 @@ class DisMarketController extends Controller
             }
 
             return $this->artikli;
-        });
+        /*});
 
-        return $cache;
+        return $cache;*/
         // echo "Ima ukupno : " . count($this->artikli) . " artikala u DIS marketu!";
         //var_dump($this->artikli);
     }
@@ -489,7 +489,7 @@ class DisMarketController extends Controller
 
     public function disMarketSweet()
     {
-        $cache = Cache::remember('dismarketsweets', 20, function () {
+//        $cache = Cache::remember('dismarketsweets', 20, function () {
             ini_set('max_execution_time', 30000); //300 seconds = 5 minutes
             $this->login("http://online.dis.rs/inc/inc.nalog.prijava.php", "email=nemixbg%40gmail.com&lozinka=n3m4nj41982&radi=da");
 
@@ -582,9 +582,9 @@ class DisMarketController extends Controller
             }
 
             return $this->artikli;
-        });
+        /*});
 
-        return $cache;
+        return $cache;*/
         // echo "Ima ukupno : " . count($this->artikli) . " artikala u DIS marketu!";
         //var_dump($this->artikli);
     }
