@@ -85,6 +85,7 @@ class IdeaScheduleController extends Controller
                 $article->save();
             }
         }
+        echo 'successfully saved';
     }
 
     public function getIdeaDrink($categoryNumber, $data)
@@ -141,6 +142,7 @@ class IdeaScheduleController extends Controller
                 }
             }
         }
+        echo 'successfully saved';
     }
 
     public function getIdeaMeat($categoryNumber, $data)
@@ -170,6 +172,7 @@ class IdeaScheduleController extends Controller
                 }
             }
         }
+        echo 'successfully saved';
     }
 
     public function getIdeaMeat2($categoryNumber, $data)
@@ -199,6 +202,7 @@ class IdeaScheduleController extends Controller
                 }
             }
         }
+        echo 'successfully saved';
     }
 
     public function getIdeaSweet($categoryNumber, $data)
@@ -228,6 +232,7 @@ class IdeaScheduleController extends Controller
                 }
             }
         }
+        echo 'successfully saved';
     }
 
     public function getIdeaFreeze($categoryNumber, $data)
@@ -257,6 +262,7 @@ class IdeaScheduleController extends Controller
                 }
             }
         }
+        echo 'successfully saved';
     }
 
     public function storeIdea($category, $results)

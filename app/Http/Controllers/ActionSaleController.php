@@ -45,8 +45,12 @@ class ActionSaleController extends Controller
                                 //if ($max['price'] >= $ide['price']) {
                                 $ide['maxiCena'] = $max['formattedPrice'];
                                 $ide['maxiOldPrice'] = $max['oldPrice'];
+                                $ide['supplementaryPriceMaxi'] = $max['supplementaryPriceLabel1'];
+                                $ide['supplementaryPriceMaxi2'] = $max['supplementaryPriceLabel2'];
                                 $ide['ideaCena'] = $ide['formattedPrice'];
                                 $ide['ideaOldPrice'] = $ide['oldPrice'];
+                                $ide['supplementaryPriceIdea'] = $ide['supplementaryPriceLabel1'];
+                                $ide['supplementaryPriceIdea2'] = $ide['supplementaryPriceLabel2'];
                                 if($max['imageUrl'] != null) {
                                     $ide['imageUrl'] = 'https://d3el976p2k4mvu.cloudfront.net'.$max['imageUrl'];
                                 }else{

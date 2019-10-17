@@ -34,6 +34,7 @@ class Kernel extends ConsoleKernel
         $schedule->call('App\Http\Controllers\MaxiScheduleController@getMaxiSweets')->everyMinute();
         $schedule->call('App\Http\Controllers\MaxiScheduleController@getMaxiFreeze')->everyMinute();
         $schedule->call('App\Http\Controllers\IdeaScheduleController@deleteRecords')->everyMinute();
+        $schedule->call('App\Http\Controllers\IdeaScheduleController@getIdeaAction')->everyMinute();
         $schedule->call('App\Http\Controllers\IdeaScheduleController@getIdeaDrink', ['60007883',null])->everyMinute();
         $schedule->call('App\Http\Controllers\IdeaScheduleController@getIdeaMeat', ['60007823',null])->everyMinute();
         $schedule->call('App\Http\Controllers\IdeaScheduleController@getIdeaMeat2', ['60007780',null])->everyMinute();

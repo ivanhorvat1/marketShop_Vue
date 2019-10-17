@@ -39,6 +39,7 @@ class MaxiScheduleController extends Controller
         $imageUrl = null;
         $imageDefault = null;
         $storeRecords = [];
+        dd($results[0]);
         if($arrayLengt > 0) {
             for ($i = 0; $i <= $arrayLengt; $i++) {
                 $imageUrl = null;
@@ -69,8 +70,16 @@ class MaxiScheduleController extends Controller
                 } else {
                     $barcode = null;
                 }
-
-                $oldPrice = $results[$i]->price->intValue . ',' . $results[$i]->price->fractionValue . ' ' . $results[$i]->price->currencySymbol;
+                //var_dump(empty($results[$i]->price->intValue)); continue;
+                if (!empty($results[$i]->price)){
+                    $oldPrice = $results[$i]->price->intValue . ',' . $results[$i]->price->fractionValue . ' ' . $results[$i]->price->currencySymbol;
+                    $supplementaryPriceLabel1 = $results[$i]->price->supplementaryPriceLabel1;
+                    $supplementaryPriceLabel2 = $results[$i]->price->supplementaryPriceLabel2;
+                }else{
+                    $oldPrice = '--';
+                    $supplementaryPriceLabel1 = '--';
+                    $supplementaryPriceLabel2 = '--';
+                }
 
                 /*$pricesub = substr($request->products[0][$i]['price']['formattedValue'], 0, -4);
 
@@ -79,8 +88,8 @@ class MaxiScheduleController extends Controller
                 array_push($storeRecords, ['code' => $results[$i]->code, 'title' => $results[$i]->manufacturerName,
                     'body' => $results[$i]->name, 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => $barcode,
                     'formattedPrice' => $formattedPrice, 'price' => $price, 'oldPrice' => $oldPrice,
-                    'supplementaryPriceLabel1' => $results[$i]->price->supplementaryPriceLabel1,
-                    'supplementaryPriceLabel2' => $results[$i]->price->supplementaryPriceLabel2, 'shop' => 'maxi', 'category' => 'akcija']);
+                    'supplementaryPriceLabel1' => $supplementaryPriceLabel1,
+                    'supplementaryPriceLabel2' => $supplementaryPriceLabel2, 'shop' => 'maxi', 'category' => 'akcija']);
             }
 
             action_sale::where('shop', 'maxi')->delete();
@@ -100,10 +109,22 @@ class MaxiScheduleController extends Controller
                 $article->supplementaryPriceLabel1 = $record['supplementaryPriceLabel1'];
                 $article->supplementaryPriceLabel2 = $record['supplementaryPriceLabel2'];
                 $article->shop = $record['shop'];
-                $article->save();
+                $saved = $article->save();
+
+                if ($saved) {
+                    $success = true;
+                } else {
+                    return response()->json([
+                        "success" => false
+                    ]);
+                }
             }
-            echo 'successfully saved';
         }
+        $data = [
+            "success" => $success
+        ];
+
+        return response()->json($data);
     }
 
         public function getMaxiDrink()
@@ -162,10 +183,22 @@ class MaxiScheduleController extends Controller
                 $article->supplementaryPriceLabel1 = $record['supplementaryPriceLabel1'];
                 $article->supplementaryPriceLabel2 = $record['supplementaryPriceLabel2'];
                 $article->shop = $record['shop'];
-                $article->save();
+                $saved = $article->save();
+
+                if ($saved) {
+                    $success = true;
+                } else {
+                    return response()->json([
+                        "success" => false
+                    ]);
+                }
             }
-            echo 'successfully saved';
         }
+        $data = [
+            "success" => $success
+        ];
+
+        return response()->json($data);
     }
 
     public function getMaxiMeats()
@@ -224,10 +257,22 @@ class MaxiScheduleController extends Controller
                 $article->supplementaryPriceLabel1 = $record['supplementaryPriceLabel1'];
                 $article->supplementaryPriceLabel2 = $record['supplementaryPriceLabel2'];
                 $article->shop = $record['shop'];
-                $article->save();
+                $saved = $article->save();
+
+                if ($saved) {
+                    $success = true;
+                } else {
+                    return response()->json([
+                        "success" => false
+                    ]);
+                }
             }
-            echo 'successfully saved';
         }
+        $data = [
+            "success" => $success
+        ];
+
+        return response()->json($data);
     }
 
     public function getMaxiSweets()
@@ -286,10 +331,22 @@ class MaxiScheduleController extends Controller
                 $article->supplementaryPriceLabel1 = $record['supplementaryPriceLabel1'];
                 $article->supplementaryPriceLabel2 = $record['supplementaryPriceLabel2'];
                 $article->shop = $record['shop'];
-                $article->save();
+                $saved = $article->save();
+
+                if ($saved) {
+                    $success = true;
+                } else {
+                    return response()->json([
+                        "success" => false
+                    ]);
+                }
             }
-            echo 'successfully saved';
         }
+        $data = [
+            "success" => $success
+        ];
+
+        return response()->json($data);
     }
 
     public function getMaxiFreeze()
@@ -348,9 +405,21 @@ class MaxiScheduleController extends Controller
                 $article->supplementaryPriceLabel1 = $record['supplementaryPriceLabel1'];
                 $article->supplementaryPriceLabel2 = $record['supplementaryPriceLabel2'];
                 $article->shop = $record['shop'];
-                $article->save();
+                $saved = $article->save();
+
+                if ($saved) {
+                    $success = true;
+                } else {
+                    return response()->json([
+                        "success" => false
+                    ]);
+                }
             }
-            echo 'successfully saved';
         }
+        $data = [
+            "success" => $success
+        ];
+
+        return response()->json($data);
     }
 }

@@ -72,4 +72,18 @@ Route::put('article', 'ArticleController@store');
 // Delete article
 Route::delete('article/{id}', 'ArticleController@destroy');
 
+//Update Maxi && Idea
+Route::get('updateMaxiAction', 'MaxiScheduleController@getMaxiAction');
+Route::get('updateMaxiDrink', 'MaxiScheduleController@getMaxiDrink');
+Route::get('updateMaxiMeats', 'MaxiScheduleController@getMaxiMeats');
+Route::get('updateMaxiSweets', 'MaxiScheduleController@getMaxiSweets');
+Route::get('updateMaxiFreeze', 'MaxiScheduleController@getMaxiFreeze');
+Route::get('deleteIdeaRecords', 'IdeaScheduleController@deleteRecords');
+Route::get('updateIdeaAction', 'IdeaScheduleController@getIdeaAction');
+Route::get('deleteCachedData', 'IdeaScheduleController@deleteCachedData');
+/*Route::get('updateIdeaDrink', 'IdeaScheduleController@getIdeaDrink', ['60007883',null]);
+Route::get('updateIdeaMeat', 'IdeaScheduleController@getIdeaMeat', ['60007823',null]);
+Route::get('updateIdeaMeat2', 'IdeaScheduleController@getIdeaMeat2', ['60007780',null]);
+Route::get('updateIdeaSweet', 'IdeaScheduleController@getIdeaSweet', ['60007896',null]);
+Route::get('updateIdeaFreeze', 'IdeaScheduleController@getIdeaFreeze', ['60007907',null]);*/
 

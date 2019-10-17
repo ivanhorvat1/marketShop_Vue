@@ -32,19 +32,20 @@
             <!-- FIRST TAB updating articles from online stores -->
             <div class="tab-content">
                 <div id="menu2" class="container tab-pane active"><br>
-                    <button @click="fetchArticles(0,'maxi','akcija')" class="btn btn-primary waves-effect waves-light">Maxi Akcija</button>
+                    <!--<button @click="fetchArticles(0,'maxi','akcija')" class="btn btn-primary waves-effect waves-light">Maxi Akcija</button>
                     <button @click="storeArticles('maxi','akcija')" class="btn btn-warning">Ubaci Akcija Maxi</button>
                     <button @click="fetchArticles(0, 'maxi', 'pice')" class="btn btn-warning">Ubaci Maxi Pice</button>
-                    <!--<button @click="storeArticles('maxi','pice')" class="btn btn-primary">Ubaci Pice Maxi</button>-->
                     <button @click="fetchArticles(0, 'maxi', 'meso')" class="btn btn-warning">Ubaci Maxi Meso</button>
-                    <!--<button @click="storeArticles('maxi','meso')" class="btn btn-primary">Ubaci Meso Maxi</button>-->
                     <button @click="fetchArticles(0, 'maxi', 'slatkisi')" class="btn btn-warning">Ubaci Maxi Slatkisi</button>
-                    <!--<button @click="storeArticles('maxi','slatkisi')" class="btn btn-primary">Ubaci Slatkise Maxi</button>-->
-                    <button @click="fetchArticles(0, 'maxi', 'smrznuti')" class="btn btn-warning">Ubaci Maxi Smrznuto</button>
-                    <!--<button @click="storeArticles('maxi','smrznuti')" class="btn btn-primary">Ubaci Smrznuto Maxi</button>-->
+                    <button @click="fetchArticles(0, 'maxi', 'smrznuti')" class="btn btn-warning">Ubaci Maxi Smrznuto</button>-->
+                    <button @click="updateMaxiAction()" class="btn btn-warning">updateMaxiAction</button>
+                    <button @click="updateMaxiDrink()" class="btn btn-warning">updateMaxiDrink</button>
+                    <button @click="updateMaxiMeats()" class="btn btn-warning">updateMaxiMeats</button>
+                    <button @click="updateMaxiSweets()" class="btn btn-warning">updateMaxiSweets</button>
+                    <button @click="updateMaxiFreeze()" class="btn btn-warning">updateMaxiFreeze</button>
                     <br>
                     <br>
-                    <button @click="fetchArticles(0,'idea','akcija')" class="btn btn-primary">Idea Akcija</button>
+                    <!--<button @click="fetchArticles(0,'idea','akcija')" class="btn btn-primary">Idea Akcija</button>
                     <button @click="storeArticles('idea','akcija')" class="btn btn-info">Ubaci Akcija Idea</button><br><br>
                     <button @click="getCategoriesIdea('60007883')" class="btn btn-primary">Pice Idea</button>
                     <button @click="getCategoriesIdea('60007823')" class="btn btn-primary">Meso Idea</button>
@@ -52,11 +53,18 @@
                     <button @click="getCategoriesIdea('60007896')" class="btn btn-primary">Slatkisi Idea</button>
                     <button @click="getCategoriesIdea('60007907')" class="btn btn-primary">Smrznuti Proiz Idea</button><br>
                     <button @click="checkChildren()" class="btn btn-danger">check idea children</button>
-                    <!--:disabled="this.categoryArray.length < 16"-->
+                    &lt;!&ndash;:disabled="this.categoryArray.length < 16"&ndash;&gt;
                     <button @click="storeArticles('idea','pice')" class="btn btn-warning">Ubaci Pice Idea</button>
                     <button @click="storeArticles('idea','meso')" class="btn btn-warning">Ubaci Meso Idea</button>
                     <button @click="storeArticles('idea','slatkisi')" class="btn btn-warning">Ubaci Slatkisi Idea</button>
-                    <button @click="storeArticles('idea','smrznuti')" class="btn btn-warning">Ubaci smrznuti Idea</button>
+                    <button @click="storeArticles('idea','smrznuti')" class="btn btn-warning">Ubaci smrznuti Idea</button>-->
+                    <button @click="updateIdeaAction()" class="btn btn-warning">updateIdeaAction</button>
+                    <button @click="deleteIdeaRecords()" class="btn btn-danger">deleteIdeaRecords</button>
+                    <button class="btn btn-warning"><a href="/getIdeaDrinkScheduler/60007883/null" style="color: black">UpdateIdeaDrinkScheduler</a></button>
+                    <button class="btn btn-warning"><a href="/getIdeaMeatScheduler/60007823/null" style="color: black">UpdateIdeaMeatScheduler</a></button>
+                    <button class="btn btn-warning"><a href="/getIdeaMeat2Scheduler/60007780/null" style="color: black">UpdateIdeaMeat2Scheduler</a></button>
+                    <button class="btn btn-warning"><a href="/getIdeaSweetScheduler/60007896/null" style="color: black">UpdateIdeaSweetScheduler</a></button>
+                    <button class="btn btn-warning"><a href="/getIdeaFreezeScheduler/60007907/null" style="color: black">UpdateIdeaFreezeScheduler</a></button>
                     <br><br>
                     <button class="btn btn-primary"><a href="/disDrink" style="color: white">Dis Market Pice</a></button>
                     <button class="btn btn-primary"><a href="/disMeat" style="color: white">Dis Market Meso</a></button>
@@ -73,6 +81,7 @@
                     <button class="btn btn-primary"><a href="/univerexportMeats" style="color: white">Univerexport Market Meso</a></button>
                     <button @click="updateUniverexportArticles()" class="btn btn-warning">Univer update Articles</button>
                     <br><br>
+                    <button @click="deleteCachedData()" class="btn btn-danger">deleteCachedData</button>
                 </div>
                 <!-- SECOND TAB configure users -->
                 <div id="home" class="container tab-pane fade"><br>
@@ -789,7 +798,55 @@
                     .then(res => {
                         //M.toast({html: res.success, classes: 'rounded'}, 3000);
                     })
-            },
+            },updateMaxiAction() {
+                fetch('api/updateMaxiAction')
+                    .then(res => res.json())
+                    .then(res => {
+                        //M.toast({html: res.success, classes: 'rounded'}, 3000);
+                    })
+            },updateMaxiDrink() {
+                fetch('api/updateMaxiDrink')
+                    .then(res => res.json())
+                    .then(res => {
+                        //M.toast({html: res.success, classes: 'rounded'}, 3000);
+                    })
+            },updateMaxiMeats() {
+                fetch('api/updateMaxiMeats')
+                    .then(res => res.json())
+                    .then(res => {
+                        //M.toast({html: res.success, classes: 'rounded'}, 3000);
+                    })
+            },updateMaxiSweets() {
+                fetch('api/updateMaxiSweets')
+                    .then(res => res.json())
+                    .then(res => {
+                        //M.toast({html: res.success, classes: 'rounded'}, 3000);
+                    })
+            },updateMaxiFreeze() {
+                fetch('api/updateMaxiFreeze')
+                    .then(res => res.json())
+                    .then(res => {
+                        //M.toast({html: res.success, classes: 'rounded'}, 3000);
+                    })
+            },deleteIdeaRecords() {
+                fetch('api/deleteIdeaRecords')
+                    .then(res => res.json())
+                    .then(res => {
+                        //M.toast({html: res.success, classes: 'rounded'}, 3000);
+                    })
+            },updateIdeaAction() {
+                fetch('api/updateIdeaAction')
+                    .then(res => res.json())
+                    .then(res => {
+                        //M.toast({html: res.success, classes: 'rounded'}, 3000);
+                    })
+            },deleteCachedData() {
+                fetch('api/deleteCachedData')
+                    .then(res => res.json())
+                    .then(res => {
+                        //M.toast({html: res.success, classes: 'rounded'}, 3000);
+                    })
+            }
         }
     }
 </script>

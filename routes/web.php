@@ -17,21 +17,6 @@
 
 //Scheduler
 
-Route::get('/getMaxiDrinkScheduler/{categoryNumber}/{data}', [
-    'uses' => 'IdeaScheduleController@getIdeaDrink',
-    'as' => 'getMaxiDrinkScheduler'
-]);
-
-Route::get('/getIdeaFreezeScheduler/{categoryNumber}/{data}', [
-    'uses' => 'IdeaScheduleController@getIdeaFreeze',
-    'as' => 'getIdeaFreezeScheduler'
-]);
-
-Route::get('/univer', [
-    'uses' => 'UniverexportMarketController@curlAllUniverexport',
-    'as' => 'univer'
-]);
-
 Auth::routes();
 
 Route::get('/', [
@@ -137,6 +122,96 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/home', [
         'uses' => 'AdminController@getView',
         'as' => 'home'
+    ]);
+
+    Route::get('/getMaxiActionScheduler', [
+        'uses' => 'MaxiScheduleController@getMaxiAction',
+        'as' => 'getMaxiActionScheduler'
+    ]);
+
+    Route::get('/getMaxiDrinkScheduler', [
+        'uses' => 'MaxiScheduleController@getMaxiDrink',
+        'as' => 'getMaxiDrinkScheduler'
+    ]);
+
+    Route::get('/getMaxiMeatsScheduler', [
+        'uses' => 'MaxiScheduleController@getMaxiMeats',
+        'as' => 'getMaxiMeatsScheduler'
+    ]);
+
+    Route::get('/getMaxiSweetsScheduler', [
+        'uses' => 'MaxiScheduleController@getMaxiSweets',
+        'as' => 'getMaxiSweetsScheduler'
+    ]);
+
+    Route::get('/getMaxiFreezeScheduler', [
+        'uses' => 'MaxiScheduleController@getMaxiFreeze',
+        'as' => 'getMaxiFreezeScheduler'
+    ]);
+
+    Route::get('/deleteRecordsIdea', [
+        'uses' => 'IdeaScheduleController@deleteRecords',
+        'as' => 'deleteRecordsIdea'
+    ]);
+
+    Route::get('/getIdeaActionScheduler', [
+        'uses' => 'IdeaScheduleController@getIdeaAction',
+        'as' => 'getIdeaActionScheduler'
+    ]);
+
+    Route::get('/getIdeaDrinkScheduler/{categoryNumber}/{data}', [
+        'uses' => 'IdeaScheduleController@getIdeaDrink',
+        'as' => 'getIdeaDrinkScheduler'
+    ]);
+
+    Route::get('/getIdeaMeatScheduler/{categoryNumber}/{data}', [
+        'uses' => 'IdeaScheduleController@getIdeaMeat',
+        'as' => 'getIdeaMeatScheduler'
+    ]);
+
+    Route::get('/getIdeaMeat2Scheduler/{categoryNumber}/{data}', [
+        'uses' => 'IdeaScheduleController@getIdeaMeat2',
+        'as' => 'getIdeaMeat2Scheduler'
+    ]);
+
+    Route::get('/getIdeaSweetScheduler/{categoryNumber}/{data}', [
+        'uses' => 'IdeaScheduleController@getIdeaSweet',
+        'as' => 'getIdeaSweetScheduler'
+    ]);
+
+    Route::get('/getIdeaFreezeScheduler/{categoryNumber}/{data}', [
+        'uses' => 'IdeaScheduleController@getIdeaFreeze',
+        'as' => 'getIdeaFreezeScheduler'
+    ]);
+
+    Route::get('/getDisDrinksScheduler', [
+        'uses' => 'DisMarketController@updateExistingDrinks',
+        'as' => 'getDisDrinksScheduler'
+    ]);
+
+    Route::get('/getDisMeatScheduler', [
+        'uses' => 'DisMarketController@updateExistingMeat',
+        'as' => 'getDisMeatScheduler'
+    ]);
+
+    Route::get('/getDisFreezeScheduler', [
+        'uses' => 'DisMarketController@updateExistingFreeze',
+        'as' => 'getDisFreezeScheduler'
+    ]);
+
+    Route::get('/getDisSweetScheduler', [
+        'uses' => 'DisMarketController@updateExistingSweet',
+        'as' => 'getDisSweetScheduler'
+    ]);
+
+    Route::get('/univer', [
+        'uses' => 'UniverexportMarketController@curlAllUniverexport',
+        'as' => 'univer'
+    ]);
+
+    Route::get('/deleteCachedData', [
+        'uses' => 'IdeaScheduleController@deleteCachedData',
+        'as' => 'deleteCachedData'
     ]);
 
 });

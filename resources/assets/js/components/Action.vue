@@ -73,11 +73,13 @@
                             <h4 v-if="article.maxiCena">
                                 <img style="height: 50px; width: 80px"
                                      src="images/market_logo/delhaize-maxi-logo-vector.png"/>
+                                <span><small><del>{{ article.maxiOldPrice.substring(0, article.maxiOldPrice.length - 3) }}</del></small></span>&nbsp;
                                 <span><b>{{ article.maxiCena.substring(0, article.maxiCena.length - 3) }}</b></span>
                             </h4>
                             <h4 v-if="article.ideaCena">
                                 <img style="height: 50px; width: 80px"
                                      src="images/market_logo/Idea_Logo_resized.png"/>
+                                <span><small><del>{{ article.ideaOldPrice.substring(0, article.ideaOldPrice.length - 3) }}</del></small></span>&nbsp;
                                 <span><b>{{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></span>
                             </h4>
                             <h4 v-if="article.disCena">
@@ -120,7 +122,7 @@
                     <div style="height: 450px;" class="box one" v-if="articles.length > 0"
                          v-for="articlea in filteredProducts.slice(startSlice,endSlice)" v-bind:key="articlea.code"
                          v-b-tooltip.hover.html="'<h6>'+articlea.body+'</h6>'">
-                        <p class="textOverflowSeparated" align="center">{{ articlea.body }}</p>
+                        <p class="textOverflow" align="center">{{ articlea.body }}</p>
                         <div style="margin-top: 50px">
                             <img center v-if="articlea.imageUrl !== null && articlea.shop == 'maxi'" class="center"
                                  :src="'https://d3el976p2k4mvu.cloudfront.net'+articlea.imageUrl" width="180px">
@@ -137,16 +139,18 @@
                                  :src="articlea.imageUrl" width="90px" height="180px">
                             <img v-else center style="height: 180px; width: 180px;" :src=articlea.imageDefault>
                         </div>
-                        <div class="poster p1" style="margin-top: 50px">
+                        <div class="poster p1" style="margin-top: 20px">
                             <h5 v-if="articlea.shop == 'maxi'">
                                 <img style="height: 50px; width: 80px"
-                                     src="images/market_logo/delhaize-maxi-logo-vector.png"/>
-                                <b>{{articlea.formattedPrice }}</b>
+                                     src="images/market_logo/delhaize-maxi-logo-vector.png"/><br>
+                                <h5><del>{{ articlea.oldPrice }}</del></h5>
+                                <b>{{articlea.formattedPrice }}</b>{{' '+articlea.supplementaryPriceLabel2}}
                             </h5>
                             <h5 v-if="articlea.shop == 'idea'">
                                 <img style="height: 50px; width: 80px"
-                                     src="images/market_logo/Idea_Logo_resized.png"/>
-                                <b>{{articlea.formattedPrice }}</b>
+                                     src="images/market_logo/Idea_Logo_resized.png"/><br>
+                                <h5><del>{{ articlea.oldPrice }}</del></h5>
+                                <b>{{articlea.formattedPrice }}{{' '+ !articlea.supplementaryPriceLabel2 ? articlea.supplementaryPriceLabel2 : ''}}</b>
                             </h5>
                             <h5 v-if="articlea.shop == 'dis'">
                                 <img style="height: 50px; width: 80px"
@@ -204,14 +208,16 @@
                             <div class="col-sm-6">
                                 <img style="height: 55px; width: 80px"
                                      src="images/market_logo/delhaize-maxi-logo-vector.png"/>
-                                <h5><b>{{maxiCena}}</b></h5>
+                                <h5><del>{{maxiOldPrice}}</del></h5>
+                                <h5><b>{{maxiCena}}{{' '+supplementaryPriceMaxi2}}</b></h5>
                                 <h5><b>{{supplementaryPriceMaxi}}</b></h5><br>
                             </div>
                             <div class="col-sm-6">
                                 <img style="height: 50px; width: 80px"
                                      src="images/market_logo/Idea_Logo_resized.png"/>
+                                <h5><del>{{ideaOldPrice}}</del></h5>
                                 <h5><b>{{ideaCena}}</b></h5>
-                                <h5><b>{{supplementaryPriceIdea}}</b></h5>
+                                <h5><b>{{supplementaryPriceIdea}}{{supplementaryPriceIdea2}}</b></h5>
                             </div>
                             <div class="col-sm-6">
                                 <img style="height: 50px; width: 80px"
@@ -448,8 +454,12 @@
                 body: '',
                 imageUrl: '',
                 supplementaryPriceIdea: '',
+                supplementaryPriceIdea2: '',
                 supplementaryPriceMaxi: '',
+                supplementaryPriceMaxi2: '',
+                ideaOldPrice: '--',
                 ideaCena: '--',
+                maxiOldPrice: '--',
                 maxiCena: '--',
                 disCena: '--',
                 univerexportCena: '--',
@@ -498,9 +508,9 @@
             }
         },
         mounted() {
-            let recaptchaScript = document.createElement('script')
-            recaptchaScript.setAttribute('src', '/js/loader.js')
-            document.head.appendChild(recaptchaScript)
+            let recaptchaScript = document.createElement('script');
+            recaptchaScript.setAttribute('src', '/js/loader.js');
+            document.head.appendChild(recaptchaScript);
         },
         created() {
             var width = $(window).width();
@@ -520,11 +530,15 @@
                 this.title = article.title;
                 this.body = article.body;
                 this.imageUrl = article.imageUrl;
+                this.ideaOldPrice = article.ideaOldPrice;
                 this.supplementaryPriceIdea = article.supplementaryPriceIdea;
-                if (article.supplementaryPriceMaxi) {
+                this.supplementaryPriceIdea2 = article.supplementaryPriceIdea2;
+                if (article.supplementaryPriceMaxi && article.supplementaryPriceMaxi2) {
                     this.supplementaryPriceMaxi = article.supplementaryPriceMaxi.replace('rsd/Kg', 'Din/Kg');
+                    this.supplementaryPriceMaxi2 = article.supplementaryPriceMaxi2.replace('rsd/Kg', 'Din/Kg');
                 } else {
                     this.supplementaryPriceMaxi = '';
+                    this.supplementaryPriceMaxi2 = '';
                 }
 
                 if (article.ideaCena) {
@@ -533,6 +547,10 @@
 
                 if (article.maxiCena) {
                     this.maxiCena = article.maxiCena.substring(0, article.maxiCena.length - 3) + 'Din';
+                }
+
+                if (article.maxiOldPrice) {
+                    this.maxiOldPrice = article.maxiOldPrice.substring(0, article.maxiOldPrice.length - 3) + 'Din';
                 }
 
                 if (article.disCena) {

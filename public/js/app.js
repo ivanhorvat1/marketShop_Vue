@@ -2192,6 +2192,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2210,8 +2216,12 @@ __webpack_require__.r(__webpack_exports__);
       body: '',
       imageUrl: '',
       supplementaryPriceIdea: '',
+      supplementaryPriceIdea2: '',
       supplementaryPriceMaxi: '',
+      supplementaryPriceMaxi2: '',
+      ideaOldPrice: '--',
       ideaCena: '--',
+      maxiOldPrice: '--',
       maxiCena: '--',
       disCena: '--',
       univerexportCena: '--',
@@ -2287,12 +2297,16 @@ __webpack_require__.r(__webpack_exports__);
       this.title = article.title;
       this.body = article.body;
       this.imageUrl = article.imageUrl;
+      this.ideaOldPrice = article.ideaOldPrice;
       this.supplementaryPriceIdea = article.supplementaryPriceIdea;
+      this.supplementaryPriceIdea2 = article.supplementaryPriceIdea2;
 
-      if (article.supplementaryPriceMaxi) {
+      if (article.supplementaryPriceMaxi && article.supplementaryPriceMaxi2) {
         this.supplementaryPriceMaxi = article.supplementaryPriceMaxi.replace('rsd/Kg', 'Din/Kg');
+        this.supplementaryPriceMaxi2 = article.supplementaryPriceMaxi2.replace('rsd/Kg', 'Din/Kg');
       } else {
         this.supplementaryPriceMaxi = '';
+        this.supplementaryPriceMaxi2 = '';
       }
 
       if (article.ideaCena) {
@@ -2301,6 +2315,10 @@ __webpack_require__.r(__webpack_exports__);
 
       if (article.maxiCena) {
         this.maxiCena = article.maxiCena.substring(0, article.maxiCena.length - 3) + 'Din';
+      }
+
+      if (article.maxiOldPrice) {
+        this.maxiOldPrice = article.maxiOldPrice.substring(0, article.maxiOldPrice.length - 3) + 'Din';
       }
 
       if (article.disCena) {
@@ -2483,6 +2501,15 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3309,6 +3336,54 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateUniverexportArticles: function updateUniverexportArticles() {
       fetch('api/univer_update_articles').then(function (res) {
+        return res.json();
+      }).then(function (res) {//M.toast({html: res.success, classes: 'rounded'}, 3000);
+      });
+    },
+    updateMaxiAction: function updateMaxiAction() {
+      fetch('api/updateMaxiAction').then(function (res) {
+        return res.json();
+      }).then(function (res) {//M.toast({html: res.success, classes: 'rounded'}, 3000);
+      });
+    },
+    updateMaxiDrink: function updateMaxiDrink() {
+      fetch('api/updateMaxiDrink').then(function (res) {
+        return res.json();
+      }).then(function (res) {//M.toast({html: res.success, classes: 'rounded'}, 3000);
+      });
+    },
+    updateMaxiMeats: function updateMaxiMeats() {
+      fetch('api/updateMaxiMeats').then(function (res) {
+        return res.json();
+      }).then(function (res) {//M.toast({html: res.success, classes: 'rounded'}, 3000);
+      });
+    },
+    updateMaxiSweets: function updateMaxiSweets() {
+      fetch('api/updateMaxiSweets').then(function (res) {
+        return res.json();
+      }).then(function (res) {//M.toast({html: res.success, classes: 'rounded'}, 3000);
+      });
+    },
+    updateMaxiFreeze: function updateMaxiFreeze() {
+      fetch('api/updateMaxiFreeze').then(function (res) {
+        return res.json();
+      }).then(function (res) {//M.toast({html: res.success, classes: 'rounded'}, 3000);
+      });
+    },
+    deleteIdeaRecords: function deleteIdeaRecords() {
+      fetch('api/deleteIdeaRecords').then(function (res) {
+        return res.json();
+      }).then(function (res) {//M.toast({html: res.success, classes: 'rounded'}, 3000);
+      });
+    },
+    updateIdeaAction: function updateIdeaAction() {
+      fetch('api/updateIdeaAction').then(function (res) {
+        return res.json();
+      }).then(function (res) {//M.toast({html: res.success, classes: 'rounded'}, 3000);
+      });
+    },
+    deleteCachedData: function deleteCachedData() {
+      fetch('api/deleteCachedData').then(function (res) {
         return res.json();
       }).then(function (res) {//M.toast({html: res.success, classes: 'rounded'}, 3000);
       });
@@ -29745,7 +29820,7 @@ var VBTooltip = {
 /*!*************************************************!*\
   !*** ./node_modules/bootstrap-vue/esm/index.js ***!
   \*************************************************/
-/*! exports provided: BVConfigPlugin, BVConfig, BootstrapVue, install, setConfig, default, componentsPlugin, BVModalPlugin, BVToastPlugin, AlertPlugin, BAlert, BadgePlugin, BBadge, BreadcrumbPlugin, BBreadcrumb, BBreadcrumbItem, ButtonPlugin, BButton, BButtonClose, ButtonGroupPlugin, BButtonGroup, ButtonToolbarPlugin, BButtonToolbar, CardPlugin, BCard, BCardBody, BCardFooter, BCardGroup, BCardHeader, BCardImg, BCardImgLazy, BCardSubTitle, BCardText, BCardTitle, CarouselPlugin, BCarousel, BCarouselSlide, CollapsePlugin, BCollapse, DropdownPlugin, BDropdown, BDropdownItem, BDropdownItemButton, BDropdownDivider, BDropdownForm, BDropdownGroup, BDropdownHeader, BDropdownText, EmbedPlugin, BEmbed, FormPlugin, BForm, BFormDatalist, BFormText, BFormInvalidFeedback, BFormValidFeedback, FormCheckboxPlugin, BFormCheckbox, BFormCheckboxGroup, FormFilePlugin, BFormFile, FormGroupPlugin, BFormGroup, FormInputPlugin, BFormInput, FormRadioPlugin, BFormRadio, BFormRadioGroup, FormSelectPlugin, BFormSelect, FormTextareaPlugin, BFormTextarea, ImagePlugin, BImg, BImgLazy, InputGroupPlugin, BInputGroup, BInputGroupAddon, BInputGroupAppend, BInputGroupPrepend, BInputGroupText, JumbotronPlugin, BJumbotron, LayoutPlugin, BContainer, BRow, BCol, BFormRow, LinkPlugin, BLink, ListGroupPlugin, BListGroup, BListGroupItem, MediaPlugin, BMedia, BMediaAside, BMediaBody, ModalPlugin, BModal, NavPlugin, BNav, BNavForm, BNavItem, BNavItemDropdown, BNavText, NavbarPlugin, BNavbar, BNavbarBrand, BNavbarNav, BNavbarToggle, PaginationPlugin, BPagination, PaginationNavPlugin, BPaginationNav, PopoverPlugin, BPopover, ProgressPlugin, BProgress, BProgressBar, SpinnerPlugin, BSpinner, TablePlugin, BTable, BTableLite, TabsPlugin, BTabs, BTab, ToastPlugin, BToast, BToaster, TooltipPlugin, BTooltip, directivesPlugin, VBModalPlugin, VBModal, VBPopoverPlugin, VBPopover, VBScrollspyPlugin, VBScrollspy, VBTogglePlugin, VBToggle, VBTooltipPlugin, VBTooltip */
+/*! exports provided: componentsPlugin, BVModalPlugin, BVToastPlugin, AlertPlugin, BAlert, BadgePlugin, BBadge, BreadcrumbPlugin, BBreadcrumb, BBreadcrumbItem, ButtonPlugin, BButton, BButtonClose, ButtonGroupPlugin, BButtonGroup, ButtonToolbarPlugin, BButtonToolbar, CardPlugin, BCard, BCardBody, BCardFooter, BCardGroup, BCardHeader, BCardImg, BCardImgLazy, BCardSubTitle, BCardText, BCardTitle, CarouselPlugin, BCarousel, BCarouselSlide, CollapsePlugin, BCollapse, DropdownPlugin, BDropdown, BDropdownItem, BDropdownItemButton, BDropdownDivider, BDropdownForm, BDropdownGroup, BDropdownHeader, BDropdownText, EmbedPlugin, BEmbed, FormPlugin, BForm, BFormDatalist, BFormText, BFormInvalidFeedback, BFormValidFeedback, FormCheckboxPlugin, BFormCheckbox, BFormCheckboxGroup, FormFilePlugin, BFormFile, FormGroupPlugin, BFormGroup, FormInputPlugin, BFormInput, FormRadioPlugin, BFormRadio, BFormRadioGroup, FormSelectPlugin, BFormSelect, FormTextareaPlugin, BFormTextarea, ImagePlugin, BImg, BImgLazy, InputGroupPlugin, BInputGroup, BInputGroupAddon, BInputGroupAppend, BInputGroupPrepend, BInputGroupText, JumbotronPlugin, BJumbotron, LayoutPlugin, BContainer, BRow, BCol, BFormRow, LinkPlugin, BLink, ListGroupPlugin, BListGroup, BListGroupItem, MediaPlugin, BMedia, BMediaAside, BMediaBody, ModalPlugin, BModal, NavPlugin, BNav, BNavForm, BNavItem, BNavItemDropdown, BNavText, NavbarPlugin, BNavbar, BNavbarBrand, BNavbarNav, BNavbarToggle, PaginationPlugin, BPagination, PaginationNavPlugin, BPaginationNav, PopoverPlugin, BPopover, ProgressPlugin, BProgress, BProgressBar, SpinnerPlugin, BSpinner, TablePlugin, BTable, BTableLite, TabsPlugin, BTabs, BTab, ToastPlugin, BToast, BToaster, TooltipPlugin, BTooltip, directivesPlugin, VBModalPlugin, VBModal, VBPopoverPlugin, VBPopover, VBScrollspyPlugin, VBScrollspy, VBTogglePlugin, VBToggle, VBTooltipPlugin, VBTooltip, BVConfigPlugin, BVConfig, BootstrapVue, install, setConfig, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -75426,6 +75501,21 @@ var render = function() {
                                   }),
                                   _vm._v(" "),
                                   _c("span", [
+                                    _c("small", [
+                                      _c("del", [
+                                        _vm._v(
+                                          _vm._s(
+                                            article.maxiOldPrice.substring(
+                                              0,
+                                              article.maxiOldPrice.length - 3
+                                            )
+                                          )
+                                        )
+                                      ])
+                                    ])
+                                  ]),
+                                  _vm._v(" \n                                "),
+                                  _c("span", [
                                     _c("b", [
                                       _vm._v(
                                         _vm._s(
@@ -75453,6 +75543,21 @@ var render = function() {
                                     }
                                   }),
                                   _vm._v(" "),
+                                  _c("span", [
+                                    _c("small", [
+                                      _c("del", [
+                                        _vm._v(
+                                          _vm._s(
+                                            article.ideaOldPrice.substring(
+                                              0,
+                                              article.ideaOldPrice.length - 3
+                                            )
+                                          )
+                                        )
+                                      ])
+                                    ])
+                                  ]),
+                                  _vm._v(" \n                                "),
                                   _c("span", [
                                     _c("b", [
                                       _vm._v(
@@ -75559,7 +75664,7 @@ var render = function() {
                           _c(
                             "p",
                             {
-                              staticClass: "textOverflowSeparated",
+                              staticClass: "textOverflow",
                               attrs: { align: "center" }
                             },
                             [_vm._v(_vm._s(articlea.body))]
@@ -75631,7 +75736,7 @@ var render = function() {
                             "div",
                             {
                               staticClass: "poster p1",
-                              staticStyle: { "margin-top": "50px" }
+                              staticStyle: { "margin-top": "20px" }
                             },
                             [
                               articlea.shop == "maxi"
@@ -75646,10 +75751,22 @@ var render = function() {
                                           "images/market_logo/delhaize-maxi-logo-vector.png"
                                       }
                                     }),
+                                    _c("br"),
+                                    _vm._v(" "),
+                                    _c("h5", [
+                                      _c("del", [
+                                        _vm._v(_vm._s(articlea.oldPrice))
+                                      ])
+                                    ]),
                                     _vm._v(" "),
                                     _c("b", [
                                       _vm._v(_vm._s(articlea.formattedPrice))
-                                    ])
+                                    ]),
+                                    _vm._v(
+                                      _vm._s(
+                                        " " + articlea.supplementaryPriceLabel2
+                                      ) + "\n                            "
+                                    )
                                   ])
                                 : _vm._e(),
                               _vm._v(" "),
@@ -75665,9 +75782,23 @@ var render = function() {
                                           "images/market_logo/Idea_Logo_resized.png"
                                       }
                                     }),
+                                    _c("br"),
+                                    _vm._v(" "),
+                                    _c("h5", [
+                                      _c("del", [
+                                        _vm._v(_vm._s(articlea.oldPrice))
+                                      ])
+                                    ]),
                                     _vm._v(" "),
                                     _c("b", [
-                                      _vm._v(_vm._s(articlea.formattedPrice))
+                                      _vm._v(
+                                        _vm._s(articlea.formattedPrice) +
+                                          _vm._s(
+                                             true
+                                              ? articlea.supplementaryPriceLabel2
+                                              : undefined
+                                          )
+                                      )
                                     ])
                                   ])
                                 : _vm._e(),
@@ -75755,7 +75886,16 @@ var render = function() {
                         }
                       }),
                       _vm._v(" "),
-                      _c("h5", [_c("b", [_vm._v(_vm._s(_vm.maxiCena))])]),
+                      _c("h5", [_c("del", [_vm._v(_vm._s(_vm.maxiOldPrice))])]),
+                      _vm._v(" "),
+                      _c("h5", [
+                        _c("b", [
+                          _vm._v(
+                            _vm._s(_vm.maxiCena) +
+                              _vm._s(" " + _vm.supplementaryPriceMaxi2)
+                          )
+                        ])
+                      ]),
                       _vm._v(" "),
                       _c("h5", [
                         _c("b", [_vm._v(_vm._s(_vm.supplementaryPriceMaxi))])
@@ -75771,10 +75911,17 @@ var render = function() {
                         }
                       }),
                       _vm._v(" "),
+                      _c("h5", [_c("del", [_vm._v(_vm._s(_vm.ideaOldPrice))])]),
+                      _vm._v(" "),
                       _c("h5", [_c("b", [_vm._v(_vm._s(_vm.ideaCena))])]),
                       _vm._v(" "),
                       _c("h5", [
-                        _c("b", [_vm._v(_vm._s(_vm.supplementaryPriceIdea))])
+                        _c("b", [
+                          _vm._v(
+                            _vm._s(_vm.supplementaryPriceIdea) +
+                              _vm._s(_vm.supplementaryPriceIdea2)
+                          )
+                        ])
                       ])
                     ]),
                     _vm._v(" "),
@@ -76804,14 +76951,14 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "btn btn-primary waves-effect waves-light",
+                staticClass: "btn btn-warning",
                 on: {
                   click: function($event) {
-                    return _vm.fetchArticles(0, "maxi", "akcija")
+                    return _vm.updateMaxiAction()
                   }
                 }
               },
-              [_vm._v("Maxi Akcija")]
+              [_vm._v("updateMaxiAction")]
             ),
             _vm._v(" "),
             _c(
@@ -76820,11 +76967,11 @@ var render = function() {
                 staticClass: "btn btn-warning",
                 on: {
                   click: function($event) {
-                    return _vm.storeArticles("maxi", "akcija")
+                    return _vm.updateMaxiDrink()
                   }
                 }
               },
-              [_vm._v("Ubaci Akcija Maxi")]
+              [_vm._v("updateMaxiDrink")]
             ),
             _vm._v(" "),
             _c(
@@ -76833,11 +76980,11 @@ var render = function() {
                 staticClass: "btn btn-warning",
                 on: {
                   click: function($event) {
-                    return _vm.fetchArticles(0, "maxi", "pice")
+                    return _vm.updateMaxiMeats()
                   }
                 }
               },
-              [_vm._v("Ubaci Maxi Pice")]
+              [_vm._v("updateMaxiMeats")]
             ),
             _vm._v(" "),
             _c(
@@ -76846,11 +76993,11 @@ var render = function() {
                 staticClass: "btn btn-warning",
                 on: {
                   click: function($event) {
-                    return _vm.fetchArticles(0, "maxi", "meso")
+                    return _vm.updateMaxiSweets()
                   }
                 }
               },
-              [_vm._v("Ubaci Maxi Meso")]
+              [_vm._v("updateMaxiSweets")]
             ),
             _vm._v(" "),
             _c(
@@ -76859,24 +77006,11 @@ var render = function() {
                 staticClass: "btn btn-warning",
                 on: {
                   click: function($event) {
-                    return _vm.fetchArticles(0, "maxi", "slatkisi")
+                    return _vm.updateMaxiFreeze()
                   }
                 }
               },
-              [_vm._v("Ubaci Maxi Slatkisi")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-warning",
-                on: {
-                  click: function($event) {
-                    return _vm.fetchArticles(0, "maxi", "smrznuti")
-                  }
-                }
-              },
-              [_vm._v("Ubaci Maxi Smrznuto")]
+              [_vm._v("updateMaxiFreeze")]
             ),
             _vm._v(" "),
             _c("br"),
@@ -76886,96 +77020,15 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "btn btn-primary",
+                staticClass: "btn btn-warning",
                 on: {
                   click: function($event) {
-                    return _vm.fetchArticles(0, "idea", "akcija")
+                    return _vm.updateIdeaAction()
                   }
                 }
               },
-              [_vm._v("Idea Akcija")]
+              [_vm._v("updateIdeaAction")]
             ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-info",
-                on: {
-                  click: function($event) {
-                    return _vm.storeArticles("idea", "akcija")
-                  }
-                }
-              },
-              [_vm._v("Ubaci Akcija Idea")]
-            ),
-            _c("br"),
-            _c("br"),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                on: {
-                  click: function($event) {
-                    return _vm.getCategoriesIdea("60007883")
-                  }
-                }
-              },
-              [_vm._v("Pice Idea")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                on: {
-                  click: function($event) {
-                    return _vm.getCategoriesIdea("60007823")
-                  }
-                }
-              },
-              [_vm._v("Meso Idea")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                on: {
-                  click: function($event) {
-                    return _vm.getCategoriesIdea("60007780")
-                  }
-                }
-              },
-              [_vm._v("Meso2 Idea")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                on: {
-                  click: function($event) {
-                    return _vm.getCategoriesIdea("60007896")
-                  }
-                }
-              },
-              [_vm._v("Slatkisi Idea")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                on: {
-                  click: function($event) {
-                    return _vm.getCategoriesIdea("60007907")
-                  }
-                }
-              },
-              [_vm._v("Smrznuti Proiz Idea")]
-            ),
-            _c("br"),
             _vm._v(" "),
             _c(
               "button",
@@ -76983,67 +77036,12 @@ var render = function() {
                 staticClass: "btn btn-danger",
                 on: {
                   click: function($event) {
-                    return _vm.checkChildren()
+                    return _vm.deleteIdeaRecords()
                   }
                 }
               },
-              [_vm._v("check idea children")]
+              [_vm._v("deleteIdeaRecords")]
             ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-warning",
-                on: {
-                  click: function($event) {
-                    return _vm.storeArticles("idea", "pice")
-                  }
-                }
-              },
-              [_vm._v("Ubaci Pice Idea")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-warning",
-                on: {
-                  click: function($event) {
-                    return _vm.storeArticles("idea", "meso")
-                  }
-                }
-              },
-              [_vm._v("Ubaci Meso Idea")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-warning",
-                on: {
-                  click: function($event) {
-                    return _vm.storeArticles("idea", "slatkisi")
-                  }
-                }
-              },
-              [_vm._v("Ubaci Slatkisi Idea")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-warning",
-                on: {
-                  click: function($event) {
-                    return _vm.storeArticles("idea", "smrznuti")
-                  }
-                }
-              },
-              [_vm._v("Ubaci smrznuti Idea")]
-            ),
-            _vm._v(" "),
-            _c("br"),
-            _c("br"),
             _vm._v(" "),
             _vm._m(2),
             _vm._v(" "),
@@ -77052,6 +77050,19 @@ var render = function() {
             _vm._m(4),
             _vm._v(" "),
             _vm._m(5),
+            _vm._v(" "),
+            _vm._m(6),
+            _vm._v(" "),
+            _c("br"),
+            _c("br"),
+            _vm._v(" "),
+            _vm._m(7),
+            _vm._v(" "),
+            _vm._m(8),
+            _vm._v(" "),
+            _vm._m(9),
+            _vm._v(" "),
+            _vm._m(10),
             _vm._v(" "),
             _c(
               "button",
@@ -77108,13 +77119,13 @@ var render = function() {
             _c("br"),
             _c("br"),
             _vm._v(" "),
-            _vm._m(6),
+            _vm._m(11),
             _vm._v(" "),
-            _vm._m(7),
+            _vm._m(12),
             _vm._v(" "),
-            _vm._m(8),
+            _vm._m(13),
             _vm._v(" "),
-            _vm._m(9),
+            _vm._m(14),
             _vm._v(" "),
             _c(
               "button",
@@ -77130,7 +77141,20 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("br"),
-            _c("br")
+            _c("br"),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-danger",
+                on: {
+                  click: function($event) {
+                    return _vm.deleteCachedData()
+                  }
+                }
+              },
+              [_vm._v("deleteCachedData")]
+            )
           ]
         ),
         _vm._v(" "),
@@ -77839,6 +77863,81 @@ var staticRenderFns = [
           attrs: { "data-toggle": "tab", href: "#menu2" }
         },
         [_vm._v("Updating articles")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn btn-warning" }, [
+      _c(
+        "a",
+        {
+          staticStyle: { color: "black" },
+          attrs: { href: "/getIdeaDrinkScheduler/60007883/null" }
+        },
+        [_vm._v("UpdateIdeaDrinkScheduler")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn btn-warning" }, [
+      _c(
+        "a",
+        {
+          staticStyle: { color: "black" },
+          attrs: { href: "/getIdeaMeatScheduler/60007823/null" }
+        },
+        [_vm._v("UpdateIdeaMeatScheduler")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn btn-warning" }, [
+      _c(
+        "a",
+        {
+          staticStyle: { color: "black" },
+          attrs: { href: "/getIdeaMeat2Scheduler/60007780/null" }
+        },
+        [_vm._v("UpdateIdeaMeat2Scheduler")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn btn-warning" }, [
+      _c(
+        "a",
+        {
+          staticStyle: { color: "black" },
+          attrs: { href: "/getIdeaSweetScheduler/60007896/null" }
+        },
+        [_vm._v("UpdateIdeaSweetScheduler")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn btn-warning" }, [
+      _c(
+        "a",
+        {
+          staticStyle: { color: "black" },
+          attrs: { href: "/getIdeaFreezeScheduler/60007907/null" }
+        },
+        [_vm._v("UpdateIdeaFreezeScheduler")]
       )
     ])
   },
@@ -79446,7 +79545,8 @@ var render = function() {
                                       width: "80px"
                                     },
                                     attrs: {
-                                      src: "images/market_logo/univer12.png"
+                                      src:
+                                        "images/market_logo/univer_resized.png"
                                     }
                                   }),
                                   _vm._v(" "),
@@ -79500,7 +79600,7 @@ var render = function() {
                           _c(
                             "p",
                             {
-                              staticClass: "textOverflowSeparated",
+                              staticClass: "textOverflow",
                               attrs: { align: "center" }
                             },
                             [_vm._v(_vm._s(articlea.body))]
@@ -79736,7 +79836,7 @@ var render = function() {
                     _c("div", { staticClass: "col-sm-6" }, [
                       _c("img", {
                         staticStyle: { height: "50px", width: "80px" },
-                        attrs: { src: "images/market_logo/univer12.png" }
+                        attrs: { src: "images/market_logo/univer_resized.png" }
                       }),
                       _vm._v(" "),
                       _c("h5", [
@@ -81064,7 +81164,8 @@ var render = function() {
                                       width: "80px"
                                     },
                                     attrs: {
-                                      src: "images/market_logo/univer12.png"
+                                      src:
+                                        "images/market_logo/univer_resized.png"
                                     }
                                   }),
                                   _vm._v(" "),
@@ -81118,7 +81219,7 @@ var render = function() {
                           _c(
                             "p",
                             {
-                              staticClass: "textOverflowSeparated",
+                              staticClass: "textOverflow",
                               attrs: { align: "center" }
                             },
                             [_vm._v(_vm._s(articlea.body))]
@@ -81258,7 +81359,8 @@ var render = function() {
                                         width: "80px"
                                       },
                                       attrs: {
-                                        src: "images/market_logo/univer12.png"
+                                        src:
+                                          "images/market_logo/univer_resized.png"
                                       }
                                     }),
                                     _vm._v(" "),
@@ -81353,7 +81455,7 @@ var render = function() {
                     _c("div", { staticClass: "col-sm-6" }, [
                       _c("img", {
                         staticStyle: { height: "50px", width: "80px" },
-                        attrs: { src: "images/market_logo/univer12.png" }
+                        attrs: { src: "images/market_logo/univer_resized.png" }
                       }),
                       _vm._v(" "),
                       _c("h5", [
@@ -82740,7 +82842,8 @@ var render = function() {
                                       width: "80px"
                                     },
                                     attrs: {
-                                      src: "images/market_logo/univer12.png"
+                                      src:
+                                        "images/market_logo/univer_resized.png"
                                     }
                                   }),
                                   _vm._v(" "),
@@ -82794,7 +82897,7 @@ var render = function() {
                           _c(
                             "p",
                             {
-                              staticClass: "textOverflowSeparated",
+                              staticClass: "textOverflow",
                               attrs: { align: "center" }
                             },
                             [_vm._v(_vm._s(articlea.body))]
@@ -82938,7 +83041,8 @@ var render = function() {
                                         width: "80px"
                                       },
                                       attrs: {
-                                        src: "images/market_logo/univer12.png"
+                                        src:
+                                          "images/market_logo/univer_resized.png"
                                       }
                                     }),
                                     _vm._v(" "),
@@ -84365,7 +84469,8 @@ var render = function() {
                                       width: "80px"
                                     },
                                     attrs: {
-                                      src: "images/market_logo/univer12.png"
+                                      src:
+                                        "images/market_logo/univer_resized.png"
                                     }
                                   }),
                                   _vm._v(" "),
@@ -84419,7 +84524,7 @@ var render = function() {
                           _c(
                             "p",
                             {
-                              staticClass: "textOverflowSeparated",
+                              staticClass: "textOverflow",
                               attrs: { align: "center" }
                             },
                             [_vm._v(_vm._s(articlea.body))]
@@ -84559,7 +84664,8 @@ var render = function() {
                                         width: "80px"
                                       },
                                       attrs: {
-                                        src: "images/market_logo/univer12.png"
+                                        src:
+                                          "images/market_logo/univer_resized.png"
                                       }
                                     }),
                                     _vm._v(" "),
@@ -84654,7 +84760,7 @@ var render = function() {
                     _c("div", { staticClass: "col-sm-6" }, [
                       _c("img", {
                         staticStyle: { height: "50px", width: "80px" },
-                        attrs: { src: "images/market_logo/univer12.png" }
+                        attrs: { src: "images/market_logo/univer_resized.png" }
                       }),
                       _vm._v(" "),
                       _c("h5", [

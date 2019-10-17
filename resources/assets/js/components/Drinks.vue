@@ -85,7 +85,7 @@
                                     <span><b>{{ article.disCena.substring(0, article.disCena.length - 3) }}</b></span>
                                 </h4>
                                 <h4 v-if="article.univerexportCena">
-                                    <img style="height: 50px; width: 80px" src="images/market_logo/univer12.png"/>
+                                    <img style="height: 50px; width: 80px" src="images/market_logo/univer_resized.png"/>
                                     <span><b>{{ article.univerexportCena.substring(0, article.univerexportCena.length - 3) }}</b></span>
                                 </h4>
                                 <!--<h4>
@@ -146,7 +146,7 @@
                         <div style="height: 450px;" class="box one" v-if="articles.length > 0"
                              v-for="articlea in filteredProducts.slice(startSlice,endSlice)" v-bind:key="articlea.code"
                              v-b-tooltip.hover.html="'<h6>'+articlea.body+'</h6>'">
-                            <p class="textOverflowSeparated" align="center">{{ articlea.body }}</p>
+                            <p class="textOverflow" align="center">{{ articlea.body }}</p>
                             <div style="margin-top: 50px">
                                 <img center v-if="articlea.imageUrl !== null && articlea.shop == 'maxi'" class="center"
                                      :src="'https://d3el976p2k4mvu.cloudfront.net'+articlea.imageUrl" width="180px">
@@ -252,7 +252,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <img style="height: 50px; width: 80px"
-                                         src="images/market_logo/univer12.png"/>
+                                         src="images/market_logo/univer_resized.png"/>
                                     <h5><b>{{univerexportCena}}</b></h5>
                                 </div>
                             </div>
