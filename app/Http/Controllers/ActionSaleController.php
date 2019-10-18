@@ -22,7 +22,8 @@ class ActionSaleController extends Controller
         ini_set('max_execution_time', 600);
         $expiresAt = Carbon::now()->endOfDay()->subHour()->addMinutes(30);
 
-        $cache = Cache::remember('maxiIdeaDisSale', 10, function () {
+//        $cache = Cache::remember('maxiIdeaDisSale', 10, function () {
+        $cache = Cache::rememberForever('maxiIdeaDisSale', function () {
 
             $maxi = action_sale::where('shop', 'maxi')->where('category', 'akcija')->get();
             $idea = action_sale::where('shop', 'idea')->where('category', 'akcija')->get();
@@ -106,6 +107,7 @@ class ActionSaleController extends Controller
                                     }
 
                                     $maxide[$di['shop'] . 'Cena'] = $di['formattedPrice'];
+                                    $maxide[$di['shop'] . 'OldPrice'] = $di['oldPrice'];
                                     $maxide['disPriceCompare'] = $di['price'];
 //                            $maxide['maxiPriceCompare'] = $maxide['maxiPriceCompare'];
 //                            $maxide['ideaPriceCompare'] = $maxide['ideaPriceCompare'];
@@ -407,7 +409,7 @@ class ActionSaleController extends Controller
             $this->sort = 'DESC';
         }
 
-        $cache = Cache::remember($this->shop . 'Action' . $this->sort, 10, function () {
+        $cache = Cache::rememberForever($this->shop . 'Action' . $this->sort, function () {
 
             if ($this->shop == 'maxi') {
                 return action_sale::where('shop', 'maxi')->orderBy('price', $this->sort)->get();
@@ -426,7 +428,7 @@ class ActionSaleController extends Controller
     public function compareDynamically(Request $request)
     {
         ini_set('max_execution_time', 600);
-        $cached = Cache::remember('ActionDvI', 10, function () {
+        $cached = Cache::rememberForever('ActionDvI', function () {
 
             $maxi = action_sale::where('shop', 'maxi')->where('category', 'akcija')->get();
             $idea = action_sale::where('shop', 'idea')->where('category', 'akcija')->get();
@@ -442,6 +444,14 @@ class ActionSaleController extends Controller
                             if ($barIde == $barMax) {
                                 $ide['maxiCena'] = $max['formattedPrice'];
                                 $ide['ideaCena'] = $ide['formattedPrice'];
+
+                                $ide['maxiOldPrice'] = $max['oldPrice'];
+                                $ide['supplementaryPriceMaxi'] = $max['supplementaryPriceLabel1'];
+                                $ide['supplementaryPriceMaxi2'] = $max['supplementaryPriceLabel2'];
+                                $ide['ideaOldPrice'] = $ide['oldPrice'];
+                                $ide['supplementaryPriceIdea'] = $ide['supplementaryPriceLabel1'];
+                                $ide['supplementaryPriceIdea2'] = $ide['supplementaryPriceLabel2'];
+
                                 if($max['imageUrl'] != null) {
                                     $ide['imageUrl'] = 'https://d3el976p2k4mvu.cloudfront.net'.$max['imageUrl'];
                                 }else{

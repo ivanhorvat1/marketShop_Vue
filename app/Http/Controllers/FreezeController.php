@@ -22,7 +22,7 @@ class FreezeController extends Controller
 
         $expiresAt = Carbon::now()->endOfDay()->subHour()->addMinutes(30);
 
-        $cache = Cache::remember('maxiIdeaDisFreeze', 10, function () {
+        $cache = Cache::rememberForever('maxiIdeaDisFreeze', function () {
             $maxiIdea = [];
 
             $maxi = Freeze::where('shop', 'maxi')->where('category', 'smrznuti')->whereNotNull('barcodes')->get();
@@ -169,7 +169,7 @@ class FreezeController extends Controller
             $this->sort = 'DESC';
         }
 
-        $cache = Cache::remember($this->shop . 'Freeze' . $this->sort, 10, function () {
+        $cache = Cache::rememberForever($this->shop . 'Freeze' . $this->sort, function () {
 
             if ($this->shop == 'maxi') {
                 return Freeze::where('shop', 'maxi')->orderBy('price', $this->sort)->get();
@@ -188,7 +188,7 @@ class FreezeController extends Controller
     public function compareDynamically(Request $request)
     {
 
-        $cached = Cache::remember('FreezeDvI', 10, function () {
+        $cached = Cache::rememberForever('FreezeDvI', function () {
 
             $maxi = Freeze::where('shop', 'maxi')->where('category', 'smrznuti')->whereNotNull('barcodes')->get();
             $idea = Freeze::where('shop', 'idea')->where('category', 'smrznuti')->whereNotNull('barcodes')->get();

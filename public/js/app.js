@@ -2198,6 +2198,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2224,7 +2230,9 @@ __webpack_require__.r(__webpack_exports__);
       maxiOldPrice: '--',
       maxiCena: '--',
       disCena: '--',
+      disOldPrice: '--',
       univerexportCena: '--',
+      univerexportOldPrice: '--',
       selected: 'ActionAll'
       /*options: [
           { value: 'A', text: 'Option A (from options prop)' },
@@ -2257,6 +2265,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     styles: function styles() {
       var height = 450;
+      var width = 300;
 
       if (this.products[0].disCena) {
         height = 500;
@@ -2268,6 +2277,7 @@ __webpack_require__.r(__webpack_exports__);
 
       return {
         height: height + 'px',
+        width: width + 'px',
         'cursor': 'pointer'
       };
     }
@@ -2325,8 +2335,16 @@ __webpack_require__.r(__webpack_exports__);
         this.disCena = article.disCena.substring(0, article.disCena.length - 3) + 'Din';
       }
 
+      if (article.disOldPrice) {
+        this.disOldPrice = article.disOldPrice.substring(0, article.disOldPrice.length - 3) + 'Din';
+      }
+
       if (article.univerexportCena) {
         this.univerexportCena = article.univerexportCena.substring(0, article.univerexportCena.length - 3) + 'Din';
+      }
+
+      if (article.univerexportOldPrice) {
+        this.univerexportOldPrice = article.univerexportOldPrice.substring(0, article.univerexportOldPrice.length - 3) + 'Din';
       }
 
       this.$root.$emit('bv::show::modal', this.infoModal.id, button);
@@ -2501,6 +2519,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -75587,6 +75606,21 @@ var render = function() {
                                   }),
                                   _vm._v(" "),
                                   _c("span", [
+                                    _c("small", [
+                                      _c("del", [
+                                        _vm._v(
+                                          _vm._s(
+                                            article.disOldPrice.substring(
+                                              0,
+                                              article.disOldPrice.length - 3
+                                            )
+                                          )
+                                        )
+                                      ])
+                                    ])
+                                  ]),
+                                  _vm._v(" \n                                "),
+                                  _c("span", [
                                     _c("b", [
                                       _vm._v(
                                         _vm._s(
@@ -75613,6 +75647,22 @@ var render = function() {
                                         "images/market_logo/univer_resized.png"
                                     }
                                   }),
+                                  _vm._v(" "),
+                                  _c("span", [
+                                    _c("small", [
+                                      _c("del", [
+                                        _vm._v(
+                                          _vm._s(
+                                            article.univerexportOldPrice.substring(
+                                              0,
+                                              article.univerexportOldPrice
+                                                .length - 3
+                                            )
+                                          )
+                                        )
+                                      ])
+                                    ])
+                                  ]),
                                   _vm._v(" "),
                                   _c("span", [
                                     _c("b", [
@@ -75816,6 +75866,12 @@ var render = function() {
                                       }
                                     }),
                                     _vm._v(" "),
+                                    _c("h5", [
+                                      _c("del", [
+                                        _vm._v(_vm._s(articlea.oldPrice))
+                                      ])
+                                    ]),
+                                    _vm._v(" "),
                                     _c("b", [
                                       _vm._v(_vm._s(articlea.formattedPrice))
                                     ])
@@ -75834,6 +75890,12 @@ var render = function() {
                                           "images/market_logo/univer_resized.png"
                                       }
                                     }),
+                                    _vm._v(" "),
+                                    _c("h5", [
+                                      _c("del", [
+                                        _vm._v(_vm._s(articlea.oldPrice))
+                                      ])
+                                    ]),
                                     _vm._v(" "),
                                     _c("b", [
                                       _vm._v(_vm._s(articlea.formattedPrice))
@@ -75933,6 +75995,8 @@ var render = function() {
                         }
                       }),
                       _vm._v(" "),
+                      _c("h5", [_c("del", [_vm._v(_vm._s(_vm.disOldPrice))])]),
+                      _vm._v(" "),
                       _c("h5", [_c("b", [_vm._v(_vm._s(_vm.disCena))])])
                     ]),
                     _vm._v(" "),
@@ -75941,6 +76005,10 @@ var render = function() {
                         staticStyle: { height: "50px", width: "80px" },
                         attrs: { src: "images/market_logo/univer_resized.png" }
                       }),
+                      _vm._v(" "),
+                      _c("h5", [
+                        _c("del", [_vm._v(_vm._s(_vm.univerexportOldPrice))])
+                      ]),
                       _vm._v(" "),
                       _c("h5", [
                         _c("b", [_vm._v(_vm._s(_vm.univerexportCena))])
@@ -77154,7 +77222,9 @@ var render = function() {
                 }
               },
               [_vm._v("deleteCachedData")]
-            )
+            ),
+            _vm._v(" "),
+            _vm._m(15)
           ]
         ),
         _vm._v(" "),
@@ -78046,6 +78116,18 @@ var staticRenderFns = [
           attrs: { href: "/univerexportMeats" }
         },
         [_vm._v("Univerexport Market Meso")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn btn-primary" }, [
+      _c(
+        "a",
+        { staticStyle: { color: "white" }, attrs: { href: "/scheduleRun" } },
+        [_vm._v("Schedule run")]
       )
     ])
   }

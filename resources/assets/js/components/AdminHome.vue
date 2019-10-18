@@ -82,6 +82,7 @@
                     <button @click="updateUniverexportArticles()" class="btn btn-warning">Univer update Articles</button>
                     <br><br>
                     <button @click="deleteCachedData()" class="btn btn-danger">deleteCachedData</button>
+                    <button class="btn btn-primary"><a href="/scheduleRun" style="color: white">Schedule run</a></button>
                 </div>
                 <!-- SECOND TAB configure users -->
                 <div id="home" class="container tab-pane fade"><br>

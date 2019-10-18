@@ -65,7 +65,7 @@
                 <div class="wrap">
                     <div class="box one" v-if="products.length > 0"
                          v-for="article in filteredProducts.slice(startSlice,endSlice)" v-bind:key="article.code"
-                         v-bind:style="[{ 'background-image': 'url(' + article.imageUrl + ')' },styles]"
+                         v-bind:style="[{ 'background-image': 'url(' + article.imageUrl + ')'},styles]"
                          @click="info(article,$event.target)"
                          v-b-tooltip.hover.html="'<h6>'+article.body+'</h6>'">
                         <p class="textOverflow" align="center">{{ article.body }}</p>
@@ -85,10 +85,12 @@
                             <h4 v-if="article.disCena">
                                 <img style="height: 50px; width: 80px"
                                      src="images/market_logo/dis_krnjevo_resized.gif"/>
+                                <span><small><del>{{ article.disOldPrice.substring(0, article.disOldPrice.length - 3) }}</del></small></span>&nbsp;
                                 <span><b>{{ article.disCena.substring(0, article.disCena.length - 3) }}</b></span>
                             </h4>
                             <h4 v-if="article.univerexportCena">
                                 <img style="height: 50px; width: 80px" src="images/market_logo/univer_resized.png"/>
+                                <span><small><del>{{ article.univerexportOldPrice.substring(0, article.univerexportOldPrice.length - 3) }}</del></small></span>
                                 <span><b>{{ article.univerexportCena.substring(0, article.univerexportCena.length - 3) }}</b></span>
                             </h4>
                         </div>
@@ -155,10 +157,12 @@
                             <h5 v-if="articlea.shop == 'dis'">
                                 <img style="height: 50px; width: 80px"
                                      src="images/market_logo/dis_krnjevo_resized.gif"/>
+                                <h5><del>{{ articlea.oldPrice }}</del></h5>
                                 <b>{{articlea.formattedPrice }}</b>
                             </h5>
                             <h5 v-if="articlea.shop == 'univerexport'">
                                 <img style="height: 50px; width: 80px" src="images/market_logo/univer_resized.png"/>
+                                <h5><del>{{ articlea.oldPrice }}</del></h5>
                                 <b>{{articlea.formattedPrice }}</b>
                             </h5>
                         </div>
@@ -222,11 +226,13 @@
                             <div class="col-sm-6">
                                 <img style="height: 50px; width: 80px"
                                      src="images/market_logo/dis_krnjevo_resized.gif"/>
+                                <h5><del>{{disOldPrice}}</del></h5>
                                 <h5><b>{{disCena}}</b></h5>
                             </div>
                             <div class="col-sm-6">
                                 <img style="height: 50px; width: 80px"
                                      src="images/market_logo/univer_resized.png"/>
+                                <h5><del>{{univerexportOldPrice}}</del></h5>
                                 <h5><b>{{univerexportCena}}</b></h5>
                             </div>
                         </div>
@@ -462,7 +468,9 @@
                 maxiOldPrice: '--',
                 maxiCena: '--',
                 disCena: '--',
+                disOldPrice: '--',
                 univerexportCena: '--',
+                univerexportOldPrice: '--',
                 selected: 'ActionAll',
                 /*options: [
                     { value: 'A', text: 'Option A (from options prop)' },
@@ -492,6 +500,7 @@
             },
             styles: function () {
                 var height = 450;
+                var width = 300;
 
                 if (this.products[0].disCena) {
                     height = 500;
@@ -503,6 +512,7 @@
 
                 return {
                     height: height + 'px',
+                    width: width + 'px',
                     'cursor': 'pointer'
                 };
             }
@@ -557,8 +567,16 @@
                     this.disCena = article.disCena.substring(0, article.disCena.length - 3) + 'Din';
                 }
 
+                if (article.disOldPrice) {
+                    this.disOldPrice = article.disOldPrice.substring(0, article.disOldPrice.length - 3) + 'Din';
+                }
+
                 if (article.univerexportCena) {
                     this.univerexportCena = article.univerexportCena.substring(0, article.univerexportCena.length - 3) + 'Din';
+                }
+
+                if (article.univerexportOldPrice) {
+                    this.univerexportOldPrice = article.univerexportOldPrice.substring(0, article.univerexportOldPrice.length - 3) + 'Din';
                 }
                 this.$root.$emit('bv::show::modal', this.infoModal.id, button)
             },

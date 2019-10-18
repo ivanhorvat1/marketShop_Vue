@@ -39,8 +39,8 @@ class MaxiScheduleController extends Controller
         $imageUrl = null;
         $imageDefault = null;
         $storeRecords = [];
-        dd($results[0]);
-        if($arrayLengt > 0) {
+
+        if ($arrayLengt > 0) {
             for ($i = 0; $i <= $arrayLengt; $i++) {
                 $imageUrl = null;
                 if (array_key_exists('images', $results[$i]) && !empty($results[$i]->images) && array_key_exists('2', $results[$i]->images)) {
@@ -71,11 +71,11 @@ class MaxiScheduleController extends Controller
                     $barcode = null;
                 }
                 //var_dump(empty($results[$i]->price->intValue)); continue;
-                if (!empty($results[$i]->price)){
+                if (!empty($results[$i]->price)) {
                     $oldPrice = $results[$i]->price->intValue . ',' . $results[$i]->price->fractionValue . ' ' . $results[$i]->price->currencySymbol;
                     $supplementaryPriceLabel1 = $results[$i]->price->supplementaryPriceLabel1;
                     $supplementaryPriceLabel2 = $results[$i]->price->supplementaryPriceLabel2;
-                }else{
+                } else {
                     $oldPrice = '--';
                     $supplementaryPriceLabel1 = '--';
                     $supplementaryPriceLabel2 = '--';
@@ -127,7 +127,7 @@ class MaxiScheduleController extends Controller
         return response()->json($data);
     }
 
-        public function getMaxiDrink()
+    public function getMaxiDrink()
     {
         $obj = $this->curlAction('https://www.maxi.rs/online/Pice%2C-kafa-i-caj/c/01/getSearchPageData?pageSize=5000&pageNumber=0&sort=promotion');
         $results = $obj->results;
@@ -135,7 +135,7 @@ class MaxiScheduleController extends Controller
         $imageUrl = null;
         $imageDefault = null;
         $storeRecords = [];
-        if($arrayLengt > 0) {
+        if ($arrayLengt > 0) {
             for ($i = 0; $i <= $arrayLengt; $i++) {
                 $imageUrl = null;
                 if (array_key_exists('images', $results[$i]) && !empty($results[$i]->images) && array_key_exists('2', $results[$i]->images)) {
@@ -209,7 +209,7 @@ class MaxiScheduleController extends Controller
         $imageUrl = null;
         $imageDefault = null;
         $storeRecords = [];
-        if($arrayLengt > 0) {
+        if ($arrayLengt > 0) {
             for ($i = 0; $i <= $arrayLengt; $i++) {
                 $imageUrl = null;
                 if (array_key_exists('images', $results[$i]) && !empty($results[$i]->images) && array_key_exists('2', $results[$i]->images)) {
@@ -283,7 +283,7 @@ class MaxiScheduleController extends Controller
         $imageUrl = null;
         $imageDefault = null;
         $storeRecords = [];
-        if($arrayLengt > 0) {
+        if ($arrayLengt > 0) {
             for ($i = 0; $i <= $arrayLengt; $i++) {
                 $imageUrl = null;
                 if (array_key_exists('images', $results[$i]) && !empty($results[$i]->images) && array_key_exists('2', $results[$i]->images)) {
@@ -357,7 +357,7 @@ class MaxiScheduleController extends Controller
         $imageUrl = null;
         $imageDefault = null;
         $storeRecords = [];
-        if($arrayLengt > 0) {
+        if ($arrayLengt > 0) {
             for ($i = 0; $i <= $arrayLengt; $i++) {
                 $imageUrl = null;
                 if (array_key_exists('images', $results[$i]) && !empty($results[$i]->images) && array_key_exists('2', $results[$i]->images)) {

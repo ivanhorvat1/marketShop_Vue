@@ -205,13 +205,18 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     ]);
 
     Route::get('/univer', [
-        'uses' => 'UniverexportMarketController@curlAllUniverexport',
+        'uses' => 'UniverexportMarketController@updateExistingUniverArticles',
         'as' => 'univer'
     ]);
 
     Route::get('/deleteCachedData', [
         'uses' => 'IdeaScheduleController@deleteCachedData',
         'as' => 'deleteCachedData'
+    ]);
+
+    Route::get('/scheduleRun', [
+        'uses' => 'IdeaScheduleController@scheduleRun',
+        'as' => 'scheduleRun'
     ]);
 
 });

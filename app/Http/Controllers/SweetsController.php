@@ -21,7 +21,7 @@ class SweetsController extends Controller
     {
         $expiresAt = Carbon::now()->endOfDay()->subHour()->addMinutes(30);
 
-        $cache = Cache::remember('maxiIdeaDisSweets', 10, function () {
+        $cache = Cache::rememberForever('maxiIdeaDisSweets', function () {
             $maxiIdea = [];
             // Get articles
             $maxi = Sweets::where('shop', 'maxi')->where('category', 'slatkisi')->whereNotNull('barcodes')->get();
@@ -148,7 +148,7 @@ class SweetsController extends Controller
             $this->sort = 'DESC';
         }
 
-        $cache = Cache::remember($this->shop.'Sweets'.$this->sort, 10, function () {
+        $cache = Cache::rememberForever($this->shop.'Sweets'.$this->sort, function () {
 
             if($this->shop == 'maxi'){
                 return Sweets::where('shop', 'maxi')->orderBy('price', $this->sort)->get();
@@ -167,7 +167,7 @@ class SweetsController extends Controller
     public function compareDynamically(Request $request)
     {
 
-        $cached = Cache::remember('SweetsDvIs', 10, function () {
+        $cached = Cache::rememberForever('SweetsDvIs', function () {
 
             $maxi = Sweets::where('shop', 'maxi')->where('category', 'slatkisi')->whereNotNull('barcodes')->get();
             $idea = Sweets::where('shop', 'idea')->where('category', 'slatkisi')->whereNotNull('barcodes')->get();

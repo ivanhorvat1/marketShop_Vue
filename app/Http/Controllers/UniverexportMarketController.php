@@ -285,7 +285,7 @@ class UniverexportMarketController extends Controller
     public function updateExistingUniverArticles()
     {
             $categories = $this->curlAllUniverexport();
-
+//dd($categories);
             $p = 0;
             $s = 0;
             $f = 0;
@@ -316,10 +316,10 @@ class UniverexportMarketController extends Controller
 
                     if (strpos($value['salePrice'][$i], ".") == false) {
                         $price = $value['salePrice'][$i] . '00';
-                        $formattedPrice = $value['salePrice'][$i] . ".00 RSD";
+                        $formattedPrice = $value['salePrice'][$i] . ",00 RSD";
                     } else {
                         $price = str_replace('.', '', $value['salePrice'][$i]);
-                        $formattedPrice = $value['salePrice'][$i] . " RSD";
+                        $formattedPrice =  str_replace('.', ',', $value['salePrice'][$i]) . " RSD";
                     }
 
                     if (!$price) {
@@ -360,10 +360,16 @@ class UniverexportMarketController extends Controller
 
                             if (strpos($value['salePrice'][$i], ".") == false) {
                                 $price = $value['salePrice'][$i] . '00';
-                                $formattedPrice = $value['salePrice'][$i] . ".00 RSD";
+                                $formattedPrice = $value['salePrice'][$i] . ",00 RSD";
                             } else {
                                 $price = str_replace('.', '', $value['salePrice'][$i]);
-                                $formattedPrice = $value['salePrice'][$i] . " RSD";
+                                $formattedPrice = str_replace('.', ',', $value['salePrice'][$i]) . " RSD";
+                            }
+
+                            if (strpos($value['oldPrice'][$i], ".") == false) {
+                                $old_price = $value['oldPrice'][$i] . ",00 RSD";
+                            } else {
+                                $old_price = str_replace('.', ',', $value['oldPrice'][$i]) . " RSD";
                             }
 
 
@@ -377,7 +383,8 @@ class UniverexportMarketController extends Controller
                                 'imageUrl' => $imageUrl,
                                 'imageDefault' => $imageDefault,
                                 'formattedPrice' => $formattedPrice,
-                                'price' => $price
+                                'price' => $price,
+                                'oldPrice' => $old_price
                             ];
 
                             $saved = univerexport_action_sale::create($data);
@@ -501,13 +508,14 @@ class UniverexportMarketController extends Controller
                 $match);
             $category = [];
             $category['url'] = $match[1];
-            $category['name'] = array_map(function ($name) {
+            /*$category['name'] = array_map(function ($name) {
                 return trim($name);
-            }, $match[2]);
+            }, $match[2]);*/
+            $category['name'] = ['Pica i napici','Smrznuto','Slatko i slano','Pekara i mesara'];
             $category['count'] = $match[3];
 
             $custom_urls = ['online.php?kat=a','online.php?kat=7','online.php?kat=8','online.php?kat=2'];
-
+//dd($category['name']);
 //            var_dump($category['url'],$custom_urls);die;
             $data = array_map(function ($url) use ($host) {
                 return $host . $url;
@@ -537,7 +545,7 @@ class UniverexportMarketController extends Controller
 
                 /** @var Content of all subCategory $productsSubCategoriesContent */
                 $productsSubCategoriesContent = $this->multi($urlArray);
-
+//dd($productsSubCategoriesContent);
                 foreach ($productsSubCategoriesContent as $productSubCategoryContent) {
                     preg_match_all("!<a href=\'(.*?)(\d*)&naz=(.*?)\'\s*>!",
                         $productSubCategoryContent, $all_match);

@@ -21,6 +21,7 @@ class CreateDisActionSalesTable extends Migration
             $table->text('barcodes')->nullable();
             $table->string('formattedPrice')->nullable();
             $table->integer('price')->nullable();
+            $table->string('oldPrice')->nullable()->default(0);
             $table->string('category')->nullable();
             $table->string('supplementaryPriceLabel1')->nullable();
             $table->string('supplementaryPriceLabel2')->nullable();

@@ -743,6 +743,7 @@ class DisMarketController extends Controller
 
                 if ($disArtikli['salePrice'] != null) {
                     $formattedPrice = $disArtikli['salePrice'] . " RSD";
+                    $oldPrice = $disArtikli['oldPrice'] . " RSD";
 
                     $data = [
                         'code' => $code,
@@ -753,7 +754,8 @@ class DisMarketController extends Controller
                         'shop' => $shop,
                         'imageDefault' => $imageDefault,
                         'formattedPrice' => $formattedPrice,
-                        'price' => str_replace(',', '', $disArtikli['salePrice'])
+                        'price' => str_replace(',', '', $disArtikli['salePrice']),
+                        'oldPrice' => $oldPrice
                     ];
 
                     $saved = dis_action_sale::create($data);
@@ -813,6 +815,7 @@ class DisMarketController extends Controller
 
                 if ($disArtikli['salePrice'] != null) {
                     $formattedPrice = $disArtikli['salePrice'] . " RSD";
+                    $oldPrice = $disArtikli['oldPrice'] . " RSD";
 
                     $data = [
                         'code' => $code,
@@ -823,7 +826,8 @@ class DisMarketController extends Controller
                         'shop' => $shop,
                         'imageDefault' => $imageDefault,
                         'formattedPrice' => $formattedPrice,
-                        'price' => str_replace(',', '', $disArtikli['salePrice'])
+                        'price' => str_replace(',', '', $disArtikli['salePrice']),
+                        'oldPrice' => $oldPrice
                     ];
 
                     $saved = dis_action_sale::create($data);
@@ -887,6 +891,7 @@ class DisMarketController extends Controller
                 $saved = $article->save();
                 if ($disArtikli['salePrice'] != null) {
                     $formattedPrice = $disArtikli['salePrice'] . " RSD";
+                    $oldPrice = $disArtikli['oldPrice'] . " RSD";
 
                     $data = [
                         'code' => $code,
@@ -897,7 +902,8 @@ class DisMarketController extends Controller
                         'shop' => $shop,
                         'imageDefault' => $imageDefault,
                         'formattedPrice' => $formattedPrice,
-                        'price' => str_replace(',', '', $disArtikli['salePrice'])
+                        'price' => str_replace(',', '', $disArtikli['salePrice']),
+                        'oldPrice' => $oldPrice
                     ];
 
                     $saved = dis_action_sale::create($data);
@@ -959,6 +965,7 @@ class DisMarketController extends Controller
                 $saved = $article->save();
                 if ($disArtikli['salePrice'] != null) {
                     $formattedPrice = $disArtikli['salePrice'] . " RSD";
+                    $oldPrice = $disArtikli['oldPrice'] . " RSD";
 
                     $data = [
                         'code' => $code,
@@ -969,7 +976,8 @@ class DisMarketController extends Controller
                         'shop' => $shop,
                         'imageDefault' => $imageDefault,
                         'formattedPrice' => $formattedPrice,
-                        'price' => str_replace(',', '', $disArtikli['salePrice'])
+                        'price' => str_replace(',', '', $disArtikli['salePrice']),
+                        'oldPrice' => $oldPrice
                     ];
 
                     $saved = dis_action_sale::create($data);

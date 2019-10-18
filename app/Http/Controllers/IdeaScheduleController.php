@@ -33,6 +33,11 @@ class IdeaScheduleController extends Controller
         Artisan::call('cache:clear');
     }
 
+    public function scheduleRun()
+    {
+        Artisan::call('schedule:run');
+    }
+
     public function deleteRecords()
     {
         drink::where('shop', 'idea')->delete();
@@ -82,10 +87,22 @@ class IdeaScheduleController extends Controller
                 $article->supplementaryPriceLabel1 = $record['supplementaryPriceLabel1'];
                 $article->supplementaryPriceLabel2 = $record['supplementaryPriceLabel2'];
                 $article->shop = $record['shop'];
-                $article->save();
+                $saved = $article->save();
+
+                if ($saved) {
+                    $success = true;
+                } else {
+                    return response()->json([
+                        "success" => false
+                    ]);
+                }
             }
         }
-        echo 'successfully saved';
+        $data = [
+            "success" => $success
+        ];
+
+        return response()->json($data);
     }
 
     public function getIdeaDrink($categoryNumber, $data)

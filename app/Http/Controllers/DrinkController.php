@@ -17,7 +17,7 @@ class DrinkController extends Controller
         ini_set('max_execution_time', 600);
         $expiresAt = Carbon::now()->endOfDay()->subHour()->addMinutes(30);
 
-        $cache = Cache::remember('maxiIdeaDisDrinks', 10, function () {
+        $cache = Cache::rememberForever('maxiIdeaDisDrinks', function () {
             $maxiIdea = [];
             $barcodesIdea = [];
             $barcodesMaxi = [];
@@ -183,7 +183,7 @@ class DrinkController extends Controller
             $this->sort = 'DESC';
         }
 
-        $cache = Cache::remember($this->shop . 'Drinks' . $this->sort, 10, function () {
+        $cache = Cache::rememberForever($this->shop . 'Drinks' . $this->sort, function () {
 
             if ($this->shop == 'maxi') {
                 return drink::where('shop', 'maxi')->orderBy('price', $this->sort)->get();
@@ -202,7 +202,7 @@ class DrinkController extends Controller
     public function compareDynamically(Request $request)
     {
 
-        $cached = Cache::remember('DrinkDvIs', 10, function () {
+        $cached = Cache::rememberForever('DrinkDvIs', function () {
 
             $maxi = drink::where('shop', 'maxi')->where('category', 'pice')->whereNotNull('barcodes')->orderBy('price', 'DESC')->get();
             $idea = drink::where('shop', 'idea')->where('category', 'pice')->whereNotNull('barcodes')->orderBy('price', 'DESC')->get();
