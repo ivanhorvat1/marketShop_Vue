@@ -156,6 +156,7 @@ class ActionSaleController extends Controller
                                     //if ($uni['price'] >= $maxidedis['price']) {
 
                                     $maxidedis[$uni['shop'] . 'Cena'] = str_replace('.', ',', $uni['formattedPrice']);
+                                    $maxidedis[$uni['shop'] . 'OldPrice'] = $uni['oldPrice'];
                                     //if (!in_array($maxidedis['barcodes'], array_column($maxiIdeaDisUni, 'barcodes'))) {
                                     array_push($maxiIdeaDisUni, $maxidedis);
                                     //}

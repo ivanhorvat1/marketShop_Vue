@@ -1191,3 +1191,36 @@ button.load_more:hover, button.load_more:focus, button.load_more:active {
     letter-spacing: 0.125rem;
 }
 
+/*PROMOTION DATE*/
+
+.promotionDate {
+     /*position: absolute;
+    padding-right: 77px;
+     !*transform: rotate(-45deg);*!
+     !*padding-top: 10px;*!
+    !*clip-path: polygon(0 0, 0% 400%, 300% 0);*!
+     background-color: yellow;
+    !*margin-right: 500px;*!*/
+    text-align: left;
+    /*line-height: 200px;*/
+    padding-top: 90px;
+    position: absolute;
+    z-index: 1;
+    width: 100px;
+    height: 100px;
+    font-size: 15px;
+ }
+
+.promotionDate:before {
+    content: '';
+    z-index: -1;
+    position: absolute;
+    top:90px;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-top: 80px solid yellow;
+    border-right: 150px solid transparent;
+}
+
+

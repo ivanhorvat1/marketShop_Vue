@@ -87,9 +87,8 @@ class MaxiScheduleController extends Controller
 
                 array_push($storeRecords, ['code' => $results[$i]->code, 'title' => $results[$i]->manufacturerName,
                     'body' => $results[$i]->name, 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => $barcode,
-                    'formattedPrice' => $formattedPrice, 'price' => $price, 'oldPrice' => $oldPrice,
-                    'supplementaryPriceLabel1' => $supplementaryPriceLabel1,
-                    'supplementaryPriceLabel2' => $supplementaryPriceLabel2, 'shop' => 'maxi', 'category' => 'akcija']);
+                    'toDate' => $results[$i]->potentialPromotions[0]->toDate, 'formattedPrice' => $formattedPrice, 'price' => $price, 'oldPrice' => $oldPrice,
+                    'supplementaryPriceLabel1' => $supplementaryPriceLabel1, 'supplementaryPriceLabel2' => $supplementaryPriceLabel2, 'shop' => 'maxi', 'category' => 'akcija']);
             }
 
             action_sale::where('shop', 'maxi')->delete();
@@ -103,6 +102,7 @@ class MaxiScheduleController extends Controller
                 $article->imageUrl = $record['imageUrl'];
                 $article->imageDefault = $record['imageDefault'];
                 $article->barcodes = $record['barcodes'];
+                $article->toDate = $record['toDate'];
                 $article->formattedPrice = $record['formattedPrice'];
                 $article->price = $record['price'];
                 $article->oldPrice = $record['oldPrice'];

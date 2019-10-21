@@ -2204,6 +2204,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2519,6 +2520,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -75663,7 +75666,7 @@ var render = function() {
                                       ])
                                     ])
                                   ]),
-                                  _vm._v(" "),
+                                  _vm._v(" \n                                "),
                                   _c("span", [
                                     _c("b", [
                                       _vm._v(
@@ -75711,6 +75714,13 @@ var render = function() {
                           staticStyle: { height: "450px" }
                         },
                         [
+                          articlea.toDate
+                            ? _c("p", { staticClass: "promotionDate" }, [
+                                _vm._v("Promocija vazi do: "),
+                                _c("b", [_vm._v(_vm._s(articlea.toDate))])
+                              ])
+                            : _vm._e(),
+                          _vm._v(" "),
                           _c(
                             "p",
                             {
@@ -77195,18 +77205,9 @@ var render = function() {
             _vm._v(" "),
             _vm._m(14),
             _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-warning",
-                on: {
-                  click: function($event) {
-                    return _vm.updateUniverexportArticles()
-                  }
-                }
-              },
-              [_vm._v("Univer update Articles")]
-            ),
+            _vm._m(15),
+            _vm._v(" "),
+            _vm._m(16),
             _vm._v(" "),
             _c("br"),
             _c("br"),
@@ -77224,7 +77225,7 @@ var render = function() {
               [_vm._v("deleteCachedData")]
             ),
             _vm._v(" "),
-            _vm._m(15)
+            _vm._m(17)
           ]
         ),
         _vm._v(" "),
@@ -78116,6 +78117,36 @@ var staticRenderFns = [
           attrs: { href: "/univerexportMeats" }
         },
         [_vm._v("Univerexport Market Meso")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn btn-warning" }, [
+      _c(
+        "a",
+        {
+          staticStyle: { color: "black" },
+          attrs: { href: "/univer/pice/smrznuto" }
+        },
+        [_vm._v("UpdateUniverPice&SmrznutoScheduler")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn btn-warning" }, [
+      _c(
+        "a",
+        {
+          staticStyle: { color: "black" },
+          attrs: { href: "/univer/slatkisi/meso" }
+        },
+        [_vm._v("UpdateUniverSlatkisi&MesoScheduler")]
       )
     ])
   },

@@ -204,8 +204,13 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         'as' => 'getDisSweetScheduler'
     ]);
 
-    Route::get('/univer', [
-        'uses' => 'UniverexportMarketController@updateExistingUniverArticles',
+    Route::get('/univer/{cat1}/{cat2}', [
+        'uses' => 'UniverexportScheduleController@updateExistingUniverArticles',
+        'as' => 'univer'
+    ]);
+
+    Route::get('/univer/{cat1}/{cat2}', [
+        'uses' => 'UniverexportScheduleController@updateExistingUniverArticles',
         'as' => 'univer'
     ]);
 

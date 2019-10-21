@@ -79,7 +79,9 @@
                     <button class="btn btn-primary"><a href="/univerexportFreeze" style="color: white">Univerexport Market Smrznuto</a></button>
                     <button class="btn btn-primary"><a href="/univerexportSweets" style="color: white">Univerexport Market Slatkisi</a></button>
                     <button class="btn btn-primary"><a href="/univerexportMeats" style="color: white">Univerexport Market Meso</a></button>
-                    <button @click="updateUniverexportArticles()" class="btn btn-warning">Univer update Articles</button>
+                    <!--<button @click="updateUniverexportArticles()" class="btn btn-warning">Univer update Articles</button>-->
+                    <button class="btn btn-warning"><a href="/univer/pice/smrznuto" style="color: black">UpdateUniverPice&SmrznutoScheduler</a></button>
+                    <button class="btn btn-warning"><a href="/univer/slatkisi/meso" style="color: black">UpdateUniverSlatkisi&MesoScheduler</a></button>
                     <br><br>
                     <button @click="deleteCachedData()" class="btn btn-danger">deleteCachedData</button>
                     <button class="btn btn-primary"><a href="/scheduleRun" style="color: white">Schedule run</a></button>

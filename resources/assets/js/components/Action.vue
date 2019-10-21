@@ -90,7 +90,7 @@
                             </h4>
                             <h4 v-if="article.univerexportCena">
                                 <img style="height: 50px; width: 80px" src="images/market_logo/univer_resized.png"/>
-                                <span><small><del>{{ article.univerexportOldPrice.substring(0, article.univerexportOldPrice.length - 3) }}</del></small></span>
+                                <span><small><del>{{ article.univerexportOldPrice.substring(0, article.univerexportOldPrice.length - 3) }}</del></small></span>&nbsp;
                                 <span><b>{{ article.univerexportCena.substring(0, article.univerexportCena.length - 3) }}</b></span>
                             </h4>
                         </div>
@@ -124,6 +124,7 @@
                     <div style="height: 450px;" class="box one" v-if="articles.length > 0"
                          v-for="articlea in filteredProducts.slice(startSlice,endSlice)" v-bind:key="articlea.code"
                          v-b-tooltip.hover.html="'<h6>'+articlea.body+'</h6>'">
+                        <p v-if="articlea.toDate" class="promotionDate">Promocija vazi do: <b>{{ articlea.toDate }}</b></p>
                         <p class="textOverflow" align="center">{{ articlea.body }}</p>
                         <div style="margin-top: 50px">
                             <img center v-if="articlea.imageUrl !== null && articlea.shop == 'maxi'" class="center"

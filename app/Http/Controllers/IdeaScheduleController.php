@@ -66,8 +66,9 @@ class IdeaScheduleController extends Controller
 
                 array_push($storeRecords, ['code' => $results[$i]->code, 'title' => $results[$i]->manufacturer,
                     'body' => $results[$i]->name, 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => implode(',', $results[$i]->barcodes),
-                    'formattedPrice' => $results[$i]->price->formatted_price, 'price' => $results[$i]->price->amount, 'oldPrice' => $results[$i]->offer->original_price->formatted_price,
-                    'supplementaryPriceLabel1' => $results[$i]->statistical_price, 'supplementaryPriceLabel2' => null, 'shop' => 'idea', 'category' => 'akcija']);
+                    'toDate' =>  str_replace('.','/', substr($results[$i]->offer->end_on,0,-6)), 'formattedPrice' => $results[$i]->price->formatted_price, 'price' => $results[$i]->price->amount,
+                    'oldPrice' => $results[$i]->offer->original_price->formatted_price, 'supplementaryPriceLabel1' => $results[$i]->statistical_price,
+                    'supplementaryPriceLabel2' => null, 'shop' => 'idea', 'category' => 'akcija']);
             }
 
             action_sale::where('shop', 'idea')->delete();
@@ -81,6 +82,7 @@ class IdeaScheduleController extends Controller
                 $article->imageUrl = $record['imageUrl'];
                 $article->imageDefault = $record['imageDefault'];
                 $article->barcodes = $record['barcodes'];
+                $article->toDate = $record['toDate'];
                 $article->formattedPrice = $record['formattedPrice'];
                 $article->price = $record['price'];
                 $article->oldPrice = $record['oldPrice'];
