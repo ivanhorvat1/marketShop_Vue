@@ -27,8 +27,9 @@ class UniverexportScheduleController extends Controller
         $saved = false;
         $success = false;
 
-        foreach ($categories as $key => $value) {
 
+
+        foreach ($categories as $key => $value) {
             if ($key == 'Pica i napici' && $p == 0) {
                 univerexport_action_sale::where('category', 'pice')->delete();
                 $p++;
@@ -44,94 +45,97 @@ class UniverexportScheduleController extends Controller
             }
 
             for ($i = 0; $i < count($value['id']); $i++) {
-
                 /*var_dump($value['salePrice'][$i]);
                 var_dump(strpos($value['salePrice'][$i], ".")); continue;*/
 
-                if (strpos($value['salePrice'][$i], ".") == false) {
-                    $price = $value['salePrice'][$i] . '00';
-                    $formattedPrice = $value['salePrice'][$i] . ",00 RSD";
-                } else {
-                    $price = str_replace('.', '', $value['salePrice'][$i]);
-                    $formattedPrice = str_replace('.', ',', $value['salePrice'][$i]) . " RSD";
-                }
-
-                if (!$price) {
-                    $price = null;
-                }
-
-                if ($key == 'Pica i napici') {
-                    $article = univerexport_drink::where('code', (int)$value['id'][$i])->first();
-                    if (!$article) continue;
-                } elseif ($key == 'Slatko i slano') {
-                    $article = univerexport_sweets::where('code', (int)$value['id'][$i])->first();
-                    if (!$article) continue;
-                } elseif ($key == 'Smrznuto') {
-                    $article = univerexport_freeze::where('code', (int)$value['id'][$i])->first();
-                    if (!$article) continue;
-                } elseif ($key == 'Pekara i mesara') {
-                    $article = univerexport_meats::where('code', (int)$value['id'][$i])->first();
-                    if (!$article) continue;
-                } else {
-                    continue;
-                }
-
-
-                if ($article) {
-                    $code = $value['id'][$i];
-                    $barcodes = $article->barcodes;
-                    $title = $value['manufacturer'][$i];
-                    $body = $value['name'][$i];
-                    $category = $article->category;
-                    $shop = $article->shop;
-                    $imageUrl = $article->imageUrl;
-                    $imageDefault = 'https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694';
-                    $article->formattedPrice = $formattedPrice;
-                    $article->price = $price;
-                    $saved = $article->save();
-
-                    if ($value['oldPrice'][$i] != 0) {
-
-                        if (strpos($value['salePrice'][$i], ".") == false) {
-                            $price = $value['salePrice'][$i] . '00';
-                            $formattedPrice = $value['salePrice'][$i] . ",00 RSD";
-                        } else {
-                            $price = str_replace('.', '', $value['salePrice'][$i]);
-                            $formattedPrice = str_replace('.', ',', $value['salePrice'][$i]) . " RSD";
-                        }
-
-                        if (strpos($value['oldPrice'][$i], ".") == false) {
-                            $old_price = $value['oldPrice'][$i] . ",00 RSD";
-                        } else {
-                            $old_price = str_replace('.', ',', $value['oldPrice'][$i]) . " RSD";
-                        }
-
-
-                        $data = [
-                            'code' => $code,
-                            'title' => $title,
-                            'body' => $body,
-                            'barcodes' => $barcodes,
-                            'category' => $category,
-                            'shop' => $shop,
-                            'imageUrl' => $imageUrl,
-                            'imageDefault' => $imageDefault,
-                            'formattedPrice' => $formattedPrice,
-                            'price' => $price,
-                            'oldPrice' => $old_price
-                        ];
-
-                        $saved = univerexport_action_sale::create($data);
+                if(isset($value['salePrice'][$i])) {
+                    if (strpos($value['salePrice'][$i], ".") == false) {
+                        $price = $value['salePrice'][$i] . '00';
+                        $formattedPrice = $value['salePrice'][$i] . ",00 RSD";
+                    } else {
+                        $price = str_replace('.', '', $value['salePrice'][$i]);
+                        $formattedPrice = str_replace('.', ',', $value['salePrice'][$i]) . " RSD";
                     }
-                }
+
+                    if (!$price) {
+                        $price = null;
+                    }
+
+                    if ($key == 'Pica i napici') {
+                        $article = univerexport_drink::where('code', (int)$value['id'][$i])->first();
+                        if (!$article) continue;
+                    } elseif ($key == 'Slatko i slano') {
+                        $article = univerexport_sweets::where('code', (int)$value['id'][$i])->first();
+                        if (!$article) continue;
+                    } elseif ($key == 'Smrznuto') {
+                        $article = univerexport_freeze::where('code', (int)$value['id'][$i])->first();
+                        if (!$article) continue;
+                    } elseif ($key == 'Pekara i mesara') {
+                        $article = univerexport_meats::where('code', (int)$value['id'][$i])->first();
+                        if (!$article) continue;
+                    } else {
+                        continue;
+                    }
 
 
-                if ($saved) {
-                    $success = true;
-                } else {
-                    return response()->json([
-                        "success" => false
-                    ]);
+                    if ($article) {
+                        $code = $value['id'][$i];
+                        $barcodes = $article->barcodes;
+                        $title = $value['manufacturer'][$i];
+                        $body = $value['name'][$i];
+                        $category = $article->category;
+                        $shop = $article->shop;
+                        $imageUrl = $article->imageUrl;
+                        $imageDefault = 'https://d3el976p2k4mvu.cloudfront.net/_ui/responsive/common/images/product-details/product-no-image.svg?buildNumber=97d8e0570565bc1fcf193b453773e43360a2c694';
+                        $article->formattedPrice = $formattedPrice;
+                        $article->price = $price;
+                        $article->supplementaryPriceLabel2 = $value['referencePrice'][$i] . ' ' . $value['referenceMeasure'][$i];
+                        $saved = $article->save();
+
+                        if ($value['oldPrice'][$i] != 0) {
+
+                            if (strpos($value['salePrice'][$i], ".") == false) {
+                                $price = $value['salePrice'][$i] . '00';
+                                $formattedPrice = $value['salePrice'][$i] . ",00 RSD";
+                            } else {
+                                $price = str_replace('.', '', $value['salePrice'][$i]);
+                                $formattedPrice = str_replace('.', ',', $value['salePrice'][$i]) . " RSD";
+                            }
+
+                            if (strpos($value['oldPrice'][$i], ".") == false) {
+                                $old_price = $value['oldPrice'][$i] . ",00 RSD";
+                            } else {
+                                $old_price = str_replace('.', ',', $value['oldPrice'][$i]) . " RSD";
+                            }
+
+
+                            $data = [
+                                'code' => $code,
+                                'title' => $title,
+                                'body' => $body,
+                                'barcodes' => $barcodes,
+                                'category' => $category,
+                                'shop' => $shop,
+                                'imageUrl' => $imageUrl,
+                                'imageDefault' => $imageDefault,
+                                'formattedPrice' => $formattedPrice,
+                                'price' => $price,
+                                'oldPrice' => $old_price,
+                                'supplementaryPriceLabel2' => $value['referencePrice'][$i] . ' ' . $value['referenceMeasure'][$i]
+                            ];
+
+                            $saved = univerexport_action_sale::create($data);
+                        }
+                    }
+
+
+                    if ($saved) {
+                        $success = true;
+                    } else {
+                        return response()->json([
+                            "success" => false
+                        ]);
+                    }
                 }
             }
         }
@@ -147,7 +151,7 @@ class UniverexportScheduleController extends Controller
     {
         $this->cat1 = $cat1;
         $this->cat2 = $cat2;
-        $cache = Cache::remember('curlUniverexport', 25, function () {
+//        $cache = Cache::remember('curlUniverexport', 25, function () {
             ini_set('max_execution_time', 30000); //300 seconds = 5 minutes
             ini_set('memory_limit', '-1');
 
@@ -325,9 +329,9 @@ class UniverexportScheduleController extends Controller
             }
 
             return $products;
-        });
+        /*});
 
-        return $cache;
+        return $cache;*/
 
     }
 

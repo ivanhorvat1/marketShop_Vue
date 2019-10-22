@@ -2205,6 +2205,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2226,14 +2259,17 @@ __webpack_require__.r(__webpack_exports__);
       supplementaryPriceIdea2: '',
       supplementaryPriceMaxi: '',
       supplementaryPriceMaxi2: '',
+      toDateMaxi: '',
       ideaOldPrice: '--',
       ideaCena: '--',
+      toDateIdea: '',
       maxiOldPrice: '--',
       maxiCena: '--',
       disCena: '--',
       disOldPrice: '--',
       univerexportCena: '--',
       univerexportOldPrice: '--',
+      supplementaryPriceUniver2: '',
       selected: 'ActionAll'
       /*options: [
           { value: 'A', text: 'Option A (from options prop)' },
@@ -2311,6 +2347,8 @@ __webpack_require__.r(__webpack_exports__);
       this.ideaOldPrice = article.ideaOldPrice;
       this.supplementaryPriceIdea = article.supplementaryPriceIdea;
       this.supplementaryPriceIdea2 = article.supplementaryPriceIdea2;
+      this.toDateIdea = article.toDateIdea;
+      this.toDateMaxi = article.toDateMaxi;
 
       if (article.supplementaryPriceMaxi && article.supplementaryPriceMaxi2) {
         this.supplementaryPriceMaxi = article.supplementaryPriceMaxi.replace('rsd/Kg', 'Din/Kg');
@@ -2318,6 +2356,12 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.supplementaryPriceMaxi = '';
         this.supplementaryPriceMaxi2 = '';
+      }
+
+      if (article.supplementaryPriceUniver2) {
+        this.supplementaryPriceUniver2 = article.supplementaryPriceUniver2;
+      } else {
+        this.supplementaryPriceUniver2 = '';
       }
 
       if (article.ideaCena) {
@@ -75510,89 +75554,129 @@ var render = function() {
                           _vm._v(" "),
                           _c("div", { staticClass: "poster p1" }, [
                             article.maxiCena
-                              ? _c("h4", [
-                                  _c("img", {
-                                    staticStyle: {
-                                      height: "50px",
-                                      width: "80px"
-                                    },
-                                    attrs: {
-                                      src:
-                                        "images/market_logo/delhaize-maxi-logo-vector.png"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("span", [
-                                    _c("small", [
-                                      _c("del", [
+                              ? _c(
+                                  "h4",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "b-tooltip",
+                                        rawName: "v-b-tooltip.hover.html",
+                                        value:
+                                          "<h6>Promocija traje do: " +
+                                          article.toDateMaxi +
+                                          "</h6>",
+                                        expression:
+                                          "'<h6>Promocija traje do: '+article.toDateMaxi+'</h6>'",
+                                        modifiers: { hover: true, html: true }
+                                      }
+                                    ]
+                                  },
+                                  [
+                                    _c("img", {
+                                      staticStyle: {
+                                        height: "50px",
+                                        width: "80px"
+                                      },
+                                      attrs: {
+                                        src:
+                                          "images/market_logo/delhaize-maxi-logo-vector.png"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("span", [
+                                      _c("small", [
+                                        _c("del", [
+                                          _vm._v(
+                                            _vm._s(
+                                              article.maxiOldPrice.substring(
+                                                0,
+                                                article.maxiOldPrice.length - 3
+                                              )
+                                            )
+                                          )
+                                        ])
+                                      ])
+                                    ]),
+                                    _vm._v(
+                                      " \n                                "
+                                    ),
+                                    _c("span", [
+                                      _c("b", [
                                         _vm._v(
                                           _vm._s(
-                                            article.maxiOldPrice.substring(
+                                            article.maxiCena.substring(
                                               0,
-                                              article.maxiOldPrice.length - 3
+                                              article.maxiCena.length - 3
                                             )
                                           )
                                         )
                                       ])
                                     ])
-                                  ]),
-                                  _vm._v(" \n                                "),
-                                  _c("span", [
-                                    _c("b", [
-                                      _vm._v(
-                                        _vm._s(
-                                          article.maxiCena.substring(
-                                            0,
-                                            article.maxiCena.length - 3
-                                          )
-                                        )
-                                      )
-                                    ])
-                                  ])
-                                ])
+                                  ]
+                                )
                               : _vm._e(),
                             _vm._v(" "),
                             article.ideaCena
-                              ? _c("h4", [
-                                  _c("img", {
-                                    staticStyle: {
-                                      height: "50px",
-                                      width: "80px"
-                                    },
-                                    attrs: {
-                                      src:
-                                        "images/market_logo/Idea_Logo_resized.png"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("span", [
-                                    _c("small", [
-                                      _c("del", [
+                              ? _c(
+                                  "h4",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "b-tooltip",
+                                        rawName: "v-b-tooltip.hover.html",
+                                        value:
+                                          "<h6>Promocija traje do: " +
+                                          article.toDateIdea +
+                                          "</h6>",
+                                        expression:
+                                          "'<h6>Promocija traje do: '+article.toDateIdea+'</h6>'",
+                                        modifiers: { hover: true, html: true }
+                                      }
+                                    ]
+                                  },
+                                  [
+                                    _c("img", {
+                                      staticStyle: {
+                                        height: "50px",
+                                        width: "80px"
+                                      },
+                                      attrs: {
+                                        src:
+                                          "images/market_logo/Idea_Logo_resized.png"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("span", [
+                                      _c("small", [
+                                        _c("del", [
+                                          _vm._v(
+                                            _vm._s(
+                                              article.ideaOldPrice.substring(
+                                                0,
+                                                article.ideaOldPrice.length - 3
+                                              )
+                                            )
+                                          )
+                                        ])
+                                      ])
+                                    ]),
+                                    _vm._v(
+                                      " \n                                "
+                                    ),
+                                    _c("span", [
+                                      _c("b", [
                                         _vm._v(
                                           _vm._s(
-                                            article.ideaOldPrice.substring(
+                                            article.ideaCena.substring(
                                               0,
-                                              article.ideaOldPrice.length - 3
+                                              article.ideaCena.length - 3
                                             )
                                           )
                                         )
                                       ])
                                     ])
-                                  ]),
-                                  _vm._v(" \n                                "),
-                                  _c("span", [
-                                    _c("b", [
-                                      _vm._v(
-                                        _vm._s(
-                                          article.ideaCena.substring(
-                                            0,
-                                            article.ideaCena.length - 3
-                                          )
-                                        )
-                                      )
-                                    ])
-                                  ])
-                                ])
+                                  ]
+                                )
                               : _vm._e(),
                             _vm._v(" "),
                             article.disCena
@@ -75715,9 +75799,23 @@ var render = function() {
                         },
                         [
                           articlea.toDate
-                            ? _c("p", { staticClass: "promotionDate" }, [
-                                _vm._v("Promocija vazi do: "),
-                                _c("b", [_vm._v(_vm._s(articlea.toDate))])
+                            ? _c("section", { staticClass: "promotionDate" }, [
+                                _c("div", { staticClass: "row" }, [
+                                  _c("div", { staticClass: "col-md-1" }, [
+                                    _c("div", { attrs: { id: "header" } }, [
+                                      _c("p", { staticClass: "verticaltext" }, [
+                                        _vm._v(
+                                          "\n                                            Promocija "
+                                        ),
+                                        _c("br"),
+                                        _vm._v(" traje do: "),
+                                        _c("b", [
+                                          _vm._v(_vm._s(articlea.toDate))
+                                        ])
+                                      ])
+                                    ])
+                                  ])
+                                ])
                               ])
                             : _vm._e(),
                           _vm._v(" "),
@@ -75933,7 +76031,7 @@ var render = function() {
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "modal-header col-sm-12" }, [
                   _c("h4", { staticStyle: { align: "center" } }, [
-                    _vm._v(_vm._s(_vm.title))
+                    _vm._v(_vm._s(_vm.body))
                   ])
                 ]),
                 _vm._v(" "),
@@ -75946,56 +76044,96 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-content col-sm-6" }, [
-                  _c("h6", [_vm._v(_vm._s(_vm.body))]),
-                  _vm._v(" "),
                   _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-sm-6" }, [
-                      _c("img", {
-                        staticStyle: { height: "55px", width: "80px" },
-                        attrs: {
-                          src:
-                            "images/market_logo/delhaize-maxi-logo-vector.png"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("h5", [_c("del", [_vm._v(_vm._s(_vm.maxiOldPrice))])]),
-                      _vm._v(" "),
-                      _c("h5", [
-                        _c("b", [
-                          _vm._v(
-                            _vm._s(_vm.maxiCena) +
-                              _vm._s(" " + _vm.supplementaryPriceMaxi2)
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("h5", [
-                        _c("b", [_vm._v(_vm._s(_vm.supplementaryPriceMaxi))])
-                      ]),
-                      _c("br")
-                    ]),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "b-tooltip",
+                            rawName: "v-b-tooltip.hover.html",
+                            value:
+                              "<h6>Promocija traje do: " +
+                              _vm.toDateMaxi +
+                              "</h6>",
+                            expression:
+                              "'<h6>Promocija traje do: '+toDateMaxi+'</h6>'",
+                            modifiers: { hover: true, html: true }
+                          }
+                        ],
+                        staticClass: "col-sm-6"
+                      },
+                      [
+                        _c("img", {
+                          staticStyle: { height: "55px", width: "80px" },
+                          attrs: {
+                            src:
+                              "images/market_logo/delhaize-maxi-logo-vector.png"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("h5", [
+                          _c("del", [_vm._v(_vm._s(_vm.maxiOldPrice))])
+                        ]),
+                        _vm._v(" "),
+                        _c("h5", [
+                          _c("b", [
+                            _vm._v(
+                              _vm._s(_vm.maxiCena) +
+                                _vm._s(" " + _vm.supplementaryPriceMaxi2)
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("h5", [
+                          _c("b", [_vm._v(_vm._s(_vm.supplementaryPriceMaxi))])
+                        ]),
+                        _c("br")
+                      ]
+                    ),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-sm-6" }, [
-                      _c("img", {
-                        staticStyle: { height: "50px", width: "80px" },
-                        attrs: {
-                          src: "images/market_logo/Idea_Logo_resized.png"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("h5", [_c("del", [_vm._v(_vm._s(_vm.ideaOldPrice))])]),
-                      _vm._v(" "),
-                      _c("h5", [_c("b", [_vm._v(_vm._s(_vm.ideaCena))])]),
-                      _vm._v(" "),
-                      _c("h5", [
-                        _c("b", [
-                          _vm._v(
-                            _vm._s(_vm.supplementaryPriceIdea) +
-                              _vm._s(_vm.supplementaryPriceIdea2)
-                          )
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "b-tooltip",
+                            rawName: "v-b-tooltip.hover.html",
+                            value:
+                              "<h6>Promocija traje do: " +
+                              _vm.toDateIdea +
+                              "</h6>",
+                            expression:
+                              "'<h6>Promocija traje do: '+toDateIdea+'</h6>'",
+                            modifiers: { hover: true, html: true }
+                          }
+                        ],
+                        staticClass: "col-sm-6"
+                      },
+                      [
+                        _c("img", {
+                          staticStyle: { height: "50px", width: "80px" },
+                          attrs: {
+                            src: "images/market_logo/Idea_Logo_resized.png"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("h5", [
+                          _c("del", [_vm._v(_vm._s(_vm.ideaOldPrice))])
+                        ]),
+                        _vm._v(" "),
+                        _c("h5", [_c("b", [_vm._v(_vm._s(_vm.ideaCena))])]),
+                        _vm._v(" "),
+                        _c("h5", [
+                          _c("b", [
+                            _vm._v(
+                              _vm._s(_vm.supplementaryPriceIdea) +
+                                _vm._s(_vm.supplementaryPriceIdea2)
+                            )
+                          ])
                         ])
-                      ])
-                    ]),
+                      ]
+                    ),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-sm-6" }, [
                       _c("img", {
@@ -76022,6 +76160,10 @@ var render = function() {
                       _vm._v(" "),
                       _c("h5", [
                         _c("b", [_vm._v(_vm._s(_vm.univerexportCena))])
+                      ]),
+                      _vm._v(" "),
+                      _c("h5", [
+                        _c("b", [_vm._v(_vm._s(_vm.supplementaryPriceUniver2))])
                       ])
                     ])
                   ])

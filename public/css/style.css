@@ -1151,6 +1151,8 @@ body {
 
 /* END HOMEPAGE ANIMATION TEXT */
 
+/* SECTION FOR BANNER IN LEFT AND CONTENT IN RIGHT*/
+
 section {
     width: 95%;
     margin: auto;
@@ -1170,6 +1172,10 @@ div#right_side {
     position: fixed;
     top: 10px;
 }
+
+/* END SECTION FOR BANNER IN LEFT AND CONTENT IN RIGHT*/
+
+/* LOAD MORE BUTTON */
 
 button.load_more {
     height: 40px;
@@ -1191,24 +1197,19 @@ button.load_more:hover, button.load_more:focus, button.load_more:active {
     letter-spacing: 0.125rem;
 }
 
+/* END LOAD MORE BUTTON */
+
 /*PROMOTION DATE*/
 
 .promotionDate {
-     /*position: absolute;
-    padding-right: 77px;
-     !*transform: rotate(-45deg);*!
-     !*padding-top: 10px;*!
-    !*clip-path: polygon(0 0, 0% 400%, 300% 0);*!
-     background-color: yellow;
-    !*margin-right: 500px;*!*/
     text-align: left;
-    /*line-height: 200px;*/
     padding-top: 90px;
     position: absolute;
     z-index: 1;
     width: 100px;
     height: 100px;
     font-size: 15px;
+    font-family: Garamond;
  }
 
 .promotionDate:before {
@@ -1219,8 +1220,26 @@ button.load_more:hover, button.load_more:focus, button.load_more:active {
     left: 0;
     width: 0;
     height: 0;
-    border-top: 80px solid yellow;
+    border-top: 100px solid yellow;
     border-right: 150px solid transparent;
 }
 
+#header {
+    position: absolute;
+}
+.verticaltext {
+    transform: rotate(-35deg);
+    transform-origin: right, top;
+    -ms-transform: rotate(-35deg);
+    -ms-transform-origin:right, top;
+    -webkit-transform: rotate(-35deg);
+    -webkit-transform-origin:right, top;
+    position: absolute;
+    z-index: 1;
+    width: 100px;
+    height: 100px;
+    padding-top: 12px;
+    text-align: center;
+}
 
+/*END PROMOTION DATE*/

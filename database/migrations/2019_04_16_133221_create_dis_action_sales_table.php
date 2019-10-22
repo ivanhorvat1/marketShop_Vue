@@ -19,6 +19,7 @@ class CreateDisActionSalesTable extends Migration
             $table->string('title')->nullable();
             $table->text('body')->nullable();
             $table->text('barcodes')->nullable();
+            $table->string('toDate')->nullable()->default('nedostupno');
             $table->string('formattedPrice')->nullable();
             $table->integer('price')->nullable();
             $table->string('oldPrice')->nullable()->default(0);

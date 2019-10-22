@@ -48,10 +48,12 @@ class ActionSaleController extends Controller
                                 $ide['maxiOldPrice'] = $max['oldPrice'];
                                 $ide['supplementaryPriceMaxi'] = $max['supplementaryPriceLabel1'];
                                 $ide['supplementaryPriceMaxi2'] = $max['supplementaryPriceLabel2'];
+                                $ide['toDateMaxi'] = $max['toDate'];
                                 $ide['ideaCena'] = $ide['formattedPrice'];
                                 $ide['ideaOldPrice'] = $ide['oldPrice'];
                                 $ide['supplementaryPriceIdea'] = $ide['supplementaryPriceLabel1'];
                                 $ide['supplementaryPriceIdea2'] = $ide['supplementaryPriceLabel2'];
+                                $ide['toDateIdea'] = $ide['toDate'];
                                 if($max['imageUrl'] != null) {
                                     $ide['imageUrl'] = 'https://d3el976p2k4mvu.cloudfront.net'.$max['imageUrl'];
                                 }else{
@@ -157,6 +159,7 @@ class ActionSaleController extends Controller
 
                                     $maxidedis[$uni['shop'] . 'Cena'] = str_replace('.', ',', $uni['formattedPrice']);
                                     $maxidedis[$uni['shop'] . 'OldPrice'] = $uni['oldPrice'];
+                                    $maxidedis['supplementaryPriceUniver2'] = $uni['supplementaryPriceLabel2'];
                                     //if (!in_array($maxidedis['barcodes'], array_column($maxiIdeaDisUni, 'barcodes'))) {
                                     array_push($maxiIdeaDisUni, $maxidedis);
                                     //}
@@ -449,9 +452,11 @@ class ActionSaleController extends Controller
                                 $ide['maxiOldPrice'] = $max['oldPrice'];
                                 $ide['supplementaryPriceMaxi'] = $max['supplementaryPriceLabel1'];
                                 $ide['supplementaryPriceMaxi2'] = $max['supplementaryPriceLabel2'];
+                                $ide['toDateMaxi'] = $max['toDate'];
                                 $ide['ideaOldPrice'] = $ide['oldPrice'];
                                 $ide['supplementaryPriceIdea'] = $ide['supplementaryPriceLabel1'];
                                 $ide['supplementaryPriceIdea2'] = $ide['supplementaryPriceLabel2'];
+                                $ide['toDateIdea'] = $ide['toDate'];
 
                                 if($max['imageUrl'] != null) {
                                     $ide['imageUrl'] = 'https://d3el976p2k4mvu.cloudfront.net'.$max['imageUrl'];

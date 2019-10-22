@@ -579,10 +579,10 @@ console.log(document.documentElement.scrollTop);
         },
         created() {
             var width = $(window).width();
-            if(width > 1900){
+            if (width > 1900) {
                 this.endSlice = 15;
                 this.onScrollSlice = 15;
-            }else{
+            } else {
                 this.endSlice = 12;
                 this.onScrollSlice = 12;
             }
@@ -637,7 +637,7 @@ console.log(document.documentElement.scrollTop);
                 };
                 scrollToTop();
             },
-            loadMore(){
+            loadMore() {
                 if (this.products.length > 0 || this.articles.length > 0) {
                     if (this.products.length < this.endSlice && this.articles.length < this.endSlice) {
                         document.getElementById("loadMoreButton").style.display = "none";
@@ -651,11 +651,11 @@ console.log(document.documentElement.scrollTop);
                     let scroll = Math.ceil($(window).scrollTop() + $(window).height());
                     let windowHeight = Math.round($(document).height());
                     let width = $(window).width();
-                    if(width > 1500) {
+                    if (width > 1500) {
                         document.getElementById("loadMoreButton").style.display = "none";
                     }
 
-                    if (document.documentElement.scrollTop> 100) {
+                    if (document.documentElement.scrollTop > 100) {
                         $('#left_side').addClass("fix-one");
                     } else {
                         $('#left_side').removeClass("fix-one");
@@ -698,7 +698,7 @@ console.log(document.documentElement.scrollTop);
                         $('body').addClass('loaded');
                         window.scrollTo(0, 0);
 
-                        if($(window).width() < 1500) {
+                        if ($(window).width() < 1500) {
                             document.getElementById("loadMoreButton").style.display = "block";
                         }
 
@@ -723,7 +723,7 @@ console.log(document.documentElement.scrollTop);
                     this.articles = res.data;
                     window.scrollTo(0, 0);
 
-                    if($(window).width() < 1500) {
+                    if ($(window).width() < 1500) {
                         document.getElementById("loadMoreButton").style.display = "block";
                     }
 
@@ -751,7 +751,7 @@ console.log(document.documentElement.scrollTop);
                             // $(".overlay").remove();
                             window.scrollTo(0, 0);
 
-                            if($(window).width() < 1500) {
+                            if ($(window).width() < 1500) {
                                 document.getElementById("loadMoreButton").style.display = "block";
                             }
 
