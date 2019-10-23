@@ -48,7 +48,7 @@ Route::get('/meats', [
 ]);
 
 Route::get('/test', [
-    'uses' => 'FrontEndController@getImage',
+    'uses' => 'ActionSaleController@index',
     'as' => 'test'
 ]);
 

@@ -74,14 +74,14 @@
                                     v-b-tooltip.hover.html="'<h6>Promocija traje do: '+article.toDateMaxi+'</h6>'">
                                     <img style="height: 50px; width: 80px"
                                          src="images/market_logo/delhaize-maxi-logo-vector.png"/>
-                                    <span><small><del>{{ article.maxiOldPrice.substring(0, article.maxiOldPrice.length - 3) }}</del></small></span>&nbsp;
+                                    <span v-if="article.maxiOldPrice"><small><del>{{ article.maxiOldPrice.substring(0, article.maxiOldPrice.length - 3) }}</del></small></span>&nbsp;
                                     <span><b>{{ article.maxiCena.substring(0, article.maxiCena.length - 3) }}</b></span>
                                 </h4>
                                 <h4 v-if="article.ideaCena"
                                     v-b-tooltip.hover.html="'<h6>Promocija traje do: '+article.toDateIdea+'</h6>'">
                                     <img style="height: 50px; width: 80px"
                                          src="images/market_logo/Idea_Logo_resized.png"/>
-                                    <span><small><del>{{ article.ideaOldPrice.substring(0, article.ideaOldPrice.length - 3) }}</del></small></span>&nbsp;
+                                    <span v-if="article.ideaOldPrice"><small><del>{{ article.ideaOldPrice.substring(0, article.ideaOldPrice.length - 3) }}</del></small></span>&nbsp;
                                     <span><b>{{ article.ideaCena.substring(0, article.ideaCena.length - 3) }}</b></span>
                                 </h4>
                                 <h4 v-if="article.disCena">
@@ -168,7 +168,7 @@
                                     <img style="height: 50px; width: 80px"
                                          src="images/market_logo/Idea_Logo_resized.png"/><br>
                                     <h5>
-                                        <del>{{ articlea.oldPrice }}</del>
+                                        <del v-if="articlea.oldPrice">{{ articlea.oldPrice }}</del>
                                     </h5>
                                     <b>{{articlea.formattedPrice }}{{' '+ !articlea.supplementaryPriceLabel2 ?
                                         articlea.supplementaryPriceLabel2 : ''}}</b>

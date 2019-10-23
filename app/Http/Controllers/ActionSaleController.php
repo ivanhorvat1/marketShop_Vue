@@ -25,119 +25,250 @@ class ActionSaleController extends Controller
 //        $cache = Cache::remember('maxiIdeaDisSale', 10, function () {
         $cache = Cache::rememberForever('maxiIdeaDisSale', function () {
 
-            $maxi = action_sale::where('shop', 'maxi')->where('category', 'akcija')->get();
-            $idea = action_sale::where('shop', 'idea')->where('category', 'akcija')->get();
-            $dis = dis_action_sale::orderBy('price', 'DESC')->get();
-            $univer = univerexport_action_sale::where('deleted',0)->orderBy('price', 'DESC')->get();
+        $maxi = action_sale::where('shop', 'maxi')->where('category', 'akcija')->whereNotNull('barcodes')->get();
+        //$idea = action_sale::where('shop', 'idea')->where('category', 'akcija')->get();
+        $dis = dis_action_sale::orderBy('price', 'DESC')->get();
+        $univer = univerexport_action_sale::where('deleted', 0)->orderBy('price', 'DESC')->get();
 
 
 //            $maxi= [['barcodes' =>'2501011010845,8600995140020','price'=>200,'shop'=>'maxi'],['barcodes' =>'2501011010846,8600995140021','price'=>200,'shop'=>'maxi']];
 //            $idea= [['barcodes' =>'2501011010845,2501011010844,2501011010843,8600995140020','price'=>400,'shop'=>'idea'],['barcodes' =>'2501011010855,2501011010844,2501011010843,8600995140020','price'=>400,'shop'=>'idea']];
 
-            $maxiIdea = [];
+        $maxiIdea = [];
+        $checkIdea = [];
 
-            foreach ($maxi as $max) {
-                foreach ($idea as $ide) {
-                    $barcodesIdea = explode(',', $ide['barcodes']);
-                    $barcodesMaxi = explode(',', $max['barcodes']);
-                    foreach ($barcodesIdea as $barIde) {
-                        foreach ($barcodesMaxi as $barMax) {
-                            if ($barIde == $barMax) {
-                                //if ($max['price'] >= $ide['price']) {
+        foreach ($maxi as $max) {
+            //foreach ($idea as $ide) {
+            //$barcodesIdea = explode(',', $ide['barcodes']);
+            $barcodesMaxi = explode(',', $max['barcodes']);
+//                    foreach ($barcodesIdea as $barIde) {
+            foreach ($barcodesMaxi as $barMax) {
+//                            if ($barIde == $barMax) {
+//                                //if ($max['price'] >= $ide['price']) {
+//                                $ide['maxiCena'] = $max['formattedPrice'];
+//                                $ide['maxiOldPrice'] = $max['oldPrice'];
+//                                $ide['supplementaryPriceMaxi'] = $max['supplementaryPriceLabel1'];
+//                                $ide['supplementaryPriceMaxi2'] = $max['supplementaryPriceLabel2'];
+//                                $ide['toDateMaxi'] = $max['toDate'];
+//                                $ide['ideaCena'] = $ide['formattedPrice'];
+//                                $ide['ideaOldPrice'] = $ide['oldPrice'];
+//                                $ide['supplementaryPriceIdea'] = $ide['supplementaryPriceLabel1'];
+//                                $ide['supplementaryPriceIdea2'] = $ide['supplementaryPriceLabel2'];
+//                                $ide['toDateIdea'] = $ide['toDate'];
+//                                if($max['imageUrl'] != null) {
+//                                    $ide['imageUrl'] = 'https://d3el976p2k4mvu.cloudfront.net'.$max['imageUrl'];
+//                                }else{
+//                                    $ide['imageUrl'] = $ide['imageDefault'];
+//                                }
+//                                array_push($maxiIdea, $ide);
+//                                /*} else {
+//                                    $max['ideaCena'] = $ide['formattedPrice'];
+//                                    $max['maxiCena'] = $max['formattedPrice'];
+//                                    array_push($maxiIdea, $max);
+//                                }*/
+//                            }
+//                        }
+                $idea = action_sale::where('shop', 'idea')->where('barcodes', 'LIKE', "%$barMax%")->whereNotNull('barcodes')->get()->toArray();
+//dd($query);
+
+                if (!empty($idea)) {
+                    if(!in_array($idea, $checkIdea)) {
+                        foreach ($idea as $ide) {
+                            array_push($checkIdea, $idea);
+                            $ide['maxiCena'] = $max['formattedPrice'];
+                            $ide['maxiOldPrice'] = $max['oldPrice'];
+                            $ide['maxiBarcodes'] = $max['barcodes'];
+//                        $ide['barcodes'] = $max['barcodes'].','.$ide['barcodes'];
+                            $ide['supplementaryPriceMaxi'] = $max['supplementaryPriceLabel1'];
+                            $ide['supplementaryPriceMaxi2'] = $max['supplementaryPriceLabel2'];
+                            $ide['toDateMaxi'] = $max['toDate'];
+                            $ide['ideaCena'] = $ide['formattedPrice'];
+                            $ide['ideaOldPrice'] = $ide['oldPrice'];
+                            $ide['supplementaryPriceIdea'] = $ide['supplementaryPriceLabel1'];
+                            $ide['supplementaryPriceIdea2'] = $ide['supplementaryPriceLabel2'];
+                            $ide['toDateIdea'] = $ide['toDate'];
+                            if ($max['imageUrl'] != null) {
+                                $ide['imageUrl'] = 'https://d3el976p2k4mvu.cloudfront.net' . $max['imageUrl'];
+                            } else {
+                                $ide['imageUrl'] = $ide['imageDefault'];
+                            }
+                            array_push($maxiIdea, $ide);
+                        }
+                    }
+                } elseif (!empty(Sweets::where('shop', 'idea')->where('barcodes', 'LIKE', "%$barMax%")->whereNotNull('barcodes')->get()->toArray())){
+                    $ideaSweets = Sweets::where('shop', 'idea')->where('barcodes', 'LIKE', "%$barMax%")->whereNotNull('barcodes')->get()->toArray();
+                    if (!empty($ideaSweets)) {
+                        if(!in_array($ideaSweets, $checkIdea)) {
+                            foreach ($ideaSweets as $ide) {
+                                array_push($checkIdea, $ideaSweets);
+//                            var_dump('2',$max['barcodes']);
                                 $ide['maxiCena'] = $max['formattedPrice'];
                                 $ide['maxiOldPrice'] = $max['oldPrice'];
+                                $ide['maxiBarcodes'] = $max['barcodes'];
+//                            $ide['barcodes'] = $max['barcodes'].','.$ide['barcodes'];
                                 $ide['supplementaryPriceMaxi'] = $max['supplementaryPriceLabel1'];
                                 $ide['supplementaryPriceMaxi2'] = $max['supplementaryPriceLabel2'];
                                 $ide['toDateMaxi'] = $max['toDate'];
                                 $ide['ideaCena'] = $ide['formattedPrice'];
-                                $ide['ideaOldPrice'] = $ide['oldPrice'];
                                 $ide['supplementaryPriceIdea'] = $ide['supplementaryPriceLabel1'];
                                 $ide['supplementaryPriceIdea2'] = $ide['supplementaryPriceLabel2'];
-                                $ide['toDateIdea'] = $ide['toDate'];
-                                if($max['imageUrl'] != null) {
-                                    $ide['imageUrl'] = 'https://d3el976p2k4mvu.cloudfront.net'.$max['imageUrl'];
-                                }else{
+                                $ide['ideaOldPrice'] = null;
+                                if ($max['imageUrl'] != null) {
+                                    $ide['imageUrl'] = 'https://d3el976p2k4mvu.cloudfront.net' . $max['imageUrl'];
+                                } else {
                                     $ide['imageUrl'] = $ide['imageDefault'];
                                 }
                                 array_push($maxiIdea, $ide);
-                                /*} else {
-                                    $max['ideaCena'] = $ide['formattedPrice'];
-                                    $max['maxiCena'] = $max['formattedPrice'];
-                                    array_push($maxiIdea, $max);
-                                }*/
                             }
                         }
                     }
-
-//                    if (explode(',', $ide['barcodes']) == explode(',', $max['barcodes'])) {
-//
-//
-//
-//                        /*$max['price'] = str_replace('.', '', $max['price']);
-//                        if ($max['price'] >= $ide['price']) {
-//                            $ide['maxiCena'] = $max['formattedPrice'];
-//                            $ide['ideaCena'] = $ide['formattedPrice'];
-//                            $ide['imageUrl'] = $max['imageUrl'];
-//                            array_push($maxiIdea, $ide);
-//                        } else {
-//                            $max['ideaCena'] = $ide['formattedPrice'];
-//                            $max['maxiCena'] = $max['formattedPrice'];
-//                            array_push($maxiIdea, $max);
-//                        }*/
-//                    }
+                }elseif (!empty(Freeze::where('shop', 'idea')->where('barcodes', 'LIKE', "%$barMax%")->whereNotNull('barcodes')->get()->toArray())){
+                    $ideaFreeze = Freeze::where('shop', 'idea')->where('barcodes', 'LIKE', "%$barMax%")->whereNotNull('barcodes')->get()->toArray();
+                    if (!empty($ideaFreeze)) {
+                        if(!in_array($ideaFreeze, $checkIdea)) {
+                            foreach ($ideaFreeze as $ide) {
+                                array_push($checkIdea, $ideaFreeze);
+//                            var_dump('3',$max['barcodes']);
+                                $ide['maxiCena'] = $max['formattedPrice'];
+                                $ide['maxiOldPrice'] = $max['oldPrice'];
+                                $ide['maxiBarcodes'] = $max['barcodes'];
+//                            $ide['barcodes'] = $max['barcodes'].','.$ide['barcodes'];
+                                $ide['supplementaryPriceMaxi'] = $max['supplementaryPriceLabel1'];
+                                $ide['supplementaryPriceMaxi2'] = $max['supplementaryPriceLabel2'];
+                                $ide['toDateMaxi'] = $max['toDate'];
+                                $ide['ideaCena'] = $ide['formattedPrice'];
+                                $ide['supplementaryPriceIdea'] = $ide['supplementaryPriceLabel1'];
+                                $ide['supplementaryPriceIdea2'] = $ide['supplementaryPriceLabel2'];
+                                $ide['ideaOldPrice'] = null;
+                                if ($max['imageUrl'] != null) {
+                                    $ide['imageUrl'] = 'https://d3el976p2k4mvu.cloudfront.net' . $max['imageUrl'];
+                                } else {
+                                    $ide['imageUrl'] = $ide['imageDefault'];
+                                }
+                                array_push($maxiIdea, $ide);
+                            }
+                        }
+                    }
+                }elseif (!empty(drink::where('shop', 'idea')->where('barcodes', 'LIKE', "%$barMax%")->whereNotNull('barcodes')->get()->toArray())){
+                    $ideaDrink = drink::where('shop', 'idea')->where('barcodes', 'LIKE', "%$barMax%")->whereNotNull('barcodes')->get()->toArray();
+                    if (!empty($ideaDrink)) {
+                        if(!in_array($ideaDrink, $checkIdea)) {
+                            foreach ($ideaDrink as $ide) {
+                                array_push($checkIdea, $ideaDrink);
+//                            var_dump('4',$max['barcodes']);
+                                $ide['maxiCena'] = $max['formattedPrice'];
+                                $ide['maxiOldPrice'] = $max['oldPrice'];
+                                $ide['maxiBarcodes'] = $max['barcodes'];
+//                            $ide['barcodes'] = $max['barcodes'].','.$ide['barcodes'];
+                                $ide['supplementaryPriceMaxi'] = $max['supplementaryPriceLabel1'];
+                                $ide['supplementaryPriceMaxi2'] = $max['supplementaryPriceLabel2'];
+                                $ide['toDateMaxi'] = $max['toDate'];
+                                $ide['ideaCena'] = $ide['formattedPrice'];
+                                $ide['supplementaryPriceIdea'] = $ide['supplementaryPriceLabel1'];
+                                $ide['supplementaryPriceIdea2'] = $ide['supplementaryPriceLabel2'];
+                                $ide['ideaOldPrice'] = null;
+                                if ($max['imageUrl'] != null) {
+                                    $ide['imageUrl'] = 'https://d3el976p2k4mvu.cloudfront.net' . $max['imageUrl'];
+                                } else {
+                                    $ide['imageUrl'] = $ide['imageDefault'];
+                                }
+                                array_push($maxiIdea, $ide);
+                            }
+                        }
+                        //dd($maxiIdea);
+                    }
+                }elseif (!empty(Meat::where('shop', 'idea')->where('barcodes', 'LIKE', "%$barMax%")->whereNotNull('barcodes')->get()->toArray())){
+                    $ideaMeat = Meat::where('shop', 'idea')->where('barcodes', 'LIKE', "%$barMax%")->whereNotNull('barcodes')->get()->toArray();
+                    if (!empty($ideaMeat)) {
+                        if (!in_array($ideaMeat, $checkIdea)) {
+                            foreach ($ideaMeat as $ide) {
+                                array_push($checkIdea, $ideaMeat);
+//                            var_dump('5',$max['barcodes']);
+                                $ide['maxiCena'] = $max['formattedPrice'];
+                                $ide['maxiOldPrice'] = $max['oldPrice'];
+                                $ide['maxiBarcodes'] = $max['barcodes'];
+//                            $ide['barcodes'] = $max['barcodes'].','.$ide['barcodes'];
+                                $ide['supplementaryPriceMaxi'] = $max['supplementaryPriceLabel1'];
+                                $ide['supplementaryPriceMaxi2'] = $max['supplementaryPriceLabel2'];
+                                $ide['toDateMaxi'] = $max['toDate'];
+                                $ide['ideaCena'] = $ide['formattedPrice'];
+                                $ide['supplementaryPriceIdea'] = $ide['supplementaryPriceLabel1'];
+                                $ide['supplementaryPriceIdea2'] = $ide['supplementaryPriceLabel2'];
+                                $ide['ideaOldPrice'] = null;
+                                if ($max['imageUrl'] != null) {
+                                    $ide['imageUrl'] = 'https://d3el976p2k4mvu.cloudfront.net' . $max['imageUrl'];
+                                } else {
+                                    $ide['imageUrl'] = $ide['imageDefault'];
+                                }
+                                array_push($maxiIdea, $ide);
+                            }
+                        }
+                    }
                 }
             }
+           // dd($barcodesMaxi);
+        }
 
-            $maxiIdeaDis = [];
+//        dd($maxiIdea);
 
-            foreach ($dis as $di) {
-                foreach ($maxiIdea as $maxide) {
-                    $barcodesDis = explode(',', $di['barcodes']);
-                    $barcodesMaxiIde = explode(',', $maxide['barcodes']);
-                    foreach ($barcodesDis as $barDis) {
-                        foreach ($barcodesMaxiIde as $barMaxIde) {
-                            if ($barDis == $barMaxIde) {
-                                //if (explode(',', $di['barcodes']) == explode(',', $maxide['barcodes'])) {
+        return array_map("unserialize", array_unique(array_map("serialize", $maxiIdea)));
+
+        $maxiIdeaDis = [];
+
+        foreach ($dis as $di) {
+            foreach ($maxiIdea as $maxide) {
+                $barcodesDis = explode(',', $di['barcodes']);
+                $barcodesMaxiIde = explode(',', $maxide['barcodes']);
+                foreach ($barcodesDis as $barDis) {
+                    foreach ($barcodesMaxiIde as $barMaxIde) {
+                        if ($barDis == $barMaxIde) {
+                            //if (explode(',', $di['barcodes']) == explode(',', $maxide['barcodes'])) {
 //                                if ($di['price'] >= $maxide['price']) {
 
-                                    if (!$maxide['ideaCena']) {
-                                        $maxide['ideaCena'] = $maxide['formattedPrice'];
-                                    }
+                            if (!$maxide['ideaCena']) {
+                                $maxide['ideaCena'] = $maxide['formattedPrice'];
+                            }
 
-                                    if (!$maxide['maxiCena']) {
-                                        $maxide['maxiCena'] = $maxide['formattedPrice'];
-                                    }
+                            if (!$maxide['maxiCena']) {
+                                $maxide['maxiCena'] = $maxide['formattedPrice'];
+                            }
 
-                                    $maxide[$di['shop'] . 'Cena'] = $di['formattedPrice'];
-                                    $maxide[$di['shop'] . 'OldPrice'] = $di['oldPrice'];
-                                    $maxide['disPriceCompare'] = $di['price'];
+                            $maxide[$di['shop'] . 'Cena'] = $di['formattedPrice'];
+                            $maxide[$di['shop'] . 'OldPrice'] = $di['oldPrice'];
+                            $maxide['disPriceCompare'] = $di['price'];
 //                            $maxide['maxiPriceCompare'] = $maxide['maxiPriceCompare'];
 //                            $maxide['ideaPriceCompare'] = $maxide['ideaPriceCompare'];
-                                    if (!in_array($maxide['barcodes'], array_column($maxiIdeaDis, 'barcodes'))) {
-                                        array_push($maxiIdeaDis, $maxide);
-                                    }
+                            if (!in_array($maxide['barcodes'], array_column($maxiIdeaDis, 'barcodes'))) {
+                                array_push($maxiIdeaDis, $maxide);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        $maxiIdeaDisUni = [];
+        if (!empty($maxiIdeaDis)) {
+            foreach ($univer as $uni) {
+                foreach ($maxiIdeaDis as $maxidedis) {
+                    $barcodesUni = explode(',', $uni['barcodes']);
+                    $barcodesMaxiIdeDis = explode(',', $maxidedis['barcodes']);
+                    foreach ($barcodesUni as $barUni) {
+                        foreach ($barcodesMaxiIdeDis as $barMaxIdeDis) {
+                            if ($barUni == $barMaxIdeDis) {
+                                //if ($uni['price'] >= $maxidedis['price']) {
+
+                                $maxidedis[$uni['shop'] . 'Cena'] = str_replace('.', ',', $uni['formattedPrice']);
+                                $maxidedis[$uni['shop'] . 'OldPrice'] = $uni['oldPrice'];
+                                $maxidedis['supplementaryPriceUniver2'] = $uni['supplementaryPriceLabel2'];
+                                //if (!in_array($maxidedis['barcodes'], array_column($maxiIdeaDisUni, 'barcodes'))) {
+                                array_push($maxiIdeaDisUni, $maxidedis);
+                                //}
                                 /*} else {
-                                    if ($maxide['ideaCena']) {
-                                        $ideaCena = $maxide['ideaCena'];
-                                    } else {
-                                        $ideaCena = $maxide['formattedPrice'];
-                                    }
+                                    $uni['univerCena'] = str_replace('.', ',', $uni['formattedPrice']);
 
-                                    if ($maxide['maxiCena']) {
-                                        $maxiCena = $maxide['maxiCena'];
-                                    } else {
-                                        $maxiCena = $maxide['formattedPrice'];
-                                    }
-
-                                    $di['ideaCena'] = $ideaCena;
-                                    $di['disCena'] = $di['formattedPrice'];
-                                    $di['disPriceCompare'] = $di['price'];
-//                            $maxide['maxiPriceCompare'] = $maxide['maxiPriceCompare'];
-//                            $maxide['ideaPriceCompare'] = $maxide['ideaPriceCompare'];
-                                    $di['imageUrl'] = $maxide['imageUrl'];
-                                    $di['maxiCena'] = $maxiCena;
-                                    if (!in_array($di['barcodes'], array_column($maxiIdeaDis, 'barcodes'))) {
-                                        array_push($maxiIdeaDis, $di);
+                                    if (!in_array($uni['barcodes'], array_column($maxiIdeaDisUni, 'barcodes'))) {
+                                        array_push($maxiIdeaDisUni, $uni);
                                     }
                                 }*/
                             }
@@ -145,43 +276,13 @@ class ActionSaleController extends Controller
                     }
                 }
             }
+        }
 
-            $maxiIdeaDisUni = [];
-            if (!empty($maxiIdeaDis)) {
-                foreach ($univer as $uni) {
-                    foreach ($maxiIdeaDis as $maxidedis) {
-                        $barcodesUni = explode(',', $uni['barcodes']);
-                        $barcodesMaxiIdeDis = explode(',', $maxidedis['barcodes']);
-                        foreach ($barcodesUni as $barUni) {
-                            foreach ($barcodesMaxiIdeDis as $barMaxIdeDis) {
-                                if ($barUni == $barMaxIdeDis) {
-                                    //if ($uni['price'] >= $maxidedis['price']) {
+        if (!empty($maxiIdeaDisUni)) return array_map("unserialize", array_unique(array_map("serialize", $maxiIdeaDisUni)));
 
-                                    $maxidedis[$uni['shop'] . 'Cena'] = str_replace('.', ',', $uni['formattedPrice']);
-                                    $maxidedis[$uni['shop'] . 'OldPrice'] = $uni['oldPrice'];
-                                    $maxidedis['supplementaryPriceUniver2'] = $uni['supplementaryPriceLabel2'];
-                                    //if (!in_array($maxidedis['barcodes'], array_column($maxiIdeaDisUni, 'barcodes'))) {
-                                    array_push($maxiIdeaDisUni, $maxidedis);
-                                    //}
-                                    /*} else {
-                                        $uni['univerCena'] = str_replace('.', ',', $uni['formattedPrice']);
+        if (!empty($maxiIdeaDis)) return array_map("unserialize", array_unique(array_map("serialize", $maxiIdeaDis)));
 
-                                        if (!in_array($uni['barcodes'], array_column($maxiIdeaDisUni, 'barcodes'))) {
-                                            array_push($maxiIdeaDisUni, $uni);
-                                        }
-                                    }*/
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (!empty($maxiIdeaDisUni)) return array_map("unserialize", array_unique(array_map("serialize", $maxiIdeaDisUni)));
-
-            if (!empty($maxiIdeaDis)) return array_map("unserialize", array_unique(array_map("serialize", $maxiIdeaDis)));
-
-            return array_map("unserialize", array_unique(array_map("serialize", $maxiIdea)));
+        return array_map("unserialize", array_unique(array_map("serialize", $maxiIdea)));
 
         });
 
@@ -209,7 +310,7 @@ class ActionSaleController extends Controller
                     'formattedPrice' => $request->products[0][$i]['price']['formatted_price'], 'price' => $request->products[0][$i]['price']['amount'],
                     'supplementaryPriceLabel1' => $request->products[0][$i]['statistical_price'], 'supplementaryPriceLabel2' => null, 'shop' => $request->shop, 'category' => $request->category]);
             }
-        } elseif ($request->category == 'akcija' && $request->shop == 'maxi'){
+        } elseif ($request->category == 'akcija' && $request->shop == 'maxi') {
             for ($i = 0; $i <= $arrayLengt; $i++) {
                 $imageUrl = null;
                 if (array_key_exists('images', $request->products[0][$i]) && !empty($request->products[0][$i]['images']) && array_key_exists('2', $request->products[0][$i]['images'])) {
@@ -220,23 +321,23 @@ class ActionSaleController extends Controller
 
                 preg_match_all('!\d+!', $request->products[0][$i]['potentialPromotions'][0]['description'], $matches);
 
-                foreach($matches as $match){
+                foreach ($matches as $match) {
                     $count = sizeof($match);
 
-                    if($count == 2){
-                        $formattedPrice = $match[1].',00 RSD';
-                        $string = $match[1].'00';
+                    if ($count == 2) {
+                        $formattedPrice = $match[1] . ',00 RSD';
+                        $string = $match[1] . '00';
                         $price = (int)$string;
-                    }elseif($count == 3){
-                        $formattedPrice = $match[1].','.$match[2].' RSD';
-                        $string = $match[1].$match[2];
+                    } elseif ($count == 3) {
+                        $formattedPrice = $match[1] . ',' . $match[2] . ' RSD';
+                        $string = $match[1] . $match[2];
                         $price = (int)$string;
                     }
                 }
 
                 //var_dump(implode(',', (array)$request->products[0][$i]['eanCodes'])); continue;
 
-                array_push($storeRecords, ['code'=>$request->products[0][$i]['code'], 'title' => $request->products[0][$i]['manufacturerName'],
+                array_push($storeRecords, ['code' => $request->products[0][$i]['code'], 'title' => $request->products[0][$i]['manufacturerName'],
                     'body' => $request->products[0][$i]['name'], 'imageUrl' => $imageUrl, 'imageDefault' => $imageDefault, 'barcodes' => implode(',', (array)$request->products[0][$i]['eanCodes']),
                     'formattedPrice' => $formattedPrice, 'price' => $price,
                     'supplementaryPriceLabel1' => $request->products[0][$i]['price']['supplementaryPriceLabel1'],
@@ -458,9 +559,9 @@ class ActionSaleController extends Controller
                                 $ide['supplementaryPriceIdea2'] = $ide['supplementaryPriceLabel2'];
                                 $ide['toDateIdea'] = $ide['toDate'];
 
-                                if($max['imageUrl'] != null) {
-                                    $ide['imageUrl'] = 'https://d3el976p2k4mvu.cloudfront.net'.$max['imageUrl'];
-                                }else{
+                                if ($max['imageUrl'] != null) {
+                                    $ide['imageUrl'] = 'https://d3el976p2k4mvu.cloudfront.net' . $max['imageUrl'];
+                                } else {
                                     $ide['imageUrl'] = $ide['imageDefault'];
                                 }
                                 array_push($maxiIdea, $ide);

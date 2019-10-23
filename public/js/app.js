@@ -75583,20 +75583,23 @@ var render = function() {
                                       }
                                     }),
                                     _vm._v(" "),
-                                    _c("span", [
-                                      _c("small", [
-                                        _c("del", [
-                                          _vm._v(
-                                            _vm._s(
-                                              article.maxiOldPrice.substring(
-                                                0,
-                                                article.maxiOldPrice.length - 3
+                                    article.maxiOldPrice
+                                      ? _c("span", [
+                                          _c("small", [
+                                            _c("del", [
+                                              _vm._v(
+                                                _vm._s(
+                                                  article.maxiOldPrice.substring(
+                                                    0,
+                                                    article.maxiOldPrice
+                                                      .length - 3
+                                                  )
+                                                )
                                               )
-                                            )
-                                          )
+                                            ])
+                                          ])
                                         ])
-                                      ])
-                                    ]),
+                                      : _vm._e(),
                                     _vm._v(
                                       " \n                                "
                                     ),
@@ -75646,20 +75649,23 @@ var render = function() {
                                       }
                                     }),
                                     _vm._v(" "),
-                                    _c("span", [
-                                      _c("small", [
-                                        _c("del", [
-                                          _vm._v(
-                                            _vm._s(
-                                              article.ideaOldPrice.substring(
-                                                0,
-                                                article.ideaOldPrice.length - 3
+                                    article.ideaOldPrice
+                                      ? _c("span", [
+                                          _c("small", [
+                                            _c("del", [
+                                              _vm._v(
+                                                _vm._s(
+                                                  article.ideaOldPrice.substring(
+                                                    0,
+                                                    article.ideaOldPrice
+                                                      .length - 3
+                                                  )
+                                                )
                                               )
-                                            )
-                                          )
+                                            ])
+                                          ])
                                         ])
-                                      ])
-                                    ]),
+                                      : _vm._e(),
                                     _vm._v(
                                       " \n                                "
                                     ),
@@ -75943,9 +75949,11 @@ var render = function() {
                                     _c("br"),
                                     _vm._v(" "),
                                     _c("h5", [
-                                      _c("del", [
-                                        _vm._v(_vm._s(articlea.oldPrice))
-                                      ])
+                                      articlea.oldPrice
+                                        ? _c("del", [
+                                            _vm._v(_vm._s(articlea.oldPrice))
+                                          ])
+                                        : _vm._e()
                                     ]),
                                     _vm._v(" "),
                                     _c("b", [
