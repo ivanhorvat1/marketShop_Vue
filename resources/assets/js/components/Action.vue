@@ -538,6 +538,7 @@
             styles: function () {
                 var height = 450;
                 var width = 300;
+                var image_height = 200;
 
                 if (this.products[0].disCena) {
                     height = 500;
@@ -550,7 +551,8 @@
                 return {
                     height: height + 'px',
                     width: width + 'px',
-                    'cursor': 'pointer'
+                    'cursor': 'pointer',
+                    'background-size': image_height+'px'
                 };
             }
         },
@@ -606,6 +608,8 @@
 
                 if (article.maxiOldPrice) {
                     this.maxiOldPrice = article.maxiOldPrice.substring(0, article.maxiOldPrice.length - 3) + 'Din';
+                }else{
+                    this.maxiOldPrice = article.maxiOldPrice;
                 }
 
                 if (article.disCena) {
@@ -614,6 +618,8 @@
 
                 if (article.disOldPrice) {
                     this.disOldPrice = article.disOldPrice.substring(0, article.disOldPrice.length - 3) + 'Din';
+                }else{
+                    this.disOldPrice = article.disOldPrice;
                 }
 
                 if (article.univerexportCena) {
@@ -622,6 +628,8 @@
 
                 if (article.univerexportOldPrice) {
                     this.univerexportOldPrice = article.univerexportOldPrice.substring(0, article.univerexportOldPrice.length - 3) + 'Din';
+                }else{
+                    this.univerexportOldPrice = article.univerexportOldPrice;
                 }
                 this.$root.$emit('bv::show::modal', this.infoModal.id, button)
             },

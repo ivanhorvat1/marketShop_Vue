@@ -18,7 +18,10 @@ use Illuminate\Support\Facades\DB;
 class ActionSaleController extends Controller
 {
     public $checkIdeaMaxi = [];
+    public $checkIdeaMaxiDis = [];
     public $maxiIdea = [];
+    public $maxiIdeaDis = [];
+    public $maxiIdeaDisUni = [];
 
     public function index()
     {
@@ -30,14 +33,16 @@ class ActionSaleController extends Controller
 
             $maxiSales = action_sale::where('shop', 'maxi')->where('category', 'akcija')->whereNotNull('barcodes')->get();
             $ideaSales = action_sale::where('shop', 'idea')->where('category', 'akcija')->get();
-            $dis = dis_action_sale::orderBy('price', 'DESC')->get();
-            $univer = univerexport_action_sale::where('deleted', 0)->orderBy('price', 'DESC')->get();
+            $disSales = dis_action_sale::orderBy('price', 'DESC')->get();
+            $univerSales = univerexport_action_sale::where('deleted', 0)->orderBy('price', 'DESC')->get();
 
 
 //            $maxi= [['barcodes' =>'2501011010845,8600995140020','price'=>200,'shop'=>'maxi'],['barcodes' =>'2501011010846,8600995140021','price'=>200,'shop'=>'maxi']];
 //            $idea= [['barcodes' =>'2501011010845,2501011010844,2501011010843,8600995140020','price'=>400,'shop'=>'idea'],['barcodes' =>'2501011010855,2501011010844,2501011010843,8600995140020','price'=>400,'shop'=>'idea']];
 
-
+            /**
+             *  check if maxi sales articles barcodes exists in every idea category
+             */
             foreach ($maxiSales as $max) {
                 //foreach ($idea as $ide) {
                 //$barcodesIdea = explode(',', $ide['barcodes']);
@@ -74,7 +79,9 @@ class ActionSaleController extends Controller
                     }
                 }
             }
-
+            /**
+             *  check if idea sales articles barcodes exists in every maxi category
+             */
             foreach ($ideaSales as $ide) {
                 $barcodesIdea = explode(',', $ide['barcodes']);
                 foreach ($barcodesIdea as $barIde) {
@@ -107,35 +114,29 @@ class ActionSaleController extends Controller
                 }
             }
 
-            return array_map("unserialize", array_unique(array_map("serialize", $this->maxiIdea)));
-
-            $maxiIdeaDis = [];
-
-            foreach ($dis as $di) {
-                foreach ($maxiIdea as $maxide) {
+            foreach ($disSales as $di) {
+                foreach ($this->maxiIdea as $maxide) {
                     $barcodesDis = explode(',', $di['barcodes']);
                     $barcodesMaxiIde = explode(',', $maxide['barcodes']);
                     foreach ($barcodesDis as $barDis) {
                         foreach ($barcodesMaxiIde as $barMaxIde) {
                             if ($barDis == $barMaxIde) {
-                                //if (explode(',', $di['barcodes']) == explode(',', $maxide['barcodes'])) {
-//                                if ($di['price'] >= $maxide['price']) {
 
-                                if (!$maxide['ideaCena']) {
+                                /*if (!$maxide['ideaCena']) {
                                     $maxide['ideaCena'] = $maxide['formattedPrice'];
                                 }
 
                                 if (!$maxide['maxiCena']) {
                                     $maxide['maxiCena'] = $maxide['formattedPrice'];
-                                }
+                                }*/
 
                                 $maxide[$di['shop'] . 'Cena'] = $di['formattedPrice'];
                                 $maxide[$di['shop'] . 'OldPrice'] = $di['oldPrice'];
                                 $maxide['disPriceCompare'] = $di['price'];
 //                            $maxide['maxiPriceCompare'] = $maxide['maxiPriceCompare'];
 //                            $maxide['ideaPriceCompare'] = $maxide['ideaPriceCompare'];
-                                if (!in_array($maxide['barcodes'], array_column($maxiIdeaDis, 'barcodes'))) {
-                                    array_push($maxiIdeaDis, $maxide);
+                                if (!in_array($maxide['barcodes'], array_column($this->maxiIdeaDis, 'barcodes'))) {
+                                    array_push($this->maxiIdeaDis, $maxide);
                                 }
                             }
                         }
@@ -143,9 +144,10 @@ class ActionSaleController extends Controller
                 }
             }
 
-            $maxiIdeaDisUni = [];
+            return array_map("unserialize", array_unique(array_map("serialize", $this->maxiIdeaDis)));
+
             if (!empty($maxiIdeaDis)) {
-                foreach ($univer as $uni) {
+                foreach ($univerSales as $uni) {
                     foreach ($maxiIdeaDis as $maxidedis) {
                         $barcodesUni = explode(',', $uni['barcodes']);
                         $barcodesMaxiIdeDis = explode(',', $maxidedis['barcodes']);
@@ -178,7 +180,7 @@ class ActionSaleController extends Controller
 
             if (!empty($maxiIdeaDis)) return array_map("unserialize", array_unique(array_map("serialize", $maxiIdeaDis)));
 
-            return array_map("unserialize", array_unique(array_map("serialize", $maxiIdea)));
+            return array_map("unserialize", array_unique(array_map("serialize", $this->maxiIdea)));
 
         });
 
@@ -510,43 +512,83 @@ class ActionSaleController extends Controller
         ini_set('max_execution_time', 600);
         $cached = Cache::rememberForever('ActionDvI', function () {
 
-            $maxi = action_sale::where('shop', 'maxi')->where('category', 'akcija')->get();
-            $idea = action_sale::where('shop', 'idea')->where('category', 'akcija')->get();
+            $maxiSales = action_sale::where('shop', 'maxi')->where('category', 'akcija')->whereNotNull('barcodes')->get();
+            $ideaSales = action_sale::where('shop', 'idea')->where('category', 'akcija')->get();
+//            $dis = dis_action_sale::orderBy('price', 'DESC')->get();
+//            $univer = univerexport_action_sale::where('deleted', 0)->orderBy('price', 'DESC')->get();
 
-            $maxiIdea = [];
+            /**
+             *  check if maxi sales articles barcodes exists in every idea category
+             */
+            foreach ($maxiSales as $max) {
+                $barcodesMaxi = explode(',', $max['barcodes']);
+                foreach ($barcodesMaxi as $barMax) {
 
-            foreach ($maxi as $max) {
-                foreach ($idea as $ide) {
-                    $barcodesIdea = explode(',', $ide['barcodes']);
-                    $barcodesMaxi = explode(',', $max['barcodes']);
-                    foreach ($barcodesIdea as $barIde) {
-                        foreach ($barcodesMaxi as $barMax) {
-                            if ($barIde == $barMax) {
-                                $ide['maxiCena'] = $max['formattedPrice'];
-                                $ide['ideaCena'] = $ide['formattedPrice'];
+                    $idea = action_sale::where('shop', 'idea')->where('barcodes', 'LIKE', "%$barMax%")->whereNotNull('barcodes')->get()->toArray();
 
-                                $ide['maxiOldPrice'] = $max['oldPrice'];
-                                $ide['supplementaryPriceMaxi'] = $max['supplementaryPriceLabel1'];
-                                $ide['supplementaryPriceMaxi2'] = $max['supplementaryPriceLabel2'];
-                                $ide['toDateMaxi'] = $max['toDate'];
-                                $ide['ideaOldPrice'] = $ide['oldPrice'];
-                                $ide['supplementaryPriceIdea'] = $ide['supplementaryPriceLabel1'];
-                                $ide['supplementaryPriceIdea2'] = $ide['supplementaryPriceLabel2'];
-                                $ide['toDateIdea'] = $ide['toDate'];
+                    if (!empty($idea)) {
 
-                                if ($max['imageUrl'] != null) {
-                                    $ide['imageUrl'] = 'https://d3el976p2k4mvu.cloudfront.net' . $max['imageUrl'];
-                                } else {
-                                    $ide['imageUrl'] = $ide['imageDefault'];
-                                }
-                                array_push($maxiIdea, $ide);
-                            }
-                        }
+                        $this->checkIfMaxiBarcodeExistsInIdeaMarket($idea, $max);
+
+                    } elseif (!empty(Sweets::where('shop', 'idea')->where('barcodes', 'LIKE', "%$barMax%")->whereNotNull('barcodes')->get()->toArray())) {
+
+                        $ideaSweets = Sweets::where('shop', 'idea')->where('barcodes', 'LIKE', "%$barMax%")->whereNotNull('barcodes')->get()->toArray();
+                        $this->checkIfMaxiBarcodeExistsInIdeaMarket($ideaSweets, $max);
+
+                    } elseif (!empty(Freeze::where('shop', 'idea')->where('barcodes', 'LIKE', "%$barMax%")->whereNotNull('barcodes')->get()->toArray())) {
+
+                        $ideaFreeze = Freeze::where('shop', 'idea')->where('barcodes', 'LIKE', "%$barMax%")->whereNotNull('barcodes')->get()->toArray();
+                        $this->checkIfMaxiBarcodeExistsInIdeaMarket($ideaFreeze, $max);
+
+                    } elseif (!empty(drink::where('shop', 'idea')->where('barcodes', 'LIKE', "%$barMax%")->whereNotNull('barcodes')->get()->toArray())) {
+
+                        $ideaDrink = drink::where('shop', 'idea')->where('barcodes', 'LIKE', "%$barMax%")->whereNotNull('barcodes')->get()->toArray();
+                        $this->checkIfMaxiBarcodeExistsInIdeaMarket($ideaDrink, $max);
+
+                    } elseif (!empty(Meat::where('shop', 'idea')->where('barcodes', 'LIKE', "%$barMax%")->whereNotNull('barcodes')->get()->toArray())) {
+
+                        $ideaMeat = Meat::where('shop', 'idea')->where('barcodes', 'LIKE', "%$barMax%")->whereNotNull('barcodes')->get()->toArray();
+                        $this->checkIfMaxiBarcodeExistsInIdeaMarket($ideaMeat, $max);
+
+                    }
+                }
+            }
+            /**
+             *  check if idea sales articles barcodes exists in every maxi category
+             */
+            foreach ($ideaSales as $ide) {
+                $barcodesIdea = explode(',', $ide['barcodes']);
+                foreach ($barcodesIdea as $barIde) {
+                    $maxi = action_sale::where('shop', 'maxi')->where('barcodes', 'LIKE', "%$barIde%")->whereNotNull('barcodes')->get()->toArray();
+                    if (!empty($maxi)) {
+
+                        $this->checkIfIdeaBarcodeExistsInMaxiMarket($maxi, $ide);
+
+                    } elseif (!empty(Sweets::where('shop', 'maxi')->where('barcodes', 'LIKE', "%$barIde%")->whereNotNull('barcodes')->get()->toArray())) {
+
+                        $maxiSweets = Sweets::where('shop', 'maxi')->where('barcodes', 'LIKE', "%$barIde%")->whereNotNull('barcodes')->get()->toArray();
+                        $this->checkIfIdeaBarcodeExistsInMaxiMarket($maxiSweets, $ide);
+
+                    } elseif (!empty(Freeze::where('shop', 'maxi')->where('barcodes', 'LIKE', "%$barIde%")->whereNotNull('barcodes')->get()->toArray())) {
+
+                        $maxiFreeze = Freeze::where('shop', 'maxi')->where('barcodes', 'LIKE', "%$barIde%")->whereNotNull('barcodes')->get()->toArray();
+                        $this->checkIfIdeaBarcodeExistsInMaxiMarket($maxiFreeze, $ide);
+
+                    } elseif (!empty(drink::where('shop', 'maxi')->where('barcodes', 'LIKE', "%$barIde%")->whereNotNull('barcodes')->get()->toArray())) {
+
+                        $maxiDrink = drink::where('shop', 'maxi')->where('barcodes', 'LIKE', "%$barIde%")->whereNotNull('barcodes')->get()->toArray();
+                        $this->checkIfIdeaBarcodeExistsInMaxiMarket($maxiDrink, $ide);
+
+                    } elseif (!empty(Meat::where('shop', 'maxi')->where('barcodes', 'LIKE', "%$barIde%")->whereNotNull('barcodes')->get()->toArray())) {
+
+                        $maxiMeat = Meat::where('shop', 'maxi')->where('barcodes', 'LIKE', "%$barIde%")->whereNotNull('barcodes')->get()->toArray();
+                        $this->checkIfIdeaBarcodeExistsInMaxiMarket($maxiMeat, $ide);
+
                     }
                 }
             }
 
-            return array_map("unserialize", array_unique(array_map("serialize", $maxiIdea)));
+            return array_map("unserialize", array_unique(array_map("serialize", $this->maxiIdea)));
 
         });
 
