@@ -87,12 +87,12 @@
                                 <h4 v-if="article.disCena">
                                     <img style="height: 50px; width: 80px"
                                          src="images/market_logo/dis_krnjevo_resized.gif"/>
-                                    <span><small><del>{{ article.disOldPrice.substring(0, article.disOldPrice.length - 3) }}</del></small></span>&nbsp;
+                                    <span v-if="article.disOldPrice"><small><del>{{ article.disOldPrice.substring(0, article.disOldPrice.length - 3) }}</del></small></span>&nbsp;
                                     <span><b>{{ article.disCena.substring(0, article.disCena.length - 3) }}</b></span>
                                 </h4>
                                 <h4 v-if="article.univerexportCena">
                                     <img style="height: 50px; width: 80px" src="images/market_logo/univer_resized.png"/>
-                                    <span><small><del>{{ article.univerexportOldPrice.substring(0, article.univerexportOldPrice.length - 3) }}</del></small></span>&nbsp;
+                                    <span v-if="article.univerexportOldPrice"><small><del>{{ article.univerexportOldPrice.substring(0, article.univerexportOldPrice.length - 3) }}</del></small></span>&nbsp;
                                     <span><b>{{ article.univerexportCena.substring(0, article.univerexportCena.length - 3) }}</b></span>
                                 </h4>
                             </div>

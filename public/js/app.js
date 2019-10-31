@@ -75706,20 +75706,22 @@ var render = function() {
                                     }
                                   }),
                                   _vm._v(" "),
-                                  _c("span", [
-                                    _c("small", [
-                                      _c("del", [
-                                        _vm._v(
-                                          _vm._s(
-                                            article.disOldPrice.substring(
-                                              0,
-                                              article.disOldPrice.length - 3
+                                  article.disOldPrice
+                                    ? _c("span", [
+                                        _c("small", [
+                                          _c("del", [
+                                            _vm._v(
+                                              _vm._s(
+                                                article.disOldPrice.substring(
+                                                  0,
+                                                  article.disOldPrice.length - 3
+                                                )
+                                              )
                                             )
-                                          )
-                                        )
+                                          ])
+                                        ])
                                       ])
-                                    ])
-                                  ]),
+                                    : _vm._e(),
                                   _vm._v(" \n                                "),
                                   _c("span", [
                                     _c("b", [
@@ -75749,21 +75751,23 @@ var render = function() {
                                     }
                                   }),
                                   _vm._v(" "),
-                                  _c("span", [
-                                    _c("small", [
-                                      _c("del", [
-                                        _vm._v(
-                                          _vm._s(
-                                            article.univerexportOldPrice.substring(
-                                              0,
-                                              article.univerexportOldPrice
-                                                .length - 3
+                                  article.univerexportOldPrice
+                                    ? _c("span", [
+                                        _c("small", [
+                                          _c("del", [
+                                            _vm._v(
+                                              _vm._s(
+                                                article.univerexportOldPrice.substring(
+                                                  0,
+                                                  article.univerexportOldPrice
+                                                    .length - 3
+                                                )
+                                              )
                                             )
-                                          )
-                                        )
+                                          ])
+                                        ])
                                       ])
-                                    ])
-                                  ]),
+                                    : _vm._e(),
                                   _vm._v(" \n                                "),
                                   _c("span", [
                                     _c("b", [
