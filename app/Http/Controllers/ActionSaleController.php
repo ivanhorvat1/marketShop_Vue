@@ -7,6 +7,10 @@ use App\dis_freeze;
 use App\dis_meat;
 use App\dis_sweet;
 use App\univerexport_action_sale;
+use App\univerexport_drink;
+use App\univerexport_freeze;
+use App\univerexport_meats;
+use App\univerexport_sweets;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -23,6 +27,7 @@ class ActionSaleController extends Controller
 {
     public $checkIdeaMaxi = [];
     public $checkIdeaMaxiDis = [];
+    public $checkIdeaMaxiDisUni = [];
     public $maxiIdea = [];
     public $maxiIdeaDis = [];
     public $maxiIdeaDisUni = [];
@@ -31,7 +36,7 @@ class ActionSaleController extends Controller
     {
         ini_set('max_execution_time', 600);
         $expiresAt = Carbon::now()->endOfDay()->subHour()->addMinutes(30);
-        Cache::forget('maxiIdeaDisSale');
+//        Cache::forget('maxiIdeaDisSale');
 //        $cache = Cache::remember('maxiIdeaDisSale', 10, function () {
         $cache = Cache::rememberForever('maxiIdeaDisSale', function () {
 
@@ -230,41 +235,73 @@ class ActionSaleController extends Controller
                 }
             }*/
 
-            return array_map("unserialize", array_unique(array_map("serialize", $this->maxiIdeaDis)));
+//            return array_map("unserialize", array_unique(array_map("serialize", $this->maxiIdeaDis)));
 
-            if (!empty($maxiIdeaDis)) {
-                foreach ($univerSales as $uni) {
-                    foreach ($maxiIdeaDis as $maxidedis) {
-                        $barcodesUni = explode(',', $uni['barcodes']);
-                        $barcodesMaxiIdeDis = explode(',', $maxidedis['barcodes']);
-                        foreach ($barcodesUni as $barUni) {
-                            foreach ($barcodesMaxiIdeDis as $barMaxIdeDis) {
-                                if ($barUni == $barMaxIdeDis) {
-                                    //if ($uni['price'] >= $maxidedis['price']) {
+//            if (!empty($maxiIdeaDis)) {
+//                foreach ($univerSales as $uni) {
+//                    foreach ($maxiIdeaDis as $maxidedis) {
+//                        $barcodesUni = explode(',', $uni['barcodes']);
+//                        $barcodesMaxiIdeDis = explode(',', $maxidedis['barcodes']);
+//                        foreach ($barcodesUni as $barUni) {
+//                            foreach ($barcodesMaxiIdeDis as $barMaxIdeDis) {
+//                                if ($barUni == $barMaxIdeDis) {
+//                                    //if ($uni['price'] >= $maxidedis['price']) {
+//
+//                                    $maxidedis[$uni['shop'] . 'Cena'] = str_replace('.', ',', $uni['formattedPrice']);
+//                                    $maxidedis[$uni['shop'] . 'OldPrice'] = $uni['oldPrice'];
+//                                    $maxidedis['supplementaryPriceUniver2'] = $uni['supplementaryPriceLabel2'];
+//                                    //if (!in_array($maxidedis['barcodes'], array_column($maxiIdeaDisUni, 'barcodes'))) {
+//                                    array_push($maxiIdeaDisUni, $maxidedis);
+//                                    //}
+////                                    } else {
+////                                        $uni['univerCena'] = str_replace('.', ',', $uni['formattedPrice']);
+////
+////                                        if (!in_array($uni['barcodes'], array_column($maxiIdeaDisUni, 'barcodes'))) {
+////                                            array_push($maxiIdeaDisUni, $uni);
+////                                        }
+////                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
 
-                                    $maxidedis[$uni['shop'] . 'Cena'] = str_replace('.', ',', $uni['formattedPrice']);
-                                    $maxidedis[$uni['shop'] . 'OldPrice'] = $uni['oldPrice'];
-                                    $maxidedis['supplementaryPriceUniver2'] = $uni['supplementaryPriceLabel2'];
-                                    //if (!in_array($maxidedis['barcodes'], array_column($maxiIdeaDisUni, 'barcodes'))) {
-                                    array_push($maxiIdeaDisUni, $maxidedis);
-                                    //}
-                                    /*} else {
-                                        $uni['univerCena'] = str_replace('.', ',', $uni['formattedPrice']);
+            foreach ($this->maxiIdeaDis as $maxidedis) {
+                $barcodesMaxiIdeaDis = explode(',', $maxidedis['barcodes']);
+                foreach ($barcodesMaxiIdeaDis as $barMaxIdeDis) {
+                    $uni = univerexport_action_sale::where('barcodes', 'LIKE', "%$barMaxIdeDis%")->whereNotNull('barcodes')->get()->toArray();
+                    if (!empty($uni)) {
 
-                                        if (!in_array($uni['barcodes'], array_column($maxiIdeaDisUni, 'barcodes'))) {
-                                            array_push($maxiIdeaDisUni, $uni);
-                                        }
-                                    }*/
-                                }
-                            }
-                        }
+                        $this->checkIfMaxiIdeaDisBarcodeExistsInUniMarket($uni, $maxidedis);
+
+                    } elseif (!empty(univerexport_sweets::where('barcodes', 'LIKE', "%$barMaxIdeDis%")->where('deleted', 0)->whereNotNull('barcodes')->get()->toArray())) {
+
+                        $uniSweets = univerexport_sweets::where('barcodes', 'LIKE', "%$barMaxIdeDis%")->where('deleted', 0)->whereNotNull('barcodes')->get()->toArray();
+                        $this->checkIfMaxiIdeaDisBarcodeExistsInUniMarket($uniSweets, $maxidedis);
+
+                    } elseif (!empty(univerexport_freeze::where('barcodes', 'LIKE', "%$barMaxIdeDis%")->where('deleted', 0)->whereNotNull('barcodes')->get()->toArray())) {
+
+                        $uniFreeze = univerexport_freeze::where('barcodes', 'LIKE', "%$barMaxIdeDis%")->where('deleted', 0)->whereNotNull('barcodes')->get()->toArray();
+                        $this->checkIfMaxiIdeaDisBarcodeExistsInUniMarket($uniFreeze, $maxidedis);
+
+                    } elseif (!empty(univerexport_drink::where('barcodes', 'LIKE', "%$barMaxIdeDis%")->where('deleted', 0)->whereNotNull('barcodes')->get()->toArray())) {
+
+                        $uniDrink = univerexport_drink::where('barcodes', 'LIKE', "%$barMaxIdeDis%")->where('deleted', 0)->whereNotNull('barcodes')->get()->toArray();
+                        $this->checkIfMaxiIdeaDisBarcodeExistsInUniMarket($uniDrink, $maxidedis);
+
+                    } elseif (!empty(univerexport_meats::where('barcodes', 'LIKE', "%$barMaxIdeDis%")->where('deleted', 0)->whereNotNull('barcodes')->get()->toArray())) {
+
+                        $uniMeat = univerexport_meats::where('barcodes', 'LIKE', "%$barMaxIdeDis%")->where('deleted', 0)->whereNotNull('barcodes')->get()->toArray();
+                        $this->checkIfMaxiIdeaDisBarcodeExistsInUniMarket($uniMeat, $maxidedis);
+
                     }
                 }
             }
 
-            if (!empty($maxiIdeaDisUni)) return array_map("unserialize", array_unique(array_map("serialize", $maxiIdeaDisUni)));
+            if (!empty($this->maxiIdeaDisUni)) return array_map("unserialize", array_unique(array_map("serialize", $this->maxiIdeaDisUni)));
 
-            if (!empty($maxiIdeaDis)) return array_map("unserialize", array_unique(array_map("serialize", $maxiIdeaDis)));
+            if (!empty($this->maxiIdeaDis)) return array_map("unserialize", array_unique(array_map("serialize", $this->maxiIdeaDis)));
 
             return array_map("unserialize", array_unique(array_map("serialize", $this->maxiIdea)));
 
@@ -382,15 +419,23 @@ class ActionSaleController extends Controller
 //                if (!in_array($dis['body'], $this->checkIdeaMaxiDis)) {
                     array_push($this->checkIdeaMaxiDis, $dis['body']);
 
-                    if(!isset($catIdea['formattedPrice'])){
+                    if (isset($dis['oldPrice'])) {
+                        $dis['disOldPrice'] = $dis['oldPrice'];
+                    } else {
+                        $dis['disOldPrice'] = null;
+                    }
+
+                    $dis['disCena'] = $dis['formattedPrice'];
+
+                    if (isset($catIdea['formattedPrice'])) {
                         $dis['ideaCena'] = $catIdea['formattedPrice'];
-                    }else{
+                    } else {
                         $dis['ideaCena'] = null;
                     }
 
-                    if(!isset($catMaxi['formattedPrice'])){
+                    if (isset($catMaxi['formattedPrice'])) {
                         $dis['maxiCena'] = $catMaxi['formattedPrice'];
-                    }else{
+                    } else {
                         $dis['maxiCena'] = null;
                     }
 
@@ -410,18 +455,18 @@ class ActionSaleController extends Controller
                         $dis['toDateMaxi'] = $catMaxi['toDate'];
                     }
 
-                    if(!isset($catIdea['supplementaryPriceLabel1'])){
+                    if (isset($catIdea['supplementaryPriceLabel1'])) {
                         $dis['supplementaryPriceMaxi'] = $catIdea['supplementaryPriceLabel1'];
                         $dis['supplementaryPriceMaxi2'] = $catIdea['supplementaryPriceLabel2'];
-                    }else{
+                    } else {
                         $dis['supplementaryPriceMaxi'] = null;
                         $dis['supplementaryPriceMaxi2'] = null;
                     }
 
-                    if(!isset($catMaxi['supplementaryPriceLabel1'])){
+                    if (isset($catMaxi['supplementaryPriceLabel1'])) {
                         $dis['supplementaryPriceIdea'] = $catMaxi['supplementaryPriceLabel1'];
                         $dis['supplementaryPriceIdea2'] = $catMaxi['supplementaryPriceLabel2'];
-                    }else{
+                    } else {
                         $dis['supplementaryPriceIdea'] = null;
                         $dis['supplementaryPriceIdea2'] = null;
                     }
@@ -434,6 +479,27 @@ class ActionSaleController extends Controller
 
                     array_push($this->maxiIdeaDis, $dis);
 //                }
+                }
+            }
+        }
+    }
+
+    public function checkIfMaxiIdeaDisBarcodeExistsInUniMarket($category, $maxidedis)
+    {
+        if (!empty($category)) {
+            foreach ($category as $cat) {
+                if (!in_array($cat['body'], $this->checkIdeaMaxiDisUni)) {
+                    //var_dump($cat['body']);
+                    array_push($this->checkIdeaMaxiDisUni, $cat['body']);
+//                    $maxidedis[$cat['shop'] . 'Cena'] = str_replace('.', ',', $cat['formattedPrice']);
+                    $maxidedis[$cat['shop'] . 'Cena'] = $cat['formattedPrice'];
+                    if (!isset($cat['oldPrice'])) {
+                        $maxidedis[$cat['shop'] . 'OldPrice'] = null;
+                    } else {
+                        $maxidedis[$cat['shop'] . 'OldPrice'] = $cat['oldPrice'];
+                    }
+                    $maxidedis['supplementaryPriceUniver2'] = $cat['supplementaryPriceLabel2'];
+                    array_push($this->maxiIdeaDisUni, $maxidedis);
                 }
             }
         }
