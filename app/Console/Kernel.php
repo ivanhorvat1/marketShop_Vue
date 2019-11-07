@@ -28,22 +28,22 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
         //->dailyAt('03:00')
 
-//        $schedule->call('App\Http\Controllers\MaxiScheduleController@getMaxiAction')->everyMinute();
-//        $schedule->call('App\Http\Controllers\MaxiScheduleController@getMaxiDrink')->everyMinute();
-//        $schedule->call('App\Http\Controllers\MaxiScheduleController@getMaxiMeats')->everyMinute();
-//        $schedule->call('App\Http\Controllers\MaxiScheduleController@getMaxiSweets')->everyMinute();
-//        $schedule->call('App\Http\Controllers\MaxiScheduleController@getMaxiFreeze')->everyMinute();
-//        $schedule->call('App\Http\Controllers\IdeaScheduleController@deleteRecords')->everyMinute();
-//        $schedule->call('App\Http\Controllers\IdeaScheduleController@getIdeaAction')->everyMinute();
-//        $schedule->call('App\Http\Controllers\IdeaScheduleController@getIdeaDrink', ['60007883',null])->everyMinute();
-//        $schedule->call('App\Http\Controllers\IdeaScheduleController@getIdeaMeat', ['60007823',null])->everyMinute();
-//        $schedule->call('App\Http\Controllers\IdeaScheduleController@getIdeaMeat2', ['60007780',null])->everyMinute();
-//        $schedule->call('App\Http\Controllers\IdeaScheduleController@getIdeaSweet', ['60007896',null])->everyMinute();
-//        $schedule->call('App\Http\Controllers\IdeaScheduleController@getIdeaFreeze', ['60007907',null])->everyMinute();
-//        $schedule->call('App\Http\Controllers\DisMarketController@updateExistingDrinks')->everyMinute();
-//        $schedule->call('App\Http\Controllers\DisMarketController@updateExistingMeat')->everyMinute();
-//        $schedule->call('App\Http\Controllers\DisMarketController@updateExistingFreeze')->everyMinute();
-//        $schedule->call('App\Http\Controllers\DisMarketController@updateExistingSweet')->everyMinute();
+        $schedule->call('App\Http\Controllers\MaxiScheduleController@getMaxiAction')->everyMinute();
+        $schedule->call('App\Http\Controllers\MaxiScheduleController@getMaxiDrink')->everyMinute();
+        $schedule->call('App\Http\Controllers\MaxiScheduleController@getMaxiMeats')->everyMinute();
+        $schedule->call('App\Http\Controllers\MaxiScheduleController@getMaxiSweets')->everyMinute();
+        $schedule->call('App\Http\Controllers\MaxiScheduleController@getMaxiFreeze')->everyMinute();
+        $schedule->call('App\Http\Controllers\IdeaScheduleController@deleteRecords')->everyMinute();
+        $schedule->call('App\Http\Controllers\IdeaScheduleController@getIdeaAction')->everyMinute();
+        $schedule->call('App\Http\Controllers\IdeaScheduleController@getIdeaDrink', ['60007883',null])->everyMinute();
+        $schedule->call('App\Http\Controllers\IdeaScheduleController@getIdeaMeat', ['60007823',null])->everyMinute();
+        $schedule->call('App\Http\Controllers\IdeaScheduleController@getIdeaMeat2', ['60007780',null])->everyMinute();
+        $schedule->call('App\Http\Controllers\IdeaScheduleController@getIdeaSweet', ['60007896',null])->everyMinute();
+        $schedule->call('App\Http\Controllers\IdeaScheduleController@getIdeaFreeze', ['60007907',null])->everyMinute();
+        $schedule->call('App\Http\Controllers\DisMarketController@updateExistingDrinks')->everyMinute();
+        $schedule->call('App\Http\Controllers\DisMarketController@updateExistingMeat')->everyMinute();
+        $schedule->call('App\Http\Controllers\DisMarketController@updateExistingFreeze')->everyMinute();
+        $schedule->call('App\Http\Controllers\DisMarketController@updateExistingSweet')->everyMinute();
         $schedule->call('App\Http\Controllers\UniverexportScheduleController@updateExistingUniverArticles', ['pice','smrznuto'])->everyMinute();
         $schedule->call('App\Http\Controllers\UniverexportScheduleController@updateExistingUniverArticles', ['slatkisi','meso'])->everyMinute();
         $schedule->call('App\Http\Controllers\IdeaScheduleController@deleteCachedData')->everyMinute();

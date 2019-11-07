@@ -152,7 +152,7 @@ class UniverexportScheduleController extends Controller
         $this->cat1 = $cat1;
         $this->cat2 = $cat2;
 //        $cache = Cache::remember('curlUniverexport', 25, function () {
-            ini_set('max_execution_time', 30000); //300 seconds = 5 minutes
+            ini_set('max_execution_time', '300'); //300 seconds = 5 minutes
             ini_set('memory_limit', '-1');
 
             $host = 'https://elakolije.univerexport.rs/';
